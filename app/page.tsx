@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useAppSelector } from "@/redux/hooks";
 import "./homepage.css";
 
@@ -16,7 +17,7 @@ export default function Homepage() {
   }, []);
 
   return (
-    <div className="homepage-wrapper" style={{ fontFamily: "Manrope, sans-serif" }}>
+    <div className="homepage-wrapper">
       {/* ── NAVBAR ── */}
       <nav className={`web-navbar ${isScrolled ? "scrolled" : ""}`}>
         <div className="web-container web-navbar__inner">
@@ -110,10 +111,14 @@ export default function Homepage() {
 
           <div className="hp-hero__visual">
             <div className="hp-hero__img-wrap">
-              <img
+              <Image
                 src="/assets/hero.png"
                 alt="EduCore AI dashboard"
                 className="hp-hero__img"
+                width={800}
+                height={600}
+                priority
+                sizes="(max-width: 768px) 100vw, 50vw"
               />
               <div className="hp-glow hp-glow--1" />
               <div className="hp-glow hp-glow--2" />
@@ -261,15 +266,21 @@ export default function Homepage() {
 
           <div className="hp-teachers__right">
             <div className="hp-teachers__img-stack">
-              <img
+              <Image
                 src="/assets/teacher-main.png"
                 alt="Teacher using EduCore"
                 className="hp-teachers__img-main"
+                width={600}
+                height={450}
+                sizes="(max-width: 768px) 100vw, 50vw"
               />
-              <img
+              <Image
                 src="/assets/teacher-group.png"
                 alt="Teacher group collaboration"
                 className="hp-teachers__img-secondary"
+                width={500}
+                height={280}
+                sizes="(max-width: 768px) 100vw, 50vw"
               />
               <div className="hp-teachers__badge">
                 <span className="hp-badge-pct">94%</span>
@@ -285,10 +296,13 @@ export default function Homepage() {
         <div className="hp-container hp-parents__inner">
           <div className="hp-parents__left">
             <div className="hp-parents__phone-wrap">
-              <img
+              <Image
                 src="/assets/parent_portal.png"
                 alt="Parent portal app"
                 className="hp-parents__phone"
+                width={400}
+                height={800}
+                sizes="(max-width: 768px) 100vw, 40vw"
               />
               <div className="hp-parents__phone-badge">
                 <span className="hp-parents__badge-icon">📊</span>

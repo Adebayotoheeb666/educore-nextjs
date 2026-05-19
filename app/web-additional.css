@@ -7,9 +7,6 @@
 .about-wrapper {
   color: #111827;
   background-color: #fff;
-  min-height: 100vh;
-  max-height: 100vh;
-  overflow-y: auto;
   padding-top: 80px;
 }
 .about-container {
@@ -19,7 +16,7 @@
 }
 .about-hero {
   position: relative;
-  height: 520px;
+  height: clamp(300px, 50vw, 520px);
   display: flex;
   align-items: center;
   overflow: hidden;
@@ -99,9 +96,15 @@
 }
 .excellence-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8rem;
+  grid-template-columns: 1fr;
+  gap: 4rem;
   align-items: center;
+}
+@media (min-width: 1025px) {
+  .excellence-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 8rem;
+  }
 }
 .excellence-image {
   position: relative;
@@ -195,8 +198,18 @@
 }
 .about-stats-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: 1fr;
   gap: 2.5rem;
+}
+@media (min-width: 600px) {
+  .about-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 1025px) {
+  .about-stats-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 .stat-card {
   background: white;
@@ -329,9 +342,6 @@
 .contact-wrapper {
   color: #111827;
   background-color: #fff;
-  min-height: 100vh;
-  max-height: 100vh;
-  overflow-y: auto;
   padding-top: 80px;
 }
 .contact-hero {
@@ -563,9 +573,6 @@
 .blog-wrapper {
   color: #111827;
   background-color: #f9fafb;
-  min-height: 100vh;
-  max-height: 100vh;
-  overflow-y: auto;
   padding-top: 80px;
 }
 .blog-container {
@@ -844,7 +851,7 @@
 }
 .bp-hero {
   position: relative;
-  height: 420px;
+  height: clamp(280px, 50vw, 420px);
   overflow: hidden;
   display: flex;
   align-items: flex-end;

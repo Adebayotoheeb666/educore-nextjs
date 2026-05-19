@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useAppSelector } from "@/redux/hooks";
 
 export default function AboutPage() {
@@ -15,7 +16,7 @@ export default function AboutPage() {
   }, []);
 
   return (
-    <div className="about-wrapper" style={{ fontFamily: "Manrope, sans-serif" }}>
+    <div className="about-wrapper">
       {/* ── NAVBAR ── */}
       <nav className={`web-navbar ${isScrolled ? "scrolled" : ""}`}>
         <div className="web-container web-navbar__inner">
@@ -65,7 +66,15 @@ export default function AboutPage() {
 
       {/* Hero Section */}
       <section className="about-hero">
-        <img src="/assets/teacher-main.png" alt="Classroom" className="about-hero-bg" />
+        <Image
+          src="/assets/teacher-main.png"
+          alt="Classroom"
+          className="about-hero-bg"
+          fill
+          priority
+          sizes="100vw"
+          style={{ objectFit: "cover" }}
+        />
         <div className="about-hero-overlay" />
         <div className="about-container">
           <div className="mission-badge">OUR MISSION</div>
@@ -91,7 +100,14 @@ export default function AboutPage() {
         <div className="about-container">
           <div className="excellence-grid">
             <div className="excellence-image">
-              <img src="/assets/teacher-group.png" alt="Team collaborating" className="main-img" />
+              <Image
+                src="/assets/teacher-group.png"
+                alt="Team collaborating"
+                className="main-img"
+                width={600}
+                height={450}
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
               <div className="journey-box">
                 <h4>2022</h4>
                 <p>The year our journey to redefine school management began.</p>
