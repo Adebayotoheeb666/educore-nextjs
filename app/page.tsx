@@ -325,7 +325,7 @@ export default function Homepage() {
       </section>
 
       {/* ── 5.5 NIGERIAN DESIGN SECTION ── */}
-      <section className="hp-nigeria" style={{ padding: "9rem 0", background: "#fff" }}>
+      <section className="hp-nigeria">
         <div className="hp-container">
           <div className="hp-section-head">
             <span className="hp-badge">LOCALLY OPTIMIZED</span>
@@ -333,26 +333,26 @@ export default function Homepage() {
             <p>EduCore AI is not a generic platform — it's built from the ground up for our unique educational environment.</p>
           </div>
 
-          <div className="hp-nigeria__grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "3rem", marginTop: "4rem" }}>
+          <div className="hp-nigeria__grid">
             <div className="hp-nigeria__item">
-              <div style={{ fontSize: "3rem", marginBottom: "1.5rem" }}>🔌</div>
-              <h4 style={{ fontSize: "1.8rem", fontWeight: 700, marginBottom: "1rem" }}>Offline-First Design</h4>
-              <p style={{ fontSize: "1.45rem", color: "#6b7280", lineHeight: 1.6 }}>Handle frequent power outages and unreliable internet without data loss. Syncs automatically when back online.</p>
+              <div className="hp-nigeria__icon">🔌</div>
+              <h4>Offline-First Design</h4>
+              <p>Handle frequent power outages and unreliable internet without data loss. Syncs automatically when back online.</p>
             </div>
             <div className="hp-nigeria__item">
-              <div style={{ fontSize: "3rem", marginBottom: "1.5rem" }}>📡</div>
-              <h4 style={{ fontSize: "1.8rem", fontWeight: 700, marginBottom: "1rem" }}>Low-Bandwidth Mode</h4>
-              <p style={{ fontSize: "1.45rem", color: "#6b7280", lineHeight: 1.6 }}>Optimized to run smoothly even on slow 3G connections common across many states.</p>
+              <div className="hp-nigeria__icon">📡</div>
+              <h4>Low-Bandwidth Mode</h4>
+              <p>Optimized to run smoothly even on slow 3G connections common across many states.</p>
             </div>
             <div className="hp-nigeria__item">
-              <div style={{ fontSize: "3rem", marginBottom: "1.5rem" }}>💰</div>
-              <h4 style={{ fontSize: "1.8rem", fontWeight: 700, marginBottom: "1rem" }}>Installment Fee Tracking</h4>
-              <p style={{ fontSize: "1.45rem", color: "#6b7280", lineHeight: 1.6 }}>Manage the reality of partial payments with automated balance tracking and reminders.</p>
+              <div className="hp-nigeria__icon">💰</div>
+              <h4>Installment Fee Tracking</h4>
+              <p>Manage the reality of partial payments with automated balance tracking and reminders.</p>
             </div>
             <div className="hp-nigeria__item">
-              <div style={{ fontSize: "3rem", marginBottom: "1.5rem" }}>🇳🇬</div>
-              <h4 style={{ fontSize: "1.8rem", fontWeight: 700, marginBottom: "1rem" }}>Ministry Compliance</h4>
-              <p style={{ fontSize: "1.45rem", color: "#6b7280", lineHeight: 1.6 }}>Generate EMIS/NEMIS-compliant reports for State Ministries and Federal agencies in one click.</p>
+              <div className="hp-nigeria__icon">🇳🇬</div>
+              <h4>Ministry Compliance</h4>
+              <p>Generate EMIS/NEMIS-compliant reports for State Ministries and Federal agencies in one click.</p>
             </div>
           </div>
         </div>
