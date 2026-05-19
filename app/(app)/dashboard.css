@@ -44,13 +44,12 @@
   flex-direction: column;
   z-index: 1050;
   overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(0, 0, 0, 0.1) transparent;
+  scrollbar-width: none;
   transition: transform 0.3s ease;
 }
 
-.sidebar-premium::-webkit-scrollbar { width: 6px; }
-.sidebar-premium::-webkit-scrollbar-thumb { background-color: rgba(0,0,0,0.1); border-radius: 10px; }
+.sidebar-premium::-webkit-scrollbar { display: none; }
+.sidebar-premium::-webkit-scrollbar-thumb { display: none; }
 
 .sidebar-logo-area {
   padding: 2.4rem 2.5rem;
