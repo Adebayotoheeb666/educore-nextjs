@@ -281,7 +281,7 @@
 /* ─── Main Content ─── */
 .dashboard-main {
   flex: 1;
-  padding: 2rem 1rem;
+  padding: 1.5rem 2rem;
   background: var(--bg-main);
   padding-left: 260px;
   min-height: calc(100vh - 70px);
@@ -302,7 +302,7 @@
 .stats-grid-dashboard {
   display: grid;
   gap: 2rem;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 }
 .stats-grid-dashboard-8 { grid-template-columns: repeat(4, 1fr); }
 .stats-grid-dashboard-3 { grid-template-columns: repeat(3, 1fr); }
@@ -342,7 +342,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .dashboard-welcome h1 {
@@ -785,7 +785,7 @@
   .sidebar-close-btn { display: block; }
   .sidebar-backdrop { display: block; }
   .hamburger-btn { display: flex; }
-  .dashboard-main { padding: 2rem 1.5rem; }
+  .dashboard-main { padding: 1.5rem 1.5rem; }
   .topbar-premium { padding: 0 1.5rem; }
   .stats-grid-dashboard-8 { grid-template-columns: repeat(2, 1fr); }
   .stats-grid-dashboard-3 { grid-template-columns: repeat(2, 1fr); }
