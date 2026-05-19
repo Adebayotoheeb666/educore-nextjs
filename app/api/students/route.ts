@@ -1,0 +1,82 @@
+import { NextRequest, NextResponse } from "next/server";
+import { query, execute } from "@/lib/db/turso";
+import { withAuth, type AuthContext } from "@/lib/middleware/auth";
+import { badRequest, created, ok, conflict, serverError } from "@/lib/utils/response";
+import { hashPassword } from "@/lib/utils/password";
+import { generateId } from "@/lib/utils/id";
+
+const ADMIN_ROLES = ["principal", "vp_admin", "admin_staff", "school_owner"];
+
+// GET /api/students
+export const GET = withAuth(async (_req: NextRequest, { school }: AuthContext): Promise<NextResponse> => {
+  try {
+    if (!school) return badRequest("School context required");
+    const students = await query(
+      `SELECT u.id, u.name, u.first_name, u.last_name, u.email, u.phone, u.avatar,
+              u.admission_no, u.dob, u.gender, u.parent_phone, u.is_active,
+              u.created_at, u.updated_at,
+              c.id as class_id, c.name as class_name, c.section as class_section, c.level as class_level
+       FROM users u
+       LEFT JOIN classes c ON c.school_id = u.school_id
+         AND EXISTS (
+           SELECT 1 FROM attendance a WHERE a.student_id = u.id AND a.class_id = c.id LIMIT 1
+         )
+       WHERE u.school_id = ? AND u.role = 'student'
+       ORDER BY u.name`,
+      [school.id]
+    );
+    return ok(students);
+  } catch (err) {
+    return serverError(err);
+  }
+});
+
+// POST /api/students
+export const POST = withAuth(
+  async (req: NextRequest, { school }: AuthContext): Promise<NextResponse> => {
+    try {
+      if (!school) return badRequest("School context required");
+      const { firstName, lastName, email, dob, gender, classId, parentPhone, parentId, avatar } = await req.json();
+
+      if (!firstName || !lastName || !email) {
+        return badRequest("First name, last name, and email are required");
+      }
+
+      const normalizedEmail = String(email).toLowerCase().trim();
+      const [existing] = await query("SELECT id FROM users WHERE email = ?", [normalizedEmail]);
+      if (existing) return conflict("Email already registered");
+
+      const year = new Date().getFullYear();
+      const [countRow] = await query<{ count: number }>(
+        "SELECT COUNT(*) as count FROM users WHERE school_id = ? AND role = 'student'",
+        [school.id]
+      );
+      const count = countRow?.count ?? 0;
+      const admissionNo = `SC-${year}-${String(count + 1).padStart(4, "0")}`;
+      const defaultPassword = `EduCore@${year}`;
+
+      const studentId = generateId();
+      const hashed = await hashPassword(defaultPassword);
+      await execute(
+        `INSERT INTO users (id, name, first_name, last_name, email, password, role, school_id, admission_no, dob, gender, parent_phone, avatar, is_active, created_at, updated_at)
+         VALUES (?, ?, ?, ?, ?, ?, 'student', ?, ?, ?, ?, ?, ?, 1, datetime('now'), datetime('now'))`,
+        [studentId, `${firstName} ${lastName}`, firstName, lastName, normalizedEmail, hashed, school.id,
+         admissionNo, dob || null, gender || null, parentPhone || null, avatar || null]
+      );
+
+      // Link parent if provided
+      if (parentId) {
+        const relId = generateId();
+        await execute(
+          `INSERT OR IGNORE INTO user_relationships (id, parent_id, child_id, created_at) VALUES (?, ?, ?, datetime('now'))`,
+          [relId, parentId, studentId]
+        );
+      }
+
+      return created({ studentId, admissionNo, defaultPassword });
+    } catch (err) {
+      return serverError(err);
+    }
+  },
+  ADMIN_ROLES
+);

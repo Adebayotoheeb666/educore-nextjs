@@ -1,0 +1,1122 @@
+[
+  {
+    "_id": "69fcb3668827bfc1edd01a0e",
+    "school": "69fcb2f84005bea0681d24cf",
+    "title": "Things Fall Apart",
+    "author": "Chinua Achebe",
+    "isbn": "978-0385474542",
+    "classLevel": [
+      "SS1",
+      "SS2",
+      "SS3"
+    ],
+    "quantity": 5,
+    "available": 3,
+    "createdAt": "2026-05-07T15:44:38.757Z",
+    "updatedAt": "2026-05-07T15:44:38.757Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb3668827bfc1edd01a10",
+    "school": "69fcb2f84005bea0681d24cf",
+    "title": "The Great Gatsby",
+    "author": "F. Scott Fitzgerald",
+    "isbn": "978-0743273565",
+    "classLevel": [
+      "SS1",
+      "SS2",
+      "SS3"
+    ],
+    "quantity": 6,
+    "available": 5,
+    "createdAt": "2026-05-07T15:44:38.764Z",
+    "updatedAt": "2026-05-07T15:44:38.764Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb3668827bfc1edd01a12",
+    "school": "69fcb2f84005bea0681d24cf",
+    "title": "Wuthering Heights",
+    "author": "Emily Brontë",
+    "isbn": "978-0199232383",
+    "classLevel": [
+      "SS2",
+      "SS3"
+    ],
+    "quantity": 8,
+    "available": 6,
+    "createdAt": "2026-05-07T15:44:38.766Z",
+    "updatedAt": "2026-05-07T15:44:38.766Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb3668827bfc1edd01a14",
+    "school": "69fcb2f84005bea0681d24cf",
+    "title": "Pride and Prejudice",
+    "author": "Jane Austen",
+    "isbn": "978-0141439518",
+    "classLevel": [
+      "SS2",
+      "SS3"
+    ],
+    "quantity": 6,
+    "available": 8,
+    "createdAt": "2026-05-07T15:44:38.769Z",
+    "updatedAt": "2026-05-07T15:44:38.769Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb3668827bfc1edd01a16",
+    "school": "69fcb2f84005bea0681d24cf",
+    "title": "One Man, One Matchet",
+    "author": "Tunde Fatunde",
+    "isbn": "978-1234567890",
+    "classLevel": [
+      "JSS3",
+      "SS1"
+    ],
+    "quantity": 8,
+    "available": 6,
+    "createdAt": "2026-05-07T15:44:38.773Z",
+    "updatedAt": "2026-05-07T15:44:38.773Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb3668827bfc1edd01a18",
+    "school": "69fcb2f84005bea0681d24cf",
+    "title": "Senior School Mathematics Vol. 1",
+    "author": "S.A Oluwasanmi",
+    "isbn": "978-0123456789",
+    "classLevel": [
+      "SS1",
+      "SS2",
+      "SS3"
+    ],
+    "quantity": 4,
+    "available": 1,
+    "createdAt": "2026-05-07T15:44:38.775Z",
+    "updatedAt": "2026-05-07T15:44:38.775Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb3668827bfc1edd01a1a",
+    "school": "69fcb2f84005bea0681d24cf",
+    "title": "Senior School Mathematics Vol. 2",
+    "author": "S.A Oluwasanmi",
+    "isbn": "978-0987654321",
+    "classLevel": [
+      "SS1",
+      "SS2",
+      "SS3"
+    ],
+    "quantity": 4,
+    "available": 1,
+    "createdAt": "2026-05-07T15:44:38.777Z",
+    "updatedAt": "2026-05-07T15:44:38.777Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb3668827bfc1edd01a1c",
+    "school": "69fcb2f84005bea0681d24cf",
+    "title": "Further Mathematics Textbook",
+    "author": "K. Adeniji",
+    "isbn": "978-1122334455",
+    "classLevel": [
+      "SS2",
+      "SS3"
+    ],
+    "quantity": 9,
+    "available": 6,
+    "createdAt": "2026-05-07T15:44:38.781Z",
+    "updatedAt": "2026-05-07T15:44:38.781Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb3668827bfc1edd01a1e",
+    "school": "69fcb2f84005bea0681d24cf",
+    "title": "Senior School Physics Vol. 1",
+    "author": "Anyakoha",
+    "isbn": "978-2233445566",
+    "classLevel": [
+      "SS1",
+      "SS2"
+    ],
+    "quantity": 7,
+    "available": 2,
+    "createdAt": "2026-05-07T15:44:38.783Z",
+    "updatedAt": "2026-05-07T15:44:38.783Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb3668827bfc1edd01a20",
+    "school": "69fcb2f84005bea0681d24cf",
+    "title": "Senior School Chemistry Vol. 1",
+    "author": "Ababio",
+    "isbn": "978-3344556677",
+    "classLevel": [
+      "SS1",
+      "SS2"
+    ],
+    "quantity": 3,
+    "available": 6,
+    "createdAt": "2026-05-07T15:44:38.785Z",
+    "updatedAt": "2026-05-07T15:44:38.785Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb3668827bfc1edd01a22",
+    "school": "69fcb2f84005bea0681d24cf",
+    "title": "Senior School Biology Vol. 1",
+    "author": "Madu",
+    "isbn": "978-4455667788",
+    "classLevel": [
+      "SS1",
+      "SS2"
+    ],
+    "quantity": 4,
+    "available": 1,
+    "createdAt": "2026-05-07T15:44:38.787Z",
+    "updatedAt": "2026-05-07T15:44:38.787Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb3668827bfc1edd01a24",
+    "school": "69fcb2f84005bea0681d24cf",
+    "title": "Government for Senior Secondary Schools",
+    "author": "Appadorai",
+    "isbn": "978-5566778899",
+    "classLevel": [
+      "SS1",
+      "SS2",
+      "SS3"
+    ],
+    "quantity": 9,
+    "available": 6,
+    "createdAt": "2026-05-07T15:44:38.790Z",
+    "updatedAt": "2026-05-07T15:44:38.790Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb3668827bfc1edd01a26",
+    "school": "69fcb2f84005bea0681d24cf",
+    "title": "Economics Textbook",
+    "author": "Samuelson",
+    "isbn": "978-6677889900",
+    "classLevel": [
+      "SS2",
+      "SS3"
+    ],
+    "quantity": 10,
+    "available": 7,
+    "createdAt": "2026-05-07T15:44:38.793Z",
+    "updatedAt": "2026-05-07T15:44:38.793Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb3668827bfc1edd01a28",
+    "school": "69fcb2f84005bea0681d24cf",
+    "title": "Geography Workbook",
+    "author": "Eze",
+    "isbn": "978-7788990011",
+    "classLevel": [
+      "SS1",
+      "SS2"
+    ],
+    "quantity": 9,
+    "available": 4,
+    "createdAt": "2026-05-07T15:44:38.797Z",
+    "updatedAt": "2026-05-07T15:44:38.797Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb3668827bfc1edd01a2a",
+    "school": "69fcb2f84005bea0681d24cf",
+    "title": "The Oxford English Dictionary",
+    "author": "Oxford University",
+    "isbn": "978-8899001122",
+    "classLevel": [
+      "SS1",
+      "SS2",
+      "SS3"
+    ],
+    "quantity": 10,
+    "available": 2,
+    "createdAt": "2026-05-07T15:44:38.803Z",
+    "updatedAt": "2026-05-07T15:44:38.803Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb3668827bfc1edd01a2c",
+    "school": "69fcb2f84005bea0681d24cf",
+    "title": "Collins Dictionary",
+    "author": "Collins",
+    "isbn": "978-9900112233",
+    "classLevel": [
+      "JSS1",
+      "JSS2",
+      "JSS3"
+    ],
+    "quantity": 7,
+    "available": 2,
+    "createdAt": "2026-05-07T15:44:38.807Z",
+    "updatedAt": "2026-05-07T15:44:38.807Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb3668827bfc1edd01a2e",
+    "school": "69fcb2f84005bea0681d24cf",
+    "title": "Mathematical Handbook",
+    "author": "Backhouse",
+    "isbn": "978-0011223344",
+    "classLevel": [
+      "SS1",
+      "SS2",
+      "SS3"
+    ],
+    "quantity": 8,
+    "available": 2,
+    "createdAt": "2026-05-07T15:44:38.810Z",
+    "updatedAt": "2026-05-07T15:44:38.810Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd04a3d",
+    "school": "69fcb3668827bfc1edd01a32",
+    "title": "Things Fall Apart",
+    "author": "Chinua Achebe",
+    "isbn": "978-0385474542",
+    "classLevel": [
+      "SS1",
+      "SS2",
+      "SS3"
+    ],
+    "quantity": 5,
+    "available": 8,
+    "createdAt": "2026-05-07T15:44:42.085Z",
+    "updatedAt": "2026-05-07T15:44:42.085Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd04a3f",
+    "school": "69fcb3668827bfc1edd01a32",
+    "title": "The Great Gatsby",
+    "author": "F. Scott Fitzgerald",
+    "isbn": "978-0743273565",
+    "classLevel": [
+      "SS1",
+      "SS2",
+      "SS3"
+    ],
+    "quantity": 9,
+    "available": 5,
+    "createdAt": "2026-05-07T15:44:42.087Z",
+    "updatedAt": "2026-05-07T15:44:42.087Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd04a41",
+    "school": "69fcb3668827bfc1edd01a32",
+    "title": "Wuthering Heights",
+    "author": "Emily Brontë",
+    "isbn": "978-0199232383",
+    "classLevel": [
+      "SS2",
+      "SS3"
+    ],
+    "quantity": 6,
+    "available": 4,
+    "createdAt": "2026-05-07T15:44:42.090Z",
+    "updatedAt": "2026-05-07T15:44:42.090Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd04a43",
+    "school": "69fcb3668827bfc1edd01a32",
+    "title": "Pride and Prejudice",
+    "author": "Jane Austen",
+    "isbn": "978-0141439518",
+    "classLevel": [
+      "SS2",
+      "SS3"
+    ],
+    "quantity": 5,
+    "available": 6,
+    "createdAt": "2026-05-07T15:44:42.092Z",
+    "updatedAt": "2026-05-07T15:44:42.092Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd04a45",
+    "school": "69fcb3668827bfc1edd01a32",
+    "title": "One Man, One Matchet",
+    "author": "Tunde Fatunde",
+    "isbn": "978-1234567890",
+    "classLevel": [
+      "JSS3",
+      "SS1"
+    ],
+    "quantity": 9,
+    "available": 4,
+    "createdAt": "2026-05-07T15:44:42.094Z",
+    "updatedAt": "2026-05-07T15:44:42.094Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd04a47",
+    "school": "69fcb3668827bfc1edd01a32",
+    "title": "Senior School Mathematics Vol. 1",
+    "author": "S.A Oluwasanmi",
+    "isbn": "978-0123456789",
+    "classLevel": [
+      "SS1",
+      "SS2",
+      "SS3"
+    ],
+    "quantity": 5,
+    "available": 6,
+    "createdAt": "2026-05-07T15:44:42.097Z",
+    "updatedAt": "2026-05-07T15:44:42.097Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd04a49",
+    "school": "69fcb3668827bfc1edd01a32",
+    "title": "Senior School Mathematics Vol. 2",
+    "author": "S.A Oluwasanmi",
+    "isbn": "978-0987654321",
+    "classLevel": [
+      "SS1",
+      "SS2",
+      "SS3"
+    ],
+    "quantity": 8,
+    "available": 2,
+    "createdAt": "2026-05-07T15:44:42.100Z",
+    "updatedAt": "2026-05-07T15:44:42.100Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd04a4b",
+    "school": "69fcb3668827bfc1edd01a32",
+    "title": "Further Mathematics Textbook",
+    "author": "K. Adeniji",
+    "isbn": "978-1122334455",
+    "classLevel": [
+      "SS2",
+      "SS3"
+    ],
+    "quantity": 10,
+    "available": 4,
+    "createdAt": "2026-05-07T15:44:42.102Z",
+    "updatedAt": "2026-05-07T15:44:42.102Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd04a4d",
+    "school": "69fcb3668827bfc1edd01a32",
+    "title": "Senior School Physics Vol. 1",
+    "author": "Anyakoha",
+    "isbn": "978-2233445566",
+    "classLevel": [
+      "SS1",
+      "SS2"
+    ],
+    "quantity": 5,
+    "available": 5,
+    "createdAt": "2026-05-07T15:44:42.105Z",
+    "updatedAt": "2026-05-07T15:44:42.105Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd04a4f",
+    "school": "69fcb3668827bfc1edd01a32",
+    "title": "Senior School Chemistry Vol. 1",
+    "author": "Ababio",
+    "isbn": "978-3344556677",
+    "classLevel": [
+      "SS1",
+      "SS2"
+    ],
+    "quantity": 7,
+    "available": 7,
+    "createdAt": "2026-05-07T15:44:42.107Z",
+    "updatedAt": "2026-05-07T15:44:42.107Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd04a51",
+    "school": "69fcb3668827bfc1edd01a32",
+    "title": "Senior School Biology Vol. 1",
+    "author": "Madu",
+    "isbn": "978-4455667788",
+    "classLevel": [
+      "SS1",
+      "SS2"
+    ],
+    "quantity": 3,
+    "available": 3,
+    "createdAt": "2026-05-07T15:44:42.109Z",
+    "updatedAt": "2026-05-07T15:44:42.109Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd04a53",
+    "school": "69fcb3668827bfc1edd01a32",
+    "title": "Government for Senior Secondary Schools",
+    "author": "Appadorai",
+    "isbn": "978-5566778899",
+    "classLevel": [
+      "SS1",
+      "SS2",
+      "SS3"
+    ],
+    "quantity": 7,
+    "available": 2,
+    "createdAt": "2026-05-07T15:44:42.112Z",
+    "updatedAt": "2026-05-07T15:44:42.112Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd04a55",
+    "school": "69fcb3668827bfc1edd01a32",
+    "title": "Economics Textbook",
+    "author": "Samuelson",
+    "isbn": "978-6677889900",
+    "classLevel": [
+      "SS2",
+      "SS3"
+    ],
+    "quantity": 6,
+    "available": 5,
+    "createdAt": "2026-05-07T15:44:42.115Z",
+    "updatedAt": "2026-05-07T15:44:42.115Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd04a57",
+    "school": "69fcb3668827bfc1edd01a32",
+    "title": "Geography Workbook",
+    "author": "Eze",
+    "isbn": "978-7788990011",
+    "classLevel": [
+      "SS1",
+      "SS2"
+    ],
+    "quantity": 9,
+    "available": 1,
+    "createdAt": "2026-05-07T15:44:42.117Z",
+    "updatedAt": "2026-05-07T15:44:42.117Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd04a59",
+    "school": "69fcb3668827bfc1edd01a32",
+    "title": "The Oxford English Dictionary",
+    "author": "Oxford University",
+    "isbn": "978-8899001122",
+    "classLevel": [
+      "SS1",
+      "SS2",
+      "SS3"
+    ],
+    "quantity": 4,
+    "available": 2,
+    "createdAt": "2026-05-07T15:44:42.119Z",
+    "updatedAt": "2026-05-07T15:44:42.119Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd04a5b",
+    "school": "69fcb3668827bfc1edd01a32",
+    "title": "Collins Dictionary",
+    "author": "Collins",
+    "isbn": "978-9900112233",
+    "classLevel": [
+      "JSS1",
+      "JSS2",
+      "JSS3"
+    ],
+    "quantity": 8,
+    "available": 4,
+    "createdAt": "2026-05-07T15:44:42.122Z",
+    "updatedAt": "2026-05-07T15:44:42.122Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd04a5d",
+    "school": "69fcb3668827bfc1edd01a32",
+    "title": "Mathematical Handbook",
+    "author": "Backhouse",
+    "isbn": "978-0011223344",
+    "classLevel": [
+      "SS1",
+      "SS2",
+      "SS3"
+    ],
+    "quantity": 7,
+    "available": 4,
+    "createdAt": "2026-05-07T15:44:42.125Z",
+    "updatedAt": "2026-05-07T15:44:42.125Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36c8827bfc1edd07678",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "title": "Things Fall Apart",
+    "author": "Chinua Achebe",
+    "isbn": "978-0385474542",
+    "classLevel": [
+      "SS1",
+      "SS2",
+      "SS3"
+    ],
+    "quantity": 3,
+    "available": 1,
+    "createdAt": "2026-05-07T15:44:44.916Z",
+    "updatedAt": "2026-05-07T15:44:44.916Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36c8827bfc1edd0767a",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "title": "The Great Gatsby",
+    "author": "F. Scott Fitzgerald",
+    "isbn": "978-0743273565",
+    "classLevel": [
+      "SS1",
+      "SS2",
+      "SS3"
+    ],
+    "quantity": 7,
+    "available": 7,
+    "createdAt": "2026-05-07T15:44:44.918Z",
+    "updatedAt": "2026-05-07T15:44:44.918Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36c8827bfc1edd0767c",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "title": "Wuthering Heights",
+    "author": "Emily Brontë",
+    "isbn": "978-0199232383",
+    "classLevel": [
+      "SS2",
+      "SS3"
+    ],
+    "quantity": 7,
+    "available": 7,
+    "createdAt": "2026-05-07T15:44:44.920Z",
+    "updatedAt": "2026-05-07T15:44:44.920Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36c8827bfc1edd0767e",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "title": "Pride and Prejudice",
+    "author": "Jane Austen",
+    "isbn": "978-0141439518",
+    "classLevel": [
+      "SS2",
+      "SS3"
+    ],
+    "quantity": 5,
+    "available": 1,
+    "createdAt": "2026-05-07T15:44:44.922Z",
+    "updatedAt": "2026-05-07T15:44:44.922Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36c8827bfc1edd07680",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "title": "One Man, One Matchet",
+    "author": "Tunde Fatunde",
+    "isbn": "978-1234567890",
+    "classLevel": [
+      "JSS3",
+      "SS1"
+    ],
+    "quantity": 4,
+    "available": 8,
+    "createdAt": "2026-05-07T15:44:44.923Z",
+    "updatedAt": "2026-05-07T15:44:44.923Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36c8827bfc1edd07682",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "title": "Senior School Mathematics Vol. 1",
+    "author": "S.A Oluwasanmi",
+    "isbn": "978-0123456789",
+    "classLevel": [
+      "SS1",
+      "SS2",
+      "SS3"
+    ],
+    "quantity": 3,
+    "available": 4,
+    "createdAt": "2026-05-07T15:44:44.926Z",
+    "updatedAt": "2026-05-07T15:44:44.926Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36c8827bfc1edd07684",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "title": "Senior School Mathematics Vol. 2",
+    "author": "S.A Oluwasanmi",
+    "isbn": "978-0987654321",
+    "classLevel": [
+      "SS1",
+      "SS2",
+      "SS3"
+    ],
+    "quantity": 8,
+    "available": 6,
+    "createdAt": "2026-05-07T15:44:44.928Z",
+    "updatedAt": "2026-05-07T15:44:44.928Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36c8827bfc1edd07686",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "title": "Further Mathematics Textbook",
+    "author": "K. Adeniji",
+    "isbn": "978-1122334455",
+    "classLevel": [
+      "SS2",
+      "SS3"
+    ],
+    "quantity": 6,
+    "available": 8,
+    "createdAt": "2026-05-07T15:44:44.932Z",
+    "updatedAt": "2026-05-07T15:44:44.932Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36c8827bfc1edd07688",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "title": "Senior School Physics Vol. 1",
+    "author": "Anyakoha",
+    "isbn": "978-2233445566",
+    "classLevel": [
+      "SS1",
+      "SS2"
+    ],
+    "quantity": 10,
+    "available": 3,
+    "createdAt": "2026-05-07T15:44:44.934Z",
+    "updatedAt": "2026-05-07T15:44:44.934Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36c8827bfc1edd0768a",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "title": "Senior School Chemistry Vol. 1",
+    "author": "Ababio",
+    "isbn": "978-3344556677",
+    "classLevel": [
+      "SS1",
+      "SS2"
+    ],
+    "quantity": 6,
+    "available": 8,
+    "createdAt": "2026-05-07T15:44:44.936Z",
+    "updatedAt": "2026-05-07T15:44:44.936Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36c8827bfc1edd0768c",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "title": "Senior School Biology Vol. 1",
+    "author": "Madu",
+    "isbn": "978-4455667788",
+    "classLevel": [
+      "SS1",
+      "SS2"
+    ],
+    "quantity": 4,
+    "available": 8,
+    "createdAt": "2026-05-07T15:44:44.937Z",
+    "updatedAt": "2026-05-07T15:44:44.937Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36c8827bfc1edd0768e",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "title": "Government for Senior Secondary Schools",
+    "author": "Appadorai",
+    "isbn": "978-5566778899",
+    "classLevel": [
+      "SS1",
+      "SS2",
+      "SS3"
+    ],
+    "quantity": 8,
+    "available": 8,
+    "createdAt": "2026-05-07T15:44:44.939Z",
+    "updatedAt": "2026-05-07T15:44:44.939Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36c8827bfc1edd07690",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "title": "Economics Textbook",
+    "author": "Samuelson",
+    "isbn": "978-6677889900",
+    "classLevel": [
+      "SS2",
+      "SS3"
+    ],
+    "quantity": 6,
+    "available": 4,
+    "createdAt": "2026-05-07T15:44:44.940Z",
+    "updatedAt": "2026-05-07T15:44:44.940Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36c8827bfc1edd07692",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "title": "Geography Workbook",
+    "author": "Eze",
+    "isbn": "978-7788990011",
+    "classLevel": [
+      "SS1",
+      "SS2"
+    ],
+    "quantity": 5,
+    "available": 1,
+    "createdAt": "2026-05-07T15:44:44.942Z",
+    "updatedAt": "2026-05-07T15:44:44.942Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36c8827bfc1edd07694",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "title": "The Oxford English Dictionary",
+    "author": "Oxford University",
+    "isbn": "978-8899001122",
+    "classLevel": [
+      "SS1",
+      "SS2",
+      "SS3"
+    ],
+    "quantity": 8,
+    "available": 4,
+    "createdAt": "2026-05-07T15:44:44.944Z",
+    "updatedAt": "2026-05-07T15:44:44.944Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36c8827bfc1edd07696",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "title": "Collins Dictionary",
+    "author": "Collins",
+    "isbn": "978-9900112233",
+    "classLevel": [
+      "JSS1",
+      "JSS2",
+      "JSS3"
+    ],
+    "quantity": 8,
+    "available": 3,
+    "createdAt": "2026-05-07T15:44:44.945Z",
+    "updatedAt": "2026-05-07T15:44:44.945Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36c8827bfc1edd07698",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "title": "Mathematical Handbook",
+    "author": "Backhouse",
+    "isbn": "978-0011223344",
+    "classLevel": [
+      "SS1",
+      "SS2",
+      "SS3"
+    ],
+    "quantity": 5,
+    "available": 3,
+    "createdAt": "2026-05-07T15:44:44.948Z",
+    "updatedAt": "2026-05-07T15:44:44.948Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb4f695f689387092860e",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "title": "Things Fall Apart",
+    "author": "Chinua Achebe",
+    "isbn": "978-0385474542",
+    "classLevel": [
+      "SS1",
+      "SS2",
+      "SS3"
+    ],
+    "quantity": 10,
+    "available": 6,
+    "createdAt": "2026-05-07T15:51:18.044Z",
+    "updatedAt": "2026-05-07T15:51:18.044Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb4f695f6893870928610",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "title": "The Great Gatsby",
+    "author": "F. Scott Fitzgerald",
+    "isbn": "978-0743273565",
+    "classLevel": [
+      "SS1",
+      "SS2",
+      "SS3"
+    ],
+    "quantity": 10,
+    "available": 2,
+    "createdAt": "2026-05-07T15:51:18.049Z",
+    "updatedAt": "2026-05-07T15:51:18.049Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb4f695f6893870928612",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "title": "Wuthering Heights",
+    "author": "Emily Brontë",
+    "isbn": "978-0199232383",
+    "classLevel": [
+      "SS2",
+      "SS3"
+    ],
+    "quantity": 10,
+    "available": 8,
+    "createdAt": "2026-05-07T15:51:18.052Z",
+    "updatedAt": "2026-05-07T15:51:18.052Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb4f695f6893870928614",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "title": "Pride and Prejudice",
+    "author": "Jane Austen",
+    "isbn": "978-0141439518",
+    "classLevel": [
+      "SS2",
+      "SS3"
+    ],
+    "quantity": 7,
+    "available": 6,
+    "createdAt": "2026-05-07T15:51:18.055Z",
+    "updatedAt": "2026-05-07T15:51:18.055Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb4f695f6893870928616",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "title": "One Man, One Matchet",
+    "author": "Tunde Fatunde",
+    "isbn": "978-1234567890",
+    "classLevel": [
+      "JSS3",
+      "SS1"
+    ],
+    "quantity": 8,
+    "available": 2,
+    "createdAt": "2026-05-07T15:51:18.058Z",
+    "updatedAt": "2026-05-07T15:51:18.058Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb4f695f6893870928618",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "title": "Senior School Mathematics Vol. 1",
+    "author": "S.A Oluwasanmi",
+    "isbn": "978-0123456789",
+    "classLevel": [
+      "SS1",
+      "SS2",
+      "SS3"
+    ],
+    "quantity": 9,
+    "available": 5,
+    "createdAt": "2026-05-07T15:51:18.060Z",
+    "updatedAt": "2026-05-07T15:51:18.060Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb4f695f689387092861a",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "title": "Senior School Mathematics Vol. 2",
+    "author": "S.A Oluwasanmi",
+    "isbn": "978-0987654321",
+    "classLevel": [
+      "SS1",
+      "SS2",
+      "SS3"
+    ],
+    "quantity": 5,
+    "available": 8,
+    "createdAt": "2026-05-07T15:51:18.065Z",
+    "updatedAt": "2026-05-07T15:51:18.065Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb4f695f689387092861c",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "title": "Further Mathematics Textbook",
+    "author": "K. Adeniji",
+    "isbn": "978-1122334455",
+    "classLevel": [
+      "SS2",
+      "SS3"
+    ],
+    "quantity": 10,
+    "available": 1,
+    "createdAt": "2026-05-07T15:51:18.070Z",
+    "updatedAt": "2026-05-07T15:51:18.070Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb4f695f689387092861e",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "title": "Senior School Physics Vol. 1",
+    "author": "Anyakoha",
+    "isbn": "978-2233445566",
+    "classLevel": [
+      "SS1",
+      "SS2"
+    ],
+    "quantity": 10,
+    "available": 5,
+    "createdAt": "2026-05-07T15:51:18.074Z",
+    "updatedAt": "2026-05-07T15:51:18.074Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb4f695f6893870928620",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "title": "Senior School Chemistry Vol. 1",
+    "author": "Ababio",
+    "isbn": "978-3344556677",
+    "classLevel": [
+      "SS1",
+      "SS2"
+    ],
+    "quantity": 7,
+    "available": 7,
+    "createdAt": "2026-05-07T15:51:18.078Z",
+    "updatedAt": "2026-05-07T15:51:18.078Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb4f695f6893870928622",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "title": "Senior School Biology Vol. 1",
+    "author": "Madu",
+    "isbn": "978-4455667788",
+    "classLevel": [
+      "SS1",
+      "SS2"
+    ],
+    "quantity": 8,
+    "available": 2,
+    "createdAt": "2026-05-07T15:51:18.083Z",
+    "updatedAt": "2026-05-07T15:51:18.083Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb4f695f6893870928624",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "title": "Government for Senior Secondary Schools",
+    "author": "Appadorai",
+    "isbn": "978-5566778899",
+    "classLevel": [
+      "SS1",
+      "SS2",
+      "SS3"
+    ],
+    "quantity": 6,
+    "available": 5,
+    "createdAt": "2026-05-07T15:51:18.086Z",
+    "updatedAt": "2026-05-07T15:51:18.086Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb4f695f6893870928626",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "title": "Economics Textbook",
+    "author": "Samuelson",
+    "isbn": "978-6677889900",
+    "classLevel": [
+      "SS2",
+      "SS3"
+    ],
+    "quantity": 3,
+    "available": 1,
+    "createdAt": "2026-05-07T15:51:18.088Z",
+    "updatedAt": "2026-05-07T15:51:18.088Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb4f695f6893870928628",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "title": "Geography Workbook",
+    "author": "Eze",
+    "isbn": "978-7788990011",
+    "classLevel": [
+      "SS1",
+      "SS2"
+    ],
+    "quantity": 7,
+    "available": 5,
+    "createdAt": "2026-05-07T15:51:18.091Z",
+    "updatedAt": "2026-05-07T15:51:18.091Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb4f695f689387092862a",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "title": "The Oxford English Dictionary",
+    "author": "Oxford University",
+    "isbn": "978-8899001122",
+    "classLevel": [
+      "SS1",
+      "SS2",
+      "SS3"
+    ],
+    "quantity": 6,
+    "available": 2,
+    "createdAt": "2026-05-07T15:51:18.095Z",
+    "updatedAt": "2026-05-07T15:51:18.095Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb4f695f689387092862c",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "title": "Collins Dictionary",
+    "author": "Collins",
+    "isbn": "978-9900112233",
+    "classLevel": [
+      "JSS1",
+      "JSS2",
+      "JSS3"
+    ],
+    "quantity": 7,
+    "available": 7,
+    "createdAt": "2026-05-07T15:51:18.100Z",
+    "updatedAt": "2026-05-07T15:51:18.100Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb4f695f689387092862e",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "title": "Mathematical Handbook",
+    "author": "Backhouse",
+    "isbn": "978-0011223344",
+    "classLevel": [
+      "SS1",
+      "SS2",
+      "SS3"
+    ],
+    "quantity": 10,
+    "available": 5,
+    "createdAt": "2026-05-07T15:51:18.103Z",
+    "updatedAt": "2026-05-07T15:51:18.103Z",
+    "__v": 0
+  }
+]

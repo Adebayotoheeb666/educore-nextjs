@@ -1,0 +1,71 @@
+import { NextRequest, NextResponse } from "next/server";
+import { queryOne, execute } from "@/lib/db/turso";
+import { comparePassword, hashPassword } from "@/lib/utils/password";
+import { generateToken } from "@/lib/utils/jwt";
+import { setAuthCookie } from "@/lib/utils/cookies";
+import { badRequest, serverError, unauthorized } from "@/lib/utils/response";
+import { withRateLimit } from "@/lib/middleware/rateLimit";
+
+interface UserRow {
+  id: string;
+  name: string;
+  first_name: string | null;
+  last_name: string | null;
+  email: string;
+  password: string;
+  role: string;
+  avatar: string | null;
+  is_active: number;
+}
+
+// 10 attempts per minute per IP
+export const POST = withRateLimit(
+  { prefix: "login", limit: 10, windowSecs: 60 },
+  async function POST(req: NextRequest): Promise<NextResponse> {
+  try {
+    const { email, password } = await req.json();
+
+    if (!email || !password) {
+      return badRequest("Please add email and password");
+    }
+
+    const normalizedEmail = String(email).toLowerCase().trim();
+    const user = await queryOne<UserRow>(
+      "SELECT id, name, first_name, last_name, email, password, role, avatar, is_active FROM users WHERE email = ?",
+      [normalizedEmail]
+    );
+
+    if (!user) return badRequest("Invalid email or password");
+
+    let isMatched = false;
+    if (user.password && user.password.startsWith("$2")) {
+      isMatched = await comparePassword(password, user.password);
+    } else {
+      // Legacy plain-text password — hash it on first match
+      isMatched = user.password === password;
+      if (isMatched) {
+        const hashed = await hashPassword(password);
+        await execute("UPDATE users SET password = ? WHERE id = ?", [hashed, user.id]);
+      }
+    }
+
+    if (!isMatched) return badRequest("Invalid email or password");
+    if (!user.is_active) return unauthorized("Account deactivated");
+
+    const token = generateToken(user.id);
+    const response = NextResponse.json({
+      _id: user.id,
+      name: user.name,
+      firstName: user.first_name,
+      lastName: user.last_name,
+      email: user.email,
+      role: user.role,
+      avatar: user.avatar,
+      token,
+    });
+
+    return setAuthCookie(response, token);
+  } catch (err) {
+    return serverError(err);
+  }
+});

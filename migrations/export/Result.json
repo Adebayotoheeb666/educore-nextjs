@@ -1,0 +1,5202 @@
+[
+  {
+    "_id": "69fcb3668827bfc1edd01944",
+    "school": "69fcb2f84005bea0681d24cf",
+    "student": "69fcb2f84005bea0681d2542",
+    "class": "69fcb2f84005bea0681d2540",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb2f84005bea0681d24e1",
+        "caScore": 20,
+        "examScore": 41,
+        "totalScore": 61,
+        "grade": "B",
+        "_id": "69fcb3668827bfc1edd01945"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e2",
+        "caScore": 11,
+        "examScore": 45,
+        "totalScore": 56,
+        "grade": "C",
+        "_id": "69fcb3668827bfc1edd01946"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e3",
+        "caScore": 14,
+        "examScore": 41,
+        "totalScore": 55,
+        "grade": "C",
+        "_id": "69fcb3668827bfc1edd01947"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e4",
+        "caScore": 13,
+        "examScore": 67,
+        "totalScore": 80,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd01948"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24f3",
+        "caScore": 11,
+        "examScore": 69,
+        "totalScore": 80,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd01949"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24f6",
+        "caScore": 19,
+        "examScore": 52,
+        "totalScore": 71,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd0194a"
+      }
+    ],
+    "overallPercentage": 67,
+    "positionInClass": 4,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:38.608Z",
+    "updatedAt": "2026-05-07T15:44:38.608Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb3668827bfc1edd0194c",
+    "school": "69fcb2f84005bea0681d24cf",
+    "student": "69fcb2f84005bea0681d2544",
+    "class": "69fcb2f84005bea0681d2540",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb2f84005bea0681d24e1",
+        "caScore": 9,
+        "examScore": 73,
+        "totalScore": 82,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd0194d"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e2",
+        "caScore": 8,
+        "examScore": 47,
+        "totalScore": 55,
+        "grade": "C",
+        "_id": "69fcb3668827bfc1edd0194e"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e3",
+        "caScore": 10,
+        "examScore": 34,
+        "totalScore": 44,
+        "grade": "D",
+        "_id": "69fcb3668827bfc1edd0194f"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e4",
+        "caScore": 17,
+        "examScore": 80,
+        "totalScore": 97,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd01950"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24f3",
+        "caScore": 16,
+        "examScore": 45,
+        "totalScore": 61,
+        "grade": "B",
+        "_id": "69fcb3668827bfc1edd01951"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24f6",
+        "caScore": 18,
+        "examScore": 79,
+        "totalScore": 97,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd01952"
+      }
+    ],
+    "overallPercentage": 73,
+    "positionInClass": 8,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:38.621Z",
+    "updatedAt": "2026-05-07T15:44:38.621Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb3668827bfc1edd01954",
+    "school": "69fcb2f84005bea0681d24cf",
+    "student": "69fcb2f84005bea0681d2546",
+    "class": "69fcb2f84005bea0681d2540",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb2f84005bea0681d24e1",
+        "caScore": 15,
+        "examScore": 53,
+        "totalScore": 68,
+        "grade": "B",
+        "_id": "69fcb3668827bfc1edd01955"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e2",
+        "caScore": 14,
+        "examScore": 49,
+        "totalScore": 63,
+        "grade": "B",
+        "_id": "69fcb3668827bfc1edd01956"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e3",
+        "caScore": 17,
+        "examScore": 31,
+        "totalScore": 48,
+        "grade": "D",
+        "_id": "69fcb3668827bfc1edd01957"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e4",
+        "caScore": 19,
+        "examScore": 53,
+        "totalScore": 72,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd01958"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24f3",
+        "caScore": 20,
+        "examScore": 75,
+        "totalScore": 95,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd01959"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24f6",
+        "caScore": 16,
+        "examScore": 31,
+        "totalScore": 47,
+        "grade": "D",
+        "_id": "69fcb3668827bfc1edd0195a"
+      }
+    ],
+    "overallPercentage": 66,
+    "positionInClass": 15,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:38.624Z",
+    "updatedAt": "2026-05-07T15:44:38.624Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb3668827bfc1edd0195c",
+    "school": "69fcb2f84005bea0681d24cf",
+    "student": "69fcb2f84005bea0681d2548",
+    "class": "69fcb2f84005bea0681d2540",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb2f84005bea0681d24e1",
+        "caScore": 20,
+        "examScore": 52,
+        "totalScore": 72,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd0195d"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e2",
+        "caScore": 8,
+        "examScore": 35,
+        "totalScore": 43,
+        "grade": "D",
+        "_id": "69fcb3668827bfc1edd0195e"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e3",
+        "caScore": 18,
+        "examScore": 62,
+        "totalScore": 80,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd0195f"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e4",
+        "caScore": 15,
+        "examScore": 68,
+        "totalScore": 83,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd01960"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24f3",
+        "caScore": 8,
+        "examScore": 40,
+        "totalScore": 48,
+        "grade": "D",
+        "_id": "69fcb3668827bfc1edd01961"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24f6",
+        "caScore": 19,
+        "examScore": 40,
+        "totalScore": 59,
+        "grade": "C",
+        "_id": "69fcb3668827bfc1edd01962"
+      }
+    ],
+    "overallPercentage": 64,
+    "positionInClass": 9,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:38.629Z",
+    "updatedAt": "2026-05-07T15:44:38.629Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb3668827bfc1edd01964",
+    "school": "69fcb2f84005bea0681d24cf",
+    "student": "69fcb2f84005bea0681d254a",
+    "class": "69fcb2f84005bea0681d2540",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb2f84005bea0681d24e1",
+        "caScore": 20,
+        "examScore": 62,
+        "totalScore": 82,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd01965"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e2",
+        "caScore": 9,
+        "examScore": 49,
+        "totalScore": 58,
+        "grade": "C",
+        "_id": "69fcb3668827bfc1edd01966"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e3",
+        "caScore": 8,
+        "examScore": 38,
+        "totalScore": 46,
+        "grade": "D",
+        "_id": "69fcb3668827bfc1edd01967"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e4",
+        "caScore": 19,
+        "examScore": 65,
+        "totalScore": 84,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd01968"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24f3",
+        "caScore": 11,
+        "examScore": 80,
+        "totalScore": 91,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd01969"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24f6",
+        "caScore": 13,
+        "examScore": 70,
+        "totalScore": 83,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd0196a"
+      }
+    ],
+    "overallPercentage": 74,
+    "positionInClass": 19,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:38.636Z",
+    "updatedAt": "2026-05-07T15:44:38.636Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb3668827bfc1edd0196c",
+    "school": "69fcb2f84005bea0681d24cf",
+    "student": "69fcb2f84005bea0681d254c",
+    "class": "69fcb2f84005bea0681d2540",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb2f84005bea0681d24e1",
+        "caScore": 14,
+        "examScore": 44,
+        "totalScore": 58,
+        "grade": "C",
+        "_id": "69fcb3668827bfc1edd0196d"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e2",
+        "caScore": 15,
+        "examScore": 36,
+        "totalScore": 51,
+        "grade": "C",
+        "_id": "69fcb3668827bfc1edd0196e"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e3",
+        "caScore": 15,
+        "examScore": 73,
+        "totalScore": 88,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd0196f"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e4",
+        "caScore": 10,
+        "examScore": 34,
+        "totalScore": 44,
+        "grade": "D",
+        "_id": "69fcb3668827bfc1edd01970"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24f3",
+        "caScore": 11,
+        "examScore": 44,
+        "totalScore": 55,
+        "grade": "C",
+        "_id": "69fcb3668827bfc1edd01971"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24f6",
+        "caScore": 15,
+        "examScore": 78,
+        "totalScore": 93,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd01972"
+      }
+    ],
+    "overallPercentage": 65,
+    "positionInClass": 14,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:38.642Z",
+    "updatedAt": "2026-05-07T15:44:38.642Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb3668827bfc1edd01974",
+    "school": "69fcb2f84005bea0681d24cf",
+    "student": "69fcb2f84005bea0681d254e",
+    "class": "69fcb2f84005bea0681d2540",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb2f84005bea0681d24e1",
+        "caScore": 8,
+        "examScore": 43,
+        "totalScore": 51,
+        "grade": "C",
+        "_id": "69fcb3668827bfc1edd01975"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e2",
+        "caScore": 14,
+        "examScore": 70,
+        "totalScore": 84,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd01976"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e3",
+        "caScore": 19,
+        "examScore": 68,
+        "totalScore": 87,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd01977"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e4",
+        "caScore": 12,
+        "examScore": 40,
+        "totalScore": 52,
+        "grade": "C",
+        "_id": "69fcb3668827bfc1edd01978"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24f3",
+        "caScore": 18,
+        "examScore": 60,
+        "totalScore": 78,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd01979"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24f6",
+        "caScore": 8,
+        "examScore": 72,
+        "totalScore": 80,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd0197a"
+      }
+    ],
+    "overallPercentage": 72,
+    "positionInClass": 8,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:38.649Z",
+    "updatedAt": "2026-05-07T15:44:38.649Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb3668827bfc1edd0197c",
+    "school": "69fcb2f84005bea0681d24cf",
+    "student": "69fcb2f84005bea0681d2550",
+    "class": "69fcb2f84005bea0681d2540",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb2f84005bea0681d24e1",
+        "caScore": 10,
+        "examScore": 46,
+        "totalScore": 56,
+        "grade": "C",
+        "_id": "69fcb3668827bfc1edd0197d"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e2",
+        "caScore": 15,
+        "examScore": 31,
+        "totalScore": 46,
+        "grade": "D",
+        "_id": "69fcb3668827bfc1edd0197e"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e3",
+        "caScore": 20,
+        "examScore": 76,
+        "totalScore": 96,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd0197f"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e4",
+        "caScore": 20,
+        "examScore": 57,
+        "totalScore": 77,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd01980"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24f3",
+        "caScore": 15,
+        "examScore": 69,
+        "totalScore": 84,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd01981"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24f6",
+        "caScore": 18,
+        "examScore": 33,
+        "totalScore": 51,
+        "grade": "C",
+        "_id": "69fcb3668827bfc1edd01982"
+      }
+    ],
+    "overallPercentage": 68,
+    "positionInClass": 19,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:38.655Z",
+    "updatedAt": "2026-05-07T15:44:38.655Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb3668827bfc1edd01984",
+    "school": "69fcb2f84005bea0681d24cf",
+    "student": "69fcb2f84005bea0681d2552",
+    "class": "69fcb2f84005bea0681d2540",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb2f84005bea0681d24e1",
+        "caScore": 17,
+        "examScore": 50,
+        "totalScore": 67,
+        "grade": "B",
+        "_id": "69fcb3668827bfc1edd01985"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e2",
+        "caScore": 11,
+        "examScore": 45,
+        "totalScore": 56,
+        "grade": "C",
+        "_id": "69fcb3668827bfc1edd01986"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e3",
+        "caScore": 10,
+        "examScore": 44,
+        "totalScore": 54,
+        "grade": "C",
+        "_id": "69fcb3668827bfc1edd01987"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e4",
+        "caScore": 12,
+        "examScore": 76,
+        "totalScore": 88,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd01988"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24f3",
+        "caScore": 13,
+        "examScore": 68,
+        "totalScore": 81,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd01989"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24f6",
+        "caScore": 15,
+        "examScore": 34,
+        "totalScore": 49,
+        "grade": "D",
+        "_id": "69fcb3668827bfc1edd0198a"
+      }
+    ],
+    "overallPercentage": 66,
+    "positionInClass": 3,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:38.661Z",
+    "updatedAt": "2026-05-07T15:44:38.661Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb3668827bfc1edd0198c",
+    "school": "69fcb2f84005bea0681d24cf",
+    "student": "69fcb2f84005bea0681d2554",
+    "class": "69fcb2f84005bea0681d2540",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb2f84005bea0681d24e1",
+        "caScore": 16,
+        "examScore": 38,
+        "totalScore": 54,
+        "grade": "C",
+        "_id": "69fcb3668827bfc1edd0198d"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e2",
+        "caScore": 18,
+        "examScore": 78,
+        "totalScore": 96,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd0198e"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e3",
+        "caScore": 8,
+        "examScore": 78,
+        "totalScore": 86,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd0198f"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e4",
+        "caScore": 16,
+        "examScore": 45,
+        "totalScore": 61,
+        "grade": "B",
+        "_id": "69fcb3668827bfc1edd01990"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24f3",
+        "caScore": 17,
+        "examScore": 45,
+        "totalScore": 62,
+        "grade": "B",
+        "_id": "69fcb3668827bfc1edd01991"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24f6",
+        "caScore": 18,
+        "examScore": 79,
+        "totalScore": 97,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd01992"
+      }
+    ],
+    "overallPercentage": 76,
+    "positionInClass": 18,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:38.670Z",
+    "updatedAt": "2026-05-07T15:44:38.670Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb3668827bfc1edd01994",
+    "school": "69fcb2f84005bea0681d24cf",
+    "student": "69fcb2f84005bea0681d2556",
+    "class": "69fcb2f84005bea0681d2540",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb2f84005bea0681d24e1",
+        "caScore": 16,
+        "examScore": 46,
+        "totalScore": 62,
+        "grade": "B",
+        "_id": "69fcb3668827bfc1edd01995"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e2",
+        "caScore": 17,
+        "examScore": 75,
+        "totalScore": 92,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd01996"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e3",
+        "caScore": 15,
+        "examScore": 37,
+        "totalScore": 52,
+        "grade": "C",
+        "_id": "69fcb3668827bfc1edd01997"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e4",
+        "caScore": 16,
+        "examScore": 58,
+        "totalScore": 74,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd01998"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24f3",
+        "caScore": 15,
+        "examScore": 53,
+        "totalScore": 68,
+        "grade": "B",
+        "_id": "69fcb3668827bfc1edd01999"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24f6",
+        "caScore": 8,
+        "examScore": 44,
+        "totalScore": 52,
+        "grade": "C",
+        "_id": "69fcb3668827bfc1edd0199a"
+      }
+    ],
+    "overallPercentage": 67,
+    "positionInClass": 10,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:38.675Z",
+    "updatedAt": "2026-05-07T15:44:38.675Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb3668827bfc1edd0199c",
+    "school": "69fcb2f84005bea0681d24cf",
+    "student": "69fcb2f84005bea0681d2558",
+    "class": "69fcb2f84005bea0681d2540",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb2f84005bea0681d24e1",
+        "caScore": 14,
+        "examScore": 57,
+        "totalScore": 71,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd0199d"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e2",
+        "caScore": 13,
+        "examScore": 53,
+        "totalScore": 66,
+        "grade": "B",
+        "_id": "69fcb3668827bfc1edd0199e"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e3",
+        "caScore": 11,
+        "examScore": 46,
+        "totalScore": 57,
+        "grade": "C",
+        "_id": "69fcb3668827bfc1edd0199f"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e4",
+        "caScore": 12,
+        "examScore": 71,
+        "totalScore": 83,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd019a0"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24f3",
+        "caScore": 8,
+        "examScore": 35,
+        "totalScore": 43,
+        "grade": "D",
+        "_id": "69fcb3668827bfc1edd019a1"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24f6",
+        "caScore": 11,
+        "examScore": 70,
+        "totalScore": 81,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd019a2"
+      }
+    ],
+    "overallPercentage": 67,
+    "positionInClass": 4,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:38.681Z",
+    "updatedAt": "2026-05-07T15:44:38.681Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb3668827bfc1edd019a4",
+    "school": "69fcb2f84005bea0681d24cf",
+    "student": "69fcb2f84005bea0681d255a",
+    "class": "69fcb2f84005bea0681d2540",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb2f84005bea0681d24e1",
+        "caScore": 13,
+        "examScore": 36,
+        "totalScore": 49,
+        "grade": "D",
+        "_id": "69fcb3668827bfc1edd019a5"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e2",
+        "caScore": 10,
+        "examScore": 79,
+        "totalScore": 89,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd019a6"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e3",
+        "caScore": 8,
+        "examScore": 51,
+        "totalScore": 59,
+        "grade": "C",
+        "_id": "69fcb3668827bfc1edd019a7"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e4",
+        "caScore": 10,
+        "examScore": 40,
+        "totalScore": 50,
+        "grade": "C",
+        "_id": "69fcb3668827bfc1edd019a8"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24f3",
+        "caScore": 20,
+        "examScore": 74,
+        "totalScore": 94,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd019a9"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24f6",
+        "caScore": 16,
+        "examScore": 65,
+        "totalScore": 81,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd019aa"
+      }
+    ],
+    "overallPercentage": 70,
+    "positionInClass": 6,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:38.685Z",
+    "updatedAt": "2026-05-07T15:44:38.685Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb3668827bfc1edd019ac",
+    "school": "69fcb2f84005bea0681d24cf",
+    "student": "69fcb2f84005bea0681d255c",
+    "class": "69fcb2f84005bea0681d2540",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb2f84005bea0681d24e1",
+        "caScore": 17,
+        "examScore": 79,
+        "totalScore": 96,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd019ad"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e2",
+        "caScore": 13,
+        "examScore": 80,
+        "totalScore": 93,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd019ae"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e3",
+        "caScore": 18,
+        "examScore": 68,
+        "totalScore": 86,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd019af"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e4",
+        "caScore": 15,
+        "examScore": 79,
+        "totalScore": 94,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd019b0"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24f3",
+        "caScore": 11,
+        "examScore": 34,
+        "totalScore": 45,
+        "grade": "D",
+        "_id": "69fcb3668827bfc1edd019b1"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24f6",
+        "caScore": 9,
+        "examScore": 80,
+        "totalScore": 89,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd019b2"
+      }
+    ],
+    "overallPercentage": 84,
+    "positionInClass": 18,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:38.690Z",
+    "updatedAt": "2026-05-07T15:44:38.690Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb3668827bfc1edd019b4",
+    "school": "69fcb2f84005bea0681d24cf",
+    "student": "69fcb2f84005bea0681d255e",
+    "class": "69fcb2f84005bea0681d2540",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb2f84005bea0681d24e1",
+        "caScore": 8,
+        "examScore": 60,
+        "totalScore": 68,
+        "grade": "B",
+        "_id": "69fcb3668827bfc1edd019b5"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e2",
+        "caScore": 8,
+        "examScore": 58,
+        "totalScore": 66,
+        "grade": "B",
+        "_id": "69fcb3668827bfc1edd019b6"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e3",
+        "caScore": 9,
+        "examScore": 61,
+        "totalScore": 70,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd019b7"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e4",
+        "caScore": 19,
+        "examScore": 73,
+        "totalScore": 92,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd019b8"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24f3",
+        "caScore": 9,
+        "examScore": 35,
+        "totalScore": 44,
+        "grade": "D",
+        "_id": "69fcb3668827bfc1edd019b9"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24f6",
+        "caScore": 17,
+        "examScore": 50,
+        "totalScore": 67,
+        "grade": "B",
+        "_id": "69fcb3668827bfc1edd019ba"
+      }
+    ],
+    "overallPercentage": 68,
+    "positionInClass": 9,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:38.693Z",
+    "updatedAt": "2026-05-07T15:44:38.693Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb3668827bfc1edd019bc",
+    "school": "69fcb2f84005bea0681d24cf",
+    "student": "69fcb2f84005bea0681d2560",
+    "class": "69fcb2f84005bea0681d2540",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb2f84005bea0681d24e1",
+        "caScore": 19,
+        "examScore": 74,
+        "totalScore": 93,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd019bd"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e2",
+        "caScore": 11,
+        "examScore": 45,
+        "totalScore": 56,
+        "grade": "C",
+        "_id": "69fcb3668827bfc1edd019be"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e3",
+        "caScore": 20,
+        "examScore": 33,
+        "totalScore": 53,
+        "grade": "C",
+        "_id": "69fcb3668827bfc1edd019bf"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e4",
+        "caScore": 8,
+        "examScore": 45,
+        "totalScore": 53,
+        "grade": "C",
+        "_id": "69fcb3668827bfc1edd019c0"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24f3",
+        "caScore": 17,
+        "examScore": 41,
+        "totalScore": 58,
+        "grade": "C",
+        "_id": "69fcb3668827bfc1edd019c1"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24f6",
+        "caScore": 19,
+        "examScore": 57,
+        "totalScore": 76,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd019c2"
+      }
+    ],
+    "overallPercentage": 65,
+    "positionInClass": 9,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:38.699Z",
+    "updatedAt": "2026-05-07T15:44:38.699Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb3668827bfc1edd019c4",
+    "school": "69fcb2f84005bea0681d24cf",
+    "student": "69fcb2f84005bea0681d2562",
+    "class": "69fcb2f84005bea0681d2540",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb2f84005bea0681d24e1",
+        "caScore": 18,
+        "examScore": 47,
+        "totalScore": 65,
+        "grade": "B",
+        "_id": "69fcb3668827bfc1edd019c5"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e2",
+        "caScore": 9,
+        "examScore": 38,
+        "totalScore": 47,
+        "grade": "D",
+        "_id": "69fcb3668827bfc1edd019c6"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e3",
+        "caScore": 10,
+        "examScore": 36,
+        "totalScore": 46,
+        "grade": "D",
+        "_id": "69fcb3668827bfc1edd019c7"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e4",
+        "caScore": 18,
+        "examScore": 72,
+        "totalScore": 90,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd019c8"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24f3",
+        "caScore": 20,
+        "examScore": 37,
+        "totalScore": 57,
+        "grade": "C",
+        "_id": "69fcb3668827bfc1edd019c9"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24f6",
+        "caScore": 14,
+        "examScore": 58,
+        "totalScore": 72,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd019ca"
+      }
+    ],
+    "overallPercentage": 63,
+    "positionInClass": 15,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:38.706Z",
+    "updatedAt": "2026-05-07T15:44:38.706Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb3668827bfc1edd019cc",
+    "school": "69fcb2f84005bea0681d24cf",
+    "student": "69fcb2f84005bea0681d2564",
+    "class": "69fcb2f84005bea0681d2540",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb2f84005bea0681d24e1",
+        "caScore": 12,
+        "examScore": 55,
+        "totalScore": 67,
+        "grade": "B",
+        "_id": "69fcb3668827bfc1edd019cd"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e2",
+        "caScore": 8,
+        "examScore": 80,
+        "totalScore": 88,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd019ce"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e3",
+        "caScore": 17,
+        "examScore": 55,
+        "totalScore": 72,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd019cf"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e4",
+        "caScore": 18,
+        "examScore": 39,
+        "totalScore": 57,
+        "grade": "C",
+        "_id": "69fcb3668827bfc1edd019d0"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24f3",
+        "caScore": 14,
+        "examScore": 64,
+        "totalScore": 78,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd019d1"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24f6",
+        "caScore": 10,
+        "examScore": 69,
+        "totalScore": 79,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd019d2"
+      }
+    ],
+    "overallPercentage": 74,
+    "positionInClass": 14,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:38.711Z",
+    "updatedAt": "2026-05-07T15:44:38.711Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb3668827bfc1edd019d4",
+    "school": "69fcb2f84005bea0681d24cf",
+    "student": "69fcb2f84005bea0681d2566",
+    "class": "69fcb2f84005bea0681d2540",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb2f84005bea0681d24e1",
+        "caScore": 19,
+        "examScore": 72,
+        "totalScore": 91,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd019d5"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e2",
+        "caScore": 13,
+        "examScore": 64,
+        "totalScore": 77,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd019d6"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e3",
+        "caScore": 8,
+        "examScore": 61,
+        "totalScore": 69,
+        "grade": "B",
+        "_id": "69fcb3668827bfc1edd019d7"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e4",
+        "caScore": 8,
+        "examScore": 42,
+        "totalScore": 50,
+        "grade": "C",
+        "_id": "69fcb3668827bfc1edd019d8"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24f3",
+        "caScore": 15,
+        "examScore": 33,
+        "totalScore": 48,
+        "grade": "D",
+        "_id": "69fcb3668827bfc1edd019d9"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24f6",
+        "caScore": 19,
+        "examScore": 41,
+        "totalScore": 60,
+        "grade": "B",
+        "_id": "69fcb3668827bfc1edd019da"
+      }
+    ],
+    "overallPercentage": 66,
+    "positionInClass": 17,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:38.716Z",
+    "updatedAt": "2026-05-07T15:44:38.716Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb3668827bfc1edd019dc",
+    "school": "69fcb2f84005bea0681d24cf",
+    "student": "69fcb2f84005bea0681d2568",
+    "class": "69fcb2f84005bea0681d2540",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb2f84005bea0681d24e1",
+        "caScore": 8,
+        "examScore": 80,
+        "totalScore": 88,
+        "grade": "A",
+        "_id": "69fcb3668827bfc1edd019dd"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e2",
+        "caScore": 9,
+        "examScore": 36,
+        "totalScore": 45,
+        "grade": "D",
+        "_id": "69fcb3668827bfc1edd019de"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e3",
+        "caScore": 11,
+        "examScore": 42,
+        "totalScore": 53,
+        "grade": "C",
+        "_id": "69fcb3668827bfc1edd019df"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24e4",
+        "caScore": 19,
+        "examScore": 38,
+        "totalScore": 57,
+        "grade": "C",
+        "_id": "69fcb3668827bfc1edd019e0"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24f3",
+        "caScore": 17,
+        "examScore": 52,
+        "totalScore": 69,
+        "grade": "B",
+        "_id": "69fcb3668827bfc1edd019e1"
+      },
+      {
+        "subject": "69fcb2f84005bea0681d24f6",
+        "caScore": 10,
+        "examScore": 34,
+        "totalScore": 44,
+        "grade": "D",
+        "_id": "69fcb3668827bfc1edd019e2"
+      }
+    ],
+    "overallPercentage": 59,
+    "positionInClass": 6,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:38.722Z",
+    "updatedAt": "2026-05-07T15:44:38.722Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb3698827bfc1edd0493b",
+    "school": "69fcb3668827bfc1edd01a32",
+    "student": "69fcb3678827bfc1edd01aa1",
+    "class": "69fcb3678827bfc1edd01a9f",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb3668827bfc1edd01a40",
+        "caScore": 12,
+        "examScore": 51,
+        "totalScore": 63,
+        "grade": "B",
+        "_id": "69fcb3698827bfc1edd0493c"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a41",
+        "caScore": 9,
+        "examScore": 41,
+        "totalScore": 50,
+        "grade": "C",
+        "_id": "69fcb3698827bfc1edd0493d"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a42",
+        "caScore": 19,
+        "examScore": 72,
+        "totalScore": 91,
+        "grade": "A",
+        "_id": "69fcb3698827bfc1edd0493e"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a43",
+        "caScore": 16,
+        "examScore": 56,
+        "totalScore": 72,
+        "grade": "A",
+        "_id": "69fcb3698827bfc1edd0493f"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a52",
+        "caScore": 11,
+        "examScore": 77,
+        "totalScore": 88,
+        "grade": "A",
+        "_id": "69fcb3698827bfc1edd04940"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a55",
+        "caScore": 16,
+        "examScore": 38,
+        "totalScore": 54,
+        "grade": "C",
+        "_id": "69fcb3698827bfc1edd04941"
+      }
+    ],
+    "overallPercentage": 70,
+    "positionInClass": 19,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:41.968Z",
+    "updatedAt": "2026-05-07T15:44:41.968Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb3698827bfc1edd04943",
+    "school": "69fcb3668827bfc1edd01a32",
+    "student": "69fcb3678827bfc1edd01aa3",
+    "class": "69fcb3678827bfc1edd01a9f",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb3668827bfc1edd01a40",
+        "caScore": 13,
+        "examScore": 58,
+        "totalScore": 71,
+        "grade": "A",
+        "_id": "69fcb3698827bfc1edd04944"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a41",
+        "caScore": 14,
+        "examScore": 46,
+        "totalScore": 60,
+        "grade": "B",
+        "_id": "69fcb3698827bfc1edd04945"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a42",
+        "caScore": 9,
+        "examScore": 40,
+        "totalScore": 49,
+        "grade": "D",
+        "_id": "69fcb3698827bfc1edd04946"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a43",
+        "caScore": 20,
+        "examScore": 41,
+        "totalScore": 61,
+        "grade": "B",
+        "_id": "69fcb3698827bfc1edd04947"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a52",
+        "caScore": 11,
+        "examScore": 49,
+        "totalScore": 60,
+        "grade": "B",
+        "_id": "69fcb3698827bfc1edd04948"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a55",
+        "caScore": 9,
+        "examScore": 31,
+        "totalScore": 40,
+        "grade": "D",
+        "_id": "69fcb3698827bfc1edd04949"
+      }
+    ],
+    "overallPercentage": 57,
+    "positionInClass": 6,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:41.970Z",
+    "updatedAt": "2026-05-07T15:44:41.970Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb3698827bfc1edd0494b",
+    "school": "69fcb3668827bfc1edd01a32",
+    "student": "69fcb3678827bfc1edd01aa5",
+    "class": "69fcb3678827bfc1edd01a9f",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb3668827bfc1edd01a40",
+        "caScore": 19,
+        "examScore": 73,
+        "totalScore": 92,
+        "grade": "A",
+        "_id": "69fcb3698827bfc1edd0494c"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a41",
+        "caScore": 12,
+        "examScore": 70,
+        "totalScore": 82,
+        "grade": "A",
+        "_id": "69fcb3698827bfc1edd0494d"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a42",
+        "caScore": 14,
+        "examScore": 52,
+        "totalScore": 66,
+        "grade": "B",
+        "_id": "69fcb3698827bfc1edd0494e"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a43",
+        "caScore": 8,
+        "examScore": 49,
+        "totalScore": 57,
+        "grade": "C",
+        "_id": "69fcb3698827bfc1edd0494f"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a52",
+        "caScore": 10,
+        "examScore": 57,
+        "totalScore": 67,
+        "grade": "B",
+        "_id": "69fcb3698827bfc1edd04950"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a55",
+        "caScore": 15,
+        "examScore": 52,
+        "totalScore": 67,
+        "grade": "B",
+        "_id": "69fcb3698827bfc1edd04951"
+      }
+    ],
+    "overallPercentage": 72,
+    "positionInClass": 5,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:41.973Z",
+    "updatedAt": "2026-05-07T15:44:41.973Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb3698827bfc1edd04953",
+    "school": "69fcb3668827bfc1edd01a32",
+    "student": "69fcb3678827bfc1edd01aa7",
+    "class": "69fcb3678827bfc1edd01a9f",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb3668827bfc1edd01a40",
+        "caScore": 10,
+        "examScore": 76,
+        "totalScore": 86,
+        "grade": "A",
+        "_id": "69fcb3698827bfc1edd04954"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a41",
+        "caScore": 14,
+        "examScore": 57,
+        "totalScore": 71,
+        "grade": "A",
+        "_id": "69fcb3698827bfc1edd04955"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a42",
+        "caScore": 13,
+        "examScore": 69,
+        "totalScore": 82,
+        "grade": "A",
+        "_id": "69fcb3698827bfc1edd04956"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a43",
+        "caScore": 19,
+        "examScore": 57,
+        "totalScore": 76,
+        "grade": "A",
+        "_id": "69fcb3698827bfc1edd04957"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a52",
+        "caScore": 12,
+        "examScore": 36,
+        "totalScore": 48,
+        "grade": "D",
+        "_id": "69fcb3698827bfc1edd04958"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a55",
+        "caScore": 16,
+        "examScore": 71,
+        "totalScore": 87,
+        "grade": "A",
+        "_id": "69fcb3698827bfc1edd04959"
+      }
+    ],
+    "overallPercentage": 75,
+    "positionInClass": 5,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:41.976Z",
+    "updatedAt": "2026-05-07T15:44:41.976Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb3698827bfc1edd0495b",
+    "school": "69fcb3668827bfc1edd01a32",
+    "student": "69fcb3678827bfc1edd01aa9",
+    "class": "69fcb3678827bfc1edd01a9f",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb3668827bfc1edd01a40",
+        "caScore": 14,
+        "examScore": 61,
+        "totalScore": 75,
+        "grade": "A",
+        "_id": "69fcb3698827bfc1edd0495c"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a41",
+        "caScore": 19,
+        "examScore": 55,
+        "totalScore": 74,
+        "grade": "A",
+        "_id": "69fcb3698827bfc1edd0495d"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a42",
+        "caScore": 12,
+        "examScore": 62,
+        "totalScore": 74,
+        "grade": "A",
+        "_id": "69fcb3698827bfc1edd0495e"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a43",
+        "caScore": 14,
+        "examScore": 73,
+        "totalScore": 87,
+        "grade": "A",
+        "_id": "69fcb3698827bfc1edd0495f"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a52",
+        "caScore": 13,
+        "examScore": 68,
+        "totalScore": 81,
+        "grade": "A",
+        "_id": "69fcb3698827bfc1edd04960"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a55",
+        "caScore": 10,
+        "examScore": 63,
+        "totalScore": 73,
+        "grade": "A",
+        "_id": "69fcb3698827bfc1edd04961"
+      }
+    ],
+    "overallPercentage": 77,
+    "positionInClass": 5,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:41.979Z",
+    "updatedAt": "2026-05-07T15:44:41.979Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb3698827bfc1edd04963",
+    "school": "69fcb3668827bfc1edd01a32",
+    "student": "69fcb3678827bfc1edd01aab",
+    "class": "69fcb3678827bfc1edd01a9f",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb3668827bfc1edd01a40",
+        "caScore": 20,
+        "examScore": 59,
+        "totalScore": 79,
+        "grade": "A",
+        "_id": "69fcb3698827bfc1edd04964"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a41",
+        "caScore": 19,
+        "examScore": 77,
+        "totalScore": 96,
+        "grade": "A",
+        "_id": "69fcb3698827bfc1edd04965"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a42",
+        "caScore": 13,
+        "examScore": 46,
+        "totalScore": 59,
+        "grade": "C",
+        "_id": "69fcb3698827bfc1edd04966"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a43",
+        "caScore": 17,
+        "examScore": 68,
+        "totalScore": 85,
+        "grade": "A",
+        "_id": "69fcb3698827bfc1edd04967"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a52",
+        "caScore": 18,
+        "examScore": 45,
+        "totalScore": 63,
+        "grade": "B",
+        "_id": "69fcb3698827bfc1edd04968"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a55",
+        "caScore": 17,
+        "examScore": 48,
+        "totalScore": 65,
+        "grade": "B",
+        "_id": "69fcb3698827bfc1edd04969"
+      }
+    ],
+    "overallPercentage": 75,
+    "positionInClass": 1,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:41.982Z",
+    "updatedAt": "2026-05-07T15:44:41.982Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb3698827bfc1edd0496b",
+    "school": "69fcb3668827bfc1edd01a32",
+    "student": "69fcb3678827bfc1edd01aad",
+    "class": "69fcb3678827bfc1edd01a9f",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb3668827bfc1edd01a40",
+        "caScore": 17,
+        "examScore": 45,
+        "totalScore": 62,
+        "grade": "B",
+        "_id": "69fcb3698827bfc1edd0496c"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a41",
+        "caScore": 9,
+        "examScore": 31,
+        "totalScore": 40,
+        "grade": "D",
+        "_id": "69fcb3698827bfc1edd0496d"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a42",
+        "caScore": 16,
+        "examScore": 73,
+        "totalScore": 89,
+        "grade": "A",
+        "_id": "69fcb3698827bfc1edd0496e"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a43",
+        "caScore": 14,
+        "examScore": 37,
+        "totalScore": 51,
+        "grade": "C",
+        "_id": "69fcb3698827bfc1edd0496f"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a52",
+        "caScore": 10,
+        "examScore": 33,
+        "totalScore": 43,
+        "grade": "D",
+        "_id": "69fcb3698827bfc1edd04970"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a55",
+        "caScore": 14,
+        "examScore": 38,
+        "totalScore": 52,
+        "grade": "C",
+        "_id": "69fcb3698827bfc1edd04971"
+      }
+    ],
+    "overallPercentage": 56,
+    "positionInClass": 16,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:41.985Z",
+    "updatedAt": "2026-05-07T15:44:41.985Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb3698827bfc1edd04973",
+    "school": "69fcb3668827bfc1edd01a32",
+    "student": "69fcb3678827bfc1edd01aaf",
+    "class": "69fcb3678827bfc1edd01a9f",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb3668827bfc1edd01a40",
+        "caScore": 19,
+        "examScore": 65,
+        "totalScore": 84,
+        "grade": "A",
+        "_id": "69fcb3698827bfc1edd04974"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a41",
+        "caScore": 14,
+        "examScore": 38,
+        "totalScore": 52,
+        "grade": "C",
+        "_id": "69fcb3698827bfc1edd04975"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a42",
+        "caScore": 9,
+        "examScore": 46,
+        "totalScore": 55,
+        "grade": "C",
+        "_id": "69fcb3698827bfc1edd04976"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a43",
+        "caScore": 16,
+        "examScore": 57,
+        "totalScore": 73,
+        "grade": "A",
+        "_id": "69fcb3698827bfc1edd04977"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a52",
+        "caScore": 14,
+        "examScore": 62,
+        "totalScore": 76,
+        "grade": "A",
+        "_id": "69fcb3698827bfc1edd04978"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a55",
+        "caScore": 8,
+        "examScore": 36,
+        "totalScore": 44,
+        "grade": "D",
+        "_id": "69fcb3698827bfc1edd04979"
+      }
+    ],
+    "overallPercentage": 64,
+    "positionInClass": 7,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:41.987Z",
+    "updatedAt": "2026-05-07T15:44:41.987Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb3698827bfc1edd0497b",
+    "school": "69fcb3668827bfc1edd01a32",
+    "student": "69fcb3678827bfc1edd01ab1",
+    "class": "69fcb3678827bfc1edd01a9f",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb3668827bfc1edd01a40",
+        "caScore": 17,
+        "examScore": 79,
+        "totalScore": 96,
+        "grade": "A",
+        "_id": "69fcb3698827bfc1edd0497c"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a41",
+        "caScore": 20,
+        "examScore": 45,
+        "totalScore": 65,
+        "grade": "B",
+        "_id": "69fcb3698827bfc1edd0497d"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a42",
+        "caScore": 8,
+        "examScore": 53,
+        "totalScore": 61,
+        "grade": "B",
+        "_id": "69fcb3698827bfc1edd0497e"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a43",
+        "caScore": 18,
+        "examScore": 79,
+        "totalScore": 97,
+        "grade": "A",
+        "_id": "69fcb3698827bfc1edd0497f"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a52",
+        "caScore": 13,
+        "examScore": 62,
+        "totalScore": 75,
+        "grade": "A",
+        "_id": "69fcb3698827bfc1edd04980"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a55",
+        "caScore": 19,
+        "examScore": 50,
+        "totalScore": 69,
+        "grade": "B",
+        "_id": "69fcb3698827bfc1edd04981"
+      }
+    ],
+    "overallPercentage": 77,
+    "positionInClass": 15,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:41.990Z",
+    "updatedAt": "2026-05-07T15:44:41.990Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb3698827bfc1edd04983",
+    "school": "69fcb3668827bfc1edd01a32",
+    "student": "69fcb3678827bfc1edd01ab3",
+    "class": "69fcb3678827bfc1edd01a9f",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb3668827bfc1edd01a40",
+        "caScore": 16,
+        "examScore": 38,
+        "totalScore": 54,
+        "grade": "C",
+        "_id": "69fcb3698827bfc1edd04984"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a41",
+        "caScore": 18,
+        "examScore": 73,
+        "totalScore": 91,
+        "grade": "A",
+        "_id": "69fcb3698827bfc1edd04985"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a42",
+        "caScore": 16,
+        "examScore": 79,
+        "totalScore": 95,
+        "grade": "A",
+        "_id": "69fcb3698827bfc1edd04986"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a43",
+        "caScore": 17,
+        "examScore": 61,
+        "totalScore": 78,
+        "grade": "A",
+        "_id": "69fcb3698827bfc1edd04987"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a52",
+        "caScore": 8,
+        "examScore": 48,
+        "totalScore": 56,
+        "grade": "C",
+        "_id": "69fcb3698827bfc1edd04988"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a55",
+        "caScore": 16,
+        "examScore": 73,
+        "totalScore": 89,
+        "grade": "A",
+        "_id": "69fcb3698827bfc1edd04989"
+      }
+    ],
+    "overallPercentage": 77,
+    "positionInClass": 9,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:41.992Z",
+    "updatedAt": "2026-05-07T15:44:41.992Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb3698827bfc1edd0498b",
+    "school": "69fcb3668827bfc1edd01a32",
+    "student": "69fcb3678827bfc1edd01ab5",
+    "class": "69fcb3678827bfc1edd01a9f",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb3668827bfc1edd01a40",
+        "caScore": 13,
+        "examScore": 35,
+        "totalScore": 48,
+        "grade": "D",
+        "_id": "69fcb3698827bfc1edd0498c"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a41",
+        "caScore": 15,
+        "examScore": 76,
+        "totalScore": 91,
+        "grade": "A",
+        "_id": "69fcb3698827bfc1edd0498d"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a42",
+        "caScore": 10,
+        "examScore": 52,
+        "totalScore": 62,
+        "grade": "B",
+        "_id": "69fcb3698827bfc1edd0498e"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a43",
+        "caScore": 17,
+        "examScore": 56,
+        "totalScore": 73,
+        "grade": "A",
+        "_id": "69fcb3698827bfc1edd0498f"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a52",
+        "caScore": 11,
+        "examScore": 78,
+        "totalScore": 89,
+        "grade": "A",
+        "_id": "69fcb3698827bfc1edd04990"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a55",
+        "caScore": 10,
+        "examScore": 63,
+        "totalScore": 73,
+        "grade": "A",
+        "_id": "69fcb3698827bfc1edd04991"
+      }
+    ],
+    "overallPercentage": 73,
+    "positionInClass": 14,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:41.996Z",
+    "updatedAt": "2026-05-07T15:44:41.996Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb3698827bfc1edd04993",
+    "school": "69fcb3668827bfc1edd01a32",
+    "student": "69fcb3678827bfc1edd01ab7",
+    "class": "69fcb3678827bfc1edd01a9f",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb3668827bfc1edd01a40",
+        "caScore": 13,
+        "examScore": 35,
+        "totalScore": 48,
+        "grade": "D",
+        "_id": "69fcb3698827bfc1edd04994"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a41",
+        "caScore": 15,
+        "examScore": 33,
+        "totalScore": 48,
+        "grade": "D",
+        "_id": "69fcb3698827bfc1edd04995"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a42",
+        "caScore": 8,
+        "examScore": 64,
+        "totalScore": 72,
+        "grade": "A",
+        "_id": "69fcb3698827bfc1edd04996"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a43",
+        "caScore": 8,
+        "examScore": 52,
+        "totalScore": 60,
+        "grade": "B",
+        "_id": "69fcb3698827bfc1edd04997"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a52",
+        "caScore": 17,
+        "examScore": 67,
+        "totalScore": 84,
+        "grade": "A",
+        "_id": "69fcb3698827bfc1edd04998"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a55",
+        "caScore": 11,
+        "examScore": 52,
+        "totalScore": 63,
+        "grade": "B",
+        "_id": "69fcb3698827bfc1edd04999"
+      }
+    ],
+    "overallPercentage": 63,
+    "positionInClass": 5,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:42.000Z",
+    "updatedAt": "2026-05-07T15:44:42.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd0499b",
+    "school": "69fcb3668827bfc1edd01a32",
+    "student": "69fcb3678827bfc1edd01ab9",
+    "class": "69fcb3678827bfc1edd01a9f",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb3668827bfc1edd01a40",
+        "caScore": 16,
+        "examScore": 75,
+        "totalScore": 91,
+        "grade": "A",
+        "_id": "69fcb36a8827bfc1edd0499c"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a41",
+        "caScore": 19,
+        "examScore": 77,
+        "totalScore": 96,
+        "grade": "A",
+        "_id": "69fcb36a8827bfc1edd0499d"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a42",
+        "caScore": 10,
+        "examScore": 59,
+        "totalScore": 69,
+        "grade": "B",
+        "_id": "69fcb36a8827bfc1edd0499e"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a43",
+        "caScore": 12,
+        "examScore": 35,
+        "totalScore": 47,
+        "grade": "D",
+        "_id": "69fcb36a8827bfc1edd0499f"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a52",
+        "caScore": 15,
+        "examScore": 52,
+        "totalScore": 67,
+        "grade": "B",
+        "_id": "69fcb36a8827bfc1edd049a0"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a55",
+        "caScore": 12,
+        "examScore": 54,
+        "totalScore": 66,
+        "grade": "B",
+        "_id": "69fcb36a8827bfc1edd049a1"
+      }
+    ],
+    "overallPercentage": 73,
+    "positionInClass": 2,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:42.003Z",
+    "updatedAt": "2026-05-07T15:44:42.003Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd049a3",
+    "school": "69fcb3668827bfc1edd01a32",
+    "student": "69fcb3678827bfc1edd01abb",
+    "class": "69fcb3678827bfc1edd01a9f",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb3668827bfc1edd01a40",
+        "caScore": 13,
+        "examScore": 77,
+        "totalScore": 90,
+        "grade": "A",
+        "_id": "69fcb36a8827bfc1edd049a4"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a41",
+        "caScore": 15,
+        "examScore": 80,
+        "totalScore": 95,
+        "grade": "A",
+        "_id": "69fcb36a8827bfc1edd049a5"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a42",
+        "caScore": 10,
+        "examScore": 43,
+        "totalScore": 53,
+        "grade": "C",
+        "_id": "69fcb36a8827bfc1edd049a6"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a43",
+        "caScore": 19,
+        "examScore": 67,
+        "totalScore": 86,
+        "grade": "A",
+        "_id": "69fcb36a8827bfc1edd049a7"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a52",
+        "caScore": 13,
+        "examScore": 44,
+        "totalScore": 57,
+        "grade": "C",
+        "_id": "69fcb36a8827bfc1edd049a8"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a55",
+        "caScore": 19,
+        "examScore": 53,
+        "totalScore": 72,
+        "grade": "A",
+        "_id": "69fcb36a8827bfc1edd049a9"
+      }
+    ],
+    "overallPercentage": 76,
+    "positionInClass": 1,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:42.006Z",
+    "updatedAt": "2026-05-07T15:44:42.006Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd049ab",
+    "school": "69fcb3668827bfc1edd01a32",
+    "student": "69fcb3678827bfc1edd01abd",
+    "class": "69fcb3678827bfc1edd01a9f",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb3668827bfc1edd01a40",
+        "caScore": 8,
+        "examScore": 47,
+        "totalScore": 55,
+        "grade": "C",
+        "_id": "69fcb36a8827bfc1edd049ac"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a41",
+        "caScore": 9,
+        "examScore": 33,
+        "totalScore": 42,
+        "grade": "D",
+        "_id": "69fcb36a8827bfc1edd049ad"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a42",
+        "caScore": 19,
+        "examScore": 34,
+        "totalScore": 53,
+        "grade": "C",
+        "_id": "69fcb36a8827bfc1edd049ae"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a43",
+        "caScore": 9,
+        "examScore": 72,
+        "totalScore": 81,
+        "grade": "A",
+        "_id": "69fcb36a8827bfc1edd049af"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a52",
+        "caScore": 17,
+        "examScore": 59,
+        "totalScore": 76,
+        "grade": "A",
+        "_id": "69fcb36a8827bfc1edd049b0"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a55",
+        "caScore": 10,
+        "examScore": 62,
+        "totalScore": 72,
+        "grade": "A",
+        "_id": "69fcb36a8827bfc1edd049b1"
+      }
+    ],
+    "overallPercentage": 63,
+    "positionInClass": 5,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:42.009Z",
+    "updatedAt": "2026-05-07T15:44:42.009Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd049b3",
+    "school": "69fcb3668827bfc1edd01a32",
+    "student": "69fcb3678827bfc1edd01abf",
+    "class": "69fcb3678827bfc1edd01a9f",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb3668827bfc1edd01a40",
+        "caScore": 19,
+        "examScore": 70,
+        "totalScore": 89,
+        "grade": "A",
+        "_id": "69fcb36a8827bfc1edd049b4"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a41",
+        "caScore": 12,
+        "examScore": 30,
+        "totalScore": 42,
+        "grade": "D",
+        "_id": "69fcb36a8827bfc1edd049b5"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a42",
+        "caScore": 15,
+        "examScore": 65,
+        "totalScore": 80,
+        "grade": "A",
+        "_id": "69fcb36a8827bfc1edd049b6"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a43",
+        "caScore": 15,
+        "examScore": 49,
+        "totalScore": 64,
+        "grade": "B",
+        "_id": "69fcb36a8827bfc1edd049b7"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a52",
+        "caScore": 15,
+        "examScore": 51,
+        "totalScore": 66,
+        "grade": "B",
+        "_id": "69fcb36a8827bfc1edd049b8"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a55",
+        "caScore": 18,
+        "examScore": 36,
+        "totalScore": 54,
+        "grade": "C",
+        "_id": "69fcb36a8827bfc1edd049b9"
+      }
+    ],
+    "overallPercentage": 66,
+    "positionInClass": 2,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:42.011Z",
+    "updatedAt": "2026-05-07T15:44:42.011Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd049bb",
+    "school": "69fcb3668827bfc1edd01a32",
+    "student": "69fcb3678827bfc1edd01ac1",
+    "class": "69fcb3678827bfc1edd01a9f",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb3668827bfc1edd01a40",
+        "caScore": 12,
+        "examScore": 76,
+        "totalScore": 88,
+        "grade": "A",
+        "_id": "69fcb36a8827bfc1edd049bc"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a41",
+        "caScore": 20,
+        "examScore": 66,
+        "totalScore": 86,
+        "grade": "A",
+        "_id": "69fcb36a8827bfc1edd049bd"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a42",
+        "caScore": 16,
+        "examScore": 33,
+        "totalScore": 49,
+        "grade": "D",
+        "_id": "69fcb36a8827bfc1edd049be"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a43",
+        "caScore": 13,
+        "examScore": 60,
+        "totalScore": 73,
+        "grade": "A",
+        "_id": "69fcb36a8827bfc1edd049bf"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a52",
+        "caScore": 9,
+        "examScore": 45,
+        "totalScore": 54,
+        "grade": "C",
+        "_id": "69fcb36a8827bfc1edd049c0"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a55",
+        "caScore": 12,
+        "examScore": 60,
+        "totalScore": 72,
+        "grade": "A",
+        "_id": "69fcb36a8827bfc1edd049c1"
+      }
+    ],
+    "overallPercentage": 70,
+    "positionInClass": 18,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:42.015Z",
+    "updatedAt": "2026-05-07T15:44:42.015Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd049c3",
+    "school": "69fcb3668827bfc1edd01a32",
+    "student": "69fcb3678827bfc1edd01ac3",
+    "class": "69fcb3678827bfc1edd01a9f",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb3668827bfc1edd01a40",
+        "caScore": 19,
+        "examScore": 35,
+        "totalScore": 54,
+        "grade": "C",
+        "_id": "69fcb36a8827bfc1edd049c4"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a41",
+        "caScore": 12,
+        "examScore": 74,
+        "totalScore": 86,
+        "grade": "A",
+        "_id": "69fcb36a8827bfc1edd049c5"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a42",
+        "caScore": 17,
+        "examScore": 61,
+        "totalScore": 78,
+        "grade": "A",
+        "_id": "69fcb36a8827bfc1edd049c6"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a43",
+        "caScore": 14,
+        "examScore": 78,
+        "totalScore": 92,
+        "grade": "A",
+        "_id": "69fcb36a8827bfc1edd049c7"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a52",
+        "caScore": 16,
+        "examScore": 42,
+        "totalScore": 58,
+        "grade": "C",
+        "_id": "69fcb36a8827bfc1edd049c8"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a55",
+        "caScore": 10,
+        "examScore": 42,
+        "totalScore": 52,
+        "grade": "C",
+        "_id": "69fcb36a8827bfc1edd049c9"
+      }
+    ],
+    "overallPercentage": 70,
+    "positionInClass": 16,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:42.018Z",
+    "updatedAt": "2026-05-07T15:44:42.018Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd049cb",
+    "school": "69fcb3668827bfc1edd01a32",
+    "student": "69fcb3678827bfc1edd01ac5",
+    "class": "69fcb3678827bfc1edd01a9f",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb3668827bfc1edd01a40",
+        "caScore": 15,
+        "examScore": 54,
+        "totalScore": 69,
+        "grade": "B",
+        "_id": "69fcb36a8827bfc1edd049cc"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a41",
+        "caScore": 18,
+        "examScore": 76,
+        "totalScore": 94,
+        "grade": "A",
+        "_id": "69fcb36a8827bfc1edd049cd"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a42",
+        "caScore": 19,
+        "examScore": 65,
+        "totalScore": 84,
+        "grade": "A",
+        "_id": "69fcb36a8827bfc1edd049ce"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a43",
+        "caScore": 18,
+        "examScore": 34,
+        "totalScore": 52,
+        "grade": "C",
+        "_id": "69fcb36a8827bfc1edd049cf"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a52",
+        "caScore": 12,
+        "examScore": 45,
+        "totalScore": 57,
+        "grade": "C",
+        "_id": "69fcb36a8827bfc1edd049d0"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a55",
+        "caScore": 10,
+        "examScore": 74,
+        "totalScore": 84,
+        "grade": "A",
+        "_id": "69fcb36a8827bfc1edd049d1"
+      }
+    ],
+    "overallPercentage": 73,
+    "positionInClass": 19,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:42.020Z",
+    "updatedAt": "2026-05-07T15:44:42.020Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd049d3",
+    "school": "69fcb3668827bfc1edd01a32",
+    "student": "69fcb3678827bfc1edd01ac7",
+    "class": "69fcb3678827bfc1edd01a9f",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb3668827bfc1edd01a40",
+        "caScore": 16,
+        "examScore": 69,
+        "totalScore": 85,
+        "grade": "A",
+        "_id": "69fcb36a8827bfc1edd049d4"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a41",
+        "caScore": 12,
+        "examScore": 53,
+        "totalScore": 65,
+        "grade": "B",
+        "_id": "69fcb36a8827bfc1edd049d5"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a42",
+        "caScore": 14,
+        "examScore": 77,
+        "totalScore": 91,
+        "grade": "A",
+        "_id": "69fcb36a8827bfc1edd049d6"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a43",
+        "caScore": 13,
+        "examScore": 50,
+        "totalScore": 63,
+        "grade": "B",
+        "_id": "69fcb36a8827bfc1edd049d7"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a52",
+        "caScore": 10,
+        "examScore": 55,
+        "totalScore": 65,
+        "grade": "B",
+        "_id": "69fcb36a8827bfc1edd049d8"
+      },
+      {
+        "subject": "69fcb3668827bfc1edd01a55",
+        "caScore": 15,
+        "examScore": 74,
+        "totalScore": 89,
+        "grade": "A",
+        "_id": "69fcb36a8827bfc1edd049d9"
+      }
+    ],
+    "overallPercentage": 76,
+    "positionInClass": 13,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:42.025Z",
+    "updatedAt": "2026-05-07T15:44:42.025Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36c8827bfc1edd07576",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "student": "69fcb36a8827bfc1edd04ad0",
+    "class": "69fcb36a8827bfc1edd04ace",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb36a8827bfc1edd04a6f",
+        "caScore": 11,
+        "examScore": 65,
+        "totalScore": 76,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd07577"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a70",
+        "caScore": 8,
+        "examScore": 54,
+        "totalScore": 62,
+        "grade": "B",
+        "_id": "69fcb36c8827bfc1edd07578"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a71",
+        "caScore": 19,
+        "examScore": 76,
+        "totalScore": 95,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd07579"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a72",
+        "caScore": 9,
+        "examScore": 74,
+        "totalScore": 83,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd0757a"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a81",
+        "caScore": 15,
+        "examScore": 62,
+        "totalScore": 77,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd0757b"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a84",
+        "caScore": 11,
+        "examScore": 64,
+        "totalScore": 75,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd0757c"
+      }
+    ],
+    "overallPercentage": 78,
+    "positionInClass": 8,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:44.810Z",
+    "updatedAt": "2026-05-07T15:44:44.810Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36c8827bfc1edd0757e",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "student": "69fcb36a8827bfc1edd04ad2",
+    "class": "69fcb36a8827bfc1edd04ace",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb36a8827bfc1edd04a6f",
+        "caScore": 16,
+        "examScore": 36,
+        "totalScore": 52,
+        "grade": "C",
+        "_id": "69fcb36c8827bfc1edd0757f"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a70",
+        "caScore": 16,
+        "examScore": 33,
+        "totalScore": 49,
+        "grade": "D",
+        "_id": "69fcb36c8827bfc1edd07580"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a71",
+        "caScore": 16,
+        "examScore": 32,
+        "totalScore": 48,
+        "grade": "D",
+        "_id": "69fcb36c8827bfc1edd07581"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a72",
+        "caScore": 13,
+        "examScore": 62,
+        "totalScore": 75,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd07582"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a81",
+        "caScore": 8,
+        "examScore": 52,
+        "totalScore": 60,
+        "grade": "B",
+        "_id": "69fcb36c8827bfc1edd07583"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a84",
+        "caScore": 20,
+        "examScore": 61,
+        "totalScore": 81,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd07584"
+      }
+    ],
+    "overallPercentage": 61,
+    "positionInClass": 8,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:44.815Z",
+    "updatedAt": "2026-05-07T15:44:44.815Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36c8827bfc1edd07586",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "student": "69fcb36a8827bfc1edd04ad4",
+    "class": "69fcb36a8827bfc1edd04ace",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb36a8827bfc1edd04a6f",
+        "caScore": 12,
+        "examScore": 61,
+        "totalScore": 73,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd07587"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a70",
+        "caScore": 16,
+        "examScore": 65,
+        "totalScore": 81,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd07588"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a71",
+        "caScore": 14,
+        "examScore": 36,
+        "totalScore": 50,
+        "grade": "C",
+        "_id": "69fcb36c8827bfc1edd07589"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a72",
+        "caScore": 20,
+        "examScore": 62,
+        "totalScore": 82,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd0758a"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a81",
+        "caScore": 10,
+        "examScore": 54,
+        "totalScore": 64,
+        "grade": "B",
+        "_id": "69fcb36c8827bfc1edd0758b"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a84",
+        "caScore": 16,
+        "examScore": 62,
+        "totalScore": 78,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd0758c"
+      }
+    ],
+    "overallPercentage": 71,
+    "positionInClass": 14,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:44.817Z",
+    "updatedAt": "2026-05-07T15:44:44.817Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36c8827bfc1edd0758e",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "student": "69fcb36a8827bfc1edd04ad6",
+    "class": "69fcb36a8827bfc1edd04ace",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb36a8827bfc1edd04a6f",
+        "caScore": 12,
+        "examScore": 31,
+        "totalScore": 43,
+        "grade": "D",
+        "_id": "69fcb36c8827bfc1edd0758f"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a70",
+        "caScore": 17,
+        "examScore": 41,
+        "totalScore": 58,
+        "grade": "C",
+        "_id": "69fcb36c8827bfc1edd07590"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a71",
+        "caScore": 10,
+        "examScore": 40,
+        "totalScore": 50,
+        "grade": "C",
+        "_id": "69fcb36c8827bfc1edd07591"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a72",
+        "caScore": 14,
+        "examScore": 36,
+        "totalScore": 50,
+        "grade": "C",
+        "_id": "69fcb36c8827bfc1edd07592"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a81",
+        "caScore": 20,
+        "examScore": 77,
+        "totalScore": 97,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd07593"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a84",
+        "caScore": 17,
+        "examScore": 37,
+        "totalScore": 54,
+        "grade": "C",
+        "_id": "69fcb36c8827bfc1edd07594"
+      }
+    ],
+    "overallPercentage": 59,
+    "positionInClass": 10,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:44.819Z",
+    "updatedAt": "2026-05-07T15:44:44.819Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36c8827bfc1edd07596",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "student": "69fcb36a8827bfc1edd04ad8",
+    "class": "69fcb36a8827bfc1edd04ace",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb36a8827bfc1edd04a6f",
+        "caScore": 20,
+        "examScore": 54,
+        "totalScore": 74,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd07597"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a70",
+        "caScore": 11,
+        "examScore": 80,
+        "totalScore": 91,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd07598"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a71",
+        "caScore": 20,
+        "examScore": 60,
+        "totalScore": 80,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd07599"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a72",
+        "caScore": 18,
+        "examScore": 65,
+        "totalScore": 83,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd0759a"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a81",
+        "caScore": 16,
+        "examScore": 35,
+        "totalScore": 51,
+        "grade": "C",
+        "_id": "69fcb36c8827bfc1edd0759b"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a84",
+        "caScore": 14,
+        "examScore": 39,
+        "totalScore": 53,
+        "grade": "C",
+        "_id": "69fcb36c8827bfc1edd0759c"
+      }
+    ],
+    "overallPercentage": 72,
+    "positionInClass": 16,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:44.823Z",
+    "updatedAt": "2026-05-07T15:44:44.823Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36c8827bfc1edd0759e",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "student": "69fcb36a8827bfc1edd04ada",
+    "class": "69fcb36a8827bfc1edd04ace",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb36a8827bfc1edd04a6f",
+        "caScore": 12,
+        "examScore": 53,
+        "totalScore": 65,
+        "grade": "B",
+        "_id": "69fcb36c8827bfc1edd0759f"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a70",
+        "caScore": 18,
+        "examScore": 38,
+        "totalScore": 56,
+        "grade": "C",
+        "_id": "69fcb36c8827bfc1edd075a0"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a71",
+        "caScore": 13,
+        "examScore": 79,
+        "totalScore": 92,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd075a1"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a72",
+        "caScore": 20,
+        "examScore": 50,
+        "totalScore": 70,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd075a2"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a81",
+        "caScore": 13,
+        "examScore": 37,
+        "totalScore": 50,
+        "grade": "C",
+        "_id": "69fcb36c8827bfc1edd075a3"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a84",
+        "caScore": 17,
+        "examScore": 77,
+        "totalScore": 94,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd075a4"
+      }
+    ],
+    "overallPercentage": 71,
+    "positionInClass": 15,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:44.825Z",
+    "updatedAt": "2026-05-07T15:44:44.825Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36c8827bfc1edd075a6",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "student": "69fcb36a8827bfc1edd04adc",
+    "class": "69fcb36a8827bfc1edd04ace",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb36a8827bfc1edd04a6f",
+        "caScore": 13,
+        "examScore": 38,
+        "totalScore": 51,
+        "grade": "C",
+        "_id": "69fcb36c8827bfc1edd075a7"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a70",
+        "caScore": 9,
+        "examScore": 70,
+        "totalScore": 79,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd075a8"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a71",
+        "caScore": 16,
+        "examScore": 36,
+        "totalScore": 52,
+        "grade": "C",
+        "_id": "69fcb36c8827bfc1edd075a9"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a72",
+        "caScore": 8,
+        "examScore": 62,
+        "totalScore": 70,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd075aa"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a81",
+        "caScore": 12,
+        "examScore": 50,
+        "totalScore": 62,
+        "grade": "B",
+        "_id": "69fcb36c8827bfc1edd075ab"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a84",
+        "caScore": 17,
+        "examScore": 36,
+        "totalScore": 53,
+        "grade": "C",
+        "_id": "69fcb36c8827bfc1edd075ac"
+      }
+    ],
+    "overallPercentage": 61,
+    "positionInClass": 10,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:44.827Z",
+    "updatedAt": "2026-05-07T15:44:44.827Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36c8827bfc1edd075ae",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "student": "69fcb36a8827bfc1edd04ade",
+    "class": "69fcb36a8827bfc1edd04ace",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb36a8827bfc1edd04a6f",
+        "caScore": 20,
+        "examScore": 80,
+        "totalScore": 100,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd075af"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a70",
+        "caScore": 16,
+        "examScore": 61,
+        "totalScore": 77,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd075b0"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a71",
+        "caScore": 8,
+        "examScore": 31,
+        "totalScore": 39,
+        "grade": "F",
+        "_id": "69fcb36c8827bfc1edd075b1"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a72",
+        "caScore": 13,
+        "examScore": 76,
+        "totalScore": 89,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd075b2"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a81",
+        "caScore": 8,
+        "examScore": 65,
+        "totalScore": 73,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd075b3"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a84",
+        "caScore": 12,
+        "examScore": 77,
+        "totalScore": 89,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd075b4"
+      }
+    ],
+    "overallPercentage": 78,
+    "positionInClass": 5,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:44.829Z",
+    "updatedAt": "2026-05-07T15:44:44.829Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36c8827bfc1edd075b6",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "student": "69fcb36a8827bfc1edd04ae0",
+    "class": "69fcb36a8827bfc1edd04ace",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb36a8827bfc1edd04a6f",
+        "caScore": 8,
+        "examScore": 45,
+        "totalScore": 53,
+        "grade": "C",
+        "_id": "69fcb36c8827bfc1edd075b7"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a70",
+        "caScore": 15,
+        "examScore": 53,
+        "totalScore": 68,
+        "grade": "B",
+        "_id": "69fcb36c8827bfc1edd075b8"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a71",
+        "caScore": 19,
+        "examScore": 35,
+        "totalScore": 54,
+        "grade": "C",
+        "_id": "69fcb36c8827bfc1edd075b9"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a72",
+        "caScore": 11,
+        "examScore": 70,
+        "totalScore": 81,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd075ba"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a81",
+        "caScore": 20,
+        "examScore": 41,
+        "totalScore": 61,
+        "grade": "B",
+        "_id": "69fcb36c8827bfc1edd075bb"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a84",
+        "caScore": 19,
+        "examScore": 76,
+        "totalScore": 95,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd075bc"
+      }
+    ],
+    "overallPercentage": 69,
+    "positionInClass": 20,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:44.832Z",
+    "updatedAt": "2026-05-07T15:44:44.832Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36c8827bfc1edd075be",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "student": "69fcb36a8827bfc1edd04ae2",
+    "class": "69fcb36a8827bfc1edd04ace",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb36a8827bfc1edd04a6f",
+        "caScore": 18,
+        "examScore": 79,
+        "totalScore": 97,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd075bf"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a70",
+        "caScore": 9,
+        "examScore": 76,
+        "totalScore": 85,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd075c0"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a71",
+        "caScore": 18,
+        "examScore": 76,
+        "totalScore": 94,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd075c1"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a72",
+        "caScore": 14,
+        "examScore": 53,
+        "totalScore": 67,
+        "grade": "B",
+        "_id": "69fcb36c8827bfc1edd075c2"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a81",
+        "caScore": 15,
+        "examScore": 77,
+        "totalScore": 92,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd075c3"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a84",
+        "caScore": 11,
+        "examScore": 68,
+        "totalScore": 79,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd075c4"
+      }
+    ],
+    "overallPercentage": 86,
+    "positionInClass": 12,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:44.835Z",
+    "updatedAt": "2026-05-07T15:44:44.835Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36c8827bfc1edd075c6",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "student": "69fcb36a8827bfc1edd04ae4",
+    "class": "69fcb36a8827bfc1edd04ace",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb36a8827bfc1edd04a6f",
+        "caScore": 18,
+        "examScore": 49,
+        "totalScore": 67,
+        "grade": "B",
+        "_id": "69fcb36c8827bfc1edd075c7"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a70",
+        "caScore": 17,
+        "examScore": 53,
+        "totalScore": 70,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd075c8"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a71",
+        "caScore": 11,
+        "examScore": 32,
+        "totalScore": 43,
+        "grade": "D",
+        "_id": "69fcb36c8827bfc1edd075c9"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a72",
+        "caScore": 15,
+        "examScore": 43,
+        "totalScore": 58,
+        "grade": "C",
+        "_id": "69fcb36c8827bfc1edd075ca"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a81",
+        "caScore": 11,
+        "examScore": 57,
+        "totalScore": 68,
+        "grade": "B",
+        "_id": "69fcb36c8827bfc1edd075cb"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a84",
+        "caScore": 13,
+        "examScore": 78,
+        "totalScore": 91,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd075cc"
+      }
+    ],
+    "overallPercentage": 66,
+    "positionInClass": 11,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:44.838Z",
+    "updatedAt": "2026-05-07T15:44:44.838Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36c8827bfc1edd075ce",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "student": "69fcb36a8827bfc1edd04ae6",
+    "class": "69fcb36a8827bfc1edd04ace",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb36a8827bfc1edd04a6f",
+        "caScore": 15,
+        "examScore": 70,
+        "totalScore": 85,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd075cf"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a70",
+        "caScore": 15,
+        "examScore": 58,
+        "totalScore": 73,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd075d0"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a71",
+        "caScore": 17,
+        "examScore": 76,
+        "totalScore": 93,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd075d1"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a72",
+        "caScore": 11,
+        "examScore": 34,
+        "totalScore": 45,
+        "grade": "D",
+        "_id": "69fcb36c8827bfc1edd075d2"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a81",
+        "caScore": 19,
+        "examScore": 65,
+        "totalScore": 84,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd075d3"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a84",
+        "caScore": 8,
+        "examScore": 63,
+        "totalScore": 71,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd075d4"
+      }
+    ],
+    "overallPercentage": 75,
+    "positionInClass": 18,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:44.842Z",
+    "updatedAt": "2026-05-07T15:44:44.842Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36c8827bfc1edd075d6",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "student": "69fcb36a8827bfc1edd04ae8",
+    "class": "69fcb36a8827bfc1edd04ace",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb36a8827bfc1edd04a6f",
+        "caScore": 19,
+        "examScore": 63,
+        "totalScore": 82,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd075d7"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a70",
+        "caScore": 8,
+        "examScore": 72,
+        "totalScore": 80,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd075d8"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a71",
+        "caScore": 18,
+        "examScore": 37,
+        "totalScore": 55,
+        "grade": "C",
+        "_id": "69fcb36c8827bfc1edd075d9"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a72",
+        "caScore": 9,
+        "examScore": 31,
+        "totalScore": 40,
+        "grade": "D",
+        "_id": "69fcb36c8827bfc1edd075da"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a81",
+        "caScore": 18,
+        "examScore": 35,
+        "totalScore": 53,
+        "grade": "C",
+        "_id": "69fcb36c8827bfc1edd075db"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a84",
+        "caScore": 13,
+        "examScore": 57,
+        "totalScore": 70,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd075dc"
+      }
+    ],
+    "overallPercentage": 63,
+    "positionInClass": 10,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:44.845Z",
+    "updatedAt": "2026-05-07T15:44:44.845Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36c8827bfc1edd075de",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "student": "69fcb36a8827bfc1edd04aea",
+    "class": "69fcb36a8827bfc1edd04ace",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb36a8827bfc1edd04a6f",
+        "caScore": 15,
+        "examScore": 51,
+        "totalScore": 66,
+        "grade": "B",
+        "_id": "69fcb36c8827bfc1edd075df"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a70",
+        "caScore": 11,
+        "examScore": 77,
+        "totalScore": 88,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd075e0"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a71",
+        "caScore": 15,
+        "examScore": 46,
+        "totalScore": 61,
+        "grade": "B",
+        "_id": "69fcb36c8827bfc1edd075e1"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a72",
+        "caScore": 19,
+        "examScore": 65,
+        "totalScore": 84,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd075e2"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a81",
+        "caScore": 12,
+        "examScore": 33,
+        "totalScore": 45,
+        "grade": "D",
+        "_id": "69fcb36c8827bfc1edd075e3"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a84",
+        "caScore": 15,
+        "examScore": 35,
+        "totalScore": 50,
+        "grade": "C",
+        "_id": "69fcb36c8827bfc1edd075e4"
+      }
+    ],
+    "overallPercentage": 66,
+    "positionInClass": 6,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:44.849Z",
+    "updatedAt": "2026-05-07T15:44:44.849Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36c8827bfc1edd075e6",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "student": "69fcb36a8827bfc1edd04aec",
+    "class": "69fcb36a8827bfc1edd04ace",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb36a8827bfc1edd04a6f",
+        "caScore": 14,
+        "examScore": 48,
+        "totalScore": 62,
+        "grade": "B",
+        "_id": "69fcb36c8827bfc1edd075e7"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a70",
+        "caScore": 12,
+        "examScore": 65,
+        "totalScore": 77,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd075e8"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a71",
+        "caScore": 17,
+        "examScore": 57,
+        "totalScore": 74,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd075e9"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a72",
+        "caScore": 14,
+        "examScore": 79,
+        "totalScore": 93,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd075ea"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a81",
+        "caScore": 14,
+        "examScore": 36,
+        "totalScore": 50,
+        "grade": "C",
+        "_id": "69fcb36c8827bfc1edd075eb"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a84",
+        "caScore": 11,
+        "examScore": 75,
+        "totalScore": 86,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd075ec"
+      }
+    ],
+    "overallPercentage": 74,
+    "positionInClass": 2,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:44.853Z",
+    "updatedAt": "2026-05-07T15:44:44.853Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36c8827bfc1edd075ee",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "student": "69fcb36a8827bfc1edd04aee",
+    "class": "69fcb36a8827bfc1edd04ace",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb36a8827bfc1edd04a6f",
+        "caScore": 13,
+        "examScore": 37,
+        "totalScore": 50,
+        "grade": "C",
+        "_id": "69fcb36c8827bfc1edd075ef"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a70",
+        "caScore": 15,
+        "examScore": 30,
+        "totalScore": 45,
+        "grade": "D",
+        "_id": "69fcb36c8827bfc1edd075f0"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a71",
+        "caScore": 20,
+        "examScore": 68,
+        "totalScore": 88,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd075f1"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a72",
+        "caScore": 15,
+        "examScore": 43,
+        "totalScore": 58,
+        "grade": "C",
+        "_id": "69fcb36c8827bfc1edd075f2"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a81",
+        "caScore": 19,
+        "examScore": 37,
+        "totalScore": 56,
+        "grade": "C",
+        "_id": "69fcb36c8827bfc1edd075f3"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a84",
+        "caScore": 11,
+        "examScore": 37,
+        "totalScore": 48,
+        "grade": "D",
+        "_id": "69fcb36c8827bfc1edd075f4"
+      }
+    ],
+    "overallPercentage": 57,
+    "positionInClass": 3,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:44.858Z",
+    "updatedAt": "2026-05-07T15:44:44.858Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36c8827bfc1edd075f6",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "student": "69fcb36a8827bfc1edd04af0",
+    "class": "69fcb36a8827bfc1edd04ace",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb36a8827bfc1edd04a6f",
+        "caScore": 11,
+        "examScore": 63,
+        "totalScore": 74,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd075f7"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a70",
+        "caScore": 13,
+        "examScore": 78,
+        "totalScore": 91,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd075f8"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a71",
+        "caScore": 19,
+        "examScore": 44,
+        "totalScore": 63,
+        "grade": "B",
+        "_id": "69fcb36c8827bfc1edd075f9"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a72",
+        "caScore": 13,
+        "examScore": 42,
+        "totalScore": 55,
+        "grade": "C",
+        "_id": "69fcb36c8827bfc1edd075fa"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a81",
+        "caScore": 16,
+        "examScore": 50,
+        "totalScore": 66,
+        "grade": "B",
+        "_id": "69fcb36c8827bfc1edd075fb"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a84",
+        "caScore": 10,
+        "examScore": 52,
+        "totalScore": 62,
+        "grade": "B",
+        "_id": "69fcb36c8827bfc1edd075fc"
+      }
+    ],
+    "overallPercentage": 69,
+    "positionInClass": 17,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:44.860Z",
+    "updatedAt": "2026-05-07T15:44:44.860Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36c8827bfc1edd075fe",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "student": "69fcb36a8827bfc1edd04af2",
+    "class": "69fcb36a8827bfc1edd04ace",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb36a8827bfc1edd04a6f",
+        "caScore": 19,
+        "examScore": 76,
+        "totalScore": 95,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd075ff"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a70",
+        "caScore": 18,
+        "examScore": 47,
+        "totalScore": 65,
+        "grade": "B",
+        "_id": "69fcb36c8827bfc1edd07600"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a71",
+        "caScore": 11,
+        "examScore": 76,
+        "totalScore": 87,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd07601"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a72",
+        "caScore": 13,
+        "examScore": 35,
+        "totalScore": 48,
+        "grade": "D",
+        "_id": "69fcb36c8827bfc1edd07602"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a81",
+        "caScore": 17,
+        "examScore": 67,
+        "totalScore": 84,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd07603"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a84",
+        "caScore": 13,
+        "examScore": 77,
+        "totalScore": 90,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd07604"
+      }
+    ],
+    "overallPercentage": 78,
+    "positionInClass": 12,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:44.869Z",
+    "updatedAt": "2026-05-07T15:44:44.869Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36c8827bfc1edd07606",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "student": "69fcb36a8827bfc1edd04af4",
+    "class": "69fcb36a8827bfc1edd04ace",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb36a8827bfc1edd04a6f",
+        "caScore": 17,
+        "examScore": 48,
+        "totalScore": 65,
+        "grade": "B",
+        "_id": "69fcb36c8827bfc1edd07607"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a70",
+        "caScore": 14,
+        "examScore": 53,
+        "totalScore": 67,
+        "grade": "B",
+        "_id": "69fcb36c8827bfc1edd07608"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a71",
+        "caScore": 14,
+        "examScore": 56,
+        "totalScore": 70,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd07609"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a72",
+        "caScore": 15,
+        "examScore": 75,
+        "totalScore": 90,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd0760a"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a81",
+        "caScore": 10,
+        "examScore": 77,
+        "totalScore": 87,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd0760b"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a84",
+        "caScore": 20,
+        "examScore": 33,
+        "totalScore": 53,
+        "grade": "C",
+        "_id": "69fcb36c8827bfc1edd0760c"
+      }
+    ],
+    "overallPercentage": 72,
+    "positionInClass": 11,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:44.873Z",
+    "updatedAt": "2026-05-07T15:44:44.873Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36c8827bfc1edd0760e",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "student": "69fcb36a8827bfc1edd04af6",
+    "class": "69fcb36a8827bfc1edd04ace",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb36a8827bfc1edd04a6f",
+        "caScore": 18,
+        "examScore": 43,
+        "totalScore": 61,
+        "grade": "B",
+        "_id": "69fcb36c8827bfc1edd0760f"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a70",
+        "caScore": 10,
+        "examScore": 37,
+        "totalScore": 47,
+        "grade": "D",
+        "_id": "69fcb36c8827bfc1edd07610"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a71",
+        "caScore": 15,
+        "examScore": 42,
+        "totalScore": 57,
+        "grade": "C",
+        "_id": "69fcb36c8827bfc1edd07611"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a72",
+        "caScore": 14,
+        "examScore": 54,
+        "totalScore": 68,
+        "grade": "B",
+        "_id": "69fcb36c8827bfc1edd07612"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a81",
+        "caScore": 13,
+        "examScore": 73,
+        "totalScore": 86,
+        "grade": "A",
+        "_id": "69fcb36c8827bfc1edd07613"
+      },
+      {
+        "subject": "69fcb36a8827bfc1edd04a84",
+        "caScore": 16,
+        "examScore": 40,
+        "totalScore": 56,
+        "grade": "C",
+        "_id": "69fcb36c8827bfc1edd07614"
+      }
+    ],
+    "overallPercentage": 63,
+    "positionInClass": 15,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:44:44.876Z",
+    "updatedAt": "2026-05-07T15:44:44.876Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb527b2974ad48e19d5c3",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "student": "69fcb526b2974ad48e19d54f",
+    "class": "69fcb4d4d11fa4b280c4f45f",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb4d4d11fa4b280c4f400",
+        "caScore": 13,
+        "examScore": 40,
+        "totalScore": 53,
+        "grade": "C",
+        "_id": "69fcb527b2974ad48e19d5c4"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f401",
+        "caScore": 18,
+        "examScore": 48,
+        "totalScore": 66,
+        "grade": "B",
+        "_id": "69fcb527b2974ad48e19d5c5"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f402",
+        "caScore": 14,
+        "examScore": 41,
+        "totalScore": 55,
+        "grade": "C",
+        "_id": "69fcb527b2974ad48e19d5c6"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f403",
+        "caScore": 20,
+        "examScore": 77,
+        "totalScore": 97,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d5c7"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f412",
+        "caScore": 20,
+        "examScore": 68,
+        "totalScore": 88,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d5c8"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f415",
+        "caScore": 9,
+        "examScore": 73,
+        "totalScore": 82,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d5c9"
+      }
+    ],
+    "overallPercentage": 74,
+    "positionInClass": 9,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:52:07.095Z",
+    "updatedAt": "2026-05-07T15:52:07.095Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb527b2974ad48e19d5cb",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "student": "69fcb526b2974ad48e19d551",
+    "class": "69fcb4d4d11fa4b280c4f45f",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb4d4d11fa4b280c4f400",
+        "caScore": 9,
+        "examScore": 69,
+        "totalScore": 78,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d5cc"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f401",
+        "caScore": 19,
+        "examScore": 50,
+        "totalScore": 69,
+        "grade": "B",
+        "_id": "69fcb527b2974ad48e19d5cd"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f402",
+        "caScore": 14,
+        "examScore": 65,
+        "totalScore": 79,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d5ce"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f403",
+        "caScore": 9,
+        "examScore": 60,
+        "totalScore": 69,
+        "grade": "B",
+        "_id": "69fcb527b2974ad48e19d5cf"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f412",
+        "caScore": 19,
+        "examScore": 37,
+        "totalScore": 56,
+        "grade": "C",
+        "_id": "69fcb527b2974ad48e19d5d0"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f415",
+        "caScore": 15,
+        "examScore": 77,
+        "totalScore": 92,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d5d1"
+      }
+    ],
+    "overallPercentage": 74,
+    "positionInClass": 5,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:52:07.105Z",
+    "updatedAt": "2026-05-07T15:52:07.105Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb527b2974ad48e19d5d3",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "student": "69fcb526b2974ad48e19d553",
+    "class": "69fcb4d4d11fa4b280c4f45f",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb4d4d11fa4b280c4f400",
+        "caScore": 10,
+        "examScore": 34,
+        "totalScore": 44,
+        "grade": "D",
+        "_id": "69fcb527b2974ad48e19d5d4"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f401",
+        "caScore": 9,
+        "examScore": 45,
+        "totalScore": 54,
+        "grade": "C",
+        "_id": "69fcb527b2974ad48e19d5d5"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f402",
+        "caScore": 9,
+        "examScore": 32,
+        "totalScore": 41,
+        "grade": "D",
+        "_id": "69fcb527b2974ad48e19d5d6"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f403",
+        "caScore": 19,
+        "examScore": 68,
+        "totalScore": 87,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d5d7"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f412",
+        "caScore": 12,
+        "examScore": 70,
+        "totalScore": 82,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d5d8"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f415",
+        "caScore": 8,
+        "examScore": 33,
+        "totalScore": 41,
+        "grade": "D",
+        "_id": "69fcb527b2974ad48e19d5d9"
+      }
+    ],
+    "overallPercentage": 58,
+    "positionInClass": 20,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:52:07.112Z",
+    "updatedAt": "2026-05-07T15:52:07.112Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb527b2974ad48e19d5db",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "student": "69fcb526b2974ad48e19d555",
+    "class": "69fcb4d4d11fa4b280c4f45f",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb4d4d11fa4b280c4f400",
+        "caScore": 16,
+        "examScore": 69,
+        "totalScore": 85,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d5dc"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f401",
+        "caScore": 13,
+        "examScore": 68,
+        "totalScore": 81,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d5dd"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f402",
+        "caScore": 19,
+        "examScore": 61,
+        "totalScore": 80,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d5de"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f403",
+        "caScore": 12,
+        "examScore": 53,
+        "totalScore": 65,
+        "grade": "B",
+        "_id": "69fcb527b2974ad48e19d5df"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f412",
+        "caScore": 15,
+        "examScore": 38,
+        "totalScore": 53,
+        "grade": "C",
+        "_id": "69fcb527b2974ad48e19d5e0"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f415",
+        "caScore": 9,
+        "examScore": 43,
+        "totalScore": 52,
+        "grade": "C",
+        "_id": "69fcb527b2974ad48e19d5e1"
+      }
+    ],
+    "overallPercentage": 69,
+    "positionInClass": 2,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:52:07.126Z",
+    "updatedAt": "2026-05-07T15:52:07.126Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb527b2974ad48e19d5e3",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "student": "69fcb526b2974ad48e19d557",
+    "class": "69fcb4d4d11fa4b280c4f45f",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb4d4d11fa4b280c4f400",
+        "caScore": 15,
+        "examScore": 40,
+        "totalScore": 55,
+        "grade": "C",
+        "_id": "69fcb527b2974ad48e19d5e4"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f401",
+        "caScore": 10,
+        "examScore": 68,
+        "totalScore": 78,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d5e5"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f402",
+        "caScore": 15,
+        "examScore": 77,
+        "totalScore": 92,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d5e6"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f403",
+        "caScore": 10,
+        "examScore": 65,
+        "totalScore": 75,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d5e7"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f412",
+        "caScore": 13,
+        "examScore": 79,
+        "totalScore": 92,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d5e8"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f415",
+        "caScore": 12,
+        "examScore": 58,
+        "totalScore": 70,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d5e9"
+      }
+    ],
+    "overallPercentage": 77,
+    "positionInClass": 8,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:52:07.148Z",
+    "updatedAt": "2026-05-07T15:52:07.148Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb527b2974ad48e19d5eb",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "student": "69fcb526b2974ad48e19d559",
+    "class": "69fcb4d4d11fa4b280c4f45f",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb4d4d11fa4b280c4f400",
+        "caScore": 16,
+        "examScore": 43,
+        "totalScore": 59,
+        "grade": "C",
+        "_id": "69fcb527b2974ad48e19d5ec"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f401",
+        "caScore": 8,
+        "examScore": 75,
+        "totalScore": 83,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d5ed"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f402",
+        "caScore": 19,
+        "examScore": 46,
+        "totalScore": 65,
+        "grade": "B",
+        "_id": "69fcb527b2974ad48e19d5ee"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f403",
+        "caScore": 18,
+        "examScore": 58,
+        "totalScore": 76,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d5ef"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f412",
+        "caScore": 9,
+        "examScore": 78,
+        "totalScore": 87,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d5f0"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f415",
+        "caScore": 12,
+        "examScore": 73,
+        "totalScore": 85,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d5f1"
+      }
+    ],
+    "overallPercentage": 76,
+    "positionInClass": 9,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:52:07.175Z",
+    "updatedAt": "2026-05-07T15:52:07.175Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb527b2974ad48e19d5f3",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "student": "69fcb526b2974ad48e19d55b",
+    "class": "69fcb4d4d11fa4b280c4f45f",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb4d4d11fa4b280c4f400",
+        "caScore": 20,
+        "examScore": 47,
+        "totalScore": 67,
+        "grade": "B",
+        "_id": "69fcb527b2974ad48e19d5f4"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f401",
+        "caScore": 13,
+        "examScore": 57,
+        "totalScore": 70,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d5f5"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f402",
+        "caScore": 9,
+        "examScore": 60,
+        "totalScore": 69,
+        "grade": "B",
+        "_id": "69fcb527b2974ad48e19d5f6"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f403",
+        "caScore": 10,
+        "examScore": 50,
+        "totalScore": 60,
+        "grade": "B",
+        "_id": "69fcb527b2974ad48e19d5f7"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f412",
+        "caScore": 16,
+        "examScore": 71,
+        "totalScore": 87,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d5f8"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f415",
+        "caScore": 17,
+        "examScore": 59,
+        "totalScore": 76,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d5f9"
+      }
+    ],
+    "overallPercentage": 72,
+    "positionInClass": 4,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:52:07.183Z",
+    "updatedAt": "2026-05-07T15:52:07.183Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb527b2974ad48e19d5fb",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "student": "69fcb526b2974ad48e19d55d",
+    "class": "69fcb4d4d11fa4b280c4f45f",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb4d4d11fa4b280c4f400",
+        "caScore": 16,
+        "examScore": 40,
+        "totalScore": 56,
+        "grade": "C",
+        "_id": "69fcb527b2974ad48e19d5fc"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f401",
+        "caScore": 9,
+        "examScore": 44,
+        "totalScore": 53,
+        "grade": "C",
+        "_id": "69fcb527b2974ad48e19d5fd"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f402",
+        "caScore": 8,
+        "examScore": 47,
+        "totalScore": 55,
+        "grade": "C",
+        "_id": "69fcb527b2974ad48e19d5fe"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f403",
+        "caScore": 17,
+        "examScore": 61,
+        "totalScore": 78,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d5ff"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f412",
+        "caScore": 17,
+        "examScore": 47,
+        "totalScore": 64,
+        "grade": "B",
+        "_id": "69fcb527b2974ad48e19d600"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f415",
+        "caScore": 11,
+        "examScore": 74,
+        "totalScore": 85,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d601"
+      }
+    ],
+    "overallPercentage": 65,
+    "positionInClass": 18,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:52:07.193Z",
+    "updatedAt": "2026-05-07T15:52:07.193Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb527b2974ad48e19d603",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "student": "69fcb526b2974ad48e19d55f",
+    "class": "69fcb4d4d11fa4b280c4f45f",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb4d4d11fa4b280c4f400",
+        "caScore": 11,
+        "examScore": 42,
+        "totalScore": 53,
+        "grade": "C",
+        "_id": "69fcb527b2974ad48e19d604"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f401",
+        "caScore": 18,
+        "examScore": 58,
+        "totalScore": 76,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d605"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f402",
+        "caScore": 13,
+        "examScore": 57,
+        "totalScore": 70,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d606"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f403",
+        "caScore": 8,
+        "examScore": 66,
+        "totalScore": 74,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d607"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f412",
+        "caScore": 10,
+        "examScore": 31,
+        "totalScore": 41,
+        "grade": "D",
+        "_id": "69fcb527b2974ad48e19d608"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f415",
+        "caScore": 13,
+        "examScore": 67,
+        "totalScore": 80,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d609"
+      }
+    ],
+    "overallPercentage": 66,
+    "positionInClass": 3,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:52:07.204Z",
+    "updatedAt": "2026-05-07T15:52:07.204Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb527b2974ad48e19d60b",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "student": "69fcb526b2974ad48e19d561",
+    "class": "69fcb4d4d11fa4b280c4f45f",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb4d4d11fa4b280c4f400",
+        "caScore": 9,
+        "examScore": 69,
+        "totalScore": 78,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d60c"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f401",
+        "caScore": 15,
+        "examScore": 67,
+        "totalScore": 82,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d60d"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f402",
+        "caScore": 15,
+        "examScore": 38,
+        "totalScore": 53,
+        "grade": "C",
+        "_id": "69fcb527b2974ad48e19d60e"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f403",
+        "caScore": 11,
+        "examScore": 49,
+        "totalScore": 60,
+        "grade": "B",
+        "_id": "69fcb527b2974ad48e19d60f"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f412",
+        "caScore": 16,
+        "examScore": 40,
+        "totalScore": 56,
+        "grade": "C",
+        "_id": "69fcb527b2974ad48e19d610"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f415",
+        "caScore": 19,
+        "examScore": 46,
+        "totalScore": 65,
+        "grade": "B",
+        "_id": "69fcb527b2974ad48e19d611"
+      }
+    ],
+    "overallPercentage": 66,
+    "positionInClass": 6,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:52:07.210Z",
+    "updatedAt": "2026-05-07T15:52:07.210Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb527b2974ad48e19d613",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "student": "69fcb526b2974ad48e19d563",
+    "class": "69fcb4d4d11fa4b280c4f45f",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb4d4d11fa4b280c4f400",
+        "caScore": 18,
+        "examScore": 30,
+        "totalScore": 48,
+        "grade": "D",
+        "_id": "69fcb527b2974ad48e19d614"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f401",
+        "caScore": 19,
+        "examScore": 49,
+        "totalScore": 68,
+        "grade": "B",
+        "_id": "69fcb527b2974ad48e19d615"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f402",
+        "caScore": 8,
+        "examScore": 36,
+        "totalScore": 44,
+        "grade": "D",
+        "_id": "69fcb527b2974ad48e19d616"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f403",
+        "caScore": 13,
+        "examScore": 60,
+        "totalScore": 73,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d617"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f412",
+        "caScore": 16,
+        "examScore": 51,
+        "totalScore": 67,
+        "grade": "B",
+        "_id": "69fcb527b2974ad48e19d618"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f415",
+        "caScore": 9,
+        "examScore": 65,
+        "totalScore": 74,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d619"
+      }
+    ],
+    "overallPercentage": 62,
+    "positionInClass": 20,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:52:07.215Z",
+    "updatedAt": "2026-05-07T15:52:07.215Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb527b2974ad48e19d61b",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "student": "69fcb526b2974ad48e19d565",
+    "class": "69fcb4d4d11fa4b280c4f45f",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb4d4d11fa4b280c4f400",
+        "caScore": 11,
+        "examScore": 39,
+        "totalScore": 50,
+        "grade": "C",
+        "_id": "69fcb527b2974ad48e19d61c"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f401",
+        "caScore": 15,
+        "examScore": 76,
+        "totalScore": 91,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d61d"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f402",
+        "caScore": 10,
+        "examScore": 72,
+        "totalScore": 82,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d61e"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f403",
+        "caScore": 12,
+        "examScore": 60,
+        "totalScore": 72,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d61f"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f412",
+        "caScore": 10,
+        "examScore": 32,
+        "totalScore": 42,
+        "grade": "D",
+        "_id": "69fcb527b2974ad48e19d620"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f415",
+        "caScore": 10,
+        "examScore": 68,
+        "totalScore": 78,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d621"
+      }
+    ],
+    "overallPercentage": 69,
+    "positionInClass": 11,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:52:07.222Z",
+    "updatedAt": "2026-05-07T15:52:07.222Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb527b2974ad48e19d623",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "student": "69fcb526b2974ad48e19d567",
+    "class": "69fcb4d4d11fa4b280c4f45f",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb4d4d11fa4b280c4f400",
+        "caScore": 14,
+        "examScore": 41,
+        "totalScore": 55,
+        "grade": "C",
+        "_id": "69fcb527b2974ad48e19d624"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f401",
+        "caScore": 12,
+        "examScore": 64,
+        "totalScore": 76,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d625"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f402",
+        "caScore": 8,
+        "examScore": 68,
+        "totalScore": 76,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d626"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f403",
+        "caScore": 14,
+        "examScore": 54,
+        "totalScore": 68,
+        "grade": "B",
+        "_id": "69fcb527b2974ad48e19d627"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f412",
+        "caScore": 8,
+        "examScore": 43,
+        "totalScore": 51,
+        "grade": "C",
+        "_id": "69fcb527b2974ad48e19d628"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f415",
+        "caScore": 8,
+        "examScore": 77,
+        "totalScore": 85,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d629"
+      }
+    ],
+    "overallPercentage": 69,
+    "positionInClass": 12,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:52:07.227Z",
+    "updatedAt": "2026-05-07T15:52:07.227Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb527b2974ad48e19d62b",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "student": "69fcb526b2974ad48e19d569",
+    "class": "69fcb4d4d11fa4b280c4f45f",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb4d4d11fa4b280c4f400",
+        "caScore": 15,
+        "examScore": 61,
+        "totalScore": 76,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d62c"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f401",
+        "caScore": 14,
+        "examScore": 33,
+        "totalScore": 47,
+        "grade": "D",
+        "_id": "69fcb527b2974ad48e19d62d"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f402",
+        "caScore": 12,
+        "examScore": 71,
+        "totalScore": 83,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d62e"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f403",
+        "caScore": 18,
+        "examScore": 44,
+        "totalScore": 62,
+        "grade": "B",
+        "_id": "69fcb527b2974ad48e19d62f"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f412",
+        "caScore": 16,
+        "examScore": 73,
+        "totalScore": 89,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d630"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f415",
+        "caScore": 18,
+        "examScore": 48,
+        "totalScore": 66,
+        "grade": "B",
+        "_id": "69fcb527b2974ad48e19d631"
+      }
+    ],
+    "overallPercentage": 71,
+    "positionInClass": 13,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:52:07.235Z",
+    "updatedAt": "2026-05-07T15:52:07.235Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb527b2974ad48e19d633",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "student": "69fcb526b2974ad48e19d56b",
+    "class": "69fcb4d4d11fa4b280c4f45f",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb4d4d11fa4b280c4f400",
+        "caScore": 20,
+        "examScore": 33,
+        "totalScore": 53,
+        "grade": "C",
+        "_id": "69fcb527b2974ad48e19d634"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f401",
+        "caScore": 16,
+        "examScore": 68,
+        "totalScore": 84,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d635"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f402",
+        "caScore": 14,
+        "examScore": 75,
+        "totalScore": 89,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d636"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f403",
+        "caScore": 20,
+        "examScore": 53,
+        "totalScore": 73,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d637"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f412",
+        "caScore": 16,
+        "examScore": 33,
+        "totalScore": 49,
+        "grade": "D",
+        "_id": "69fcb527b2974ad48e19d638"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f415",
+        "caScore": 8,
+        "examScore": 32,
+        "totalScore": 40,
+        "grade": "D",
+        "_id": "69fcb527b2974ad48e19d639"
+      }
+    ],
+    "overallPercentage": 65,
+    "positionInClass": 18,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:52:07.239Z",
+    "updatedAt": "2026-05-07T15:52:07.239Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb527b2974ad48e19d63b",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "student": "69fcb526b2974ad48e19d56d",
+    "class": "69fcb4d4d11fa4b280c4f45f",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb4d4d11fa4b280c4f400",
+        "caScore": 14,
+        "examScore": 73,
+        "totalScore": 87,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d63c"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f401",
+        "caScore": 20,
+        "examScore": 35,
+        "totalScore": 55,
+        "grade": "C",
+        "_id": "69fcb527b2974ad48e19d63d"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f402",
+        "caScore": 13,
+        "examScore": 79,
+        "totalScore": 92,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d63e"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f403",
+        "caScore": 11,
+        "examScore": 60,
+        "totalScore": 71,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d63f"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f412",
+        "caScore": 15,
+        "examScore": 42,
+        "totalScore": 57,
+        "grade": "C",
+        "_id": "69fcb527b2974ad48e19d640"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f415",
+        "caScore": 10,
+        "examScore": 46,
+        "totalScore": 56,
+        "grade": "C",
+        "_id": "69fcb527b2974ad48e19d641"
+      }
+    ],
+    "overallPercentage": 70,
+    "positionInClass": 18,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:52:07.242Z",
+    "updatedAt": "2026-05-07T15:52:07.242Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb527b2974ad48e19d643",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "student": "69fcb526b2974ad48e19d56f",
+    "class": "69fcb4d4d11fa4b280c4f45f",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb4d4d11fa4b280c4f400",
+        "caScore": 8,
+        "examScore": 34,
+        "totalScore": 42,
+        "grade": "D",
+        "_id": "69fcb527b2974ad48e19d644"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f401",
+        "caScore": 14,
+        "examScore": 32,
+        "totalScore": 46,
+        "grade": "D",
+        "_id": "69fcb527b2974ad48e19d645"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f402",
+        "caScore": 20,
+        "examScore": 65,
+        "totalScore": 85,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d646"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f403",
+        "caScore": 15,
+        "examScore": 73,
+        "totalScore": 88,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d647"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f412",
+        "caScore": 17,
+        "examScore": 30,
+        "totalScore": 47,
+        "grade": "D",
+        "_id": "69fcb527b2974ad48e19d648"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f415",
+        "caScore": 11,
+        "examScore": 36,
+        "totalScore": 47,
+        "grade": "D",
+        "_id": "69fcb527b2974ad48e19d649"
+      }
+    ],
+    "overallPercentage": 59,
+    "positionInClass": 17,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:52:07.250Z",
+    "updatedAt": "2026-05-07T15:52:07.250Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb527b2974ad48e19d64b",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "student": "69fcb526b2974ad48e19d571",
+    "class": "69fcb4d4d11fa4b280c4f45f",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb4d4d11fa4b280c4f400",
+        "caScore": 15,
+        "examScore": 38,
+        "totalScore": 53,
+        "grade": "C",
+        "_id": "69fcb527b2974ad48e19d64c"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f401",
+        "caScore": 10,
+        "examScore": 59,
+        "totalScore": 69,
+        "grade": "B",
+        "_id": "69fcb527b2974ad48e19d64d"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f402",
+        "caScore": 10,
+        "examScore": 51,
+        "totalScore": 61,
+        "grade": "B",
+        "_id": "69fcb527b2974ad48e19d64e"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f403",
+        "caScore": 13,
+        "examScore": 32,
+        "totalScore": 45,
+        "grade": "D",
+        "_id": "69fcb527b2974ad48e19d64f"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f412",
+        "caScore": 18,
+        "examScore": 71,
+        "totalScore": 89,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d650"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f415",
+        "caScore": 19,
+        "examScore": 61,
+        "totalScore": 80,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d651"
+      }
+    ],
+    "overallPercentage": 66,
+    "positionInClass": 15,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:52:07.255Z",
+    "updatedAt": "2026-05-07T15:52:07.255Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb527b2974ad48e19d653",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "student": "69fcb526b2974ad48e19d573",
+    "class": "69fcb4d4d11fa4b280c4f45f",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb4d4d11fa4b280c4f400",
+        "caScore": 8,
+        "examScore": 63,
+        "totalScore": 71,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d654"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f401",
+        "caScore": 14,
+        "examScore": 68,
+        "totalScore": 82,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d655"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f402",
+        "caScore": 13,
+        "examScore": 31,
+        "totalScore": 44,
+        "grade": "D",
+        "_id": "69fcb527b2974ad48e19d656"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f403",
+        "caScore": 8,
+        "examScore": 65,
+        "totalScore": 73,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d657"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f412",
+        "caScore": 14,
+        "examScore": 67,
+        "totalScore": 81,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d658"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f415",
+        "caScore": 15,
+        "examScore": 34,
+        "totalScore": 49,
+        "grade": "D",
+        "_id": "69fcb527b2974ad48e19d659"
+      }
+    ],
+    "overallPercentage": 67,
+    "positionInClass": 16,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:52:07.263Z",
+    "updatedAt": "2026-05-07T15:52:07.263Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb527b2974ad48e19d65b",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "student": "69fcb526b2974ad48e19d575",
+    "class": "69fcb4d4d11fa4b280c4f45f",
+    "term": "first",
+    "session": "2024/2025",
+    "subjects": [
+      {
+        "subject": "69fcb4d4d11fa4b280c4f400",
+        "caScore": 14,
+        "examScore": 37,
+        "totalScore": 51,
+        "grade": "C",
+        "_id": "69fcb527b2974ad48e19d65c"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f401",
+        "caScore": 20,
+        "examScore": 71,
+        "totalScore": 91,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d65d"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f402",
+        "caScore": 8,
+        "examScore": 33,
+        "totalScore": 41,
+        "grade": "D",
+        "_id": "69fcb527b2974ad48e19d65e"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f403",
+        "caScore": 16,
+        "examScore": 56,
+        "totalScore": 72,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d65f"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f412",
+        "caScore": 20,
+        "examScore": 59,
+        "totalScore": 79,
+        "grade": "A",
+        "_id": "69fcb527b2974ad48e19d660"
+      },
+      {
+        "subject": "69fcb4d4d11fa4b280c4f415",
+        "caScore": 9,
+        "examScore": 46,
+        "totalScore": 55,
+        "grade": "C",
+        "_id": "69fcb527b2974ad48e19d661"
+      }
+    ],
+    "overallPercentage": 65,
+    "positionInClass": 9,
+    "principalComment": "Good performance. Keep up the good work.",
+    "status": "approved",
+    "createdAt": "2026-05-07T15:52:07.271Z",
+    "updatedAt": "2026-05-07T15:52:07.271Z",
+    "__v": 0
+  }
+]

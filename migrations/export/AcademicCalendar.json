@@ -1,0 +1,510 @@
+[
+  {
+    "_id": "69fcb34213a20a20306fa574",
+    "school": "69fcb2f84005bea0681d24cf",
+    "session": "2024/2025",
+    "terms": [
+      {
+        "term": "first",
+        "name": "First Term 2024/2025",
+        "startDate": "2024-09-09T00:00:00.000Z",
+        "endDate": "2024-12-13T00:00:00.000Z",
+        "events": [
+          {
+            "title": "School Resumption",
+            "date": "2024-09-09T00:00:00.000Z",
+            "type": "other",
+            "_id": "69fcb34213a20a20306fa576"
+          },
+          {
+            "title": "Mid-Term Break Begins",
+            "date": "2024-10-25T00:00:00.000Z",
+            "type": "holiday",
+            "_id": "69fcb34213a20a20306fa577"
+          },
+          {
+            "title": "Mid-Term Break Ends",
+            "date": "2024-11-01T00:00:00.000Z",
+            "type": "holiday",
+            "_id": "69fcb34213a20a20306fa578"
+          },
+          {
+            "title": "First Term Exams Begin",
+            "date": "2024-12-02T00:00:00.000Z",
+            "type": "exam",
+            "_id": "69fcb34213a20a20306fa579"
+          },
+          {
+            "title": "Christmas Holiday Begins",
+            "date": "2024-12-13T00:00:00.000Z",
+            "type": "holiday",
+            "_id": "69fcb34213a20a20306fa57a"
+          }
+        ],
+        "_id": "69fcb34213a20a20306fa575"
+      },
+      {
+        "term": "second",
+        "name": "Second Term 2024/2025",
+        "startDate": "2025-01-13T00:00:00.000Z",
+        "endDate": "2025-04-04T00:00:00.000Z",
+        "events": [
+          {
+            "title": "School Resumption",
+            "date": "2025-01-13T00:00:00.000Z",
+            "type": "other",
+            "_id": "69fcb34213a20a20306fa57c"
+          },
+          {
+            "title": "Mid-Term Break Begins",
+            "date": "2025-02-21T00:00:00.000Z",
+            "type": "holiday",
+            "_id": "69fcb34213a20a20306fa57d"
+          },
+          {
+            "title": "Mid-Term Break Ends",
+            "date": "2025-02-28T00:00:00.000Z",
+            "type": "holiday",
+            "_id": "69fcb34213a20a20306fa57e"
+          },
+          {
+            "title": "Second Term Exams Begin",
+            "date": "2025-03-24T00:00:00.000Z",
+            "type": "exam",
+            "_id": "69fcb34213a20a20306fa57f"
+          },
+          {
+            "title": "Easter Holiday Begins",
+            "date": "2025-04-04T00:00:00.000Z",
+            "type": "holiday",
+            "_id": "69fcb34213a20a20306fa580"
+          }
+        ],
+        "_id": "69fcb34213a20a20306fa57b"
+      },
+      {
+        "term": "third",
+        "name": "Third Term 2024/2025",
+        "startDate": "2025-04-21T00:00:00.000Z",
+        "endDate": "2025-07-18T00:00:00.000Z",
+        "events": [
+          {
+            "title": "School Resumption",
+            "date": "2025-04-21T00:00:00.000Z",
+            "type": "other",
+            "_id": "69fcb34213a20a20306fa582"
+          },
+          {
+            "title": "Mid-Term Break Begins",
+            "date": "2025-06-06T00:00:00.000Z",
+            "type": "holiday",
+            "_id": "69fcb34213a20a20306fa583"
+          },
+          {
+            "title": "Mid-Term Break Ends",
+            "date": "2025-06-13T00:00:00.000Z",
+            "type": "holiday",
+            "_id": "69fcb34213a20a20306fa584"
+          },
+          {
+            "title": "Third Term Exams Begin",
+            "date": "2025-06-30T00:00:00.000Z",
+            "type": "exam",
+            "_id": "69fcb34213a20a20306fa585"
+          },
+          {
+            "title": "Summer Holiday Begins",
+            "date": "2025-07-18T00:00:00.000Z",
+            "type": "holiday",
+            "_id": "69fcb34213a20a20306fa586"
+          }
+        ],
+        "_id": "69fcb34213a20a20306fa581"
+      }
+    ],
+    "createdAt": "2026-05-07T15:44:02.372Z",
+    "updatedAt": "2026-05-07T15:44:02.372Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb3688827bfc1edd01eba",
+    "school": "69fcb3668827bfc1edd01a32",
+    "session": "2024/2025",
+    "terms": [
+      {
+        "term": "first",
+        "name": "First Term 2024/2025",
+        "startDate": "2024-09-09T00:00:00.000Z",
+        "endDate": "2024-12-13T00:00:00.000Z",
+        "events": [
+          {
+            "title": "School Resumption",
+            "date": "2024-09-09T00:00:00.000Z",
+            "type": "other",
+            "_id": "69fcb3688827bfc1edd01ebc"
+          },
+          {
+            "title": "Mid-Term Break Begins",
+            "date": "2024-10-25T00:00:00.000Z",
+            "type": "holiday",
+            "_id": "69fcb3688827bfc1edd01ebd"
+          },
+          {
+            "title": "Mid-Term Break Ends",
+            "date": "2024-11-01T00:00:00.000Z",
+            "type": "holiday",
+            "_id": "69fcb3688827bfc1edd01ebe"
+          },
+          {
+            "title": "First Term Exams Begin",
+            "date": "2024-12-02T00:00:00.000Z",
+            "type": "exam",
+            "_id": "69fcb3688827bfc1edd01ebf"
+          },
+          {
+            "title": "Christmas Holiday Begins",
+            "date": "2024-12-13T00:00:00.000Z",
+            "type": "holiday",
+            "_id": "69fcb3688827bfc1edd01ec0"
+          }
+        ],
+        "_id": "69fcb3688827bfc1edd01ebb"
+      },
+      {
+        "term": "second",
+        "name": "Second Term 2024/2025",
+        "startDate": "2025-01-13T00:00:00.000Z",
+        "endDate": "2025-04-04T00:00:00.000Z",
+        "events": [
+          {
+            "title": "School Resumption",
+            "date": "2025-01-13T00:00:00.000Z",
+            "type": "other",
+            "_id": "69fcb3688827bfc1edd01ec2"
+          },
+          {
+            "title": "Mid-Term Break Begins",
+            "date": "2025-02-21T00:00:00.000Z",
+            "type": "holiday",
+            "_id": "69fcb3688827bfc1edd01ec3"
+          },
+          {
+            "title": "Mid-Term Break Ends",
+            "date": "2025-02-28T00:00:00.000Z",
+            "type": "holiday",
+            "_id": "69fcb3688827bfc1edd01ec4"
+          },
+          {
+            "title": "Second Term Exams Begin",
+            "date": "2025-03-24T00:00:00.000Z",
+            "type": "exam",
+            "_id": "69fcb3688827bfc1edd01ec5"
+          },
+          {
+            "title": "Easter Holiday Begins",
+            "date": "2025-04-04T00:00:00.000Z",
+            "type": "holiday",
+            "_id": "69fcb3688827bfc1edd01ec6"
+          }
+        ],
+        "_id": "69fcb3688827bfc1edd01ec1"
+      },
+      {
+        "term": "third",
+        "name": "Third Term 2024/2025",
+        "startDate": "2025-04-21T00:00:00.000Z",
+        "endDate": "2025-07-18T00:00:00.000Z",
+        "events": [
+          {
+            "title": "School Resumption",
+            "date": "2025-04-21T00:00:00.000Z",
+            "type": "other",
+            "_id": "69fcb3688827bfc1edd01ec8"
+          },
+          {
+            "title": "Mid-Term Break Begins",
+            "date": "2025-06-06T00:00:00.000Z",
+            "type": "holiday",
+            "_id": "69fcb3688827bfc1edd01ec9"
+          },
+          {
+            "title": "Mid-Term Break Ends",
+            "date": "2025-06-13T00:00:00.000Z",
+            "type": "holiday",
+            "_id": "69fcb3688827bfc1edd01eca"
+          },
+          {
+            "title": "Third Term Exams Begin",
+            "date": "2025-06-30T00:00:00.000Z",
+            "type": "exam",
+            "_id": "69fcb3688827bfc1edd01ecb"
+          },
+          {
+            "title": "Summer Holiday Begins",
+            "date": "2025-07-18T00:00:00.000Z",
+            "type": "holiday",
+            "_id": "69fcb3688827bfc1edd01ecc"
+          }
+        ],
+        "_id": "69fcb3688827bfc1edd01ec7"
+      }
+    ],
+    "createdAt": "2026-05-07T15:44:40.260Z",
+    "updatedAt": "2026-05-07T15:44:40.260Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36b8827bfc1edd04e8d",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "session": "2024/2025",
+    "terms": [
+      {
+        "term": "first",
+        "name": "First Term 2024/2025",
+        "startDate": "2024-09-09T00:00:00.000Z",
+        "endDate": "2024-12-13T00:00:00.000Z",
+        "events": [
+          {
+            "title": "School Resumption",
+            "date": "2024-09-09T00:00:00.000Z",
+            "type": "other",
+            "_id": "69fcb36b8827bfc1edd04e8f"
+          },
+          {
+            "title": "Mid-Term Break Begins",
+            "date": "2024-10-25T00:00:00.000Z",
+            "type": "holiday",
+            "_id": "69fcb36b8827bfc1edd04e90"
+          },
+          {
+            "title": "Mid-Term Break Ends",
+            "date": "2024-11-01T00:00:00.000Z",
+            "type": "holiday",
+            "_id": "69fcb36b8827bfc1edd04e91"
+          },
+          {
+            "title": "First Term Exams Begin",
+            "date": "2024-12-02T00:00:00.000Z",
+            "type": "exam",
+            "_id": "69fcb36b8827bfc1edd04e92"
+          },
+          {
+            "title": "Christmas Holiday Begins",
+            "date": "2024-12-13T00:00:00.000Z",
+            "type": "holiday",
+            "_id": "69fcb36b8827bfc1edd04e93"
+          }
+        ],
+        "_id": "69fcb36b8827bfc1edd04e8e"
+      },
+      {
+        "term": "second",
+        "name": "Second Term 2024/2025",
+        "startDate": "2025-01-13T00:00:00.000Z",
+        "endDate": "2025-04-04T00:00:00.000Z",
+        "events": [
+          {
+            "title": "School Resumption",
+            "date": "2025-01-13T00:00:00.000Z",
+            "type": "other",
+            "_id": "69fcb36b8827bfc1edd04e95"
+          },
+          {
+            "title": "Mid-Term Break Begins",
+            "date": "2025-02-21T00:00:00.000Z",
+            "type": "holiday",
+            "_id": "69fcb36b8827bfc1edd04e96"
+          },
+          {
+            "title": "Mid-Term Break Ends",
+            "date": "2025-02-28T00:00:00.000Z",
+            "type": "holiday",
+            "_id": "69fcb36b8827bfc1edd04e97"
+          },
+          {
+            "title": "Second Term Exams Begin",
+            "date": "2025-03-24T00:00:00.000Z",
+            "type": "exam",
+            "_id": "69fcb36b8827bfc1edd04e98"
+          },
+          {
+            "title": "Easter Holiday Begins",
+            "date": "2025-04-04T00:00:00.000Z",
+            "type": "holiday",
+            "_id": "69fcb36b8827bfc1edd04e99"
+          }
+        ],
+        "_id": "69fcb36b8827bfc1edd04e94"
+      },
+      {
+        "term": "third",
+        "name": "Third Term 2024/2025",
+        "startDate": "2025-04-21T00:00:00.000Z",
+        "endDate": "2025-07-18T00:00:00.000Z",
+        "events": [
+          {
+            "title": "School Resumption",
+            "date": "2025-04-21T00:00:00.000Z",
+            "type": "other",
+            "_id": "69fcb36b8827bfc1edd04e9b"
+          },
+          {
+            "title": "Mid-Term Break Begins",
+            "date": "2025-06-06T00:00:00.000Z",
+            "type": "holiday",
+            "_id": "69fcb36b8827bfc1edd04e9c"
+          },
+          {
+            "title": "Mid-Term Break Ends",
+            "date": "2025-06-13T00:00:00.000Z",
+            "type": "holiday",
+            "_id": "69fcb36b8827bfc1edd04e9d"
+          },
+          {
+            "title": "Third Term Exams Begin",
+            "date": "2025-06-30T00:00:00.000Z",
+            "type": "exam",
+            "_id": "69fcb36b8827bfc1edd04e9e"
+          },
+          {
+            "title": "Summer Holiday Begins",
+            "date": "2025-07-18T00:00:00.000Z",
+            "type": "holiday",
+            "_id": "69fcb36b8827bfc1edd04e9f"
+          }
+        ],
+        "_id": "69fcb36b8827bfc1edd04e9a"
+      }
+    ],
+    "createdAt": "2026-05-07T15:44:43.476Z",
+    "updatedAt": "2026-05-07T15:44:43.476Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb4f595f6893870928589",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "session": "2024/2025",
+    "terms": [
+      {
+        "term": "first",
+        "name": "First Term 2024/2025",
+        "startDate": "2024-09-09T00:00:00.000Z",
+        "endDate": "2024-12-13T00:00:00.000Z",
+        "events": [
+          {
+            "title": "School Resumption",
+            "date": "2024-09-09T00:00:00.000Z",
+            "type": "other",
+            "_id": "69fcb4f595f689387092858b"
+          },
+          {
+            "title": "Mid-Term Break Begins",
+            "date": "2024-10-25T00:00:00.000Z",
+            "type": "holiday",
+            "_id": "69fcb4f595f689387092858c"
+          },
+          {
+            "title": "Mid-Term Break Ends",
+            "date": "2024-11-01T00:00:00.000Z",
+            "type": "holiday",
+            "_id": "69fcb4f595f689387092858d"
+          },
+          {
+            "title": "First Term Exams Begin",
+            "date": "2024-12-02T00:00:00.000Z",
+            "type": "exam",
+            "_id": "69fcb4f595f689387092858e"
+          },
+          {
+            "title": "Christmas Holiday Begins",
+            "date": "2024-12-13T00:00:00.000Z",
+            "type": "holiday",
+            "_id": "69fcb4f595f689387092858f"
+          }
+        ],
+        "_id": "69fcb4f595f689387092858a"
+      },
+      {
+        "term": "second",
+        "name": "Second Term 2024/2025",
+        "startDate": "2025-01-13T00:00:00.000Z",
+        "endDate": "2025-04-04T00:00:00.000Z",
+        "events": [
+          {
+            "title": "School Resumption",
+            "date": "2025-01-13T00:00:00.000Z",
+            "type": "other",
+            "_id": "69fcb4f595f6893870928591"
+          },
+          {
+            "title": "Mid-Term Break Begins",
+            "date": "2025-02-21T00:00:00.000Z",
+            "type": "holiday",
+            "_id": "69fcb4f595f6893870928592"
+          },
+          {
+            "title": "Mid-Term Break Ends",
+            "date": "2025-02-28T00:00:00.000Z",
+            "type": "holiday",
+            "_id": "69fcb4f595f6893870928593"
+          },
+          {
+            "title": "Second Term Exams Begin",
+            "date": "2025-03-24T00:00:00.000Z",
+            "type": "exam",
+            "_id": "69fcb4f595f6893870928594"
+          },
+          {
+            "title": "Easter Holiday Begins",
+            "date": "2025-04-04T00:00:00.000Z",
+            "type": "holiday",
+            "_id": "69fcb4f595f6893870928595"
+          }
+        ],
+        "_id": "69fcb4f595f6893870928590"
+      },
+      {
+        "term": "third",
+        "name": "Third Term 2024/2025",
+        "startDate": "2025-04-21T00:00:00.000Z",
+        "endDate": "2025-07-18T00:00:00.000Z",
+        "events": [
+          {
+            "title": "School Resumption",
+            "date": "2025-04-21T00:00:00.000Z",
+            "type": "other",
+            "_id": "69fcb4f595f6893870928597"
+          },
+          {
+            "title": "Mid-Term Break Begins",
+            "date": "2025-06-06T00:00:00.000Z",
+            "type": "holiday",
+            "_id": "69fcb4f595f6893870928598"
+          },
+          {
+            "title": "Mid-Term Break Ends",
+            "date": "2025-06-13T00:00:00.000Z",
+            "type": "holiday",
+            "_id": "69fcb4f595f6893870928599"
+          },
+          {
+            "title": "Third Term Exams Begin",
+            "date": "2025-06-30T00:00:00.000Z",
+            "type": "exam",
+            "_id": "69fcb4f595f689387092859a"
+          },
+          {
+            "title": "Summer Holiday Begins",
+            "date": "2025-07-18T00:00:00.000Z",
+            "type": "holiday",
+            "_id": "69fcb4f595f689387092859b"
+          }
+        ],
+        "_id": "69fcb4f595f6893870928596"
+      }
+    ],
+    "createdAt": "2026-05-07T15:51:17.807Z",
+    "updatedAt": "2026-05-07T15:51:17.807Z",
+    "__v": 0
+  }
+]

@@ -1,0 +1,124 @@
+[
+  {
+    "_id": "6a07348e6d3d7e145762d9e7",
+    "title": "The Future of Personalized Learning in Nigerian Schools",
+    "subtitle": "How AI is tailoring education to every student’s pace and style",
+    "content": "Artificial intelligence is reshaping how Nigerian schools deliver instruction. EduCore AI helps teachers identify learning gaps early and recommend targeted support before students fall behind.\n\nSchools using adaptive learning modules report stronger engagement in core subjects and fewer end-of-term surprises on report cards.\n\nThe key is pairing automation with teacher judgment — AI handles pattern detection while educators focus on mentorship and classroom culture.",
+    "category": "AI in Classroom",
+    "coverImage": "/assets/teacher-main.png",
+    "readTime": "6 min read",
+    "tags": [
+      "EdTech",
+      "AI",
+      "Personalization"
+    ],
+    "published": true,
+    "featured": true,
+    "author": "69fcae4e03889a3a66ed05f8",
+    "views": 0,
+    "__v": 0,
+    "createdAt": "2026-05-15T14:58:22.844Z",
+    "updatedAt": "2026-05-15T14:58:22.844Z"
+  },
+  {
+    "_id": "6a07348e6d3d7e145762d9e8",
+    "title": "Expanding our Reach: 50 New Schools Joined EduCore",
+    "subtitle": "Quarterly growth update from the EduCore team",
+    "content": "We are proud to welcome fifty additional schools to the EduCore ecosystem this quarter. Each onboarding includes staff training, data migration support, and a dedicated success manager.\n\nOur goal remains the same: give every Nigerian school modern tools for attendance, results, fees, and parent communication without overwhelming administrative teams.",
+    "category": "Company News",
+    "coverImage": "/assets/analytics-chart.png",
+    "readTime": "4 min read",
+    "tags": [
+      "Company",
+      "Growth"
+    ],
+    "published": true,
+    "featured": false,
+    "author": "69fcae4e03889a3a66ed05f8",
+    "views": 0,
+    "__v": 0,
+    "createdAt": "2026-05-15T14:58:22.846Z",
+    "updatedAt": "2026-05-15T14:58:22.846Z"
+  },
+  {
+    "_id": "6a07348e6d3d7e145762d9e9",
+    "title": "10 Tips for Effective Digital Grading and Feedback",
+    "subtitle": "Practical workflows for teachers using EduCore",
+    "content": "Digital grading saves time when it is structured. Start with clear rubrics, batch similar assignments, and use comment banks for common feedback.\n\nEduCore’s results module lets you enter scores once and publish to parents when ready — reducing duplicate data entry across spreadsheets.\n\nAlways review outliers before release; AI suggestions are helpful, but professional judgment stays with the teacher.",
+    "category": "Educational Tips",
+    "coverImage": "/assets/hero.png",
+    "readTime": "7 min read",
+    "tags": [
+      "Grading",
+      "Teachers"
+    ],
+    "published": true,
+    "featured": false,
+    "author": "69fcae4e03889a3a66ed05f8",
+    "views": 0,
+    "__v": 0,
+    "createdAt": "2026-05-15T14:58:22.847Z",
+    "updatedAt": "2026-05-15T14:58:22.847Z"
+  },
+  {
+    "_id": "6a07348e6d3d7e145762d9ea",
+    "title": "Case Study: Government College Lagos Attendance Surge",
+    "subtitle": "How automated alerts improved daily presence",
+    "content": "Government College Lagos piloted EduCore attendance alerts for one term. Daily registers synced to the dashboard, and parents received notifications for unexplained absences.\n\nWithin twelve weeks, average attendance improved measurably. Administrators attributed the gain to faster follow-up and clearer accountability.",
+    "category": "Case Studies",
+    "coverImage": "/assets/teacher-group.png",
+    "readTime": "5 min read",
+    "tags": [
+      "Attendance",
+      "Case Study"
+    ],
+    "published": true,
+    "featured": false,
+    "author": "69fcae4e03889a3a66ed05f8",
+    "views": 0,
+    "__v": 0,
+    "createdAt": "2026-05-15T14:58:22.847Z",
+    "updatedAt": "2026-05-15T14:58:22.847Z"
+  },
+  {
+    "_id": "6a07348e6d3d7e145762d9eb",
+    "title": "Integrating AI Without Losing the Human Touch",
+    "subtitle": "Best practices for school leaders",
+    "content": "Technology should amplify relationships, not replace them. Set policies for when AI recommendations require human approval, especially for discipline and promotion decisions.\n\nTrain staff on interpreting analytics dashboards and involve parents through transparent communication about how data is used.",
+    "category": "AI in Classroom",
+    "coverImage": "/assets/parent_portal.png",
+    "readTime": "8 min read",
+    "tags": [
+      "Leadership",
+      "AI"
+    ],
+    "published": true,
+    "featured": false,
+    "author": "69fcae4e03889a3a66ed05f8",
+    "views": 0,
+    "__v": 0,
+    "createdAt": "2026-05-15T14:58:22.847Z",
+    "updatedAt": "2026-05-15T14:58:22.847Z"
+  },
+  {
+    "_id": "6a07348e6d3d7e145762d9ec",
+    "title": "The Future of School Management: 5 AI Tips to Transform Efficiency",
+    "subtitle": "A strategic guide for principals and bursars",
+    "content": "1. Automate attendance tracking and parent notifications.\n\n2. Use predictive analytics on fee collections to reduce defaulters.\n\n3. Standardize result computation to cut release delays.\n\n4. Centralize announcements instead of scattered WhatsApp threads.\n\n5. Review class performance trends monthly with your academic team.\n\nEduCore AI bundles these workflows so leadership can focus on culture and learning outcomes.",
+    "category": "AI Strategy",
+    "coverImage": "/assets/hero.png",
+    "readTime": "8 min read",
+    "tags": [
+      "SchoolManagement",
+      "AI",
+      "NigeriaEducation"
+    ],
+    "published": true,
+    "featured": false,
+    "author": "69fcae4e03889a3a66ed05f8",
+    "views": 2,
+    "__v": 0,
+    "createdAt": "2026-05-15T14:58:22.848Z",
+    "updatedAt": "2026-05-15T18:03:40.020Z"
+  }
+]

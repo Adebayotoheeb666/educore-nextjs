@@ -1,0 +1,54 @@
+import { NextRequest, NextResponse } from "next/server";
+import { query, execute } from "@/lib/db/turso";
+import { withAuth, type AuthContext } from "@/lib/middleware/auth";
+import { badRequest, conflict, created, ok, serverError } from "@/lib/utils/response";
+import { hashPassword } from "@/lib/utils/password";
+import { generateId } from "@/lib/utils/id";
+
+export const GET = withAuth(async (_req: NextRequest, { school }: AuthContext): Promise<NextResponse> => {
+  try {
+    if (!school) return badRequest("School context required");
+    const parents = await query(
+      `SELECT u.id, u.name, u.email, u.phone, u.avatar, u.is_active, u.created_at,
+              GROUP_CONCAT(c.id) as child_ids, GROUP_CONCAT(c.name) as child_names
+       FROM users u
+       LEFT JOIN user_relationships ur ON ur.parent_id = u.id
+       LEFT JOIN users c ON ur.child_id = c.id
+       WHERE u.school_id = ? AND u.role = 'parent'
+       GROUP BY u.id
+       ORDER BY u.name`,
+      [school.id]
+    );
+    return ok(parents);
+  } catch (err) {
+    return serverError(err);
+  }
+});
+
+export const POST = withAuth(
+  async (req: NextRequest, { school }: AuthContext): Promise<NextResponse> => {
+    try {
+      if (!school) return badRequest("School context required");
+      const { name, email, password, phone, avatar } = await req.json();
+
+      if (!name || !email || !password) return badRequest("Name, email, and password are required");
+
+      const normalizedEmail = String(email).toLowerCase().trim();
+      const [existing] = await query("SELECT id FROM users WHERE email = ?", [normalizedEmail]);
+      if (existing) return conflict("Email already registered");
+
+      const hashed = await hashPassword(password);
+      const id = generateId();
+      await execute(
+        `INSERT INTO users (id, name, email, password, role, phone, school_id, avatar, is_active, created_at, updated_at)
+         VALUES (?, ?, ?, ?, 'parent', ?, ?, ?, 1, datetime('now'), datetime('now'))`,
+        [id, name, normalizedEmail, hashed, phone || null, school.id, avatar || null]
+      );
+
+      return created({ id, name, email: normalizedEmail, role: "parent" });
+    } catch (err) {
+      return serverError(err);
+    }
+  },
+  ["principal", "vp_admin", "admin_staff", "school_owner"]
+);

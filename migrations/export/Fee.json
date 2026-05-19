@@ -1,0 +1,1532 @@
+[
+  {
+    "_id": "69fcb3668827bfc1edd019e5",
+    "school": "69fcb2f84005bea0681d24cf",
+    "title": "First Term 2024/2025 - JSS1-A",
+    "session": "2024/2025",
+    "term": "first",
+    "class": "69fcb2f84005bea0681d2540",
+    "items": [
+      {
+        "name": "Tuition Fee",
+        "amount": 150000,
+        "mandatory": true,
+        "_id": "69fcb3668827bfc1edd019e6"
+      },
+      {
+        "name": "Development Levy",
+        "amount": 50000,
+        "mandatory": true,
+        "_id": "69fcb3668827bfc1edd019e7"
+      },
+      {
+        "name": "Examination Fee",
+        "amount": 25000,
+        "mandatory": true,
+        "_id": "69fcb3668827bfc1edd019e8"
+      },
+      {
+        "name": "Sports Fee",
+        "amount": 10000,
+        "mandatory": false,
+        "_id": "69fcb3668827bfc1edd019e9"
+      },
+      {
+        "name": "ICT Fee",
+        "amount": 15000,
+        "mandatory": false,
+        "_id": "69fcb3668827bfc1edd019ea"
+      },
+      {
+        "name": "Transport Fee",
+        "amount": 30000,
+        "mandatory": false,
+        "_id": "69fcb3668827bfc1edd019eb"
+      }
+    ],
+    "totalAmount": 250000,
+    "dueDate": "2024-09-30T00:00:00.000Z",
+    "createdAt": "2026-05-07T15:44:38.729Z",
+    "updatedAt": "2026-05-07T15:44:38.729Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb3668827bfc1edd019ed",
+    "school": "69fcb2f84005bea0681d24cf",
+    "title": "First Term 2024/2025 - JSS1-B",
+    "session": "2024/2025",
+    "term": "first",
+    "class": "69fcb2f84005bea0681d258b",
+    "items": [
+      {
+        "name": "Tuition Fee",
+        "amount": 150000,
+        "mandatory": true,
+        "_id": "69fcb3668827bfc1edd019ee"
+      },
+      {
+        "name": "Development Levy",
+        "amount": 50000,
+        "mandatory": true,
+        "_id": "69fcb3668827bfc1edd019ef"
+      },
+      {
+        "name": "Examination Fee",
+        "amount": 25000,
+        "mandatory": true,
+        "_id": "69fcb3668827bfc1edd019f0"
+      },
+      {
+        "name": "Sports Fee",
+        "amount": 10000,
+        "mandatory": false,
+        "_id": "69fcb3668827bfc1edd019f1"
+      },
+      {
+        "name": "ICT Fee",
+        "amount": 15000,
+        "mandatory": false,
+        "_id": "69fcb3668827bfc1edd019f2"
+      },
+      {
+        "name": "Transport Fee",
+        "amount": 30000,
+        "mandatory": false,
+        "_id": "69fcb3668827bfc1edd019f3"
+      }
+    ],
+    "totalAmount": 250000,
+    "dueDate": "2024-09-30T00:00:00.000Z",
+    "createdAt": "2026-05-07T15:44:38.737Z",
+    "updatedAt": "2026-05-07T15:44:38.737Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb3668827bfc1edd019f5",
+    "school": "69fcb2f84005bea0681d24cf",
+    "title": "First Term 2024/2025 - JSS2-A",
+    "session": "2024/2025",
+    "term": "first",
+    "class": "69fcb2f94005bea0681d25da",
+    "items": [
+      {
+        "name": "Tuition Fee",
+        "amount": 150000,
+        "mandatory": true,
+        "_id": "69fcb3668827bfc1edd019f6"
+      },
+      {
+        "name": "Development Levy",
+        "amount": 50000,
+        "mandatory": true,
+        "_id": "69fcb3668827bfc1edd019f7"
+      },
+      {
+        "name": "Examination Fee",
+        "amount": 25000,
+        "mandatory": true,
+        "_id": "69fcb3668827bfc1edd019f8"
+      },
+      {
+        "name": "Sports Fee",
+        "amount": 10000,
+        "mandatory": false,
+        "_id": "69fcb3668827bfc1edd019f9"
+      },
+      {
+        "name": "ICT Fee",
+        "amount": 15000,
+        "mandatory": false,
+        "_id": "69fcb3668827bfc1edd019fa"
+      },
+      {
+        "name": "Transport Fee",
+        "amount": 30000,
+        "mandatory": false,
+        "_id": "69fcb3668827bfc1edd019fb"
+      }
+    ],
+    "totalAmount": 250000,
+    "dueDate": "2024-09-30T00:00:00.000Z",
+    "createdAt": "2026-05-07T15:44:38.742Z",
+    "updatedAt": "2026-05-07T15:44:38.742Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb3668827bfc1edd019fd",
+    "school": "69fcb2f84005bea0681d24cf",
+    "title": "First Term 2024/2025 - JSS2-B",
+    "session": "2024/2025",
+    "term": "first",
+    "class": "69fcb2f94005bea0681d262b",
+    "items": [
+      {
+        "name": "Tuition Fee",
+        "amount": 150000,
+        "mandatory": true,
+        "_id": "69fcb3668827bfc1edd019fe"
+      },
+      {
+        "name": "Development Levy",
+        "amount": 50000,
+        "mandatory": true,
+        "_id": "69fcb3668827bfc1edd019ff"
+      },
+      {
+        "name": "Examination Fee",
+        "amount": 25000,
+        "mandatory": true,
+        "_id": "69fcb3668827bfc1edd01a00"
+      },
+      {
+        "name": "Sports Fee",
+        "amount": 10000,
+        "mandatory": false,
+        "_id": "69fcb3668827bfc1edd01a01"
+      },
+      {
+        "name": "ICT Fee",
+        "amount": 15000,
+        "mandatory": false,
+        "_id": "69fcb3668827bfc1edd01a02"
+      },
+      {
+        "name": "Transport Fee",
+        "amount": 30000,
+        "mandatory": false,
+        "_id": "69fcb3668827bfc1edd01a03"
+      }
+    ],
+    "totalAmount": 250000,
+    "dueDate": "2024-09-30T00:00:00.000Z",
+    "createdAt": "2026-05-07T15:44:38.745Z",
+    "updatedAt": "2026-05-07T15:44:38.745Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb3668827bfc1edd01a05",
+    "school": "69fcb2f84005bea0681d24cf",
+    "title": "First Term 2024/2025 - JSS3-A",
+    "session": "2024/2025",
+    "term": "first",
+    "class": "69fcb2f94005bea0681d2688",
+    "items": [
+      {
+        "name": "Tuition Fee",
+        "amount": 150000,
+        "mandatory": true,
+        "_id": "69fcb3668827bfc1edd01a06"
+      },
+      {
+        "name": "Development Levy",
+        "amount": 50000,
+        "mandatory": true,
+        "_id": "69fcb3668827bfc1edd01a07"
+      },
+      {
+        "name": "Examination Fee",
+        "amount": 25000,
+        "mandatory": true,
+        "_id": "69fcb3668827bfc1edd01a08"
+      },
+      {
+        "name": "Sports Fee",
+        "amount": 10000,
+        "mandatory": false,
+        "_id": "69fcb3668827bfc1edd01a09"
+      },
+      {
+        "name": "ICT Fee",
+        "amount": 15000,
+        "mandatory": false,
+        "_id": "69fcb3668827bfc1edd01a0a"
+      },
+      {
+        "name": "Transport Fee",
+        "amount": 30000,
+        "mandatory": false,
+        "_id": "69fcb3668827bfc1edd01a0b"
+      }
+    ],
+    "totalAmount": 250000,
+    "dueDate": "2024-09-30T00:00:00.000Z",
+    "createdAt": "2026-05-07T15:44:38.751Z",
+    "updatedAt": "2026-05-07T15:44:38.751Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd049dc",
+    "school": "69fcb3668827bfc1edd01a32",
+    "title": "First Term 2024/2025 - JSS1-A",
+    "session": "2024/2025",
+    "term": "first",
+    "class": "69fcb3678827bfc1edd01a9f",
+    "items": [
+      {
+        "name": "Tuition Fee",
+        "amount": 150000,
+        "mandatory": true,
+        "_id": "69fcb36a8827bfc1edd049dd"
+      },
+      {
+        "name": "Development Levy",
+        "amount": 50000,
+        "mandatory": true,
+        "_id": "69fcb36a8827bfc1edd049de"
+      },
+      {
+        "name": "Examination Fee",
+        "amount": 25000,
+        "mandatory": true,
+        "_id": "69fcb36a8827bfc1edd049df"
+      },
+      {
+        "name": "Sports Fee",
+        "amount": 10000,
+        "mandatory": false,
+        "_id": "69fcb36a8827bfc1edd049e0"
+      },
+      {
+        "name": "ICT Fee",
+        "amount": 15000,
+        "mandatory": false,
+        "_id": "69fcb36a8827bfc1edd049e1"
+      },
+      {
+        "name": "Transport Fee",
+        "amount": 30000,
+        "mandatory": false,
+        "_id": "69fcb36a8827bfc1edd049e2"
+      }
+    ],
+    "totalAmount": 250000,
+    "dueDate": "2024-09-30T00:00:00.000Z",
+    "createdAt": "2026-05-07T15:44:42.032Z",
+    "updatedAt": "2026-05-07T15:44:42.032Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd049e4",
+    "school": "69fcb3668827bfc1edd01a32",
+    "title": "First Term 2024/2025 - JSS1-B",
+    "session": "2024/2025",
+    "term": "first",
+    "class": "69fcb3678827bfc1edd01afa",
+    "items": [
+      {
+        "name": "Tuition Fee",
+        "amount": 150000,
+        "mandatory": true,
+        "_id": "69fcb36a8827bfc1edd049e5"
+      },
+      {
+        "name": "Development Levy",
+        "amount": 50000,
+        "mandatory": true,
+        "_id": "69fcb36a8827bfc1edd049e6"
+      },
+      {
+        "name": "Examination Fee",
+        "amount": 25000,
+        "mandatory": true,
+        "_id": "69fcb36a8827bfc1edd049e7"
+      },
+      {
+        "name": "Sports Fee",
+        "amount": 10000,
+        "mandatory": false,
+        "_id": "69fcb36a8827bfc1edd049e8"
+      },
+      {
+        "name": "ICT Fee",
+        "amount": 15000,
+        "mandatory": false,
+        "_id": "69fcb36a8827bfc1edd049e9"
+      },
+      {
+        "name": "Transport Fee",
+        "amount": 30000,
+        "mandatory": false,
+        "_id": "69fcb36a8827bfc1edd049ea"
+      }
+    ],
+    "totalAmount": 250000,
+    "dueDate": "2024-09-30T00:00:00.000Z",
+    "createdAt": "2026-05-07T15:44:42.037Z",
+    "updatedAt": "2026-05-07T15:44:42.037Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd049ec",
+    "school": "69fcb3668827bfc1edd01a32",
+    "title": "First Term 2024/2025 - JSS2-A",
+    "session": "2024/2025",
+    "term": "first",
+    "class": "69fcb3678827bfc1edd01b4b",
+    "items": [
+      {
+        "name": "Tuition Fee",
+        "amount": 150000,
+        "mandatory": true,
+        "_id": "69fcb36a8827bfc1edd049ed"
+      },
+      {
+        "name": "Development Levy",
+        "amount": 50000,
+        "mandatory": true,
+        "_id": "69fcb36a8827bfc1edd049ee"
+      },
+      {
+        "name": "Examination Fee",
+        "amount": 25000,
+        "mandatory": true,
+        "_id": "69fcb36a8827bfc1edd049ef"
+      },
+      {
+        "name": "Sports Fee",
+        "amount": 10000,
+        "mandatory": false,
+        "_id": "69fcb36a8827bfc1edd049f0"
+      },
+      {
+        "name": "ICT Fee",
+        "amount": 15000,
+        "mandatory": false,
+        "_id": "69fcb36a8827bfc1edd049f1"
+      },
+      {
+        "name": "Transport Fee",
+        "amount": 30000,
+        "mandatory": false,
+        "_id": "69fcb36a8827bfc1edd049f2"
+      }
+    ],
+    "totalAmount": 250000,
+    "dueDate": "2024-09-30T00:00:00.000Z",
+    "createdAt": "2026-05-07T15:44:42.040Z",
+    "updatedAt": "2026-05-07T15:44:42.040Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd049f4",
+    "school": "69fcb3668827bfc1edd01a32",
+    "title": "First Term 2024/2025 - JSS2-B",
+    "session": "2024/2025",
+    "term": "first",
+    "class": "69fcb3678827bfc1edd01ba6",
+    "items": [
+      {
+        "name": "Tuition Fee",
+        "amount": 150000,
+        "mandatory": true,
+        "_id": "69fcb36a8827bfc1edd049f5"
+      },
+      {
+        "name": "Development Levy",
+        "amount": 50000,
+        "mandatory": true,
+        "_id": "69fcb36a8827bfc1edd049f6"
+      },
+      {
+        "name": "Examination Fee",
+        "amount": 25000,
+        "mandatory": true,
+        "_id": "69fcb36a8827bfc1edd049f7"
+      },
+      {
+        "name": "Sports Fee",
+        "amount": 10000,
+        "mandatory": false,
+        "_id": "69fcb36a8827bfc1edd049f8"
+      },
+      {
+        "name": "ICT Fee",
+        "amount": 15000,
+        "mandatory": false,
+        "_id": "69fcb36a8827bfc1edd049f9"
+      },
+      {
+        "name": "Transport Fee",
+        "amount": 30000,
+        "mandatory": false,
+        "_id": "69fcb36a8827bfc1edd049fa"
+      }
+    ],
+    "totalAmount": 250000,
+    "dueDate": "2024-09-30T00:00:00.000Z",
+    "createdAt": "2026-05-07T15:44:42.043Z",
+    "updatedAt": "2026-05-07T15:44:42.043Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd049fc",
+    "school": "69fcb3668827bfc1edd01a32",
+    "title": "First Term 2024/2025 - JSS3-A",
+    "session": "2024/2025",
+    "term": "first",
+    "class": "69fcb3678827bfc1edd01bfb",
+    "items": [
+      {
+        "name": "Tuition Fee",
+        "amount": 150000,
+        "mandatory": true,
+        "_id": "69fcb36a8827bfc1edd049fd"
+      },
+      {
+        "name": "Development Levy",
+        "amount": 50000,
+        "mandatory": true,
+        "_id": "69fcb36a8827bfc1edd049fe"
+      },
+      {
+        "name": "Examination Fee",
+        "amount": 25000,
+        "mandatory": true,
+        "_id": "69fcb36a8827bfc1edd049ff"
+      },
+      {
+        "name": "Sports Fee",
+        "amount": 10000,
+        "mandatory": false,
+        "_id": "69fcb36a8827bfc1edd04a00"
+      },
+      {
+        "name": "ICT Fee",
+        "amount": 15000,
+        "mandatory": false,
+        "_id": "69fcb36a8827bfc1edd04a01"
+      },
+      {
+        "name": "Transport Fee",
+        "amount": 30000,
+        "mandatory": false,
+        "_id": "69fcb36a8827bfc1edd04a02"
+      }
+    ],
+    "totalAmount": 250000,
+    "dueDate": "2024-09-30T00:00:00.000Z",
+    "createdAt": "2026-05-07T15:44:42.048Z",
+    "updatedAt": "2026-05-07T15:44:42.048Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd04a04",
+    "school": "69fcb3668827bfc1edd01a32",
+    "title": "First Term 2024/2025 - JSS3-B",
+    "session": "2024/2025",
+    "term": "first",
+    "class": "69fcb3678827bfc1edd01c54",
+    "items": [
+      {
+        "name": "Tuition Fee",
+        "amount": 150000,
+        "mandatory": true,
+        "_id": "69fcb36a8827bfc1edd04a05"
+      },
+      {
+        "name": "Development Levy",
+        "amount": 50000,
+        "mandatory": true,
+        "_id": "69fcb36a8827bfc1edd04a06"
+      },
+      {
+        "name": "Examination Fee",
+        "amount": 25000,
+        "mandatory": true,
+        "_id": "69fcb36a8827bfc1edd04a07"
+      },
+      {
+        "name": "Sports Fee",
+        "amount": 10000,
+        "mandatory": false,
+        "_id": "69fcb36a8827bfc1edd04a08"
+      },
+      {
+        "name": "ICT Fee",
+        "amount": 15000,
+        "mandatory": false,
+        "_id": "69fcb36a8827bfc1edd04a09"
+      },
+      {
+        "name": "Transport Fee",
+        "amount": 30000,
+        "mandatory": false,
+        "_id": "69fcb36a8827bfc1edd04a0a"
+      }
+    ],
+    "totalAmount": 250000,
+    "dueDate": "2024-09-30T00:00:00.000Z",
+    "createdAt": "2026-05-07T15:44:42.053Z",
+    "updatedAt": "2026-05-07T15:44:42.053Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd04a0c",
+    "school": "69fcb3668827bfc1edd01a32",
+    "title": "First Term 2024/2025 - SS1-A",
+    "session": "2024/2025",
+    "term": "first",
+    "class": "69fcb3678827bfc1edd01ca7",
+    "items": [
+      {
+        "name": "Tuition Fee",
+        "amount": 150000,
+        "mandatory": true,
+        "_id": "69fcb36a8827bfc1edd04a0d"
+      },
+      {
+        "name": "Development Levy",
+        "amount": 50000,
+        "mandatory": true,
+        "_id": "69fcb36a8827bfc1edd04a0e"
+      },
+      {
+        "name": "Examination Fee",
+        "amount": 25000,
+        "mandatory": true,
+        "_id": "69fcb36a8827bfc1edd04a0f"
+      },
+      {
+        "name": "Sports Fee",
+        "amount": 10000,
+        "mandatory": false,
+        "_id": "69fcb36a8827bfc1edd04a10"
+      },
+      {
+        "name": "ICT Fee",
+        "amount": 15000,
+        "mandatory": false,
+        "_id": "69fcb36a8827bfc1edd04a11"
+      },
+      {
+        "name": "Transport Fee",
+        "amount": 30000,
+        "mandatory": false,
+        "_id": "69fcb36a8827bfc1edd04a12"
+      }
+    ],
+    "totalAmount": 250000,
+    "dueDate": "2024-09-30T00:00:00.000Z",
+    "createdAt": "2026-05-07T15:44:42.057Z",
+    "updatedAt": "2026-05-07T15:44:42.057Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd04a14",
+    "school": "69fcb3668827bfc1edd01a32",
+    "title": "First Term 2024/2025 - SS1-B",
+    "session": "2024/2025",
+    "term": "first",
+    "class": "69fcb3678827bfc1edd01cfe",
+    "items": [
+      {
+        "name": "Tuition Fee",
+        "amount": 150000,
+        "mandatory": true,
+        "_id": "69fcb36a8827bfc1edd04a15"
+      },
+      {
+        "name": "Development Levy",
+        "amount": 50000,
+        "mandatory": true,
+        "_id": "69fcb36a8827bfc1edd04a16"
+      },
+      {
+        "name": "Examination Fee",
+        "amount": 25000,
+        "mandatory": true,
+        "_id": "69fcb36a8827bfc1edd04a17"
+      },
+      {
+        "name": "Sports Fee",
+        "amount": 10000,
+        "mandatory": false,
+        "_id": "69fcb36a8827bfc1edd04a18"
+      },
+      {
+        "name": "ICT Fee",
+        "amount": 15000,
+        "mandatory": false,
+        "_id": "69fcb36a8827bfc1edd04a19"
+      },
+      {
+        "name": "Transport Fee",
+        "amount": 30000,
+        "mandatory": false,
+        "_id": "69fcb36a8827bfc1edd04a1a"
+      }
+    ],
+    "totalAmount": 250000,
+    "dueDate": "2024-09-30T00:00:00.000Z",
+    "createdAt": "2026-05-07T15:44:42.060Z",
+    "updatedAt": "2026-05-07T15:44:42.060Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd04a1c",
+    "school": "69fcb3668827bfc1edd01a32",
+    "title": "First Term 2024/2025 - SS2-A",
+    "session": "2024/2025",
+    "term": "first",
+    "class": "69fcb3678827bfc1edd01d57",
+    "items": [
+      {
+        "name": "Tuition Fee",
+        "amount": 150000,
+        "mandatory": true,
+        "_id": "69fcb36a8827bfc1edd04a1d"
+      },
+      {
+        "name": "Development Levy",
+        "amount": 50000,
+        "mandatory": true,
+        "_id": "69fcb36a8827bfc1edd04a1e"
+      },
+      {
+        "name": "Examination Fee",
+        "amount": 25000,
+        "mandatory": true,
+        "_id": "69fcb36a8827bfc1edd04a1f"
+      },
+      {
+        "name": "Sports Fee",
+        "amount": 10000,
+        "mandatory": false,
+        "_id": "69fcb36a8827bfc1edd04a20"
+      },
+      {
+        "name": "ICT Fee",
+        "amount": 15000,
+        "mandatory": false,
+        "_id": "69fcb36a8827bfc1edd04a21"
+      },
+      {
+        "name": "Transport Fee",
+        "amount": 30000,
+        "mandatory": false,
+        "_id": "69fcb36a8827bfc1edd04a22"
+      }
+    ],
+    "totalAmount": 250000,
+    "dueDate": "2024-09-30T00:00:00.000Z",
+    "createdAt": "2026-05-07T15:44:42.064Z",
+    "updatedAt": "2026-05-07T15:44:42.064Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd04a24",
+    "school": "69fcb3668827bfc1edd01a32",
+    "title": "First Term 2024/2025 - SS2-B",
+    "session": "2024/2025",
+    "term": "first",
+    "class": "69fcb3678827bfc1edd01dae",
+    "items": [
+      {
+        "name": "Tuition Fee",
+        "amount": 150000,
+        "mandatory": true,
+        "_id": "69fcb36a8827bfc1edd04a25"
+      },
+      {
+        "name": "Development Levy",
+        "amount": 50000,
+        "mandatory": true,
+        "_id": "69fcb36a8827bfc1edd04a26"
+      },
+      {
+        "name": "Examination Fee",
+        "amount": 25000,
+        "mandatory": true,
+        "_id": "69fcb36a8827bfc1edd04a27"
+      },
+      {
+        "name": "Sports Fee",
+        "amount": 10000,
+        "mandatory": false,
+        "_id": "69fcb36a8827bfc1edd04a28"
+      },
+      {
+        "name": "ICT Fee",
+        "amount": 15000,
+        "mandatory": false,
+        "_id": "69fcb36a8827bfc1edd04a29"
+      },
+      {
+        "name": "Transport Fee",
+        "amount": 30000,
+        "mandatory": false,
+        "_id": "69fcb36a8827bfc1edd04a2a"
+      }
+    ],
+    "totalAmount": 250000,
+    "dueDate": "2024-09-30T00:00:00.000Z",
+    "createdAt": "2026-05-07T15:44:42.070Z",
+    "updatedAt": "2026-05-07T15:44:42.070Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd04a2c",
+    "school": "69fcb3668827bfc1edd01a32",
+    "title": "First Term 2024/2025 - SS3-A",
+    "session": "2024/2025",
+    "term": "first",
+    "class": "69fcb3688827bfc1edd01e01",
+    "items": [
+      {
+        "name": "Tuition Fee",
+        "amount": 150000,
+        "mandatory": true,
+        "_id": "69fcb36a8827bfc1edd04a2d"
+      },
+      {
+        "name": "Development Levy",
+        "amount": 50000,
+        "mandatory": true,
+        "_id": "69fcb36a8827bfc1edd04a2e"
+      },
+      {
+        "name": "Examination Fee",
+        "amount": 25000,
+        "mandatory": true,
+        "_id": "69fcb36a8827bfc1edd04a2f"
+      },
+      {
+        "name": "Sports Fee",
+        "amount": 10000,
+        "mandatory": false,
+        "_id": "69fcb36a8827bfc1edd04a30"
+      },
+      {
+        "name": "ICT Fee",
+        "amount": 15000,
+        "mandatory": false,
+        "_id": "69fcb36a8827bfc1edd04a31"
+      },
+      {
+        "name": "Transport Fee",
+        "amount": 30000,
+        "mandatory": false,
+        "_id": "69fcb36a8827bfc1edd04a32"
+      }
+    ],
+    "totalAmount": 250000,
+    "dueDate": "2024-09-30T00:00:00.000Z",
+    "createdAt": "2026-05-07T15:44:42.075Z",
+    "updatedAt": "2026-05-07T15:44:42.075Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd04a34",
+    "school": "69fcb3668827bfc1edd01a32",
+    "title": "First Term 2024/2025 - SS3-B",
+    "session": "2024/2025",
+    "term": "first",
+    "class": "69fcb3688827bfc1edd01e5c",
+    "items": [
+      {
+        "name": "Tuition Fee",
+        "amount": 150000,
+        "mandatory": true,
+        "_id": "69fcb36a8827bfc1edd04a35"
+      },
+      {
+        "name": "Development Levy",
+        "amount": 50000,
+        "mandatory": true,
+        "_id": "69fcb36a8827bfc1edd04a36"
+      },
+      {
+        "name": "Examination Fee",
+        "amount": 25000,
+        "mandatory": true,
+        "_id": "69fcb36a8827bfc1edd04a37"
+      },
+      {
+        "name": "Sports Fee",
+        "amount": 10000,
+        "mandatory": false,
+        "_id": "69fcb36a8827bfc1edd04a38"
+      },
+      {
+        "name": "ICT Fee",
+        "amount": 15000,
+        "mandatory": false,
+        "_id": "69fcb36a8827bfc1edd04a39"
+      },
+      {
+        "name": "Transport Fee",
+        "amount": 30000,
+        "mandatory": false,
+        "_id": "69fcb36a8827bfc1edd04a3a"
+      }
+    ],
+    "totalAmount": 250000,
+    "dueDate": "2024-09-30T00:00:00.000Z",
+    "createdAt": "2026-05-07T15:44:42.078Z",
+    "updatedAt": "2026-05-07T15:44:42.078Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36c8827bfc1edd07617",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "title": "First Term 2024/2025 - JSS1-A",
+    "session": "2024/2025",
+    "term": "first",
+    "class": "69fcb36a8827bfc1edd04ace",
+    "items": [
+      {
+        "name": "Tuition Fee",
+        "amount": 150000,
+        "mandatory": true,
+        "_id": "69fcb36c8827bfc1edd07618"
+      },
+      {
+        "name": "Development Levy",
+        "amount": 50000,
+        "mandatory": true,
+        "_id": "69fcb36c8827bfc1edd07619"
+      },
+      {
+        "name": "Examination Fee",
+        "amount": 25000,
+        "mandatory": true,
+        "_id": "69fcb36c8827bfc1edd0761a"
+      },
+      {
+        "name": "Sports Fee",
+        "amount": 10000,
+        "mandatory": false,
+        "_id": "69fcb36c8827bfc1edd0761b"
+      },
+      {
+        "name": "ICT Fee",
+        "amount": 15000,
+        "mandatory": false,
+        "_id": "69fcb36c8827bfc1edd0761c"
+      },
+      {
+        "name": "Transport Fee",
+        "amount": 30000,
+        "mandatory": false,
+        "_id": "69fcb36c8827bfc1edd0761d"
+      }
+    ],
+    "totalAmount": 250000,
+    "dueDate": "2024-09-30T00:00:00.000Z",
+    "createdAt": "2026-05-07T15:44:44.882Z",
+    "updatedAt": "2026-05-07T15:44:44.882Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36c8827bfc1edd0761f",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "title": "First Term 2024/2025 - JSS1-B",
+    "session": "2024/2025",
+    "term": "first",
+    "class": "69fcb36a8827bfc1edd04b27",
+    "items": [
+      {
+        "name": "Tuition Fee",
+        "amount": 150000,
+        "mandatory": true,
+        "_id": "69fcb36c8827bfc1edd07620"
+      },
+      {
+        "name": "Development Levy",
+        "amount": 50000,
+        "mandatory": true,
+        "_id": "69fcb36c8827bfc1edd07621"
+      },
+      {
+        "name": "Examination Fee",
+        "amount": 25000,
+        "mandatory": true,
+        "_id": "69fcb36c8827bfc1edd07622"
+      },
+      {
+        "name": "Sports Fee",
+        "amount": 10000,
+        "mandatory": false,
+        "_id": "69fcb36c8827bfc1edd07623"
+      },
+      {
+        "name": "ICT Fee",
+        "amount": 15000,
+        "mandatory": false,
+        "_id": "69fcb36c8827bfc1edd07624"
+      },
+      {
+        "name": "Transport Fee",
+        "amount": 30000,
+        "mandatory": false,
+        "_id": "69fcb36c8827bfc1edd07625"
+      }
+    ],
+    "totalAmount": 250000,
+    "dueDate": "2024-09-30T00:00:00.000Z",
+    "createdAt": "2026-05-07T15:44:44.884Z",
+    "updatedAt": "2026-05-07T15:44:44.884Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36c8827bfc1edd07627",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "title": "First Term 2024/2025 - JSS2-A",
+    "session": "2024/2025",
+    "term": "first",
+    "class": "69fcb36a8827bfc1edd04b82",
+    "items": [
+      {
+        "name": "Tuition Fee",
+        "amount": 150000,
+        "mandatory": true,
+        "_id": "69fcb36c8827bfc1edd07628"
+      },
+      {
+        "name": "Development Levy",
+        "amount": 50000,
+        "mandatory": true,
+        "_id": "69fcb36c8827bfc1edd07629"
+      },
+      {
+        "name": "Examination Fee",
+        "amount": 25000,
+        "mandatory": true,
+        "_id": "69fcb36c8827bfc1edd0762a"
+      },
+      {
+        "name": "Sports Fee",
+        "amount": 10000,
+        "mandatory": false,
+        "_id": "69fcb36c8827bfc1edd0762b"
+      },
+      {
+        "name": "ICT Fee",
+        "amount": 15000,
+        "mandatory": false,
+        "_id": "69fcb36c8827bfc1edd0762c"
+      },
+      {
+        "name": "Transport Fee",
+        "amount": 30000,
+        "mandatory": false,
+        "_id": "69fcb36c8827bfc1edd0762d"
+      }
+    ],
+    "totalAmount": 250000,
+    "dueDate": "2024-09-30T00:00:00.000Z",
+    "createdAt": "2026-05-07T15:44:44.886Z",
+    "updatedAt": "2026-05-07T15:44:44.886Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36c8827bfc1edd0762f",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "title": "First Term 2024/2025 - JSS2-B",
+    "session": "2024/2025",
+    "term": "first",
+    "class": "69fcb36a8827bfc1edd04bd9",
+    "items": [
+      {
+        "name": "Tuition Fee",
+        "amount": 150000,
+        "mandatory": true,
+        "_id": "69fcb36c8827bfc1edd07630"
+      },
+      {
+        "name": "Development Levy",
+        "amount": 50000,
+        "mandatory": true,
+        "_id": "69fcb36c8827bfc1edd07631"
+      },
+      {
+        "name": "Examination Fee",
+        "amount": 25000,
+        "mandatory": true,
+        "_id": "69fcb36c8827bfc1edd07632"
+      },
+      {
+        "name": "Sports Fee",
+        "amount": 10000,
+        "mandatory": false,
+        "_id": "69fcb36c8827bfc1edd07633"
+      },
+      {
+        "name": "ICT Fee",
+        "amount": 15000,
+        "mandatory": false,
+        "_id": "69fcb36c8827bfc1edd07634"
+      },
+      {
+        "name": "Transport Fee",
+        "amount": 30000,
+        "mandatory": false,
+        "_id": "69fcb36c8827bfc1edd07635"
+      }
+    ],
+    "totalAmount": 250000,
+    "dueDate": "2024-09-30T00:00:00.000Z",
+    "createdAt": "2026-05-07T15:44:44.888Z",
+    "updatedAt": "2026-05-07T15:44:44.888Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36c8827bfc1edd07637",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "title": "First Term 2024/2025 - JSS3-A",
+    "session": "2024/2025",
+    "term": "first",
+    "class": "69fcb36a8827bfc1edd04c22",
+    "items": [
+      {
+        "name": "Tuition Fee",
+        "amount": 150000,
+        "mandatory": true,
+        "_id": "69fcb36c8827bfc1edd07638"
+      },
+      {
+        "name": "Development Levy",
+        "amount": 50000,
+        "mandatory": true,
+        "_id": "69fcb36c8827bfc1edd07639"
+      },
+      {
+        "name": "Examination Fee",
+        "amount": 25000,
+        "mandatory": true,
+        "_id": "69fcb36c8827bfc1edd0763a"
+      },
+      {
+        "name": "Sports Fee",
+        "amount": 10000,
+        "mandatory": false,
+        "_id": "69fcb36c8827bfc1edd0763b"
+      },
+      {
+        "name": "ICT Fee",
+        "amount": 15000,
+        "mandatory": false,
+        "_id": "69fcb36c8827bfc1edd0763c"
+      },
+      {
+        "name": "Transport Fee",
+        "amount": 30000,
+        "mandatory": false,
+        "_id": "69fcb36c8827bfc1edd0763d"
+      }
+    ],
+    "totalAmount": 250000,
+    "dueDate": "2024-09-30T00:00:00.000Z",
+    "createdAt": "2026-05-07T15:44:44.891Z",
+    "updatedAt": "2026-05-07T15:44:44.891Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36c8827bfc1edd0763f",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "title": "First Term 2024/2025 - JSS3-B",
+    "session": "2024/2025",
+    "term": "first",
+    "class": "69fcb36a8827bfc1edd04c71",
+    "items": [
+      {
+        "name": "Tuition Fee",
+        "amount": 150000,
+        "mandatory": true,
+        "_id": "69fcb36c8827bfc1edd07640"
+      },
+      {
+        "name": "Development Levy",
+        "amount": 50000,
+        "mandatory": true,
+        "_id": "69fcb36c8827bfc1edd07641"
+      },
+      {
+        "name": "Examination Fee",
+        "amount": 25000,
+        "mandatory": true,
+        "_id": "69fcb36c8827bfc1edd07642"
+      },
+      {
+        "name": "Sports Fee",
+        "amount": 10000,
+        "mandatory": false,
+        "_id": "69fcb36c8827bfc1edd07643"
+      },
+      {
+        "name": "ICT Fee",
+        "amount": 15000,
+        "mandatory": false,
+        "_id": "69fcb36c8827bfc1edd07644"
+      },
+      {
+        "name": "Transport Fee",
+        "amount": 30000,
+        "mandatory": false,
+        "_id": "69fcb36c8827bfc1edd07645"
+      }
+    ],
+    "totalAmount": 250000,
+    "dueDate": "2024-09-30T00:00:00.000Z",
+    "createdAt": "2026-05-07T15:44:44.894Z",
+    "updatedAt": "2026-05-07T15:44:44.894Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36c8827bfc1edd07647",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "title": "First Term 2024/2025 - SS1-A",
+    "session": "2024/2025",
+    "term": "first",
+    "class": "69fcb36a8827bfc1edd04cba",
+    "items": [
+      {
+        "name": "Tuition Fee",
+        "amount": 150000,
+        "mandatory": true,
+        "_id": "69fcb36c8827bfc1edd07648"
+      },
+      {
+        "name": "Development Levy",
+        "amount": 50000,
+        "mandatory": true,
+        "_id": "69fcb36c8827bfc1edd07649"
+      },
+      {
+        "name": "Examination Fee",
+        "amount": 25000,
+        "mandatory": true,
+        "_id": "69fcb36c8827bfc1edd0764a"
+      },
+      {
+        "name": "Sports Fee",
+        "amount": 10000,
+        "mandatory": false,
+        "_id": "69fcb36c8827bfc1edd0764b"
+      },
+      {
+        "name": "ICT Fee",
+        "amount": 15000,
+        "mandatory": false,
+        "_id": "69fcb36c8827bfc1edd0764c"
+      },
+      {
+        "name": "Transport Fee",
+        "amount": 30000,
+        "mandatory": false,
+        "_id": "69fcb36c8827bfc1edd0764d"
+      }
+    ],
+    "totalAmount": 250000,
+    "dueDate": "2024-09-30T00:00:00.000Z",
+    "createdAt": "2026-05-07T15:44:44.896Z",
+    "updatedAt": "2026-05-07T15:44:44.896Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36c8827bfc1edd0764f",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "title": "First Term 2024/2025 - SS1-B",
+    "session": "2024/2025",
+    "term": "first",
+    "class": "69fcb36a8827bfc1edd04d09",
+    "items": [
+      {
+        "name": "Tuition Fee",
+        "amount": 150000,
+        "mandatory": true,
+        "_id": "69fcb36c8827bfc1edd07650"
+      },
+      {
+        "name": "Development Levy",
+        "amount": 50000,
+        "mandatory": true,
+        "_id": "69fcb36c8827bfc1edd07651"
+      },
+      {
+        "name": "Examination Fee",
+        "amount": 25000,
+        "mandatory": true,
+        "_id": "69fcb36c8827bfc1edd07652"
+      },
+      {
+        "name": "Sports Fee",
+        "amount": 10000,
+        "mandatory": false,
+        "_id": "69fcb36c8827bfc1edd07653"
+      },
+      {
+        "name": "ICT Fee",
+        "amount": 15000,
+        "mandatory": false,
+        "_id": "69fcb36c8827bfc1edd07654"
+      },
+      {
+        "name": "Transport Fee",
+        "amount": 30000,
+        "mandatory": false,
+        "_id": "69fcb36c8827bfc1edd07655"
+      }
+    ],
+    "totalAmount": 250000,
+    "dueDate": "2024-09-30T00:00:00.000Z",
+    "createdAt": "2026-05-07T15:44:44.899Z",
+    "updatedAt": "2026-05-07T15:44:44.899Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36c8827bfc1edd07657",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "title": "First Term 2024/2025 - SS2-A",
+    "session": "2024/2025",
+    "term": "first",
+    "class": "69fcb36b8827bfc1edd04d52",
+    "items": [
+      {
+        "name": "Tuition Fee",
+        "amount": 150000,
+        "mandatory": true,
+        "_id": "69fcb36c8827bfc1edd07658"
+      },
+      {
+        "name": "Development Levy",
+        "amount": 50000,
+        "mandatory": true,
+        "_id": "69fcb36c8827bfc1edd07659"
+      },
+      {
+        "name": "Examination Fee",
+        "amount": 25000,
+        "mandatory": true,
+        "_id": "69fcb36c8827bfc1edd0765a"
+      },
+      {
+        "name": "Sports Fee",
+        "amount": 10000,
+        "mandatory": false,
+        "_id": "69fcb36c8827bfc1edd0765b"
+      },
+      {
+        "name": "ICT Fee",
+        "amount": 15000,
+        "mandatory": false,
+        "_id": "69fcb36c8827bfc1edd0765c"
+      },
+      {
+        "name": "Transport Fee",
+        "amount": 30000,
+        "mandatory": false,
+        "_id": "69fcb36c8827bfc1edd0765d"
+      }
+    ],
+    "totalAmount": 250000,
+    "dueDate": "2024-09-30T00:00:00.000Z",
+    "createdAt": "2026-05-07T15:44:44.901Z",
+    "updatedAt": "2026-05-07T15:44:44.901Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36c8827bfc1edd0765f",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "title": "First Term 2024/2025 - SS2-B",
+    "session": "2024/2025",
+    "term": "first",
+    "class": "69fcb36b8827bfc1edd04d9b",
+    "items": [
+      {
+        "name": "Tuition Fee",
+        "amount": 150000,
+        "mandatory": true,
+        "_id": "69fcb36c8827bfc1edd07660"
+      },
+      {
+        "name": "Development Levy",
+        "amount": 50000,
+        "mandatory": true,
+        "_id": "69fcb36c8827bfc1edd07661"
+      },
+      {
+        "name": "Examination Fee",
+        "amount": 25000,
+        "mandatory": true,
+        "_id": "69fcb36c8827bfc1edd07662"
+      },
+      {
+        "name": "Sports Fee",
+        "amount": 10000,
+        "mandatory": false,
+        "_id": "69fcb36c8827bfc1edd07663"
+      },
+      {
+        "name": "ICT Fee",
+        "amount": 15000,
+        "mandatory": false,
+        "_id": "69fcb36c8827bfc1edd07664"
+      },
+      {
+        "name": "Transport Fee",
+        "amount": 30000,
+        "mandatory": false,
+        "_id": "69fcb36c8827bfc1edd07665"
+      }
+    ],
+    "totalAmount": 250000,
+    "dueDate": "2024-09-30T00:00:00.000Z",
+    "createdAt": "2026-05-07T15:44:44.904Z",
+    "updatedAt": "2026-05-07T15:44:44.904Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36c8827bfc1edd07667",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "title": "First Term 2024/2025 - SS3-A",
+    "session": "2024/2025",
+    "term": "first",
+    "class": "69fcb36b8827bfc1edd04de8",
+    "items": [
+      {
+        "name": "Tuition Fee",
+        "amount": 150000,
+        "mandatory": true,
+        "_id": "69fcb36c8827bfc1edd07668"
+      },
+      {
+        "name": "Development Levy",
+        "amount": 50000,
+        "mandatory": true,
+        "_id": "69fcb36c8827bfc1edd07669"
+      },
+      {
+        "name": "Examination Fee",
+        "amount": 25000,
+        "mandatory": true,
+        "_id": "69fcb36c8827bfc1edd0766a"
+      },
+      {
+        "name": "Sports Fee",
+        "amount": 10000,
+        "mandatory": false,
+        "_id": "69fcb36c8827bfc1edd0766b"
+      },
+      {
+        "name": "ICT Fee",
+        "amount": 15000,
+        "mandatory": false,
+        "_id": "69fcb36c8827bfc1edd0766c"
+      },
+      {
+        "name": "Transport Fee",
+        "amount": 30000,
+        "mandatory": false,
+        "_id": "69fcb36c8827bfc1edd0766d"
+      }
+    ],
+    "totalAmount": 250000,
+    "dueDate": "2024-09-30T00:00:00.000Z",
+    "createdAt": "2026-05-07T15:44:44.906Z",
+    "updatedAt": "2026-05-07T15:44:44.906Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb36c8827bfc1edd0766f",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "title": "First Term 2024/2025 - SS3-B",
+    "session": "2024/2025",
+    "term": "first",
+    "class": "69fcb36b8827bfc1edd04e35",
+    "items": [
+      {
+        "name": "Tuition Fee",
+        "amount": 150000,
+        "mandatory": true,
+        "_id": "69fcb36c8827bfc1edd07670"
+      },
+      {
+        "name": "Development Levy",
+        "amount": 50000,
+        "mandatory": true,
+        "_id": "69fcb36c8827bfc1edd07671"
+      },
+      {
+        "name": "Examination Fee",
+        "amount": 25000,
+        "mandatory": true,
+        "_id": "69fcb36c8827bfc1edd07672"
+      },
+      {
+        "name": "Sports Fee",
+        "amount": 10000,
+        "mandatory": false,
+        "_id": "69fcb36c8827bfc1edd07673"
+      },
+      {
+        "name": "ICT Fee",
+        "amount": 15000,
+        "mandatory": false,
+        "_id": "69fcb36c8827bfc1edd07674"
+      },
+      {
+        "name": "Transport Fee",
+        "amount": 30000,
+        "mandatory": false,
+        "_id": "69fcb36c8827bfc1edd07675"
+      }
+    ],
+    "totalAmount": 250000,
+    "dueDate": "2024-09-30T00:00:00.000Z",
+    "createdAt": "2026-05-07T15:44:44.909Z",
+    "updatedAt": "2026-05-07T15:44:44.909Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fcb4f695f6893870928605",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "title": "First Term 2024/2025 - JSS1-A",
+    "session": "2024/2025",
+    "term": "first",
+    "class": "69fcb4d4d11fa4b280c4f45f",
+    "items": [
+      {
+        "name": "Tuition Fee",
+        "amount": 150000,
+        "mandatory": true,
+        "_id": "69fcb4f695f6893870928606"
+      },
+      {
+        "name": "Development Levy",
+        "amount": 50000,
+        "mandatory": true,
+        "_id": "69fcb4f695f6893870928607"
+      },
+      {
+        "name": "Examination Fee",
+        "amount": 25000,
+        "mandatory": true,
+        "_id": "69fcb4f695f6893870928608"
+      },
+      {
+        "name": "Sports Fee",
+        "amount": 10000,
+        "mandatory": false,
+        "_id": "69fcb4f695f6893870928609"
+      },
+      {
+        "name": "ICT Fee",
+        "amount": 15000,
+        "mandatory": false,
+        "_id": "69fcb4f695f689387092860a"
+      },
+      {
+        "name": "Transport Fee",
+        "amount": 30000,
+        "mandatory": false,
+        "_id": "69fcb4f695f689387092860b"
+      }
+    ],
+    "totalAmount": 250000,
+    "dueDate": "2024-09-30T00:00:00.000Z",
+    "createdAt": "2026-05-07T15:51:18.029Z",
+    "updatedAt": "2026-05-07T15:51:18.029Z",
+    "__v": 0
+  }
+]

@@ -1,0 +1,117 @@
+[
+  {
+    "_id": "69fcae4e03889a3a66ed05f6",
+    "name": "Lagos Internation School",
+    "subDomain": "lagos-internation-school",
+    "subscription": {
+      "status": "active",
+      "plan": "premium",
+      "aiTokenBudget": 500000,
+      "usedAiTokens": 64799,
+      "expiresAt": "2027-05-07T15:49:59.285Z"
+    },
+    "settings": {
+      "academicSession": "2023/2024",
+      "currentTerm": "first"
+    },
+    "createdAt": "2026-05-07T15:22:54.244Z",
+    "updatedAt": "2026-05-07T15:49:59.292Z",
+    "__v": 0,
+    "address": "12 Mainland Way, Lagos",
+    "email": "info@lagosinternation.ng",
+    "phone": "08011112222",
+    "state": "Lagos",
+    "type": "secondary",
+    "owner": "69fcae4e03889a3a66ed05f8"
+  },
+  {
+    "_id": "69fcb2f84005bea0681d24cf",
+    "name": "Pinnacle Academy Lagos",
+    "email": "info@pinnacle.ng",
+    "phone": "08012345001",
+    "state": "Lagos",
+    "type": "secondary",
+    "address": "45 Lekki Road, Lekki, Lagos",
+    "subscription": {
+      "status": "active",
+      "plan": "premium",
+      "aiTokenBudget": 500000,
+      "usedAiTokens": 86622,
+      "expiresAt": "2027-05-07T15:42:48.507Z"
+    },
+    "settings": {
+      "academicSession": "2024/2025",
+      "currentTerm": "first"
+    },
+    "createdAt": "2026-05-07T15:42:48.531Z",
+    "updatedAt": "2026-05-07T15:42:48.561Z",
+    "__v": 0,
+    "owner": "69fcb2f84005bea0681d24d4"
+  },
+  {
+    "_id": "69fcb3668827bfc1edd01a32",
+    "name": "Excellence International School",
+    "email": "admin@excellence.edu.ng",
+    "phone": "08023456001",
+    "state": "Oyo",
+    "type": "secondary",
+    "address": "123 Ring Road, Ibadan, Oyo",
+    "subscription": {
+      "status": "active",
+      "plan": "premium",
+      "aiTokenBudget": 500000,
+      "usedAiTokens": 37564,
+      "expiresAt": "2027-05-07T15:44:38.819Z"
+    },
+    "settings": {
+      "academicSession": "2024/2025",
+      "currentTerm": "first"
+    },
+    "createdAt": "2026-05-07T15:44:38.826Z",
+    "updatedAt": "2026-05-07T15:44:38.841Z",
+    "__v": 0,
+    "owner": "69fcb3668827bfc1edd01a35"
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd04a61",
+    "name": "Future Leaders Academy Abuja",
+    "email": "contact@futureleaders.ng",
+    "phone": "08034567001",
+    "state": "FCT",
+    "type": "secondary",
+    "address": "78 Ahmadu Bello Way, Abuja",
+    "subscription": {
+      "status": "active",
+      "plan": "premium",
+      "aiTokenBudget": 500000,
+      "usedAiTokens": 17087,
+      "expiresAt": "2027-05-07T15:44:42.131Z"
+    },
+    "settings": {
+      "academicSession": "2024/2025",
+      "currentTerm": "first"
+    },
+    "createdAt": "2026-05-07T15:44:42.134Z",
+    "updatedAt": "2026-05-07T15:44:42.139Z",
+    "__v": 0,
+    "owner": "69fcb36a8827bfc1edd04a64"
+  },
+  {
+    "_id": "6a070250e3aa8ebb536e813e",
+    "name": "Educore International School",
+    "subDomain": "educore-international-school",
+    "subscription": {
+      "status": "trial",
+      "plan": "basic",
+      "aiTokenBudget": 100000,
+      "usedAiTokens": 0
+    },
+    "settings": {
+      "academicSession": "2023/2024",
+      "currentTerm": "first"
+    },
+    "createdAt": "2026-05-15T11:24:00.464Z",
+    "updatedAt": "2026-05-15T11:24:00.464Z",
+    "__v": 0
+  }
+]

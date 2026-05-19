@@ -1,0 +1,1234 @@
+[
+  {
+    "_id": "69fcb2f84005bea0681d24e1",
+    "school": "69fcb2f84005bea0681d24cf",
+    "name": "English Language",
+    "code": "ENG",
+    "classes": [],
+    "teachers": [
+      "69fcb2f84005bea0681d24f9"
+    ],
+    "category": "core",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:42:48.612Z",
+    "updatedAt": "2026-05-07T15:42:48.715Z"
+  },
+  {
+    "_id": "69fcb2f84005bea0681d24e2",
+    "school": "69fcb2f84005bea0681d24cf",
+    "name": "Mathematics",
+    "code": "MTH",
+    "classes": [],
+    "teachers": [
+      "69fcb2f84005bea0681d24fb"
+    ],
+    "category": "core",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:42:48.613Z",
+    "updatedAt": "2026-05-07T15:42:48.722Z"
+  },
+  {
+    "_id": "69fcb2f84005bea0681d24e3",
+    "school": "69fcb2f84005bea0681d24cf",
+    "name": "Social Studies",
+    "code": "SST",
+    "classes": [],
+    "teachers": [
+      "69fcb2f84005bea0681d24fd"
+    ],
+    "category": "core",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:42:48.613Z",
+    "updatedAt": "2026-05-07T15:42:48.724Z"
+  },
+  {
+    "_id": "69fcb2f84005bea0681d24e4",
+    "school": "69fcb2f84005bea0681d24cf",
+    "name": "Basic Science",
+    "code": "BSC",
+    "classes": [],
+    "teachers": [
+      "69fcb2f84005bea0681d24ff"
+    ],
+    "category": "science",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:42:48.613Z",
+    "updatedAt": "2026-05-07T15:42:48.727Z"
+  },
+  {
+    "_id": "69fcb2f84005bea0681d24e5",
+    "school": "69fcb2f84005bea0681d24cf",
+    "name": "Physics",
+    "code": "PHY",
+    "classes": [],
+    "teachers": [
+      "69fcb2f84005bea0681d2501"
+    ],
+    "category": "science",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:42:48.613Z",
+    "updatedAt": "2026-05-07T15:42:48.729Z"
+  },
+  {
+    "_id": "69fcb2f84005bea0681d24e6",
+    "school": "69fcb2f84005bea0681d24cf",
+    "name": "Chemistry",
+    "code": "CHM",
+    "classes": [],
+    "teachers": [
+      "69fcb2f84005bea0681d2503"
+    ],
+    "category": "science",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:42:48.613Z",
+    "updatedAt": "2026-05-07T15:42:48.732Z"
+  },
+  {
+    "_id": "69fcb2f84005bea0681d24e7",
+    "school": "69fcb2f84005bea0681d24cf",
+    "name": "Biology",
+    "code": "BIO",
+    "classes": [],
+    "teachers": [
+      "69fcb2f84005bea0681d2505"
+    ],
+    "category": "science",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:42:48.613Z",
+    "updatedAt": "2026-05-07T15:42:48.735Z"
+  },
+  {
+    "_id": "69fcb2f84005bea0681d24e8",
+    "school": "69fcb2f84005bea0681d24cf",
+    "name": "Literature in English",
+    "code": "LIT",
+    "classes": [],
+    "teachers": [
+      "69fcb2f84005bea0681d2507"
+    ],
+    "category": "arts",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:42:48.613Z",
+    "updatedAt": "2026-05-07T15:42:48.738Z"
+  },
+  {
+    "_id": "69fcb2f84005bea0681d24e9",
+    "school": "69fcb2f84005bea0681d24cf",
+    "name": "Geography",
+    "code": "GEO",
+    "classes": [],
+    "teachers": [
+      "69fcb2f84005bea0681d2509"
+    ],
+    "category": "arts",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:42:48.613Z",
+    "updatedAt": "2026-05-07T15:42:48.743Z"
+  },
+  {
+    "_id": "69fcb2f84005bea0681d24ea",
+    "school": "69fcb2f84005bea0681d24cf",
+    "name": "Government",
+    "code": "GOV",
+    "classes": [],
+    "teachers": [
+      "69fcb2f84005bea0681d250b"
+    ],
+    "category": "arts",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:42:48.613Z",
+    "updatedAt": "2026-05-07T15:42:48.747Z"
+  },
+  {
+    "_id": "69fcb2f84005bea0681d24eb",
+    "school": "69fcb2f84005bea0681d24cf",
+    "name": "History",
+    "code": "HIS",
+    "classes": [],
+    "teachers": [
+      "69fcb2f84005bea0681d250d"
+    ],
+    "category": "arts",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:42:48.614Z",
+    "updatedAt": "2026-05-07T15:42:48.750Z"
+  },
+  {
+    "_id": "69fcb2f84005bea0681d24ec",
+    "school": "69fcb2f84005bea0681d24cf",
+    "name": "Economics",
+    "code": "ECO",
+    "classes": [],
+    "teachers": [
+      "69fcb2f84005bea0681d250f"
+    ],
+    "category": "commercial",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:42:48.614Z",
+    "updatedAt": "2026-05-07T15:42:48.754Z"
+  },
+  {
+    "_id": "69fcb2f84005bea0681d24ed",
+    "school": "69fcb2f84005bea0681d24cf",
+    "name": "Commerce",
+    "code": "COM",
+    "classes": [],
+    "teachers": [
+      "69fcb2f84005bea0681d2511"
+    ],
+    "category": "commercial",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:42:48.614Z",
+    "updatedAt": "2026-05-07T15:42:48.758Z"
+  },
+  {
+    "_id": "69fcb2f84005bea0681d24ee",
+    "school": "69fcb2f84005bea0681d24cf",
+    "name": "Financial Accounting",
+    "code": "ACC",
+    "classes": [],
+    "teachers": [
+      "69fcb2f84005bea0681d2513"
+    ],
+    "category": "commercial",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:42:48.614Z",
+    "updatedAt": "2026-05-07T15:42:48.762Z"
+  },
+  {
+    "_id": "69fcb2f84005bea0681d24ef",
+    "school": "69fcb2f84005bea0681d24cf",
+    "name": "Agricultural Science",
+    "code": "AGR",
+    "classes": [],
+    "teachers": [
+      "69fcb2f84005bea0681d2515"
+    ],
+    "category": "vocational",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:42:48.614Z",
+    "updatedAt": "2026-05-07T15:42:48.765Z"
+  },
+  {
+    "_id": "69fcb2f84005bea0681d24f0",
+    "school": "69fcb2f84005bea0681d24cf",
+    "name": "Computer Studies",
+    "code": "CMP",
+    "classes": [],
+    "teachers": [
+      "69fcb2f84005bea0681d2517"
+    ],
+    "category": "vocational",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:42:48.614Z",
+    "updatedAt": "2026-05-07T15:42:48.769Z"
+  },
+  {
+    "_id": "69fcb2f84005bea0681d24f1",
+    "school": "69fcb2f84005bea0681d24cf",
+    "name": "Technical Drawing",
+    "code": "TCD",
+    "classes": [],
+    "teachers": [
+      "69fcb2f84005bea0681d2519"
+    ],
+    "category": "vocational",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:42:48.614Z",
+    "updatedAt": "2026-05-07T15:42:48.772Z"
+  },
+  {
+    "_id": "69fcb2f84005bea0681d24f2",
+    "school": "69fcb2f84005bea0681d24cf",
+    "name": "Further Mathematics",
+    "code": "FMT",
+    "classes": [],
+    "teachers": [
+      "69fcb2f84005bea0681d251b"
+    ],
+    "category": "science",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:42:48.614Z",
+    "updatedAt": "2026-05-07T15:42:48.775Z"
+  },
+  {
+    "_id": "69fcb2f84005bea0681d24f3",
+    "school": "69fcb2f84005bea0681d24cf",
+    "name": "Civic Education",
+    "code": "CED",
+    "classes": [],
+    "teachers": [
+      "69fcb2f84005bea0681d251d"
+    ],
+    "category": "core",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:42:48.614Z",
+    "updatedAt": "2026-05-07T15:42:48.777Z"
+  },
+  {
+    "_id": "69fcb2f84005bea0681d24f4",
+    "school": "69fcb2f84005bea0681d24cf",
+    "name": "Islamic Studies",
+    "code": "ISL",
+    "classes": [],
+    "teachers": [
+      "69fcb2f84005bea0681d251f"
+    ],
+    "category": "core",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:42:48.615Z",
+    "updatedAt": "2026-05-07T15:42:48.780Z"
+  },
+  {
+    "_id": "69fcb2f84005bea0681d24f5",
+    "school": "69fcb2f84005bea0681d24cf",
+    "name": "Christian Religious Studies",
+    "code": "CRS",
+    "classes": [],
+    "teachers": [
+      "69fcb2f84005bea0681d2521"
+    ],
+    "category": "core",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:42:48.615Z",
+    "updatedAt": "2026-05-07T15:42:48.784Z"
+  },
+  {
+    "_id": "69fcb2f84005bea0681d24f6",
+    "school": "69fcb2f84005bea0681d24cf",
+    "name": "Physical Education",
+    "code": "PED",
+    "classes": [],
+    "teachers": [
+      "69fcb2f84005bea0681d2523"
+    ],
+    "category": "core",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:42:48.615Z",
+    "updatedAt": "2026-05-07T15:42:48.791Z"
+  },
+  {
+    "_id": "69fcb3668827bfc1edd01a40",
+    "school": "69fcb3668827bfc1edd01a32",
+    "name": "English Language",
+    "code": "ENG",
+    "classes": [],
+    "teachers": [
+      "69fcb3668827bfc1edd01a58"
+    ],
+    "category": "core",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:44:38.879Z",
+    "updatedAt": "2026-05-07T15:44:38.973Z"
+  },
+  {
+    "_id": "69fcb3668827bfc1edd01a41",
+    "school": "69fcb3668827bfc1edd01a32",
+    "name": "Mathematics",
+    "code": "MTH",
+    "classes": [],
+    "teachers": [
+      "69fcb3668827bfc1edd01a5a"
+    ],
+    "category": "core",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:44:38.880Z",
+    "updatedAt": "2026-05-07T15:44:38.976Z"
+  },
+  {
+    "_id": "69fcb3668827bfc1edd01a42",
+    "school": "69fcb3668827bfc1edd01a32",
+    "name": "Social Studies",
+    "code": "SST",
+    "classes": [],
+    "teachers": [
+      "69fcb3668827bfc1edd01a5c"
+    ],
+    "category": "core",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:44:38.880Z",
+    "updatedAt": "2026-05-07T15:44:38.981Z"
+  },
+  {
+    "_id": "69fcb3668827bfc1edd01a43",
+    "school": "69fcb3668827bfc1edd01a32",
+    "name": "Basic Science",
+    "code": "BSC",
+    "classes": [],
+    "teachers": [
+      "69fcb3668827bfc1edd01a5e"
+    ],
+    "category": "science",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:44:38.880Z",
+    "updatedAt": "2026-05-07T15:44:38.984Z"
+  },
+  {
+    "_id": "69fcb3668827bfc1edd01a44",
+    "school": "69fcb3668827bfc1edd01a32",
+    "name": "Physics",
+    "code": "PHY",
+    "classes": [],
+    "teachers": [
+      "69fcb3668827bfc1edd01a60"
+    ],
+    "category": "science",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:44:38.880Z",
+    "updatedAt": "2026-05-07T15:44:38.987Z"
+  },
+  {
+    "_id": "69fcb3668827bfc1edd01a45",
+    "school": "69fcb3668827bfc1edd01a32",
+    "name": "Chemistry",
+    "code": "CHM",
+    "classes": [],
+    "teachers": [
+      "69fcb3668827bfc1edd01a62"
+    ],
+    "category": "science",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:44:38.880Z",
+    "updatedAt": "2026-05-07T15:44:38.989Z"
+  },
+  {
+    "_id": "69fcb3668827bfc1edd01a46",
+    "school": "69fcb3668827bfc1edd01a32",
+    "name": "Biology",
+    "code": "BIO",
+    "classes": [],
+    "teachers": [
+      "69fcb3668827bfc1edd01a64"
+    ],
+    "category": "science",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:44:38.880Z",
+    "updatedAt": "2026-05-07T15:44:38.991Z"
+  },
+  {
+    "_id": "69fcb3668827bfc1edd01a47",
+    "school": "69fcb3668827bfc1edd01a32",
+    "name": "Literature in English",
+    "code": "LIT",
+    "classes": [],
+    "teachers": [
+      "69fcb3668827bfc1edd01a66"
+    ],
+    "category": "arts",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:44:38.880Z",
+    "updatedAt": "2026-05-07T15:44:38.993Z"
+  },
+  {
+    "_id": "69fcb3668827bfc1edd01a48",
+    "school": "69fcb3668827bfc1edd01a32",
+    "name": "Geography",
+    "code": "GEO",
+    "classes": [],
+    "teachers": [
+      "69fcb3668827bfc1edd01a68"
+    ],
+    "category": "arts",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:44:38.880Z",
+    "updatedAt": "2026-05-07T15:44:38.996Z"
+  },
+  {
+    "_id": "69fcb3668827bfc1edd01a49",
+    "school": "69fcb3668827bfc1edd01a32",
+    "name": "Government",
+    "code": "GOV",
+    "classes": [],
+    "teachers": [
+      "69fcb3668827bfc1edd01a6a"
+    ],
+    "category": "arts",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:44:38.880Z",
+    "updatedAt": "2026-05-07T15:44:39.001Z"
+  },
+  {
+    "_id": "69fcb3668827bfc1edd01a4a",
+    "school": "69fcb3668827bfc1edd01a32",
+    "name": "History",
+    "code": "HIS",
+    "classes": [],
+    "teachers": [
+      "69fcb3668827bfc1edd01a6c"
+    ],
+    "category": "arts",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:44:38.880Z",
+    "updatedAt": "2026-05-07T15:44:39.005Z"
+  },
+  {
+    "_id": "69fcb3668827bfc1edd01a4b",
+    "school": "69fcb3668827bfc1edd01a32",
+    "name": "Economics",
+    "code": "ECO",
+    "classes": [],
+    "teachers": [
+      "69fcb3668827bfc1edd01a6e"
+    ],
+    "category": "commercial",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:44:38.880Z",
+    "updatedAt": "2026-05-07T15:44:39.009Z"
+  },
+  {
+    "_id": "69fcb3668827bfc1edd01a4c",
+    "school": "69fcb3668827bfc1edd01a32",
+    "name": "Commerce",
+    "code": "COM",
+    "classes": [],
+    "teachers": [
+      "69fcb3668827bfc1edd01a70"
+    ],
+    "category": "commercial",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:44:38.880Z",
+    "updatedAt": "2026-05-07T15:44:39.012Z"
+  },
+  {
+    "_id": "69fcb3668827bfc1edd01a4d",
+    "school": "69fcb3668827bfc1edd01a32",
+    "name": "Financial Accounting",
+    "code": "ACC",
+    "classes": [],
+    "teachers": [
+      "69fcb3668827bfc1edd01a72"
+    ],
+    "category": "commercial",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:44:38.880Z",
+    "updatedAt": "2026-05-07T15:44:39.016Z"
+  },
+  {
+    "_id": "69fcb3668827bfc1edd01a4e",
+    "school": "69fcb3668827bfc1edd01a32",
+    "name": "Agricultural Science",
+    "code": "AGR",
+    "classes": [],
+    "teachers": [
+      "69fcb3668827bfc1edd01a74"
+    ],
+    "category": "vocational",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:44:38.880Z",
+    "updatedAt": "2026-05-07T15:44:39.018Z"
+  },
+  {
+    "_id": "69fcb3668827bfc1edd01a4f",
+    "school": "69fcb3668827bfc1edd01a32",
+    "name": "Computer Studies",
+    "code": "CMP",
+    "classes": [],
+    "teachers": [
+      "69fcb3668827bfc1edd01a76"
+    ],
+    "category": "vocational",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:44:38.881Z",
+    "updatedAt": "2026-05-07T15:44:39.021Z"
+  },
+  {
+    "_id": "69fcb3668827bfc1edd01a50",
+    "school": "69fcb3668827bfc1edd01a32",
+    "name": "Technical Drawing",
+    "code": "TCD",
+    "classes": [],
+    "teachers": [
+      "69fcb3668827bfc1edd01a78"
+    ],
+    "category": "vocational",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:44:38.881Z",
+    "updatedAt": "2026-05-07T15:44:39.024Z"
+  },
+  {
+    "_id": "69fcb3668827bfc1edd01a51",
+    "school": "69fcb3668827bfc1edd01a32",
+    "name": "Further Mathematics",
+    "code": "FMT",
+    "classes": [],
+    "teachers": [
+      "69fcb3668827bfc1edd01a7a"
+    ],
+    "category": "science",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:44:38.881Z",
+    "updatedAt": "2026-05-07T15:44:39.029Z"
+  },
+  {
+    "_id": "69fcb3668827bfc1edd01a52",
+    "school": "69fcb3668827bfc1edd01a32",
+    "name": "Civic Education",
+    "code": "CED",
+    "classes": [],
+    "teachers": [
+      "69fcb3668827bfc1edd01a7c"
+    ],
+    "category": "core",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:44:38.881Z",
+    "updatedAt": "2026-05-07T15:44:39.034Z"
+  },
+  {
+    "_id": "69fcb3668827bfc1edd01a53",
+    "school": "69fcb3668827bfc1edd01a32",
+    "name": "Islamic Studies",
+    "code": "ISL",
+    "classes": [],
+    "teachers": [
+      "69fcb3668827bfc1edd01a7e"
+    ],
+    "category": "core",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:44:38.881Z",
+    "updatedAt": "2026-05-07T15:44:39.035Z"
+  },
+  {
+    "_id": "69fcb3668827bfc1edd01a54",
+    "school": "69fcb3668827bfc1edd01a32",
+    "name": "Christian Religious Studies",
+    "code": "CRS",
+    "classes": [],
+    "teachers": [
+      "69fcb3668827bfc1edd01a80"
+    ],
+    "category": "core",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:44:38.881Z",
+    "updatedAt": "2026-05-07T15:44:39.039Z"
+  },
+  {
+    "_id": "69fcb3668827bfc1edd01a55",
+    "school": "69fcb3668827bfc1edd01a32",
+    "name": "Physical Education",
+    "code": "PED",
+    "classes": [],
+    "teachers": [
+      "69fcb3668827bfc1edd01a82"
+    ],
+    "category": "core",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:44:38.881Z",
+    "updatedAt": "2026-05-07T15:44:39.043Z"
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd04a6f",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "name": "English Language",
+    "code": "ENG",
+    "classes": [],
+    "teachers": [
+      "69fcb36a8827bfc1edd04a87"
+    ],
+    "category": "core",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:44:42.156Z",
+    "updatedAt": "2026-05-07T15:44:42.229Z"
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd04a70",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "name": "Mathematics",
+    "code": "MTH",
+    "classes": [],
+    "teachers": [
+      "69fcb36a8827bfc1edd04a89"
+    ],
+    "category": "core",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:44:42.156Z",
+    "updatedAt": "2026-05-07T15:44:42.231Z"
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd04a71",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "name": "Social Studies",
+    "code": "SST",
+    "classes": [],
+    "teachers": [
+      "69fcb36a8827bfc1edd04a8b"
+    ],
+    "category": "core",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:44:42.156Z",
+    "updatedAt": "2026-05-07T15:44:42.233Z"
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd04a72",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "name": "Basic Science",
+    "code": "BSC",
+    "classes": [],
+    "teachers": [
+      "69fcb36a8827bfc1edd04a8d"
+    ],
+    "category": "science",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:44:42.156Z",
+    "updatedAt": "2026-05-07T15:44:42.236Z"
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd04a73",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "name": "Physics",
+    "code": "PHY",
+    "classes": [],
+    "teachers": [
+      "69fcb36a8827bfc1edd04a8f"
+    ],
+    "category": "science",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:44:42.156Z",
+    "updatedAt": "2026-05-07T15:44:42.240Z"
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd04a74",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "name": "Chemistry",
+    "code": "CHM",
+    "classes": [],
+    "teachers": [
+      "69fcb36a8827bfc1edd04a91"
+    ],
+    "category": "science",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:44:42.156Z",
+    "updatedAt": "2026-05-07T15:44:42.242Z"
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd04a75",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "name": "Biology",
+    "code": "BIO",
+    "classes": [],
+    "teachers": [
+      "69fcb36a8827bfc1edd04a93"
+    ],
+    "category": "science",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:44:42.156Z",
+    "updatedAt": "2026-05-07T15:44:42.244Z"
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd04a76",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "name": "Literature in English",
+    "code": "LIT",
+    "classes": [],
+    "teachers": [
+      "69fcb36a8827bfc1edd04a95"
+    ],
+    "category": "arts",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:44:42.156Z",
+    "updatedAt": "2026-05-07T15:44:42.248Z"
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd04a77",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "name": "Geography",
+    "code": "GEO",
+    "classes": [],
+    "teachers": [
+      "69fcb36a8827bfc1edd04a97"
+    ],
+    "category": "arts",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:44:42.156Z",
+    "updatedAt": "2026-05-07T15:44:42.252Z"
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd04a78",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "name": "Government",
+    "code": "GOV",
+    "classes": [],
+    "teachers": [
+      "69fcb36a8827bfc1edd04a99"
+    ],
+    "category": "arts",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:44:42.156Z",
+    "updatedAt": "2026-05-07T15:44:42.254Z"
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd04a79",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "name": "History",
+    "code": "HIS",
+    "classes": [],
+    "teachers": [
+      "69fcb36a8827bfc1edd04a9b"
+    ],
+    "category": "arts",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:44:42.156Z",
+    "updatedAt": "2026-05-07T15:44:42.256Z"
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd04a7a",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "name": "Economics",
+    "code": "ECO",
+    "classes": [],
+    "teachers": [
+      "69fcb36a8827bfc1edd04a9d"
+    ],
+    "category": "commercial",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:44:42.156Z",
+    "updatedAt": "2026-05-07T15:44:42.258Z"
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd04a7b",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "name": "Commerce",
+    "code": "COM",
+    "classes": [],
+    "teachers": [
+      "69fcb36a8827bfc1edd04a9f"
+    ],
+    "category": "commercial",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:44:42.156Z",
+    "updatedAt": "2026-05-07T15:44:42.260Z"
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd04a7c",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "name": "Financial Accounting",
+    "code": "ACC",
+    "classes": [],
+    "teachers": [
+      "69fcb36a8827bfc1edd04aa1"
+    ],
+    "category": "commercial",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:44:42.156Z",
+    "updatedAt": "2026-05-07T15:44:42.263Z"
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd04a7d",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "name": "Agricultural Science",
+    "code": "AGR",
+    "classes": [],
+    "teachers": [
+      "69fcb36a8827bfc1edd04aa3"
+    ],
+    "category": "vocational",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:44:42.156Z",
+    "updatedAt": "2026-05-07T15:44:42.266Z"
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd04a7e",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "name": "Computer Studies",
+    "code": "CMP",
+    "classes": [],
+    "teachers": [
+      "69fcb36a8827bfc1edd04aa5"
+    ],
+    "category": "vocational",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:44:42.156Z",
+    "updatedAt": "2026-05-07T15:44:42.269Z"
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd04a7f",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "name": "Technical Drawing",
+    "code": "TCD",
+    "classes": [],
+    "teachers": [
+      "69fcb36a8827bfc1edd04aa7"
+    ],
+    "category": "vocational",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:44:42.156Z",
+    "updatedAt": "2026-05-07T15:44:42.273Z"
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd04a80",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "name": "Further Mathematics",
+    "code": "FMT",
+    "classes": [],
+    "teachers": [
+      "69fcb36a8827bfc1edd04aa9"
+    ],
+    "category": "science",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:44:42.156Z",
+    "updatedAt": "2026-05-07T15:44:42.275Z"
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd04a81",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "name": "Civic Education",
+    "code": "CED",
+    "classes": [],
+    "teachers": [
+      "69fcb36a8827bfc1edd04aab"
+    ],
+    "category": "core",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:44:42.156Z",
+    "updatedAt": "2026-05-07T15:44:42.277Z"
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd04a82",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "name": "Islamic Studies",
+    "code": "ISL",
+    "classes": [],
+    "teachers": [
+      "69fcb36a8827bfc1edd04aad"
+    ],
+    "category": "core",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:44:42.156Z",
+    "updatedAt": "2026-05-07T15:44:42.280Z"
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd04a83",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "name": "Christian Religious Studies",
+    "code": "CRS",
+    "classes": [],
+    "teachers": [
+      "69fcb36a8827bfc1edd04aaf"
+    ],
+    "category": "core",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:44:42.156Z",
+    "updatedAt": "2026-05-07T15:44:42.284Z"
+  },
+  {
+    "_id": "69fcb36a8827bfc1edd04a84",
+    "school": "69fcb36a8827bfc1edd04a61",
+    "name": "Physical Education",
+    "code": "PED",
+    "classes": [],
+    "teachers": [
+      "69fcb36a8827bfc1edd04ab1"
+    ],
+    "category": "core",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:44:42.156Z",
+    "updatedAt": "2026-05-07T15:44:42.285Z"
+  },
+  {
+    "_id": "69fcb4d4d11fa4b280c4f400",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "name": "English Language",
+    "code": "ENG",
+    "classes": [],
+    "teachers": [
+      "69fcb4d4d11fa4b280c4f418"
+    ],
+    "category": "core",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:50:44.699Z",
+    "updatedAt": "2026-05-07T15:50:44.814Z"
+  },
+  {
+    "_id": "69fcb4d4d11fa4b280c4f401",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "name": "Mathematics",
+    "code": "MTH",
+    "classes": [],
+    "teachers": [
+      "69fcb4d4d11fa4b280c4f41a"
+    ],
+    "category": "core",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:50:44.701Z",
+    "updatedAt": "2026-05-07T15:50:44.824Z"
+  },
+  {
+    "_id": "69fcb4d4d11fa4b280c4f402",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "name": "Social Studies",
+    "code": "SST",
+    "classes": [],
+    "teachers": [
+      "69fcb4d4d11fa4b280c4f41c"
+    ],
+    "category": "core",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:50:44.702Z",
+    "updatedAt": "2026-05-07T15:50:44.827Z"
+  },
+  {
+    "_id": "69fcb4d4d11fa4b280c4f403",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "name": "Basic Science",
+    "code": "BSC",
+    "classes": [],
+    "teachers": [
+      "69fcb4d4d11fa4b280c4f41e"
+    ],
+    "category": "science",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:50:44.702Z",
+    "updatedAt": "2026-05-07T15:50:44.829Z"
+  },
+  {
+    "_id": "69fcb4d4d11fa4b280c4f404",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "name": "Physics",
+    "code": "PHY",
+    "classes": [],
+    "teachers": [
+      "69fcb4d4d11fa4b280c4f420"
+    ],
+    "category": "science",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:50:44.702Z",
+    "updatedAt": "2026-05-07T15:50:44.834Z"
+  },
+  {
+    "_id": "69fcb4d4d11fa4b280c4f405",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "name": "Chemistry",
+    "code": "CHM",
+    "classes": [],
+    "teachers": [
+      "69fcb4d4d11fa4b280c4f422"
+    ],
+    "category": "science",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:50:44.702Z",
+    "updatedAt": "2026-05-07T15:50:44.838Z"
+  },
+  {
+    "_id": "69fcb4d4d11fa4b280c4f406",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "name": "Biology",
+    "code": "BIO",
+    "classes": [],
+    "teachers": [
+      "69fcb4d4d11fa4b280c4f424"
+    ],
+    "category": "science",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:50:44.702Z",
+    "updatedAt": "2026-05-07T15:50:44.841Z"
+  },
+  {
+    "_id": "69fcb4d4d11fa4b280c4f407",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "name": "Literature in English",
+    "code": "LIT",
+    "classes": [],
+    "teachers": [
+      "69fcb4d4d11fa4b280c4f426"
+    ],
+    "category": "arts",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:50:44.703Z",
+    "updatedAt": "2026-05-07T15:50:44.843Z"
+  },
+  {
+    "_id": "69fcb4d4d11fa4b280c4f408",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "name": "Geography",
+    "code": "GEO",
+    "classes": [],
+    "teachers": [
+      "69fcb4d4d11fa4b280c4f428"
+    ],
+    "category": "arts",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:50:44.703Z",
+    "updatedAt": "2026-05-07T15:50:44.847Z"
+  },
+  {
+    "_id": "69fcb4d4d11fa4b280c4f409",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "name": "Government",
+    "code": "GOV",
+    "classes": [],
+    "teachers": [
+      "69fcb4d4d11fa4b280c4f42a"
+    ],
+    "category": "arts",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:50:44.704Z",
+    "updatedAt": "2026-05-07T15:50:44.854Z"
+  },
+  {
+    "_id": "69fcb4d4d11fa4b280c4f40a",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "name": "History",
+    "code": "HIS",
+    "classes": [],
+    "teachers": [
+      "69fcb4d4d11fa4b280c4f42c"
+    ],
+    "category": "arts",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:50:44.704Z",
+    "updatedAt": "2026-05-07T15:50:44.857Z"
+  },
+  {
+    "_id": "69fcb4d4d11fa4b280c4f40b",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "name": "Economics",
+    "code": "ECO",
+    "classes": [],
+    "teachers": [
+      "69fcb4d4d11fa4b280c4f42e"
+    ],
+    "category": "commercial",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:50:44.704Z",
+    "updatedAt": "2026-05-07T15:50:44.860Z"
+  },
+  {
+    "_id": "69fcb4d4d11fa4b280c4f40c",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "name": "Commerce",
+    "code": "COM",
+    "classes": [],
+    "teachers": [
+      "69fcb4d4d11fa4b280c4f430"
+    ],
+    "category": "commercial",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:50:44.704Z",
+    "updatedAt": "2026-05-07T15:50:44.862Z"
+  },
+  {
+    "_id": "69fcb4d4d11fa4b280c4f40d",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "name": "Financial Accounting",
+    "code": "ACC",
+    "classes": [],
+    "teachers": [
+      "69fcb4d4d11fa4b280c4f432"
+    ],
+    "category": "commercial",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:50:44.704Z",
+    "updatedAt": "2026-05-07T15:50:44.865Z"
+  },
+  {
+    "_id": "69fcb4d4d11fa4b280c4f40e",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "name": "Agricultural Science",
+    "code": "AGR",
+    "classes": [],
+    "teachers": [
+      "69fcb4d4d11fa4b280c4f434"
+    ],
+    "category": "vocational",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:50:44.704Z",
+    "updatedAt": "2026-05-07T15:50:44.870Z"
+  },
+  {
+    "_id": "69fcb4d4d11fa4b280c4f40f",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "name": "Computer Studies",
+    "code": "CMP",
+    "classes": [],
+    "teachers": [
+      "69fcb4d4d11fa4b280c4f436"
+    ],
+    "category": "vocational",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:50:44.704Z",
+    "updatedAt": "2026-05-07T15:50:44.873Z"
+  },
+  {
+    "_id": "69fcb4d4d11fa4b280c4f410",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "name": "Technical Drawing",
+    "code": "TCD",
+    "classes": [],
+    "teachers": [
+      "69fcb4d4d11fa4b280c4f438"
+    ],
+    "category": "vocational",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:50:44.705Z",
+    "updatedAt": "2026-05-07T15:50:44.875Z"
+  },
+  {
+    "_id": "69fcb4d4d11fa4b280c4f411",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "name": "Further Mathematics",
+    "code": "FMT",
+    "classes": [],
+    "teachers": [
+      "69fcb4d4d11fa4b280c4f43a"
+    ],
+    "category": "science",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:50:44.705Z",
+    "updatedAt": "2026-05-07T15:50:44.877Z"
+  },
+  {
+    "_id": "69fcb4d4d11fa4b280c4f412",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "name": "Civic Education",
+    "code": "CED",
+    "classes": [],
+    "teachers": [
+      "69fcb4d4d11fa4b280c4f43c"
+    ],
+    "category": "core",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:50:44.705Z",
+    "updatedAt": "2026-05-07T15:50:44.880Z"
+  },
+  {
+    "_id": "69fcb4d4d11fa4b280c4f413",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "name": "Islamic Studies",
+    "code": "ISL",
+    "classes": [],
+    "teachers": [
+      "69fcb4d4d11fa4b280c4f43e"
+    ],
+    "category": "core",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:50:44.705Z",
+    "updatedAt": "2026-05-07T15:50:44.884Z"
+  },
+  {
+    "_id": "69fcb4d4d11fa4b280c4f414",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "name": "Christian Religious Studies",
+    "code": "CRS",
+    "classes": [],
+    "teachers": [
+      "69fcb4d4d11fa4b280c4f440"
+    ],
+    "category": "core",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:50:44.705Z",
+    "updatedAt": "2026-05-07T15:50:44.890Z"
+  },
+  {
+    "_id": "69fcb4d4d11fa4b280c4f415",
+    "school": "69fcae4e03889a3a66ed05f6",
+    "name": "Physical Education",
+    "code": "PED",
+    "classes": [],
+    "teachers": [
+      "69fcb4d4d11fa4b280c4f442"
+    ],
+    "category": "core",
+    "__v": 1,
+    "createdAt": "2026-05-07T15:50:44.705Z",
+    "updatedAt": "2026-05-07T15:50:44.892Z"
+  }
+]
