@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useAppSelector } from "@/redux/hooks";
-import ActionCard from "./ActionCard";
 
 const formatNaira = (n?: number | null) => `₦${Number(n ?? 0).toLocaleString()}`;
 
@@ -148,28 +147,25 @@ export default function DashboardPage() {
   const isAdmin = ADMIN_ROLES.includes(user?.role ?? "");
 
   return (
-    <div>
-
-      {/* Dashboard Action Card: Welcome + Quick Actions */}
-      {isAdmin && (
-        <ActionCard quickActions={QUICK_ACTIONS}>
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-            <h1 style={{ fontSize: "1.5rem", fontWeight: 800, marginBottom: 0 }}>{`Welcome back, ${displayName}`}</h1>
-            <p style={{ fontSize: "1rem", color: "var(--text-muted)" }}>
-              {school?.name ?? "School dashboard"}
-              {termLabel && sessionLabel ? ` · ${termLabel}, ${sessionLabel}` : ""}
-            </p>
-          </div>
-          <div className="welcome-actions">
-            <Link href="/announcements/create" className="btn-dashboard-outline">
-              New announcement
-            </Link>
-            <Link href="/analytics" className="btn-dashboard-primary">
-              View analytics
-            </Link>
-          </div>
-        </ActionCard>
-      )}
+    <div className="dashboard-page">
+      {/* Welcome section */}
+      <div className="dashboard-welcome">
+        <div>
+          <h1>{`Welcome back, ${displayName}`}</h1>
+          <p>
+            {school?.name ?? "School dashboard"}
+            {termLabel && sessionLabel ? ` · ${termLabel}, ${sessionLabel}` : ""}
+          </p>
+        </div>
+        <div className="dashboard-welcome-actions">
+          <Link href="/announcements/create" className="btn-dashboard-outline">
+            New announcement
+          </Link>
+          <Link href="/analytics" className="btn-dashboard-primary">
+            View analytics
+          </Link>
+        </div>
+      </div>
 
       {loading ? (
         <div className="dashboard-loading">
@@ -178,8 +174,8 @@ export default function DashboardPage() {
         </div>
       ) : (
         <>
-          {/* Stats grid */}
-          <section className="stats-grid-dashboard stats-grid-dashboard-8" style={{ marginBottom: "3rem" }}>
+          {/* Stats grid - 3 columns */}
+          <section className="stats-grid-dashboard stats-grid-dashboard-3" style={{ marginBottom: "3rem" }}>
             <StatCard label="Students"   value={stats?.totalStudents}  icon="👥" href="/students" />
             <StatCard label="Teachers"   value={stats?.totalTeachers}  icon="🎓" href="/teachers" />
             <StatCard label="Parents"    value={stats?.totalParents}   icon="👪" href="/parents" />
@@ -209,27 +205,8 @@ export default function DashboardPage() {
             <StatCard label="Subjects" value={stats?.totalSubjects} icon="📚" href="/subjects" />
           </section>
 
-          <div className="dashboard-content-grid">
-            <div className="main-column">
-              {opsAlerts.length > 0 && (
-                <div className="ops-alerts-card">
-                  <h3>Needs attention</h3>
-                  <ul className="ops-alerts-list">
-                    {opsAlerts.map((item) => (
-                      <li key={item.key}>
-                        <Link
-                          href={item.href}
-                          className={`ops-alert-item ops-alert-${item.tone}`}
-                        >
-                          <span>{item.label}</span>
-                          <span className="ops-alert-arrow">→</span>
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
+          <div className="dashboard-grid">
+            <div className="dashboard-main-content">
               <div className="panel-card">
                 <div className="panel-card-header">
                   <h2>Finance snapshot</h2>
@@ -275,26 +252,105 @@ export default function DashboardPage() {
                   )}
                 </div>
               </div>
-            </div>
 
-            {/* Right column: Announcements */}
-            <div className="side-column">
               <div className="panel-card">
                 <div className="panel-card-header">
-                  <h2>Announcements</h2>
-                  <Link href="/announcements">View all</Link>
+                  <h2>Academic pulse</h2>
+                </div>
+                <p style={{ color: "var(--text-muted)", marginBottom: "2rem", fontSize: "1.2rem" }}>
+                  Performance & curriculum readiness
+                </p>
+                <div className="academic-metrics">
+                  <div className="academic-metric">
+                    <span>Lesson plans approved</span>
+                    <strong>0%</strong>
+                  </div>
+                  <div className="academic-metric">
+                    <span>Pending approvals</span>
+                    <strong>0</strong>
+                  </div>
+                  <div className="academic-metric">
+                    <span>Upcoming exams</span>
+                    <strong>0</strong>
+                  </div>
+                </div>
+                <div className="curriculum-coverage">
+                  <h4>Curriculum coverage</h4>
+                  <p style={{ color: "var(--text-muted)", fontSize: "1.2rem" }}>No class performance data yet</p>
+                </div>
+                <Link href="/results" className="view-all-link">
+                  View all results →
+                </Link>
+              </div>
+            </div>
+
+            <div className="dashboard-sidebar">
+              <div className="quick-controls-card">
+                <h3>Quick controls</h3>
+                <div className="quick-controls-grid">
+                  <Link href="/students/add" className="quick-control-btn">
+                    <span>➕</span>
+                    <span>Add Student</span>
+                  </Link>
+                  <Link href="/teachers/add" className="quick-control-btn">
+                    <span>👩‍🏫</span>
+                    <span>Add Teacher</span>
+                  </Link>
+                  <Link href="/attendance" className="quick-control-btn">
+                    <span>✅</span>
+                    <span>Attendance</span>
+                  </Link>
+                  <Link href="/exams/create" className="quick-control-btn">
+                    <span>📝</span>
+                    <span>Create Exam</span>
+                  </Link>
+                  <Link href="/fees/collection" className="quick-control-btn">
+                    <span>💰</span>
+                    <span>Record Payment</span>
+                  </Link>
+                  <Link href="/announcements/create" className="quick-control-btn">
+                    <span>📢</span>
+                    <span>Announcement</span>
+                  </Link>
+                  <Link href="/lesson-plans" className="quick-control-btn">
+                    <span>📋</span>
+                    <span>Lesson Plans</span>
+                  </Link>
+                  <Link href="/timetable" className="quick-control-btn">
+                    <span>🗓️</span>
+                    <span>Timetable</span>
+                  </Link>
+                  <Link href="/classes" className="quick-control-btn">
+                    <span>🏫</span>
+                    <span>Classes</span>
+                  </Link>
+                  <Link href="/analytics" className="quick-control-btn">
+                    <span>📈</span>
+                    <span>Analytics</span>
+                  </Link>
+                  <Link href="/broadsheet" className="quick-control-btn">
+                    <span>📄</span>
+                    <span>Broadsheet</span>
+                  </Link>
+                  <Link href="/library" className="quick-control-btn">
+                    <span>📖</span>
+                    <span>Library</span>
+                  </Link>
+                </div>
+              </div>
+
+              <div className="panel-card">
+                <div className="panel-card-header">
+                  <h2>Recent announcements</h2>
                 </div>
                 {stats?.recentAnnouncements?.length ? (
-                  <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+                  <ul className="announcements-list">
                     {stats.recentAnnouncements.slice(0, 5).map((a) => (
-                      <li key={a.id} style={{ fontSize: "1.3rem", borderBottom: "1px solid #f1f5f9", paddingBottom: "1rem" }}>
-                        <Link
-                          href={`/announcements/${a.id}`}
-                          style={{ color: "var(--text-main)", textDecoration: "none", fontWeight: 600 }}
-                        >
+                      <li key={a.id}>
+                        <Link href={`/announcements/${a.id}`}>
                           {a.title}
                         </Link>
-                        <p style={{ color: "var(--text-muted)", margin: "0.4rem 0 0", fontSize: "1.1rem" }}>
+                        <p>
                           {new Date(a.created_at).toLocaleDateString("en-NG", {
                             day: "numeric",
                             month: "short",
@@ -309,18 +365,34 @@ export default function DashboardPage() {
                     No announcements yet.
                   </p>
                 )}
-                {isAdmin && (
-                  <Link
-                    href="/announcements/create"
-                    className="btn-dashboard-primary"
-                    style={{ marginTop: "2rem", display: "block", textAlign: "center" }}
-                  >
-                    + New Announcement
-                  </Link>
-                )}
+                <Link href="/announcements" className="view-all-link">
+                  View all announcements →
+                </Link>
               </div>
             </div>
           </div>
+
+          {/* AI Tools section */}
+          <section className="ai-tools-section">
+            <h2>✨ AI tools</h2>
+            <div className="ai-tools-grid">
+              <div className="ai-tool-card">
+                <span className="ai-tool-icon">📝</span>
+                <h4>Generate lesson plan</h4>
+                <p>Curriculum-aligned plans in seconds</p>
+              </div>
+              <div className="ai-tool-card">
+                <span className="ai-tool-icon">❓</span>
+                <h4>AI question bank</h4>
+                <p>Exam questions by class and difficulty</p>
+              </div>
+              <div className="ai-tool-card">
+                <span className="ai-tool-icon">🗓️</span>
+                <h4>Generate timetable</h4>
+                <p>Auto-build schedules from constraints</p>
+              </div>
+            </div>
+          </section>
         </>
       )}
     </div>
