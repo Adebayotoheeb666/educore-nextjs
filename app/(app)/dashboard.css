@@ -283,7 +283,6 @@
   flex: 1;
   padding: 1.5rem 2rem;
   background: var(--bg-main);
-  padding-left: 260px;
   min-height: calc(100vh - 70px);
   max-height: calc(100vh - 70px);
   overflow-y: auto;
