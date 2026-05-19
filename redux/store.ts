@@ -16,6 +16,7 @@ import announcementReducer from "./features/announcement/announcementSlice";
 import analyticsReducer from "./features/analytics/analyticsSlice";
 import offlineSyncReducer from "./features/offlineSync/offlineSyncSlice";
 import realtimeReducer from "./features/realtime/realtimeSlice";
+import loadingReducer from "./features/ui/loadingSlice";
 
 export const store = configureStore({
   reducer: {
@@ -35,6 +36,7 @@ export const store = configureStore({
     analytics: analyticsReducer,
     offlineSync: offlineSyncReducer,
     realtime: realtimeReducer,
+    loading: loadingReducer,
   },
 });
 
