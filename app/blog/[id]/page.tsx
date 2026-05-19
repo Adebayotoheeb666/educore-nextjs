@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { useAppSelector } from "@/redux/hooks";
 import { toast } from "sonner";
@@ -112,7 +113,7 @@ export default function BlogPost() {
 
   if (loading) {
     return (
-      <div className="bp-root" style={{ fontFamily: "Manrope, sans-serif" }}>
+      <div className="bp-root">
         {/* ── NAVBAR ── */}
         <nav className={`web-navbar ${isScrolled ? "scrolled" : ""}`}>
           <div className="web-container web-navbar__inner">
@@ -130,7 +131,7 @@ export default function BlogPost() {
 
   if (!post) {
     return (
-      <div className="bp-root" style={{ fontFamily: "Manrope, sans-serif" }}>
+      <div className="bp-root">
         {/* ── NAVBAR ── */}
         <nav className={`web-navbar ${isScrolled ? "scrolled" : ""}`}>
           <div className="web-container web-navbar__inner">
@@ -157,7 +158,7 @@ export default function BlogPost() {
     .toUpperCase();
 
   return (
-    <div className="bp-root" style={{ fontFamily: "Manrope, sans-serif" }}>
+    <div className="bp-root">
       {/* ── NAVBAR ── */}
       <nav className={`web-navbar ${isScrolled ? "scrolled" : ""}`}>
         <div className="web-container web-navbar__inner">
@@ -206,10 +207,14 @@ export default function BlogPost() {
       </nav>
 
       <div className="bp-hero">
-        <img
+        <Image
           src={post.coverImage || "/assets/hero.png"}
           alt={post.title}
           className="bp-hero__img"
+          fill
+          priority
+          sizes="100vw"
+          style={{ objectFit: "cover" }}
         />
         <div className="bp-hero__overlay" />
 
@@ -306,9 +311,12 @@ export default function BlogPost() {
                   related.map((p) => (
                     <Link key={p.id} href={`/blog/${p.id}`} className="bp-related__item">
                       <div className="bp-related__thumb">
-                        <img
+                        <Image
                           src={p.coverImage || "/assets/hero.png"}
                           alt={p.title}
+                          fill
+                          sizes="64px"
+                          style={{ objectFit: "cover" }}
                         />
                       </div>
                       <div className="bp-related__info">

@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useAppSelector } from "@/redux/hooks";
 import { toast } from "sonner";
 
@@ -74,7 +75,7 @@ export default function Blog() {
   const pageEnd = Math.min(page * 9, totalPosts);
 
   return (
-    <div className="blog-wrapper" style={{ fontFamily: "Manrope, sans-serif" }}>
+    <div className="blog-wrapper">
       {/* ── NAVBAR ── */}
       <nav className={`web-navbar ${isScrolled ? "scrolled" : ""}`}>
         <div className="web-container web-navbar__inner">
@@ -168,9 +169,13 @@ export default function Blog() {
               <section className="featured-post">
                 <div className="featured-post-card">
                   <div className="featured-post-image">
-                    <img
+                    <Image
                       src={featuredPost.coverImage || "/assets/teacher-main.png"}
                       alt={featuredPost.title}
+                      fill
+                      priority
+                      sizes="(max-width: 768px) 100vw, 70vw"
+                      style={{ objectFit: "cover" }}
                     />
                   </div>
                   <div className="featured-post-content">
@@ -200,9 +205,12 @@ export default function Blog() {
               {gridPosts.map((post) => (
                 <div key={post.id} className="post-card">
                   <div className="post-card-image">
-                    <img
+                    <Image
                       src={post.coverImage || "/assets/hero.png"}
                       alt={post.title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      style={{ objectFit: "cover" }}
                     />
                     <span className="post-card-category">{(post.category || "NEWS").toUpperCase()}</span>
                   </div>
