@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { verifyToken } from '@/lib/utils/jwt';
 import { query } from '@/lib/db/turso';
 
-interface SSEClient {
+export interface SSEClient {
   id: string;
   userId: string;
   schoolId: string | null;
