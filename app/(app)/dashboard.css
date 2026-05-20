@@ -942,6 +942,40 @@
   max-width: 80px;
 }
 
+@media (max-width: 768px) {
+  .quick-controls-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .quick-control-btn {
+    padding: 1.2rem 0.8rem;
+    font-size: 1rem;
+    min-height: 90px;
+    gap: 0.6rem;
+  }
+  .quick-control-btn span:first-child {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .quick-controls-grid {
+    grid-template-columns: 1fr;
+  }
+  .quick-control-btn {
+    padding: 1rem 0.8rem;
+    font-size: 0.95rem;
+    min-height: 70px;
+    gap: 0.5rem;
+  }
+  .quick-control-btn span:first-child {
+    font-size: 1.6rem;
+  }
+  .quick-control-btn span:last-child {
+    max-width: 100%;
+    font-size: 0.9rem;
+  }
+}
+
 /* ─── Announcements List ─── */
 .announcements-list {
   list-style: none;
