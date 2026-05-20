@@ -39,9 +39,13 @@
   gap: 1rem;
   cursor: pointer;
   text-decoration: none;
-  transition: opacity 0.15s;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.btn-primary:hover { opacity: 0.9; }
+.btn-primary:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(106, 90, 205, 0.3);
+}
 .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
 
 .btn-secondary {
@@ -57,9 +61,13 @@
   gap: 1rem;
   cursor: pointer;
   text-decoration: none;
-  transition: background 0.15s;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.btn-secondary:hover { background: #e2e8f0; }
+.btn-secondary:hover {
+  background: #e2e8f0;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
 
 .btn-outline {
   padding: 1.1rem 2.2rem;
@@ -74,9 +82,13 @@
   gap: 1rem;
   cursor: pointer;
   text-decoration: none;
-  transition: background 0.15s;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.btn-outline:hover { background: #f8fafc; }
+.btn-outline:hover {
+  background: #f8fafc;
+  transform: translateY(-2px);
+  border-color: #6A5ACD;
+}
 
 /* ─── Filter Bar ─── */
 .filter-bar {
@@ -147,6 +159,15 @@
   border-bottom: 1px solid #f1f5f9;
   vertical-align: middle;
   font-size: 1.2rem;
+}
+
+.premium-table tbody tr {
+  transition: all 0.3s ease;
+}
+
+.premium-table tbody tr:hover {
+  background-color: #f8fafc;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .premium-table tr:last-child td { border-bottom: none; }

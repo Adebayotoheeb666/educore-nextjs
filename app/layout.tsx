@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import "./animations.css";
 import "./web-additional.css";
 import Providers from "./providers";
 
