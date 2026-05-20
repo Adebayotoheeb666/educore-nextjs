@@ -230,7 +230,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       </aside>
 
       {/* Main container */}
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", marginLeft: 260 }}>
+      <div style={{ flex: 1, display: "flex", flexDirection: "column" }} className="dashboard-main-container">
         {/* Topbar */}
         <header className="topbar-premium">
           <button
