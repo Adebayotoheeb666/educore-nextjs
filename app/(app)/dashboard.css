@@ -1092,11 +1092,11 @@
 
   .stats-grid-dashboard-8 { grid-template-columns: repeat(4, 1fr); }
   .stats-grid-dashboard-3 { grid-template-columns: repeat(2, 1fr); }
-  .dashboard-grid { grid-template-columns: 1fr 350px; gap: 2rem; }
+  .dashboard-grid { grid-template-columns: 1fr 320px; gap: 2rem; }
   .dashboard-wrapper { margin-left: 240px; }
   .quick-controls-grid { grid-template-columns: repeat(3, 1fr); }
   .ai-tools-grid { grid-template-columns: repeat(2, 1fr); }
-  .dashboard-sidebar { position: static; }
+  .dashboard-sidebar { position: static; top: auto; }
 }
 
 /* ─── Responsive Tablet (768px) ─── */
@@ -1165,6 +1165,8 @@
   .dashboard-welcome p { font-size: 0.95rem; }
   .dashboard-welcome-actions { width: 100%; flex-direction: column; gap: 1rem; }
 
+  .dashboard-grid { grid-template-columns: 1fr; }
+  .dashboard-sidebar { position: static; top: auto; }
   .quick-controls-grid { grid-template-columns: repeat(2, 1fr); gap: 1.2rem; }
   .quick-controls-card { padding: 1.8rem; }
   .quick-control-btn { padding: 1rem 0.6rem; }
@@ -1251,6 +1253,9 @@
 
   .admin-welcome-row { flex-direction: column; gap: 1.2rem; }
 
+  .dashboard-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+  .dashboard-sidebar { position: static; top: auto; }
+
   .panel-card {
     padding: 1rem;
     margin-bottom: 1rem;
@@ -1261,6 +1266,7 @@
 
   .quick-controls-card { padding: 1.2rem; }
   .quick-control-btn { padding: 0.8rem 0.5rem; min-height: 60px; }
+  .quick-controls-grid { grid-template-columns: 1fr; gap: 0.8rem; }
 
   .topbar-search { display: none; }
 
