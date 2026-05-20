@@ -1,0 +1,731 @@
+/* ========================================================
+   animations.css — EduCore AI Global Animations
+   ======================================================== */
+
+/* ─── Keyframe Animations ─── */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideRight {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideLeft {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(106, 90, 205, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(106, 90, 205, 0.6);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* ─── Global Animation Classes ─── */
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.6s ease-out;
+}
+
+.animate-slide-down {
+  animation: slideDown 0.6s ease-out;
+}
+
+.animate-slide-right {
+  animation: slideRight 0.6s ease-out;
+}
+
+.animate-slide-left {
+  animation: slideLeft 0.6s ease-out;
+}
+
+.animate-scale-up {
+  animation: scaleUp 0.6s ease-out;
+}
+
+.animate-bounce {
+  animation: bounce 2s ease-in-out infinite;
+}
+
+.animate-glow {
+  animation: glow 2s ease-in-out infinite;
+}
+
+.animate-pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.animate-rotate {
+  animation: rotate 2s linear infinite;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* ─── Hero Section Animations ─── */
+
+.hp-hero {
+  animation: fadeIn 0.8s ease-out;
+}
+
+.hp-hero__text {
+  animation: slideUp 0.8s ease-out 0.1s both;
+}
+
+.hp-hero__text h1 {
+  animation: slideUp 0.8s ease-out 0.2s both;
+}
+
+.hp-hero__text p {
+  animation: slideUp 0.8s ease-out 0.3s both;
+}
+
+.hp-hero__btns {
+  animation: slideUp 0.8s ease-out 0.4s both;
+}
+
+.hp-hero__visual {
+  animation: slideUp 0.8s ease-out 0.5s both;
+}
+
+.hp-hero__img {
+  transition: transform 0.3s ease;
+}
+
+.hp-hero__img:hover {
+  transform: scale(1.02);
+}
+
+/* ─── Stats Section Animations ─── */
+
+.hp-stats {
+  animation: fadeIn 0.8s ease-out;
+}
+
+.hp-stat {
+  animation: slideUp 0.6s ease-out;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hp-stat:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.hp-stat:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.hp-stat:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.hp-stat:nth-child(4) {
+  animation-delay: 0.4s;
+}
+
+.hp-stat:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+.hp-stat h3 {
+  animation: fadeIn 0.6s ease-out 0.5s both;
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+/* ─── Features Section Animations ─── */
+
+.hp-features {
+  animation: fadeIn 0.8s ease-out;
+}
+
+.hp-section-head {
+  animation: slideUp 0.6s ease-out;
+}
+
+.hp-section-head h2 {
+  animation: slideUp 0.6s ease-out 0.1s both;
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.hp-section-head p {
+  animation: slideUp 0.6s ease-out 0.2s both;
+  font-size: 1.1rem;
+  color: var(--text-muted, #64748b);
+}
+
+.hp-features__grid {
+  animation: fadeIn 0.8s ease-out 0.3s both;
+}
+
+.hp-feat-card {
+  animation: scaleUp 0.6s ease-out;
+  transition: all 0.3s ease;
+  border-radius: 14px;
+}
+
+.hp-feat-card:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.hp-feat-card:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.hp-feat-card:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.hp-feat-card:nth-child(4) {
+  animation-delay: 0.4s;
+}
+
+.hp-feat-card:nth-child(5) {
+  animation-delay: 0.5s;
+}
+
+.hp-feat-card:nth-child(6) {
+  animation-delay: 0.6s;
+}
+
+.hp-feat-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 32px rgba(106, 90, 205, 0.2);
+}
+
+.hp-feat-card h3 {
+  animation: slideUp 0.6s ease-out;
+  transition: color 0.3s ease;
+}
+
+.hp-feat-card:hover h3 {
+  color: #6A5ACD;
+}
+
+/* ─── Teachers Section Animations ─── */
+
+.hp-teachers {
+  animation: fadeIn 0.8s ease-out;
+}
+
+.hp-teachers__img-main {
+  animation: slideRight 0.8s ease-out 0.1s both;
+  border-radius: 16px;
+  transition: transform 0.3s ease;
+}
+
+.hp-teachers__img-secondary {
+  animation: slideUp 0.8s ease-out 0.2s both;
+  border-radius: 16px;
+  transition: transform 0.3s ease;
+}
+
+.hp-teachers__img-main:hover,
+.hp-teachers__img-secondary:hover {
+  transform: scale(1.05);
+}
+
+.hp-teachers__content {
+  animation: slideLeft 0.8s ease-out;
+}
+
+/* ─── Parents Section Animations ─── */
+
+.hp-parents {
+  animation: fadeIn 0.8s ease-out;
+}
+
+.hp-parents__phone {
+  animation: float 3s ease-in-out infinite;
+  transition: transform 0.3s ease;
+}
+
+.hp-parents__phone:hover {
+  animation-play-state: paused;
+}
+
+.hp-parents__features {
+  animation: slideLeft 0.8s ease-out 0.1s both;
+}
+
+.hp-parents__feature-item {
+  animation: slideRight 0.6s ease-out;
+  transition: all 0.3s ease;
+}
+
+.hp-parents__feature-item:nth-child(1) {
+  animation-delay: 0.2s;
+}
+
+.hp-parents__feature-item:nth-child(2) {
+  animation-delay: 0.3s;
+}
+
+.hp-parents__feature-item:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+.hp-parents__feature-item:hover {
+  transform: translateX(10px);
+}
+
+/* ─── Nigeria Section Animations ─── */
+
+.hp-nigeria {
+  animation: fadeIn 0.8s ease-out;
+}
+
+.hp-nigeria__item {
+  animation: scaleUp 0.6s ease-out;
+  transition: all 0.3s ease;
+  border-radius: 12px;
+}
+
+.hp-nigeria__item:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.hp-nigeria__item:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.hp-nigeria__item:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.hp-nigeria__item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* ─── CTA Section Animations ─── */
+
+.hp-cta {
+  animation: fadeIn 0.8s ease-out;
+}
+
+.hp-cta__text {
+  animation: slideUp 0.6s ease-out 0.1s both;
+}
+
+.hp-cta__text h2 {
+  animation: slideUp 0.6s ease-out 0.2s both;
+}
+
+.hp-cta__text p {
+  animation: slideUp 0.6s ease-out 0.3s both;
+}
+
+.hp-cta__btns {
+  animation: slideUp 0.6s ease-out 0.4s both;
+}
+
+/* ─── Button Animations ─── */
+
+.hp-btn {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.hp-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+  pointer-events: none;
+}
+
+.hp-btn:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.hp-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(106, 90, 205, 0.3);
+}
+
+.hp-btn:active {
+  transform: translateY(0);
+}
+
+/* ─── Footer Animations ─── */
+
+.hp-footer {
+  animation: fadeIn 0.8s ease-out;
+}
+
+.hp-footer__grid {
+  animation: slideUp 0.6s ease-out;
+}
+
+.hp-footer__col {
+  animation: slideUp 0.6s ease-out;
+}
+
+.hp-footer__col:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.hp-footer__col:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.hp-footer__col:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.hp-footer__col:nth-child(4) {
+  animation-delay: 0.4s;
+}
+
+.hp-footer__col ul li a {
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.hp-footer__col ul li a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #6A5ACD;
+  transition: width 0.3s ease;
+}
+
+.hp-footer__col ul li a:hover::after {
+  width: 100%;
+}
+
+/* ─── Navbar Animations ─── */
+
+.web-navbar {
+  animation: slideDown 0.6s ease-out;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.nav-hamburger {
+  transition: all 0.3s ease;
+}
+
+.nav-hamburger:hover {
+  transform: scale(1.1);
+}
+
+/* ─── Dashboard Animations ─── */
+
+.dashboard-page {
+  animation: fadeIn 0.6s ease-out;
+}
+
+.dashboard-welcome {
+  animation: slideUp 0.6s ease-out;
+}
+
+.stat-card-premium {
+  animation: scaleUp 0.6s ease-out;
+  transition: all 0.3s ease;
+}
+
+.stat-card-premium:nth-child(1) {
+  animation-delay: 0.05s;
+}
+
+.stat-card-premium:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.stat-card-premium:nth-child(3) {
+  animation-delay: 0.15s;
+}
+
+.stat-card-premium:nth-child(4) {
+  animation-delay: 0.2s;
+}
+
+.stat-card-premium:nth-child(5) {
+  animation-delay: 0.25s;
+}
+
+.stat-card-premium:nth-child(6) {
+  animation-delay: 0.3s;
+}
+
+.stat-card-premium:nth-child(7) {
+  animation-delay: 0.35s;
+}
+
+.stat-card-premium:nth-child(8) {
+  animation-delay: 0.4s;
+}
+
+.stat-card-premium:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 12px 24px rgba(106, 90, 205, 0.2);
+}
+
+.panel-card {
+  animation: slideUp 0.6s ease-out;
+  transition: all 0.3s ease;
+}
+
+.panel-card:hover {
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.quick-control-btn {
+  animation: scaleUp 0.5s ease-out;
+  transition: all 0.3s ease;
+}
+
+.quick-control-btn:nth-child(1) {
+  animation-delay: 0.05s;
+}
+
+.quick-control-btn:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.quick-control-btn:nth-child(3) {
+  animation-delay: 0.15s;
+}
+
+.quick-control-btn:nth-child(4) {
+  animation-delay: 0.2s;
+}
+
+.quick-control-btn:nth-child(5) {
+  animation-delay: 0.25s;
+}
+
+.quick-control-btn:nth-child(6) {
+  animation-delay: 0.3s;
+}
+
+.quick-control-btn:hover {
+  transform: scale(1.08) translateY(-3px);
+}
+
+/* ─── Form & Input Animations ─── */
+
+.auth-form input,
+.auth-form textarea,
+.auth-form select {
+  transition: all 0.3s ease;
+  border-radius: 8px;
+}
+
+.auth-form input:focus,
+.auth-form textarea:focus,
+.auth-form select:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(106, 90, 205, 0.2);
+}
+
+.btn-auth {
+  animation: slideUp 0.6s ease-out 0.3s both;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-auth:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 24px rgba(106, 90, 205, 0.4);
+}
+
+.btn-auth:active {
+  transform: translateY(-1px);
+}
+
+/* ─── Modal & Notification Animations ─── */
+
+.notification-dot {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.ops-alert-item {
+  animation: slideUp 0.6s ease-out;
+  transition: all 0.3s ease;
+}
+
+.ops-alert-item:hover {
+  transform: translateX(5px);
+}
+
+/* ─── Sidebar Animations ─── */
+
+.sidebar-item {
+  transition: all 0.3s ease;
+}
+
+.sidebar-item:hover {
+  transform: translateX(5px);
+}
+
+.sidebar-item.active {
+  animation: slideRight 0.3s ease-out;
+}
+
+/* ─── Loading State Animations ─── */
+
+.table-empty {
+  animation: fadeIn 0.6s ease-out;
+}
+
+.dashboard-loading {
+  animation: fadeIn 0.6s ease-out;
+}
+
+/* ─── Stagger Animation Utility ─── */
+
+@supports (animation-timeline: view()) {
+  .animate-on-scroll {
+    animation: slideUp 0.6s ease-out;
+    animation-timeline: view();
+    animation-range: entry 0% cover 30%;
+  }
+}
+
+/* ─── Reduced Motion Preferences ─── */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
