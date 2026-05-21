@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import "../../shared.css";
 
 interface Subject {
@@ -21,8 +22,8 @@ export default function SubjectDetailPage() {
 
   useEffect(() => {
     Promise.all([
-      fetch(`/api/subjects/${id}`, { credentials: "include" }).then((r) => r.json()),
-      fetch("/api/teachers", { credentials: "include" }).then((r) => r.json()),
+      authenticatedFetch(`/api/subjects/${id}`).then((r) => r.json()),
+      authenticatedFetch("/api/teachers").then((r) => r.json()),
     ]).then(([sd, td]) => {
       setSubject(sd.data ?? null);
       setAllTeachers(Array.isArray(td.data) ? td.data : []);
@@ -38,17 +39,16 @@ export default function SubjectDetailPage() {
     if (assignedIds.includes(selectedTeacher)) return toast.error("Teacher already assigned");
     setAssigning(true);
     try {
-      const res = await fetch(`/api/subjects/${id}/assign`, {
+      const res = await authenticatedFetch(`/api/subjects/${id}/assign`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify({ teacherId: selectedTeacher }),
       });
       if (!res.ok) throw new Error((await res.json()).message);
       toast.success("Teacher assigned");
       setSelectedTeacher("");
       // Refresh subject
-      const sd = await fetch(`/api/subjects/${id}`, { credentials: "include" }).then((r) => r.json());
+      const sd = await authenticatedFetch(`/api/subjects/${id}`).then((r) => r.json());
       setSubject(sd.data ?? null);
     } catch (err: unknown) {
       toast.error(err instanceof Error ? err.message : "Failed to assign");
@@ -59,15 +59,14 @@ export default function SubjectDetailPage() {
 
   const handleUnassign = async (teacherId: string) => {
     try {
-      const res = await fetch(`/api/subjects/${id}/unassign`, {
+      const res = await authenticatedFetch(`/api/subjects/${id}/unassign`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify({ teacherId }),
       });
       if (!res.ok) throw new Error((await res.json()).message);
       toast.success("Teacher removed");
-      const sd = await fetch(`/api/subjects/${id}`, { credentials: "include" }).then((r) => r.json());
+      const sd = await authenticatedFetch(`/api/subjects/${id}`).then((r) => r.json());
       setSubject(sd.data ?? null);
     } catch (err: unknown) {
       toast.error(err instanceof Error ? err.message : "Failed to unassign");
@@ -77,7 +76,7 @@ export default function SubjectDetailPage() {
   const handleDelete = async () => {
     if (!confirm(`Delete subject "${subject?.name}"?`)) return;
     try {
-      const res = await fetch(`/api/subjects/${id}`, { method: "DELETE", credentials: "include" });
+      const res = await authenticatedFetch(`/api/subjects/${id}`, { method: "DELETE" });
       if (!res.ok) throw new Error((await res.json()).message);
       toast.success("Subject deleted");
       router.push("/subjects");

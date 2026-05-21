@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import { useAppSelector } from "@/redux/hooks";
 
 const formatNaira = (n?: number | null) => `₦${Number(n ?? 0).toLocaleString()}`;
@@ -96,11 +97,11 @@ export default function DashboardPage() {
 
   useEffect(() => {
     Promise.all([
-      fetch("/api/analytics/dashboard", { credentials: "include" })
+      authenticatedFetch("/api/analytics/dashboard")
         .then((r) => r.json())
         .then((d) => setStats(d.data ?? d))
         .catch(() => {}),
-      fetch("/api/school", { credentials: "include" })
+      authenticatedFetch("/api/school")
         .then((r) => r.json())
         .then((d) => setSchool(d.data ?? d))
         .catch(() => {}),

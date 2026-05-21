@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { toast } from "sonner";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import "../shared.css";
 
 interface ClassItem {
@@ -22,7 +23,7 @@ export default function ClassesPage() {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    fetch("/api/classes", { credentials: "include" })
+    authenticatedFetch("/api/classes")
       .then((r) => r.json())
       .then((d) => setClasses(Array.isArray(d.data) ? d.data : []))
       .catch(() => toast.error("Failed to load classes"))
