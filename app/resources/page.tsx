@@ -41,11 +41,14 @@ export default function Resources() {
             <Link href="/about-us" onClick={() => setMenuOpen(false)}>
               About
             </Link>
-            <Link href="/privacy" onClick={() => setMenuOpen(false)}>
-              Privacy
+            <Link href="/for-schools" onClick={() => setMenuOpen(false)}>
+              For Schools
             </Link>
-            <Link href="/terms" onClick={() => setMenuOpen(false)}>
-              Terms
+            <Link href="/resources" className="active" onClick={() => setMenuOpen(false)}>
+              Resources
+            </Link>
+            <Link href="/blog" onClick={() => setMenuOpen(false)}>
+              Blog
             </Link>
             <Link href="/contact-us" onClick={() => setMenuOpen(false)}>
               Contact
@@ -54,20 +57,9 @@ export default function Resources() {
 
           {/* Auth Buttons */}
           <div className="nav-auth">
-            {isAuthenticated ? (
-              <Link href="/dashboard" className="btn-register">
-                Dashboard
-              </Link>
-            ) : (
-              <>
-                <Link href="/login" className="btn-login">
-                  Login
-                </Link>
-                <Link href="/register" className="btn-register">
-                  Explore
-                </Link>
-              </>
-            )}
+            <Link href="/dashboard" className="btn-register">
+              Dashboard
+            </Link>
           </div>
         </div>
       </nav>

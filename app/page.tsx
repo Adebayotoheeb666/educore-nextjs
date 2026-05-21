@@ -28,17 +28,20 @@ export default function Homepage() {
 
           {/* Desktop Nav Links */}
           <div className={`nav-links ${menuOpen ? "nav-links--open" : ""}`}>
-            <Link href="/" onClick={() => setMenuOpen(false)}>
+            <Link href="/" className="active" onClick={() => setMenuOpen(false)}>
               Learners
             </Link>
             <Link href="/about-us" onClick={() => setMenuOpen(false)}>
               About
             </Link>
-            <Link href="/privacy" onClick={() => setMenuOpen(false)}>
-              Privacy
+            <Link href="/for-schools" onClick={() => setMenuOpen(false)}>
+              For Schools
             </Link>
-            <Link href="/terms" onClick={() => setMenuOpen(false)}>
-              Terms
+            <Link href="/resources" onClick={() => setMenuOpen(false)}>
+              Resources
+            </Link>
+            <Link href="/blog" onClick={() => setMenuOpen(false)}>
+              Blog
             </Link>
             <Link href="/contact-us" onClick={() => setMenuOpen(false)}>
               Contact
@@ -47,20 +50,9 @@ export default function Homepage() {
 
           {/* Auth Buttons */}
           <div className="nav-auth">
-            {isAuthenticated ? (
-              <Link href="/dashboard" className="btn-register">
-                Dashboard
-              </Link>
-            ) : (
-              <>
-                <Link href="/login" className="btn-login">
-                  Login
-                </Link>
-                <Link href="/register" className="btn-register">
-                  Explore
-                </Link>
-              </>
-            )}
+            <Link href="/dashboard" className="btn-register">
+              Dashboard
+            </Link>
           </div>
 
           {/* Hamburger */}
