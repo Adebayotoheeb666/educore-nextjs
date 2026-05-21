@@ -66,7 +66,7 @@ export default function Resources() {
 
       {/* Hero */}
       <header style={{ background: "#2d2460", padding: "8rem 0 5rem", color: "#fff" }}>
-        <div className="hp-container text-center" style={{ animation: "slideDown 0.8s ease-out" }}>
+        <div className="hp-container" style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", animation: "slideDown 0.8s ease-out" }}>
           <span style={{ 
             display: "inline-block",
             background: "rgba(255,255,255,0.15)", 
@@ -82,7 +82,7 @@ export default function Resources() {
           <h1 style={{ fontSize: "3.2rem", fontWeight: 800, marginBottom: "1.5rem", color: "#fff", lineHeight: 1.3, animation: "slideRight 0.6s ease-out 0.3s both" }}>
             Educational Resources &<br />AI Insights
           </h1>
-          <p style={{ fontSize: "1.4rem", color: "rgba(255,255,255,0.7)", maxWidth: "600px", margin: "0 auto", lineHeight: 1.6, animation: "slideRight 0.6s ease-out 0.4s both" }}>
+          <p style={{ fontSize: "1.4rem", color: "rgba(255,255,255,0.7)", maxWidth: "600px", lineHeight: 1.6, animation: "slideRight 0.6s ease-out 0.4s both" }}>
             Guides, templates, and insights to help you navigate the future of education in Nigeria.
           </p>
         </div>
@@ -272,12 +272,12 @@ export default function Resources() {
 
       {/* Stay Informed CTA */}
       <section style={{ padding: "5rem 0", background: "#f8f9fa" }}>
-        <div className="hp-container text-center">
+        <div className="hp-container" style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center" }}>
           <h2 style={{ fontSize: "2.2rem", fontWeight: 800, marginBottom: "1rem", color: "#1f2937" }}>Stay Informed</h2>
           <p style={{ fontSize: "1.3rem", color: "#6b7280", marginBottom: "2rem" }}>
             Subscribe to our newsletter for the latest in Nigerian EdTech.
           </p>
-          <form onSubmit={handleSubscribe} style={{ display: "flex", gap: "0.75rem", justifyContent: "center", maxWidth: "450px", margin: "0 auto" }}>
+          <form onSubmit={handleSubscribe} style={{ display: "flex", gap: "0.75rem", justifyContent: "center", maxWidth: "450px", width: "100%" }}>
             <input
               type="email"
               placeholder="Enter your email"
