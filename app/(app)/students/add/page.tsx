@@ -7,23 +7,27 @@ import { authenticatedFetch } from "@/lib/utils/fetch";
 import "../../shared.css";
 
 interface ClassItem { id: string; name: string; section?: string; }
+interface Parent { id: string; name: string; email: string; }
 
 export default function AddStudentPage() {
   const router = useRouter();
   const [classes, setClasses] = useState<ClassItem[]>([]);
+  const [parents, setParents] = useState<Parent[]>([]);
   const [submitting, setSubmitting] = useState(false);
   const [form, setForm] = useState({
     firstName: "", lastName: "", email: "",
-    dob: "", gender: "", classId: "",
-    parentPhone: "", parentEmail: "",
+    dob: "", gender: "", classId: "", parentId: "",
     address: "", stateOfOrigin: "",
   });
 
   useEffect(() => {
-    authenticatedFetch("/api/classes")
-      .then((r) => r.json())
-      .then((d) => setClasses(Array.isArray(d.data) ? d.data : []))
-      .catch(() => {});
+    Promise.all([
+      authenticatedFetch("/api/classes").then((r) => r.json()),
+      authenticatedFetch("/api/parents").then((r) => r.json()),
+    ]).then(([cd, pd]) => {
+      setClasses(Array.isArray(cd.data) ? cd.data : []);
+      setParents(Array.isArray(pd.data) ? pd.data : []);
+    }).catch(() => {});
   }, []);
 
   const set = (field: string, value: string) =>
@@ -39,7 +43,17 @@ export default function AddStudentPage() {
       const res = await authenticatedFetch("/api/students", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({
+          firstName: form.firstName,
+          lastName: form.lastName,
+          email: form.email,
+          dob: form.dob || null,
+          gender: form.gender || null,
+          classId: form.classId || null,
+          parentId: form.parentId || null,
+          address: form.address || null,
+          stateOfOrigin: form.stateOfOrigin || null,
+        }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message);
@@ -119,15 +133,16 @@ export default function AddStudentPage() {
             </div>
           </div>
 
-          <div className="form-section-title" style={{ marginTop: "2rem" }}>Parent / Guardian Details</div>
+          <div className="form-section-title" style={{ marginTop: "2rem" }}>Parent / Guardian (Optional)</div>
           <div className="form-grid-2">
-            <div className="form-group">
-              <label>Parent Phone</label>
-              <input type="tel" value={form.parentPhone} onChange={(e) => set("parentPhone", e.target.value)} placeholder="+234 800 000 0000" />
-            </div>
-            <div className="form-group">
-              <label>Parent Email</label>
-              <input type="email" value={form.parentEmail} onChange={(e) => set("parentEmail", e.target.value)} placeholder="parent@example.com" />
+            <div className="form-group" style={{ gridColumn: "1 / -1" }}>
+              <label>Link to Registered Parent/Guardian</label>
+              <select value={form.parentId} onChange={(e) => set("parentId", e.target.value)}>
+                <option value="">Select Parent (optional)</option>
+                {parents.map((p) => (
+                  <option key={p.id} value={p.id}>{p.name} ({p.email})</option>
+                ))}
+              </select>
             </div>
           </div>
 

@@ -4,22 +4,30 @@ import { useParams, useRouter } from "next/navigation";
 import { toast } from "sonner";
 import "../../../shared.css";
 
+interface Parent {
+  id: string;
+  name: string;
+  email: string;
+}
+
 export default function EditStudentPage() {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
   const [classes, setClasses] = useState<{ id: string; name: string; section?: string }[]>([]);
+  const [parents, setParents] = useState<Parent[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [form, setForm] = useState({
     firstName: "", lastName: "", email: "", dob: "", gender: "",
-    classId: "", parentPhone: "", parentEmail: "", address: "", stateOfOrigin: "",
+    classId: "", parentId: "", address: "", stateOfOrigin: "",
   });
 
   useEffect(() => {
     Promise.all([
       fetch(`/api/students/${id}`, { credentials: "include" }).then((r) => r.json()),
       fetch("/api/classes", { credentials: "include" }).then((r) => r.json()),
-    ]).then(([sd, cd]) => {
+      fetch("/api/parents", { credentials: "include" }).then((r) => r.json()),
+    ]).then(([sd, cd, pd]) => {
       const s = sd.data;
       if (s) {
         const [first, ...rest] = (s.name ?? "").split(" ");
@@ -30,13 +38,13 @@ export default function EditStudentPage() {
           dob: s.dob ? s.dob.slice(0, 10) : "",
           gender: s.gender ?? "",
           classId: s.class_id ?? "",
-          parentPhone: s.parent_phone ?? "",
-          parentEmail: s.parent_email ?? "",
+          parentId: "",
           address: s.address ?? "",
           stateOfOrigin: s.state_of_origin ?? "",
         });
       }
       setClasses(Array.isArray(cd.data) ? cd.data : []);
+      setParents(Array.isArray(pd.data) ? pd.data : []);
     }).catch(() => toast.error("Failed to load student"))
       .finally(() => setLoading(false));
   }, [id]);
@@ -58,8 +66,7 @@ export default function EditStudentPage() {
           dob: form.dob || null,
           gender: form.gender || null,
           classId: form.classId || null,
-          parentPhone: form.parentPhone || null,
-          parentEmail: form.parentEmail || null,
+          parentId: form.parentId || null,
           address: form.address || null,
           stateOfOrigin: form.stateOfOrigin || null,
         }),
@@ -122,12 +129,13 @@ export default function EditStudentPage() {
               </select>
             </div>
             <div className="form-group">
-              <label>Parent Phone</label>
-              <input type="tel" value={form.parentPhone} onChange={(e) => set("parentPhone", e.target.value)} />
-            </div>
-            <div className="form-group">
-              <label>Parent Email</label>
-              <input type="email" value={form.parentEmail} onChange={(e) => set("parentEmail", e.target.value)} />
+              <label>Link Parent/Guardian</label>
+              <select value={form.parentId} onChange={(e) => set("parentId", e.target.value)}>
+                <option value="">Select Parent</option>
+                {parents.map((p) => (
+                  <option key={p.id} value={p.id}>{p.name} ({p.email})</option>
+                ))}
+              </select>
             </div>
             <div className="form-group">
               <label>State of Origin</label>

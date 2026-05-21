@@ -11,14 +11,14 @@ export const GET = withAuth(requireService("analytics", async (_req: NextRequest
 
     const [overall, byClass] = await Promise.all([
       queryOne<{ rate: number }>(
-        "SELECT ROUND(100.0*SUM(CASE WHEN status='present' THEN 1 ELSE 0 END)/MAX(COUNT(*),1),1) rate FROM attendance WHERE school_id=? AND strftime('%Y-%m',date)=strftime('%Y-%m','now')",
+        "SELECT COALESCE(ROUND(100.0*SUM(CASE WHEN status='present' THEN 1 ELSE 0 END)/NULLIF(COUNT(*),0),1),0) rate FROM attendance WHERE school_id=?",
         [sid]
       ),
       query<{ class: string; rate: number }>(
         `SELECT c.name || COALESCE(' ' || c.section, '') as class,
-         ROUND(100.0*SUM(CASE WHEN a.status='present' THEN 1 ELSE 0 END)/MAX(COUNT(*),1),1) as rate
+         COALESCE(ROUND(100.0*SUM(CASE WHEN a.status='present' THEN 1 ELSE 0 END)/NULLIF(COUNT(*),0),1),0) as rate
          FROM attendance a JOIN classes c ON a.class_id=c.id
-         WHERE a.school_id=? AND strftime('%Y-%m',a.date)=strftime('%Y-%m','now')
+         WHERE a.school_id=?
          GROUP BY a.class_id ORDER BY rate DESC LIMIT 10`,
         [sid]
       ),

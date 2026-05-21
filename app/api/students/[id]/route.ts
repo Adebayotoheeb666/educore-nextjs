@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { queryOne, execute } from "@/lib/db/turso";
 import { withAuth, type AuthContext } from "@/lib/middleware/auth";
 import { notFound, ok, serverError } from "@/lib/utils/response";
+import { generateId } from "@/lib/utils/id";
 
 type Params = { params: { id: string } };
 
@@ -10,7 +11,7 @@ export const GET = withAuth(async (_req: NextRequest, { school }: AuthContext, p
   try {
     if (!school) return notFound("School not found");
     const student = await queryOne(
-      `SELECT id, name, first_name, last_name, email, phone, avatar, admission_no, dob, gender, parent_phone, is_active, created_at, updated_at
+      `SELECT id, name, first_name, last_name, email, phone, avatar, admission_no, dob, gender, parent_phone, address, state_of_origin, class_id, is_active, created_at, updated_at
        FROM users WHERE id = ? AND school_id = ? AND role = 'student'`,
       [params?.id ?? "", school.id]
     );
@@ -33,28 +34,69 @@ export const PATCH = withAuth(
       );
       if (!existing) return notFound("Student not found");
 
-      const { firstName, lastName, dob, gender, parentPhone, isActive, avatar } = await req.json();
+      const { firstName, lastName, email, dob, gender, classId, parentId, isActive, avatar, address, stateOfOrigin } = await req.json();
       const ex = existing as { first_name: string | null; last_name: string | null };
       const newFirst = firstName ?? ex.first_name ?? "";
       const newLast = lastName ?? ex.last_name ?? "";
 
-      await execute(
-        `UPDATE users SET
-           first_name = COALESCE(?, first_name),
+      let setClauses = `first_name = COALESCE(?, first_name),
            last_name = COALESCE(?, last_name),
            name = ?,
            dob = COALESCE(?, dob),
            gender = COALESCE(?, gender),
-           parent_phone = COALESCE(?, parent_phone),
            is_active = COALESCE(?, is_active),
            avatar = COALESCE(?, avatar),
-           updated_at = datetime('now')
-         WHERE id = ?`,
-        [firstName || null, lastName || null, `${newFirst} ${newLast}`.trim(),
-         dob || null, gender || null, parentPhone || null,
+           updated_at = datetime('now')`;
+      let args: (string | number | null)[] = [firstName || null, lastName || null, `${newFirst} ${newLast}`.trim(),
+         dob || null, gender || null,
          isActive !== undefined ? (isActive ? 1 : 0) : null,
-         avatar || null, id]
+         avatar || null];
+
+      if (email !== undefined) {
+        setClauses = `email = COALESCE(?, email), ${setClauses}`;
+        args.unshift(email || null);
+      }
+      if (address !== undefined) {
+        setClauses += `, address = COALESCE(?, address)`;
+        args.push(address || null);
+      }
+      if (stateOfOrigin !== undefined) {
+        setClauses += `, state_of_origin = COALESCE(?, state_of_origin)`;
+        args.push(stateOfOrigin || null);
+      }
+
+      args.push(id);
+
+      await execute(
+        `UPDATE users SET ${setClauses} WHERE id = ?`,
+        args
       );
+
+      if (classId !== undefined && classId) {
+        const classRecord = await queryOne(
+          "SELECT id FROM classes WHERE id = ? AND school_id = ?",
+          [classId, school.id]
+        );
+        if (classRecord) {
+          await execute("UPDATE users SET class_id = ? WHERE id = ?", [classId, id]);
+        }
+      } else if (classId === "") {
+        await execute("UPDATE users SET class_id = NULL WHERE id = ?", [id]);
+      }
+
+      if (parentId) {
+        const parentRecord = await queryOne(
+          "SELECT id FROM users WHERE id = ? AND school_id = ? AND role = 'parent'",
+          [parentId, school.id]
+        );
+        if (parentRecord) {
+          const relId = generateId();
+          await execute(
+            `INSERT OR IGNORE INTO user_relationships (id, parent_id, child_id, created_at) VALUES (?, ?, ?, datetime('now'))`,
+            [relId, parentId, id]
+          );
+        }
+      }
 
       const updated = await queryOne(
         "SELECT id, name, first_name, last_name, email, phone, avatar, admission_no, dob, gender, parent_phone, is_active FROM users WHERE id = ?",
@@ -87,5 +129,5 @@ export const DELETE = withAuth(
       return serverError(err);
     }
   },
-  ["principal", "school_owner"]
+  ["principal", "school_owner", "admin_staff", "vp_admin"]
 );
