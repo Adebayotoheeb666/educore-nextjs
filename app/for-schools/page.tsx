@@ -68,10 +68,10 @@ export default function ForSchools() {
               EduCore AI provides the tools to manage every academic and administrative detail.
             </p>
             <div className="hp-hero__btns" style={{ justifyContent: "center", animation: "slideRight 0.6s ease-out 0.5s both" }}>
-              <Link href="/register" className="hp-btn hp-btn--primary">
+              <Link href="/register" className="hp-btn hp-btn--primary" style={{ whiteSpace: "nowrap" }}>
                 Register Your School
               </Link>
-              <Link href="/contact-us" className="hp-btn hp-btn--ghost">
+              <Link href="/contact-us" className="hp-btn hp-btn--ghost" style={{ whiteSpace: "nowrap" }}>
                 Request a Demo
               </Link>
             </div>
