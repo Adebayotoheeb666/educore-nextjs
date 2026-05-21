@@ -7,7 +7,7 @@
 .about-wrapper {
   color: #111827;
   background-color: #fff;
-  padding-top: 80px;
+  padding-top: 0;
 }
 .about-container {
   max-width: 1200px;
@@ -19,9 +19,9 @@
   height: clamp(300px, 50vw, 520px);
   display: flex;
   align-items: center;
-  overflow: hidden;
-  margin-top: -80px;
-  padding-top: 80px;
+  overflow: visible;
+  margin-top: 0;
+  padding-top: 0;
   z-index: 1;
 }
 
@@ -267,7 +267,7 @@
   padding: 6rem;
   color: white;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -358,7 +358,7 @@
 .contact-wrapper {
   color: #111827;
   background-color: #fff;
-  padding-top: 80px;
+  padding-top: 0;
 }
 .contact-hero {
   text-align: center;
@@ -439,7 +439,7 @@
 .map-placeholder {
   margin-top: 3rem;
   border-radius: 16px;
-  overflow: hidden;
+  overflow: visible;
   height: 240px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
@@ -589,7 +589,7 @@
 .blog-wrapper {
   color: #111827;
   background-color: #f9fafb;
-  padding-top: 80px;
+  padding-top: 0;
 }
 .blog-container {
   max-width: 1200px;
@@ -662,14 +662,14 @@
   display: flex;
   background: white;
   border-radius: 16px;
-  overflow: hidden;
+  overflow: visible;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
   margin-bottom: 4rem;
   min-height: 400px;
 }
 .featured-post-image {
   flex: 1;
-  overflow: hidden;
+  overflow: visible;
 }
 .featured-post-image img {
   width: 100%;
@@ -753,7 +753,7 @@
 .post-card {
   background: white;
   border-radius: 16px;
-  overflow: hidden;
+  overflow: visible;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
@@ -762,7 +762,7 @@
 .post-card:hover { transform: translateY(-5px); }
 .post-card-image {
   height: 200px;
-  overflow: hidden;
+  overflow: visible;
   position: relative;
 }
 .post-card-image img {
@@ -868,7 +868,7 @@
 .bp-hero {
   position: relative;
   height: clamp(280px, 50vw, 420px);
-  overflow: hidden;
+  overflow: visible;
   display: flex;
   align-items: flex-end;
   margin-top: 66px;
@@ -962,7 +962,7 @@
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  overflow: hidden;
+  overflow: visible;
   background: #6A5ACD;
   display: flex;
   align-items: center;
@@ -1160,7 +1160,7 @@
   width: 64px;
   height: 50px;
   border-radius: 8px;
-  overflow: hidden;
+  overflow: visible;
   background: linear-gradient(135deg, #2d2460, #6A5ACD);
   flex-shrink: 0;
 }
