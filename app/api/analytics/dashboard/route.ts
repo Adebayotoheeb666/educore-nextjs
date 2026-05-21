@@ -1,10 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { query, queryOne } from "@/lib/db/turso";
-import { requireService } from "@/lib/middleware/requireService";
 import { withAuth, type AuthContext } from "@/lib/middleware/auth";
 import { badRequest, ok, serverError } from "@/lib/utils/response";
 
-export const GET = withAuth(requireService("analytics", async (_req: NextRequest, { school }: AuthContext): Promise<NextResponse> => {
+export const GET = withAuth(async (_req: NextRequest, { school }: AuthContext): Promise<NextResponse> => {
   try {
     if (!school) return badRequest("School context required");
     const sid = school.id;
@@ -65,4 +64,4 @@ export const GET = withAuth(requireService("analytics", async (_req: NextRequest
   } catch (err) {
     return serverError(err);
   }
-}));
+});
