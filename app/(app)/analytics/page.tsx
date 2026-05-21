@@ -98,7 +98,7 @@ export default function AnalyticsPage() {
       </div>
 
       {/* Key Metrics */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "2rem", marginBottom: "3rem" }}>
+      <div className="analytics-metrics-grid">
         {[
           { label: "Students",    value: dashboard?.totalStudents?.toLocaleString() ?? "—", icon: "👨‍🎓", color: "#3730a3" },
           { label: "Teachers",    value: dashboard?.totalTeachers?.toLocaleString() ?? "—", icon: "👩‍🏫", color: "#0369a1" },
@@ -115,7 +115,7 @@ export default function AnalyticsPage() {
         ))}
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2.5rem", marginBottom: "2.5rem" }}>
+      <div className="analytics-two-col-grid">
         {/* Fee Breakdown */}
         <div style={{ background: "white", borderRadius: 16, border: "1px solid #f1f5f9", padding: "2.5rem" }}>
           <h2 style={{ fontSize: "1.8rem", fontWeight: 700, marginBottom: "2rem" }}>Fee Breakdown</h2>
@@ -185,7 +185,7 @@ export default function AnalyticsPage() {
       {/* Ops Alerts */}
       <div style={{ background: "white", borderRadius: 16, border: "1px solid #f1f5f9", padding: "2.5rem" }}>
         <h2 style={{ fontSize: "1.8rem", fontWeight: 700, marginBottom: "2rem" }}>⚡ Action Required</h2>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "2rem" }}>
+        <div className="analytics-actions-grid">
           {[
             { label: "Fee Defaulters",        value: dashboard?.feeDefaulters,       icon: "💸", href: "/fees/defaulters",  color: "#e11d48" },
             { label: "Pending Lesson Plans",   value: dashboard?.pendingLessonPlans,  icon: "📝", href: "/lesson-plans",     color: "#f59e0b" },

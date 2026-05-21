@@ -92,12 +92,12 @@ export default function ContactPage() {
 
       {/* Hero */}
       <section className="contact-hero">
-        <div className="contact-container">
-          <div className="help-badge">
+        <div className="contact-container" style={{ animation: "slideDown 0.8s ease-out" }}>
+          <div className="help-badge" style={{ animation: "slideRight 0.6s ease-out 0.2s both" }}>
             <span>✨</span> WE ARE HERE TO HELP
           </div>
-          <h1>Get in Touch</h1>
-          <p>
+          <h1 style={{ animation: "slideRight 0.6s ease-out 0.3s both" }}>Get in Touch</h1>
+          <p style={{ animation: "slideRight 0.6s ease-out 0.4s both" }}>
             Have questions about integrating EduCore AI into your school? Our team of
             educational technology experts is ready to assist you.
           </p>
@@ -265,8 +265,8 @@ export default function ContactPage() {
               <h5>Company</h5>
               <ul>
                 <li><Link href="/about-us">About Us</Link></li>
-                <li><Link href="/">Our Team</Link></li>
-                <li><Link href="/">Careers</Link></li>
+                <li><Link href="/our-team">Our Team</Link></li>
+                <li><Link href="/careers">Careers</Link></li>
                 <li><Link href="/contact-us">Contact Us</Link></li>
               </ul>
             </div>
@@ -274,10 +274,10 @@ export default function ContactPage() {
             <div className="hp-footer__col">
               <h5>Support</h5>
               <ul>
-                <li><Link href="/">Help Center</Link></li>
+                <li><Link href="/help-center">Help Center</Link></li>
                 <li><Link href="/terms">Terms of Service</Link></li>
                 <li><Link href="/privacy">Privacy Policy</Link></li>
-                <li><Link href="/">Security</Link></li>
+                <li><Link href="/security">Security</Link></li>
               </ul>
             </div>
           </div>

@@ -85,15 +85,15 @@ export default function AboutPage() {
           style={{ objectFit: "cover" }}
         />
         <div className="about-hero-overlay" />
-        <div className="about-container">
-          <div className="mission-badge">OUR MISSION</div>
-          <h1>Revolutionizing Nigerian Education Through Intelligence.</h1>
-          <p>
+        <div className="about-container" style={{ animation: "slideDown 0.8s ease-out" }}>
+          <div className="mission-badge" style={{ animation: "slideRight 0.6s ease-out 0.2s both" }}>OUR MISSION</div>
+          <h1 style={{ animation: "slideRight 0.6s ease-out 0.3s both" }}>Revolutionizing Nigerian Education Through Intelligence.</h1>
+          <p style={{ animation: "slideRight 0.6s ease-out 0.4s both" }}>
             At EduCore AI, we bridge the gap between traditional learning and the
             digital future, providing administrators with the tools to empower the next
             generation of Nigerian leaders.
           </p>
-          <div className="hero-btns">
+          <div className="hero-btns" style={{ animation: "slideRight 0.6s ease-out 0.5s both" }}>
             <Link href="/contact-us" className="btn-about-primary">
               Our Impact
             </Link>
@@ -292,8 +292,8 @@ export default function AboutPage() {
               <h5>Company</h5>
               <ul>
                 <li><Link href="/about-us">About Us</Link></li>
-                <li><Link href="/">Our Team</Link></li>
-                <li><Link href="/">Careers</Link></li>
+                <li><Link href="/our-team">Our Team</Link></li>
+                <li><Link href="/careers">Careers</Link></li>
                 <li><Link href="/contact-us">Contact Us</Link></li>
               </ul>
             </div>
@@ -301,10 +301,10 @@ export default function AboutPage() {
             <div className="hp-footer__col">
               <h5>Support</h5>
               <ul>
-                <li><Link href="/">Help Center</Link></li>
+                <li><Link href="/help-center">Help Center</Link></li>
                 <li><Link href="/terms">Terms of Service</Link></li>
                 <li><Link href="/privacy">Privacy Policy</Link></li>
-                <li><Link href="/">Security</Link></li>
+                <li><Link href="/security">Security</Link></li>
               </ul>
             </div>
           </div>

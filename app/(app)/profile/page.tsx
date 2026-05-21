@@ -115,7 +115,7 @@ export default function ProfilePage() {
       </div>
 
       {/* Hero with avatar upload */}
-      <div style={{ background: "white", borderRadius: 20, border: "1px solid #f1f5f9", padding: "3rem", marginBottom: "3rem", display: "flex", gap: "2.5rem", alignItems: "center" }}>
+      <div className="profile-hero-card">
         <div style={{ position: "relative", flexShrink: 0 }}>
           <div style={{ width: 90, height: 90, borderRadius: "50%", overflow: "hidden", border: "3px solid #ede9fa" }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -148,7 +148,7 @@ export default function ProfilePage() {
         </div>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2.5rem" }}>
+      <div className="profile-forms-grid">
         {/* Profile form */}
         <div className="form-card">
           <div className="form-section-title">Personal Information</div>

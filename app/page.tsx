@@ -351,7 +351,7 @@ export default function Homepage() {
               <p>Optimized to run smoothly even on slow 3G connections common across many states.</p>
             </div>
             <div className="hp-nigeria__item">
-              <div className="hp-nigeria__icon">💰</div>
+              <div className="hp-nigeria__icon">���</div>
               <h4>Installment Fee Tracking</h4>
               <p>Manage the reality of partial payments with automated balance tracking and reminders.</p>
             </div>
@@ -417,8 +417,8 @@ export default function Homepage() {
               <h5>Company</h5>
               <ul>
                 <li><Link href="/about-us">About Us</Link></li>
-                <li><Link href="/">Our Team</Link></li>
-                <li><Link href="/">Careers</Link></li>
+                <li><Link href="/our-team">Our Team</Link></li>
+                <li><Link href="/careers">Careers</Link></li>
                 <li><Link href="/contact-us">Contact Us</Link></li>
               </ul>
             </div>
@@ -426,10 +426,10 @@ export default function Homepage() {
             <div className="hp-footer__col">
               <h5>Support</h5>
               <ul>
-                <li><Link href="/">Help Center</Link></li>
+                <li><Link href="/help-center">Help Center</Link></li>
                 <li><Link href="/terms">Terms of Service</Link></li>
                 <li><Link href="/privacy">Privacy Policy</Link></li>
-                <li><Link href="/">Security</Link></li>
+                <li><Link href="/security">Security</Link></li>
               </ul>
             </div>
           </div>
