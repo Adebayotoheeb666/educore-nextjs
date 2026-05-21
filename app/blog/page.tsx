@@ -293,8 +293,8 @@ export default function Blog() {
               <h5>Company</h5>
               <ul>
                 <li><Link href="/about-us">About Us</Link></li>
-                <li><Link href="/">Our Team</Link></li>
-                <li><Link href="/">Careers</Link></li>
+                <li><Link href="/our-team">Our Team</Link></li>
+                <li><Link href="/careers">Careers</Link></li>
                 <li><Link href="/contact-us">Contact Us</Link></li>
               </ul>
             </div>
@@ -302,10 +302,10 @@ export default function Blog() {
             <div className="hp-footer__col">
               <h5>Support</h5>
               <ul>
-                <li><Link href="/">Help Center</Link></li>
+                <li><Link href="/help-center">Help Center</Link></li>
                 <li><Link href="/terms">Terms of Service</Link></li>
                 <li><Link href="/privacy">Privacy Policy</Link></li>
-                <li><Link href="/">Security</Link></li>
+                <li><Link href="/security">Security</Link></li>
               </ul>
             </div>
           </div>
