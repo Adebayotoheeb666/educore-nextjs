@@ -110,20 +110,6 @@ export default function AboutPage() {
       <section className="excellence-section">
         <div className="about-container">
           <div className="excellence-grid">
-            <div className="excellence-image">
-              <Image
-                src="/assets/teacher-group.png"
-                alt="Team collaborating"
-                className="main-img"
-                width={600}
-                height={450}
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
-              <div className="journey-box">
-                <h4>2022</h4>
-                <p>The year our journey to redefine school management began.</p>
-              </div>
-            </div>
             <div className="excellence-content">
               <h2>A Commitment to Excellence</h2>
               <p>
@@ -148,6 +134,20 @@ export default function AboutPage() {
                     <p>Built to grow with your school, from 100 students to 10,000.</p>
                   </div>
                 </div>
+              </div>
+            </div>
+            <div className="excellence-image">
+              <Image
+                src="/assets/teacher-group.png"
+                alt="Team collaborating"
+                className="main-img"
+                width={600}
+                height={450}
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+              <div className="journey-box">
+                <h4>2022</h4>
+                <p>The year our journey to redefine school management began.</p>
               </div>
             </div>
           </div>

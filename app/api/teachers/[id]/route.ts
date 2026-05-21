@@ -62,7 +62,7 @@ export const PATCH = withAuth(
       return serverError(err);
     }
   },
-  ["principal", "vp_admin"]
+  ["principal", "vp_admin", "school_owner"]
 );
 
 export const DELETE = withAuth(
@@ -77,5 +77,5 @@ export const DELETE = withAuth(
       return serverError(err);
     }
   },
-  ["principal"]
+  ["principal", "school_owner"]
 );

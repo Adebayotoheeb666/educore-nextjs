@@ -29,16 +29,18 @@ export const POST = withAuth(
       const { name, firstName, lastName, email, password, phone, role, avatar } = await req.json();
       const fullName = name || `${firstName ?? ""} ${lastName ?? ""}`.trim();
 
-      if (!fullName || !email || !password) {
-        return badRequest("Name, email, and password are required");
+      if (!fullName || !email) {
+        return badRequest("Name and email are required");
       }
+
+      const defaultPassword = password || `EduCore@${new Date().getFullYear()}`;
 
       const normalizedEmail = String(email).toLowerCase().trim();
       const [existing] = await query("SELECT id FROM users WHERE email = ?", [normalizedEmail]);
       if (existing) return conflict("Email already registered");
 
       const teacherRole = TEACHER_ROLES.includes(role) ? role : "subject_teacher";
-      const hashed = await hashPassword(password);
+      const hashed = await hashPassword(defaultPassword);
       const id = generateId();
 
       await execute(
@@ -48,10 +50,10 @@ export const POST = withAuth(
          normalizedEmail, hashed, phone || null, teacherRole, school.id, avatar || null]
       );
 
-      return created({ id, name: fullName, email: normalizedEmail, role: teacherRole });
+      return created({ id, name: fullName, email: normalizedEmail, role: teacherRole, defaultPassword });
     } catch (err) {
       return serverError(err);
     }
   },
-  ["principal", "vp_admin"]
+  ["principal", "vp_admin", "school_owner"]
 );
