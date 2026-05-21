@@ -25,8 +25,8 @@ export const GET = withAuth(async (_req: NextRequest, { school }: AuthContext): 
         [sid]
       ),
       queryOne<{ total: number }>("SELECT COALESCE(SUM(amount_paid),0) total FROM fee_payments WHERE school_id=? AND status='completed'", [sid]),
-      queryOne<{ total: number }>("SELECT COALESCE(SUM(f.total_amount - COALESCE(p.paid,0)),0) total FROM fees f LEFT JOIN (SELECT fee_id, SUM(amount_paid) paid FROM fee_payments WHERE school_id=? GROUP BY fee_id) p ON p.fee_id=f.id WHERE f.school_id=?", [sid, sid]),
-      queryOne<{ c: number }>("SELECT COUNT(DISTINCT fp.student_id) c FROM fees f LEFT JOIN (SELECT fee_id,student_id,SUM(amount_paid) paid FROM fee_payments WHERE school_id=? GROUP BY fee_id,student_id) fp ON fp.fee_id=f.id WHERE f.school_id=? AND (fp.paid IS NULL OR fp.paid < f.total_amount)", [sid, sid]),
+      queryOne<{ total: number }>("SELECT COALESCE(SUM(f.amount - COALESCE(p.paid,0)),0) total FROM fees f LEFT JOIN (SELECT fee_id, SUM(amount_paid) paid FROM fee_payments WHERE school_id=? GROUP BY fee_id) p ON p.fee_id=f.id WHERE f.school_id=?", [sid, sid]),
+      queryOne<{ c: number }>("SELECT COUNT(DISTINCT fp.student_id) c FROM fees f LEFT JOIN (SELECT fee_id,student_id,SUM(amount_paid) paid FROM fee_payments WHERE school_id=? GROUP BY fee_id,student_id) fp ON fp.fee_id=f.id WHERE f.school_id=? AND (fp.paid IS NULL OR fp.paid < f.amount)", [sid, sid]),
       queryOne<{ c: number }>("SELECT COUNT(*) c FROM lesson_plans WHERE school_id=? AND status='pending'", [sid]),
       queryOne<{ c: number }>("SELECT COUNT(*) c FROM book_borrows WHERE school_id=? AND returned_at IS NULL AND due_date < date('now')", [sid]),
       queryOne<{ c: number }>("SELECT COUNT(*) c FROM exams WHERE school_id=? AND date BETWEEN date('now') AND date('now','+30 days')", [sid]),
