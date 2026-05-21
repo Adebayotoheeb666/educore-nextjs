@@ -61,6 +61,17 @@ export default function AboutPage() {
               </>
             )}
           </div>
+
+          {/* Hamburger Menu */}
+          <button
+            className={`nav-hamburger ${menuOpen ? "open" : ""}`}
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle menu"
+          >
+            <span />
+            <span />
+            <span />
+          </button>
         </div>
       </nav>
 
