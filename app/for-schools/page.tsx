@@ -57,22 +57,24 @@ export default function ForSchools() {
 
       {/* Hero */}
       <header className="hp-hero" style={{ background: "linear-gradient(135deg, #f3f0ff 0%, #fff 100%)", padding: "12rem 0 6rem" }}>
-        <div className="hp-container text-center">
-          <span className="hp-badge">BUILT FOR SCALE</span>
-          <h1 style={{ fontSize: "4rem", fontWeight: 900, marginBottom: "2rem", color: "#2d2460", lineHeight: 1.2 }}>
-            The Digital Backbone for<br />Modern Nigerian Schools
-          </h1>
-          <p style={{ fontSize: "1.7rem", color: "#4b5563", maxWidth: "800px", margin: "0 auto 3rem", lineHeight: 1.6 }}>
-            From single-campus primary schools to large multi-state secondary school networks, 
-            EduCore AI provides the tools to manage every academic and administrative detail.
-          </p>
-          <div className="hp-hero__btns" style={{ justifyContent: "center" }}>
-            <Link href="/register" className="hp-btn hp-btn--primary">
-              Register Your School
-            </Link>
-            <Link href="/contact-us" className="hp-btn hp-btn--ghost">
-              Request a Demo
-            </Link>
+        <div className="hp-container" style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center" }}>
+          <div style={{ animation: "slideDown 0.8s ease-out" }}>
+            <span className="hp-badge" style={{ animation: "slideRight 0.6s ease-out 0.2s both" }}>BUILT FOR SCALE</span>
+            <h1 style={{ fontSize: "4rem", fontWeight: 900, marginBottom: "2rem", color: "#2d2460", lineHeight: 1.2, animation: "slideRight 0.6s ease-out 0.3s both" }}>
+              The Digital Backbone for<br />Modern Nigerian Schools
+            </h1>
+            <p style={{ fontSize: "1.7rem", color: "#4b5563", maxWidth: "800px", margin: "0 auto 3rem", lineHeight: 1.6, animation: "slideRight 0.6s ease-out 0.4s both" }}>
+              From single-campus primary schools to large multi-state secondary school networks, 
+              EduCore AI provides the tools to manage every academic and administrative detail.
+            </p>
+            <div className="hp-hero__btns" style={{ justifyContent: "center", animation: "slideRight 0.6s ease-out 0.5s both" }}>
+              <Link href="/register" className="hp-btn hp-btn--primary">
+                Register Your School
+              </Link>
+              <Link href="/contact-us" className="hp-btn hp-btn--ghost">
+                Request a Demo
+              </Link>
+            </div>
           </div>
         </div>
       </header>
@@ -211,7 +213,7 @@ export default function ForSchools() {
 
       {/* Government Compliance */}
       <section style={{ padding: "8rem 0", background: "#fff" }}>
-        <div className="hp-container text-center">
+        <div className="hp-container" style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center" }}>
           <span className="hp-badge" style={{ marginBottom: "1.5rem" }}>COMPLIANCE</span>
           <h2 style={{ fontSize: "3rem", fontWeight: 800, marginBottom: "2rem", color: "#0f172a" }}>Government Ready (EMIS/NEMIS)</h2>
           <p style={{ fontSize: "1.6rem", color: "#4b5563", maxWidth: "700px", margin: "0 auto 4rem", lineHeight: 1.6 }}>

@@ -66,12 +66,12 @@ export default function Resources() {
 
       {/* Hero */}
       <header className="hp-hero" style={{ background: "#2d2460", padding: "10rem 0 6rem", color: "#fff" }}>
-        <div className="hp-container text-center">
-          <span className="hp-badge" style={{ background: "rgba(255,255,255,0.1)", color: "#fff", borderColor: "rgba(255,255,255,0.2)" }}>KNOWLEDGE HUB</span>
-          <h1 style={{ fontSize: "4rem", fontWeight: 900, marginBottom: "2rem", color: "#fff", lineHeight: 1.2 }}>
+        <div className="hp-container text-center" style={{ animation: "slideDown 0.8s ease-out" }}>
+          <span className="hp-badge" style={{ background: "rgba(255,255,255,0.1)", color: "#fff", borderColor: "rgba(255,255,255,0.2)", animation: "slideRight 0.6s ease-out 0.2s both" }}>KNOWLEDGE HUB</span>
+          <h1 style={{ fontSize: "4rem", fontWeight: 900, marginBottom: "2rem", color: "#fff", lineHeight: 1.2, animation: "slideRight 0.6s ease-out 0.3s both" }}>
             Educational Resources &<br />AI Insights
           </h1>
-          <p style={{ fontSize: "1.7rem", color: "rgba(255,255,255,0.7)", maxWidth: "800px", margin: "0 auto", lineHeight: 1.6 }}>
+          <p style={{ fontSize: "1.7rem", color: "rgba(255,255,255,0.7)", maxWidth: "800px", margin: "0 auto", lineHeight: 1.6, animation: "slideRight 0.6s ease-out 0.4s both" }}>
             Guides, templates, and insights to help you navigate the future of education in Nigeria.
           </p>
         </div>

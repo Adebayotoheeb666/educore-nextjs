@@ -125,10 +125,10 @@ export default function ApiDocsPage() {
       </nav>
 
       {/* Hero Banner */}
-      <div style={{ background: "linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 50%, #ffffff 100%)", padding: "60px 0 40px" }}>
+      <div style={{ background: "linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 50%, #ffffff 100%)", padding: "60px 0 40px", animation: "slideDown 0.8s ease-out" }}>
         <div className="container-lg">
-          <h1 className="fw-bold" style={{ color: "var(--dark-blue)", fontSize: "2.5rem" }}>Developer Portal</h1>
-          <p className="text-muted" style={{ fontSize: "1.1rem", maxWidth: "600px" }}>
+          <h1 className="fw-bold" style={{ color: "var(--dark-blue)", fontSize: "2.5rem", animation: "slideRight 0.6s ease-out 0.2s both" }}>Developer Portal</h1>
+          <p className="text-muted" style={{ fontSize: "1.1rem", maxWidth: "600px", animation: "slideRight 0.6s ease-out 0.3s both" }}>
             Comprehensive documentation for external integrations and mobile client implementations. All routes support global CORS and auto rate-limiting.
           </p>
         </div>

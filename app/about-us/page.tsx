@@ -85,15 +85,15 @@ export default function AboutPage() {
           style={{ objectFit: "cover" }}
         />
         <div className="about-hero-overlay" />
-        <div className="about-container">
-          <div className="mission-badge">OUR MISSION</div>
-          <h1>Revolutionizing Nigerian Education Through Intelligence.</h1>
-          <p>
+        <div className="about-container" style={{ animation: "slideDown 0.8s ease-out" }}>
+          <div className="mission-badge" style={{ animation: "slideRight 0.6s ease-out 0.2s both" }}>OUR MISSION</div>
+          <h1 style={{ animation: "slideRight 0.6s ease-out 0.3s both" }}>Revolutionizing Nigerian Education Through Intelligence.</h1>
+          <p style={{ animation: "slideRight 0.6s ease-out 0.4s both" }}>
             At EduCore AI, we bridge the gap between traditional learning and the
             digital future, providing administrators with the tools to empower the next
             generation of Nigerian leaders.
           </p>
-          <div className="hero-btns">
+          <div className="hero-btns" style={{ animation: "slideRight 0.6s ease-out 0.5s both" }}>
             <Link href="/contact-us" className="btn-about-primary">
               Our Impact
             </Link>

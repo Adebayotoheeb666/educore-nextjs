@@ -116,8 +116,8 @@ export default function Blog() {
       </nav>
 
       <div className="blog-container" style={{ marginTop: "2rem" }}>
-        <header className="blog-header">
-          <div className="blog-header-content">
+        <header className="blog-header" style={{ animation: "slideDown 0.8s ease-out" }}>
+          <div className="blog-header-content" style={{ animation: "slideRight 0.6s ease-out 0.2s both" }}>
             <h1>Knowledge Hub</h1>
             <p>Updates, insights, and resources from the EduCore AI team.</p>
           </div>

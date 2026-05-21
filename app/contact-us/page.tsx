@@ -92,12 +92,12 @@ export default function ContactPage() {
 
       {/* Hero */}
       <section className="contact-hero">
-        <div className="contact-container">
-          <div className="help-badge">
+        <div className="contact-container" style={{ animation: "slideDown 0.8s ease-out" }}>
+          <div className="help-badge" style={{ animation: "slideRight 0.6s ease-out 0.2s both" }}>
             <span>✨</span> WE ARE HERE TO HELP
           </div>
-          <h1>Get in Touch</h1>
-          <p>
+          <h1 style={{ animation: "slideRight 0.6s ease-out 0.3s both" }}>Get in Touch</h1>
+          <p style={{ animation: "slideRight 0.6s ease-out 0.4s both" }}>
             Have questions about integrating EduCore AI into your school? Our team of
             educational technology experts is ready to assist you.
           </p>
