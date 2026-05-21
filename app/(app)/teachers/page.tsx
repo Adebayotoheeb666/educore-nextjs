@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { toast } from "sonner";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import "../shared.css";
 
 interface Teacher {
@@ -25,7 +26,7 @@ export default function TeachersPage() {
   const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
-    fetch("/api/teachers", { credentials: "include" })
+    authenticatedFetch("/api/teachers")
       .then((r) => r.json())
       .then((d) => setTeachers(Array.isArray(d.data) ? d.data : []))
       .catch(() => toast.error("Failed to load teachers"))
@@ -49,9 +50,8 @@ export default function TeachersPage() {
   const handleDelete = async (id: string) => {
     setDeleting(true);
     try {
-      const res = await fetch(`/api/teachers/${id}`, {
+      const res = await authenticatedFetch(`/api/teachers/${id}`, {
         method: "DELETE",
-        credentials: "include",
       });
       if (!res.ok) throw new Error();
       setTeachers((prev) => prev.filter((t) => t.id !== id));

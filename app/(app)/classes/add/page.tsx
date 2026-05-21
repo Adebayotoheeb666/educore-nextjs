@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import "../../shared.css";
 
 interface Teacher { id: string; name: string; role?: string; }
@@ -14,7 +15,7 @@ export default function AddClassPage() {
   const [form, setForm] = useState({ name: "", section: "", level: "", teacherId: "", capacity: "" });
 
   useEffect(() => {
-    fetch("/api/teachers", { credentials: "include" })
+    authenticatedFetch("/api/teachers")
       .then((r) => r.json())
       .then((d) => setTeachers(Array.isArray(d.data) ? d.data : []))
       .catch(() => {});
@@ -28,10 +29,9 @@ export default function AddClassPage() {
     if (!form.name) return toast.error("Class name is required");
     setSubmitting(true);
     try {
-      const res = await fetch("/api/classes", {
+      const res = await authenticatedFetch("/api/classes", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify({
           ...form,
           capacity: form.capacity ? Number(form.capacity) : undefined,

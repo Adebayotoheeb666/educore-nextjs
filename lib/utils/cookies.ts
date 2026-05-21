@@ -15,7 +15,7 @@ export function setAuthCookie(response: NextResponse, token: string): NextRespon
     path: "/",
     httpOnly: true,
     expires: new Date(Date.now() + ONE_DAY_MS),
-    sameSite: IS_PROD ? "none" : "lax",
+    sameSite: IS_PROD ? "strict" : "lax",
     secure: IS_PROD,
   });
   return response;
@@ -26,7 +26,7 @@ export function clearAuthCookie(response: NextResponse): NextResponse {
     path: "/",
     httpOnly: true,
     expires: new Date(0),
-    sameSite: IS_PROD ? "none" : "lax",
+    sameSite: IS_PROD ? "strict" : "lax",
     secure: IS_PROD,
   });
   return response;
