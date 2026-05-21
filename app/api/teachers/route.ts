@@ -55,5 +55,5 @@ export const POST = withAuth(
       return serverError(err);
     }
   },
-  ["principal", "vp_admin"]
+  ["principal", "vp_admin", "school_owner"]
 );

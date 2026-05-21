@@ -29,44 +29,50 @@ export const GET = withAuth(async (_req: NextRequest, { school }: AuthContext, p
   }
 });
 
-export const PATCH = withAuth(async (req: NextRequest, { school }: AuthContext, params): Promise<NextResponse> => {
-  try {
-    if (!school) return notFound("School not found");
-    const id = params?.id ?? "";
-    const existing = await queryOne("SELECT id FROM classes WHERE id = ? AND school_id = ?", [id, school.id]);
-    if (!existing) return notFound("Class not found");
+export const PATCH = withAuth(
+  async (req: NextRequest, { school }: AuthContext, params): Promise<NextResponse> => {
+    try {
+      if (!school) return notFound("School not found");
+      const id = params?.id ?? "";
+      const existing = await queryOne("SELECT id FROM classes WHERE id = ? AND school_id = ?", [id, school.id]);
+      if (!existing) return notFound("Class not found");
 
-    const { name, arm, level, classTeacher } = await req.json();
-    await execute(
-      `UPDATE classes SET
-         name = COALESCE(?, name),
-         section = COALESCE(?, section),
-         level = COALESCE(?, level),
-         class_teacher_id = COALESCE(?, class_teacher_id),
-         updated_at = datetime('now')
-       WHERE id = ?`,
-      [name || null, arm || null, level || null, classTeacher || null, id]
-    );
+      const { name, arm, level, classTeacher } = await req.json();
+      await execute(
+        `UPDATE classes SET
+           name = COALESCE(?, name),
+           section = COALESCE(?, section),
+           level = COALESCE(?, level),
+           class_teacher_id = COALESCE(?, class_teacher_id),
+           updated_at = datetime('now')
+         WHERE id = ?`,
+        [name || null, arm || null, level || null, classTeacher || null, id]
+      );
 
-    const updated = await queryOne(
-      "SELECT c.*, u.name as teacher_name FROM classes c LEFT JOIN users u ON c.class_teacher_id = u.id WHERE c.id = ?",
-      [id]
-    );
-    return ok(updated);
-  } catch (err) {
-    return serverError(err);
-  }
-});
+      const updated = await queryOne(
+        "SELECT c.*, u.name as teacher_name FROM classes c LEFT JOIN users u ON c.class_teacher_id = u.id WHERE c.id = ?",
+        [id]
+      );
+      return ok(updated);
+    } catch (err) {
+      return serverError(err);
+    }
+  },
+  ["principal", "vp_admin", "school_owner"]
+);
 
-export const DELETE = withAuth(async (_req: NextRequest, { school }: AuthContext, params): Promise<NextResponse> => {
-  try {
-    if (!school) return notFound("School not found");
-    const id = params?.id ?? "";
-    const existing = await queryOne("SELECT id FROM classes WHERE id = ? AND school_id = ?", [id, school.id]);
-    if (!existing) return notFound("Class not found");
-    await execute("DELETE FROM classes WHERE id = ?", [id]);
-    return ok({ message: "Class deleted" });
-  } catch (err) {
-    return serverError(err);
-  }
-});
+export const DELETE = withAuth(
+  async (_req: NextRequest, { school }: AuthContext, params): Promise<NextResponse> => {
+    try {
+      if (!school) return notFound("School not found");
+      const id = params?.id ?? "";
+      const existing = await queryOne("SELECT id FROM classes WHERE id = ? AND school_id = ?", [id, school.id]);
+      if (!existing) return notFound("Class not found");
+      await execute("DELETE FROM classes WHERE id = ?", [id]);
+      return ok({ message: "Class deleted" });
+    } catch (err) {
+      return serverError(err);
+    }
+  },
+  ["principal", "vp_admin", "school_owner"]
+);
