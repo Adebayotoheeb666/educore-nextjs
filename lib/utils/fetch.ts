@@ -3,19 +3,19 @@ export async function authenticatedFetch(
   url: string,
   options?: RequestInit
 ): Promise<Response> {
-  const headers = new Headers(options?.headers);
+  const newOptions: RequestInit = {
+    ...options,
+    credentials: "include", // Always include cookies for httpOnly token
+  };
 
   // Add Authorization header if token exists in localStorage
   if (typeof window !== "undefined") {
     const token = localStorage.getItem("accessToken");
-    if (token && !headers.has("Authorization")) {
-      headers.set("Authorization", `Bearer ${token}`);
+    if (token) {
+      newOptions.headers = new Headers(options?.headers);
+      (newOptions.headers as Headers).set("Authorization", `Bearer ${token}`);
     }
   }
 
-  return fetch(url, {
-    ...options,
-    headers,
-    credentials: "include", // Always include cookies
-  });
+  return fetch(url, newOptions);
 }

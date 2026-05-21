@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { verifyToken } from "@/lib/utils/jwt";
-import { queryOne } from "@/lib/db/turso";
+import { queryOne, execute } from "@/lib/db/turso";
 import { unauthorized } from "@/lib/utils/response";
 import { isRateLimited } from "./rateLimit";
 
@@ -66,9 +66,9 @@ export function withAuth(handler: RouteHandler, allowedRoles?: string[]) {
       if (limited) {
         return NextResponse.json(
           { message: "Too many requests. Please try again later." },
-          { 
-            status: 429, 
-            headers: { "Retry-After": retryAfter.toString() } 
+          {
+            status: 429,
+            headers: { "Retry-After": retryAfter.toString() }
           }
         );
       }
@@ -76,7 +76,12 @@ export function withAuth(handler: RouteHandler, allowedRoles?: string[]) {
       const token = extractToken(req);
       if (!token) return unauthorized();
 
-      const payload = verifyToken(token);
+      let payload;
+      try {
+        payload = verifyToken(token);
+      } catch (verifyErr) {
+        return unauthorized("Invalid or expired token");
+      }
 
       const user = await queryOne<DbUser>(
         `SELECT id, name, email, role, school_id, is_active, first_name, last_name, avatar, phone, admission_no, created_at, updated_at
@@ -99,12 +104,25 @@ export function withAuth(handler: RouteHandler, allowedRoles?: string[]) {
            FROM schools WHERE id = ?`,
           [user.school_id]
         );
+      } else if (user.role === "school_owner") {
+        // If school owner has no school_id, find and link to their owned school
+        school = await queryOne<DbSchool>(
+          `SELECT id, name, email, phone, state, type, sub_domain, address,
+                  subscription_status, subscription_plan, academic_session, current_term
+           FROM schools WHERE owner_id = ?`,
+          [user.id]
+        );
+        // Auto-link the school_id if found
+        if (school) {
+          await execute("UPDATE users SET school_id = ? WHERE id = ?", [school.id, user.id]);
+          user.school_id = school.id;
+        }
       }
 
       const params = context?.params ? await context.params : undefined;
       return handler(req, { user, school }, params);
-    } catch {
-      return unauthorized("Not authorized, token failed");
+    } catch (err) {
+      return unauthorized("Not authorized, please login");
     }
   };
 }
