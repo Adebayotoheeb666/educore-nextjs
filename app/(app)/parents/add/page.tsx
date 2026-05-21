@@ -26,10 +26,15 @@ export default function AddParentPage() {
     }
     setSubmitting(true);
     try {
+      const fullName = `${form.firstName} ${form.lastName}`;
       const res = await authenticatedFetch("/api/parents", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({
+          name: fullName,
+          email: form.email,
+          phone: form.phone,
+        }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message);

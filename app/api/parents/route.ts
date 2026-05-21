@@ -31,13 +31,14 @@ export const POST = withAuth(
       if (!school) return badRequest("School context required");
       const { name, email, password, phone, avatar } = await req.json();
 
-      if (!name || !email || !password) return badRequest("Name, email, and password are required");
+      if (!name || !email) return badRequest("Name and email are required");
 
       const normalizedEmail = String(email).toLowerCase().trim();
       const [existing] = await query("SELECT id FROM users WHERE email = ?", [normalizedEmail]);
       if (existing) return conflict("Email already registered");
 
-      const hashed = await hashPassword(password);
+      const defaultPassword = password || `EduCore@${new Date().getFullYear()}`;
+      const hashed = await hashPassword(defaultPassword);
       const id = generateId();
       await execute(
         `INSERT INTO users (id, name, email, password, role, phone, school_id, avatar, is_active, created_at, updated_at)
@@ -45,7 +46,7 @@ export const POST = withAuth(
         [id, name, normalizedEmail, hashed, phone || null, school.id, avatar || null]
       );
 
-      return created({ id, name, email: normalizedEmail, role: "parent" });
+      return created({ id, name, email: normalizedEmail, role: "parent", defaultPassword });
     } catch (err) {
       return serverError(err);
     }

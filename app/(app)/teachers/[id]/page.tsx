@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import "../../shared.css";
 
 interface Teacher {
@@ -22,8 +23,8 @@ export default function TeacherDetailPage() {
 
   useEffect(() => {
     Promise.all([
-      fetch(`/api/teachers/${id}`, { credentials: "include" }).then((r) => r.json()),
-      fetch(`/api/subjects?teacherId=${id}`, { credentials: "include" }).then((r) => r.json()).catch(() => ({ data: [] })),
+      authenticatedFetch(`/api/teachers/${id}`).then((r) => r.json()),
+      authenticatedFetch(`/api/subjects?teacherId=${id}`).then((r) => r.json()).catch(() => ({ data: [] })),
     ]).then(([td, sd]) => {
       setTeacher(td.data ?? null);
       setSubjects(Array.isArray(sd.data) ? sd.data : []);
@@ -35,7 +36,7 @@ export default function TeacherDetailPage() {
     if (!confirm(`Remove ${teacher?.name} from the system?`)) return;
     setRemoving(true);
     try {
-      const res = await fetch(`/api/teachers/${id}`, { method: "DELETE", credentials: "include" });
+      const res = await authenticatedFetch(`/api/teachers/${id}`, { method: "DELETE" });
       if (!res.ok) throw new Error((await res.json()).message);
       toast.success("Teacher removed");
       router.push("/teachers");

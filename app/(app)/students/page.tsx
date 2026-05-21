@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { toast } from "sonner";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import "../shared.css";
 
 interface Student {
@@ -31,7 +32,7 @@ export default function StudentsPage() {
   const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
-    fetch("/api/students", { credentials: "include" })
+    authenticatedFetch("/api/students")
       .then((r) => r.json())
       .then((d) => setStudents(Array.isArray(d.data) ? d.data : d.data?.students ?? []))
       .catch(() => toast.error("Failed to load students"))

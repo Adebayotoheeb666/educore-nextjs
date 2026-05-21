@@ -14,13 +14,8 @@ export const GET = withAuth(async (_req: NextRequest, { school }: AuthContext): 
     const students = await query(
       `SELECT u.id, u.name, u.first_name, u.last_name, u.email, u.phone, u.avatar,
               u.admission_no, u.dob, u.gender, u.parent_phone, u.is_active,
-              u.created_at, u.updated_at,
-              c.id as class_id, c.name as class_name, c.section as class_section, c.level as class_level
+              u.created_at, u.updated_at
        FROM users u
-       LEFT JOIN classes c ON c.school_id = u.school_id
-         AND EXISTS (
-           SELECT 1 FROM attendance a WHERE a.student_id = u.id AND a.class_id = c.id LIMIT 1
-         )
        WHERE u.school_id = ? AND u.role = 'student'
        ORDER BY u.name`,
       [school.id]
