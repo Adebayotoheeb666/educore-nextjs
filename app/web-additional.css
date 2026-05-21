@@ -22,6 +22,12 @@
   overflow: hidden;
   margin-top: -80px;
   padding-top: 80px;
+  z-index: 1;
+}
+
+.about-hero .about-container {
+  position: relative;
+  z-index: 2;
 }
 .about-hero-bg {
   position: absolute;
@@ -69,6 +75,9 @@
   gap: 2rem;
 }
 .btn-about-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   background-color: #6A5ACD;
   color: white;
   padding: 1.4rem 3.5rem;
@@ -79,6 +88,9 @@
   transition: background-color 0.3s;
 }
 .btn-about-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   background-color: transparent;
   color: white;
   border: 1px solid rgba(255, 255, 255, 0.3);
@@ -98,26 +110,30 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 4rem;
-  align-items: center;
+  align-items: flex-start;
 }
 @media (min-width: 1025px) {
   .excellence-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 8rem;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 6rem;
   }
 }
 .excellence-image {
   position: relative;
+  display: flex;
+  flex-shrink: 0;
 }
 .main-img {
   width: 100%;
+  height: auto;
   border-radius: 20px;
   box-shadow: 0 30px 60px rgba(0,0,0,0.1);
+  display: block;
 }
 .journey-box {
   position: absolute;
-  bottom: -3rem;
-  right: -3rem;
+  bottom: 1.5rem;
+  left: 1.5rem;
   background-color: #dbeafe;
   padding: 2.5rem;
   border-radius: 12px;
