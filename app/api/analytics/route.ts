@@ -18,8 +18,8 @@ export const GET = withAuth(requireService("analytics", async (_req: NextRequest
         queryOne<{ count: number }>("SELECT COUNT(*) as count FROM subjects WHERE school_id = ?", [school.id]),
         queryOne<{ count: number }>("SELECT COUNT(*) as count FROM announcements WHERE school_id = ?", [school.id]),
         queryOne<{ rate: number }>(
-          `SELECT ROUND(100.0 * SUM(CASE WHEN status = 'present' THEN 1 ELSE 0 END) / COUNT(*), 1) as rate
-           FROM attendance WHERE school_id = ? AND strftime('%Y-%m', date) = strftime('%Y-%m', 'now')`,
+          `SELECT COALESCE(ROUND(100.0 * SUM(CASE WHEN status = 'present' THEN 1 ELSE 0 END) / NULLIF(COUNT(*), 0), 1), 0) as rate
+           FROM attendance WHERE school_id = ?`,
           [school.id]
         ),
         queryOne<{ total: number }>(

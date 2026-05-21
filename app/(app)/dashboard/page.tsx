@@ -22,7 +22,7 @@ interface Stats {
   pendingLessonPlans?: number;
   overdueLibrary?: number;
   upcomingExams?: number;
-  recentPayments?: { id: string; studentName: string; amount: number; time: string }[];
+  recentPayments?: { id: string; student_name: string; amount: number; time: string }[];
   recentAnnouncements?: { id: string; title: string; created_at: string }[];
   curriculumProgress?: number;
 }
@@ -100,11 +100,11 @@ export default function DashboardPage() {
       authenticatedFetch("/api/analytics/dashboard")
         .then((r) => r.json())
         .then((d) => setStats(d.data ?? d))
-        .catch(() => {}),
+        .catch((err) => console.error("Dashboard stats fetch failed:", err)),
       authenticatedFetch("/api/school")
         .then((r) => r.json())
         .then((d) => setSchool(d.data ?? d))
-        .catch(() => {}),
+        .catch((err) => console.error("School fetch failed:", err)),
     ]).finally(() => setLoading(false));
   }, []);
 
@@ -238,7 +238,7 @@ export default function DashboardPage() {
                     <ul className="recent-payments-list">
                       {stats.recentPayments.map((p) => (
                         <li key={p.id}>
-                          <span>{p.studentName}</span>
+                          <span>{p.student_name}</span>
                           <span className="recent-pay-meta">
                             {formatNaira(p.amount)}
                             <em>{p.time}</em>

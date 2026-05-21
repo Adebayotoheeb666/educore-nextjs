@@ -7,6 +7,7 @@ export const GET = withAuth(async (_req: NextRequest, { school }: AuthContext): 
   try {
     if (!school) return badRequest("School context required");
     const sid = school.id;
+    console.log("Dashboard stats fetch for school:", sid);
 
     const [
       students, teachers, parents, classes, subjects,
@@ -19,7 +20,10 @@ export const GET = withAuth(async (_req: NextRequest, { school }: AuthContext): 
       queryOne<{ c: number }>("SELECT COUNT(*) c FROM users WHERE school_id=? AND role='parent' AND is_active=1", [sid]),
       queryOne<{ c: number }>("SELECT COUNT(*) c FROM classes WHERE school_id=?", [sid]),
       queryOne<{ c: number }>("SELECT COUNT(*) c FROM subjects WHERE school_id=?", [sid]),
-      queryOne<{ rate: number }>("SELECT ROUND(100.0*SUM(CASE WHEN status='present' THEN 1 ELSE 0 END)/MAX(COUNT(*),1),1) rate FROM attendance WHERE school_id=? AND strftime('%Y-%m',date)=strftime('%Y-%m','now')", [sid]),
+      queryOne<{ rate: number }>(
+        "SELECT COALESCE(ROUND(100.0*SUM(CASE WHEN status='present' THEN 1 ELSE 0 END)/NULLIF(COUNT(*),0),1),0) rate FROM attendance WHERE school_id=?",
+        [sid]
+      ),
       queryOne<{ total: number }>("SELECT COALESCE(SUM(amount_paid),0) total FROM fee_payments WHERE school_id=? AND status='completed'", [sid]),
       queryOne<{ total: number }>("SELECT COALESCE(SUM(f.total_amount - COALESCE(p.paid,0)),0) total FROM fees f LEFT JOIN (SELECT fee_id, SUM(amount_paid) paid FROM fee_payments WHERE school_id=? GROUP BY fee_id) p ON p.fee_id=f.id WHERE f.school_id=?", [sid, sid]),
       queryOne<{ c: number }>("SELECT COUNT(DISTINCT fp.student_id) c FROM fees f LEFT JOIN (SELECT fee_id,student_id,SUM(amount_paid) paid FROM fee_payments WHERE school_id=? GROUP BY fee_id,student_id) fp ON fp.fee_id=f.id WHERE f.school_id=? AND (fp.paid IS NULL OR fp.paid < f.total_amount)", [sid, sid]),
@@ -43,7 +47,7 @@ export const GET = withAuth(async (_req: NextRequest, { school }: AuthContext): 
     const total = collected + pending;
     const collectionRate = total > 0 ? Math.round((collected / total) * 100) : 0;
 
-    return ok({
+    const response = {
       totalStudents: students?.c ?? 0,
       totalTeachers: teachers?.c ?? 0,
       totalParents: parents?.c ?? 0,
@@ -60,8 +64,11 @@ export const GET = withAuth(async (_req: NextRequest, { school }: AuthContext): 
       staffCount: staffCount?.c ?? 0,
       recentPayments,
       recentAnnouncements,
-    });
+    };
+    console.log("Dashboard stats response:", response);
+    return ok(response);
   } catch (err) {
+    console.error("Dashboard stats error:", err);
     return serverError(err);
   }
 });
