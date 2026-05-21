@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { toast } from "sonner";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import "../shared.css";
 
 interface Parent {
@@ -22,7 +23,7 @@ export default function ParentsPage() {
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    fetch("/api/parents", { credentials: "include" })
+    authenticatedFetch("/api/parents")
       .then((r) => r.json())
       .then((d) => setParents(Array.isArray(d.data) ? d.data : []))
       .catch(() => toast.error("Failed to load parents"))

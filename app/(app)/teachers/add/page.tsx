@@ -3,6 +3,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import "../../shared.css";
 
 const ROLES = [
@@ -34,10 +35,9 @@ export default function AddTeacherPage() {
     }
     setSubmitting(true);
     try {
-      const res = await fetch("/api/teachers", {
+      const res = await authenticatedFetch("/api/teachers", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify(form),
       });
       const data = await res.json();

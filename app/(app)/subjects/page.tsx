@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { toast } from "sonner";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import "../shared.css";
 
 interface Subject {
@@ -18,7 +19,7 @@ export default function SubjectsPage() {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    fetch("/api/subjects", { credentials: "include" })
+    authenticatedFetch("/api/subjects")
       .then((r) => r.json())
       .then((d) => setSubjects(Array.isArray(d.data) ? d.data : []))
       .catch(() => toast.error("Failed to load subjects"))

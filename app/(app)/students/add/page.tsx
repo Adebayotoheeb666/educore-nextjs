@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import "../../shared.css";
 
 interface ClassItem { id: string; name: string; section?: string; }
@@ -19,7 +20,7 @@ export default function AddStudentPage() {
   });
 
   useEffect(() => {
-    fetch("/api/classes", { credentials: "include" })
+    authenticatedFetch("/api/classes")
       .then((r) => r.json())
       .then((d) => setClasses(Array.isArray(d.data) ? d.data : []))
       .catch(() => {});
@@ -35,10 +36,9 @@ export default function AddStudentPage() {
     }
     setSubmitting(true);
     try {
-      const res = await fetch("/api/students", {
+      const res = await authenticatedFetch("/api/students", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify(form),
       });
       const data = await res.json();
