@@ -435,3 +435,116 @@
 
   .avatar-sm { width: 32px; height: 32px; }
 }
+
+/* ─── Analytics Page Grids ─── */
+.analytics-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.analytics-two-col-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.analytics-actions-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+
+/* ─── Profile Page ─── */
+.profile-hero-card {
+  background: white;
+  border-radius: 20px;
+  border: 1px solid #f1f5f9;
+  padding: 3rem;
+  margin-bottom: 3rem;
+  display: flex;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.profile-forms-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+}
+
+/* ─── Analytics & Profile Responsive (1024px) ─── */
+@media (max-width: 1024px) {
+  .analytics-metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  
+  .analytics-actions-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+/* ─── Analytics & Profile Responsive (768px) ─── */
+@media (max-width: 768px) {
+  .analytics-metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .analytics-two-col-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .analytics-actions-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.2rem;
+  }
+  
+  .profile-hero-card {
+    flex-direction: column;
+    text-align: center;
+    padding: 2rem;
+    gap: 1.5rem;
+  }
+  
+  .profile-forms-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+/* ─── Analytics & Profile Responsive (480px) ─── */
+@media (max-width: 480px) {
+  .analytics-metrics-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .analytics-two-col-grid {
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .analytics-actions-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .profile-hero-card {
+    padding: 1.5rem;
+    gap: 1.2rem;
+    border-radius: 16px;
+  }
+  
+  .profile-forms-grid {
+    gap: 1.5rem;
+  }
+}
