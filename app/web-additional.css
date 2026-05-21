@@ -1259,14 +1259,130 @@
   .bp-hero__title { font-size: 2.4rem; }
 }
 @media (max-width: 768px) {
-  .about-hero h1 { font-size: 3.6rem; }
-  .journey-box { position: static; margin-top: 2rem; max-width: 100%; }
+  .about-hero {
+    height: clamp(250px, 40vw, 400px);
+    margin-top: -60px;
+    padding-top: 60px;
+  }
+  .about-hero h1 {
+    font-size: 3.6rem;
+    margin-bottom: 1.5rem;
+  }
+  .about-hero p {
+    font-size: 1.4rem;
+    margin-bottom: 2.5rem;
+  }
+  .hero-btns {
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+  .btn-about-primary,
+  .btn-about-outline {
+    padding: 1.2rem 2rem;
+    font-size: 1.2rem;
+    width: 100%;
+    text-align: center;
+  }
+  .mission-badge {
+    font-size: 1rem;
+    padding: 0.5rem 1.2rem;
+    margin-bottom: 1.5rem;
+  }
+  .excellence-section {
+    padding: 8rem 0;
+  }
+  .excellence-content h2 {
+    font-size: 2.4rem;
+    margin-bottom: 1.5rem;
+  }
+  .excellence-content > p {
+    font-size: 1.4rem;
+    margin-bottom: 2.5rem;
+  }
+  .journey-box {
+    position: static;
+    margin-top: 2rem;
+    max-width: 100%;
+  }
+  .about-stats {
+    padding: 6rem 0;
+  }
+  .stats-header h2 {
+    font-size: 2.4rem;
+  }
+  .stats-header p {
+    font-size: 1.4rem;
+  }
+  .empower-section {
+    padding: 8rem 0;
+  }
+  .empower-grid {
+    grid-template-columns: 1fr;
+  }
+  .empower-main-card {
+    padding: 3rem;
+    min-height: 350px;
+  }
+  .empower-main-card h2 {
+    font-size: 2.4rem;
+  }
+  .empower-main-card p {
+    font-size: 1.4rem;
+  }
   .featured-post-card { flex-direction: column; }
   .blog-grid { grid-template-columns: 1fr; }
   .blog-header { flex-direction: column; align-items: flex-start; gap: 2rem; }
   .blog-categories { overflow-x: auto; padding-bottom: 0.5rem; }
 }
 @media (max-width: 600px) {
+  .about-hero {
+    height: clamp(200px, 50vw, 300px);
+  }
+  .about-hero h1 {
+    font-size: 2.4rem;
+    line-height: 1.2;
+  }
+  .about-hero p {
+    font-size: 1.2rem;
+    max-width: 100%;
+  }
+  .about-container {
+    padding: 0 1.5rem;
+  }
+  .excellence-content h2 {
+    font-size: 2rem;
+  }
+  .excellence-content > p {
+    font-size: 1.2rem;
+  }
+  .feat-text h4 {
+    font-size: 1.4rem;
+  }
+  .feat-text p {
+    font-size: 1.2rem;
+  }
+  .stat-card {
+    padding: 2.5rem 1.5rem;
+  }
+  .stat-card h3 {
+    font-size: 2rem;
+  }
+  .stat-card p {
+    font-size: 1.2rem;
+  }
+  .empower-main-card {
+    padding: 2rem;
+    min-height: 300px;
+  }
+  .empower-main-card h2 {
+    font-size: 1.8rem;
+  }
+  .empower-main-card p {
+    font-size: 1.2rem;
+  }
+  .brain-icon {
+    font-size: 8rem;
+  }
   .bp-hero { height: 320px; }
   .bp-hero__title { font-size: 2rem; }
   .bp-hero__actions { top: 1rem; right: 1rem; }
