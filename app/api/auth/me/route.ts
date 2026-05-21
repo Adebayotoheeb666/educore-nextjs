@@ -10,5 +10,7 @@ export const GET = withAuth(async (_req: NextRequest, { user, school }: AuthCont
     [user.id]
   );
 
-  return ok({ ...fullUser, schoolId: school });
+  // Return user info with token for consistency with login endpoint
+  // Include schoolId if user has a school
+  return ok({ ...fullUser, token: null, schoolId: school?.id ?? null });
 });
