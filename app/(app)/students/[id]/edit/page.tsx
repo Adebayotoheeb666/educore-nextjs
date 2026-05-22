@@ -76,7 +76,7 @@ export default function EditStudentPage() {
           lastName: form.lastName,
           email: form.email,
           dob: form.dob || null,
-          gender: form.gender || null,
+          gender: form.gender === "" ? "" : form.gender,
           classId: form.classId || null,
           parentId: form.parentId || null,
           address: form.address || null,

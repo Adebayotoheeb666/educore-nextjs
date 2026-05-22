@@ -44,12 +44,12 @@ export const PATCH = withAuth(
            last_name = COALESCE(?, last_name),
            name = ?,
            dob = COALESCE(?, dob),
-           gender = COALESCE(?, gender),
+           gender = ?,
            is_active = COALESCE(?, is_active),
            avatar = COALESCE(?, avatar),
            updated_at = datetime('now')`;
       let args: (string | number | null)[] = [firstName || null, lastName || null, `${newFirst} ${newLast}`.trim(),
-         dob || null, gender || null,
+         dob || null, gender !== undefined ? gender : null,
          isActive !== undefined ? (isActive ? 1 : 0) : null,
          avatar || null];
 
