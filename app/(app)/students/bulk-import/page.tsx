@@ -108,6 +108,23 @@ export default function BulkImportPage() {
       </div>
 
       <div className="form-card">
+        <div style={{ marginBottom: "2rem", padding: "1.5rem", background: "#f0fdf4", border: "1px solid #bbf7d0", borderRadius: 8 }}>
+          <p style={{ margin: 0, fontSize: "1.3rem", marginBottom: "1rem", fontWeight: 600, color: "#166534" }}>
+            📥 Get Started Quickly
+          </p>
+          <p style={{ margin: 0, color: "#166534", fontSize: "1.2rem", marginBottom: "1rem" }}>
+            Download our CSV template with sample data to see the correct format.
+          </p>
+          <a
+            href="/api/students/bulk-import/template"
+            download="students_template.csv"
+            className="btn-primary"
+            style={{ display: "inline-block", padding: "0.8rem 1.6rem", textDecoration: "none" }}
+          >
+            📋 Download Template
+          </a>
+        </div>
+
         <form onSubmit={handleUpload}>
           <div className="form-group">
             <label>CSV File *</label>
