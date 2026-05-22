@@ -115,8 +115,8 @@ export default function EditStudentPage() {
               <label>Gender</label>
               <select value={form.gender} onChange={(e) => set("gender", e.target.value)}>
                 <option value="">Select</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
               </select>
             </div>
             <div className="form-group">
