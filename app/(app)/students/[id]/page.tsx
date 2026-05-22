@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import "../../shared.css";
 
 interface Student {
@@ -43,11 +44,11 @@ export default function StudentDetailPage() {
   useEffect(() => {
     if (!id) return;
     Promise.all([
-      fetch(`/api/students/${id}`, { credentials: "include" }).then((r) => r.json()),
-      fetch(`/api/students/${id}/history`, { credentials: "include" }).then((r) => r.json()),
+      authenticatedFetch(`/api/students/${id}`).then((r) => r.json()),
+      authenticatedFetch(`/api/students/${id}/history`).then((r) => r.json()),
     ])
       .then(([sd, hd]) => {
-        setStudent(sd.data ?? sd);
+        setStudent(sd.data);
         setHistory(Array.isArray(hd.data) ? hd.data : []);
       })
       .catch(() => toast.error("Failed to load student"))
@@ -57,7 +58,7 @@ export default function StudentDetailPage() {
   const handleDelete = async () => {
     if (!confirm("Delete this student? This cannot be undone.")) return;
     try {
-      const res = await fetch(`/api/students/${id}`, { method: "DELETE", credentials: "include" });
+      const res = await authenticatedFetch(`/api/students/${id}`, { method: "DELETE" });
       if (!res.ok) throw new Error();
       toast.success("Student deleted");
       router.push("/students");

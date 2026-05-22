@@ -156,7 +156,7 @@ export default function Blog() {
             <p style={{ fontSize: "1.6rem" }}>No posts yet. Visit the administrator dashboard to add articles.</p>
           </div>
         ) : (
-          <>
+          <div style={{ display: "contents" }}>
             {featuredPost && (
               <section className="featured-post">
                 <div className="featured-post-card">
@@ -240,7 +240,7 @@ export default function Blog() {
                       const prev = arr[idx - 1];
                       const showEllipsis = prev && n - prev > 1;
                       return (
-                        <React.Fragment key={n}>
+                        <div key={`page-${n}`} style={{ display: "contents" }}>
                           {showEllipsis && <span className="pagination-info">...</span>}
                           <button
                             type="button"
@@ -249,7 +249,7 @@ export default function Blog() {
                           >
                             {n}
                           </button>
-                        </React.Fragment>
+                        </div>
                       );
                     })}
                   <button
@@ -263,7 +263,7 @@ export default function Blog() {
                 </div>
               </footer>
             )}
-          </>
+          </div>
         )}
       </div>
 
