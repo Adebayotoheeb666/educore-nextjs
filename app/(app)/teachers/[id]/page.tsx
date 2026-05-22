@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { authenticatedFetch } from "@/lib/utils/fetch";
@@ -59,18 +60,23 @@ export default function TeacherDetailPage() {
           <p>{teacher.role.replace(/_/g, " ")}</p>
         </div>
         <div className="header-actions">
-          <button className="btn-secondary" onClick={() => router.back()}>← Back</button>
+          <Link href={`/teachers/${id}/edit`} className="btn-outline">✏️ Edit</Link>
           <button className="btn-primary" onClick={handleRemove} disabled={removing}
             style={{ background: "#ef4444" }}>
-            {removing ? "Removing…" : "Remove Teacher"}
+            {removing ? "Removing…" : "🗑 Remove"}
           </button>
         </div>
       </div>
 
       {/* Profile card */}
       <div style={{ background: "white", borderRadius: 20, border: "1px solid #f1f5f9", padding: "3rem", marginBottom: "2.5rem", display: "flex", gap: "2.5rem", alignItems: "center" }}>
-        <div style={{ width: 80, height: 80, borderRadius: "50%", background: "#ede9fa", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "2.8rem", fontWeight: 800, color: "#6A5ACD", flexShrink: 0 }}>
-          {initials}
+        <div style={{ width: 80, height: 80, borderRadius: "50%", overflow: "hidden", flexShrink: 0, border: "3px solid #ede9fa" }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={teacher.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(teacher.name)}&background=random&size=80`}
+            alt=""
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          />
         </div>
         <div style={{ flex: 1, display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "2rem" }}>
           {[
