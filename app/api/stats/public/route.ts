@@ -8,9 +8,9 @@ export const GET = async (): Promise<NextResponse> => {
     const lessonPlanCount = await queryOne("SELECT COUNT(*) as count FROM lesson_plans");
 
     return NextResponse.json({
-      schoolsOnboarded: parseInt(schoolCount?.count || 0),
-      studentsLearning: parseInt(studentCount?.count || 0),
-      lessonsGenerated: parseInt(lessonPlanCount?.count || 0),
+      schoolsOnboarded: parseInt(String(schoolCount?.count || 0)),
+      studentsLearning: parseInt(String(studentCount?.count || 0)),
+      lessonsGenerated: parseInt(String(lessonPlanCount?.count || 0)),
     });
   } catch (err) {
     console.error("Error fetching stats:", err);

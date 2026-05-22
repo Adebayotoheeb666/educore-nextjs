@@ -70,9 +70,8 @@ export default function StudentsPage() {
   const handleDelete = async (id: string) => {
     setDeleting(true);
     try {
-      const res = await fetch(`/api/students/${id}`, {
+      const res = await authenticatedFetch(`/api/students/${id}`, {
         method: "DELETE",
-        credentials: "include",
       });
       if (!res.ok) throw new Error();
       setStudents((prev) => prev.filter((s) => s.id !== id));

@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import "../../../shared.css";
 
 interface Parent {
@@ -24,9 +25,9 @@ export default function EditStudentPage() {
 
   useEffect(() => {
     Promise.all([
-      fetch(`/api/students/${id}`, { credentials: "include" }).then((r) => r.json()),
-      fetch("/api/classes", { credentials: "include" }).then((r) => r.json()),
-      fetch("/api/parents", { credentials: "include" }).then((r) => r.json()),
+      authenticatedFetch(`/api/students/${id}`).then((r) => r.json()),
+      authenticatedFetch("/api/classes").then((r) => r.json()),
+      authenticatedFetch("/api/parents").then((r) => r.json()),
     ]).then(([sd, cd, pd]) => {
       const s = sd.data;
       if (s) {
@@ -55,10 +56,9 @@ export default function EditStudentPage() {
     e.preventDefault();
     setSaving(true);
     try {
-      const res = await fetch(`/api/students/${id}`, {
+      const res = await authenticatedFetch(`/api/students/${id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify({
           firstName: form.firstName,
           lastName: form.lastName,
