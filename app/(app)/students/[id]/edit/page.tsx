@@ -20,8 +20,9 @@ export default function EditStudentPage() {
   const [saving, setSaving] = useState(false);
   const [form, setForm] = useState({
     firstName: "", lastName: "", email: "", dob: "", gender: "",
-    classId: "", parentId: "", address: "", stateOfOrigin: "",
+    classId: "", parentId: "", address: "", stateOfOrigin: "", avatar: "",
   });
+  const [avatarFile, setAvatarFile] = useState<File | null>(null);
 
   useEffect(() => {
     Promise.all([
@@ -42,6 +43,7 @@ export default function EditStudentPage() {
           parentId: "",
           address: s.address ?? "",
           stateOfOrigin: s.state_of_origin ?? "",
+          avatar: s.avatar ?? "",
         });
       }
       setClasses(Array.isArray(cd.data) ? cd.data : []);
@@ -56,6 +58,16 @@ export default function EditStudentPage() {
     e.preventDefault();
     setSaving(true);
     try {
+      let avatar = form.avatar;
+      if (avatarFile) {
+        const reader = new FileReader();
+        avatar = await new Promise<string>((resolve, reject) => {
+          reader.onload = () => resolve(reader.result as string);
+          reader.onerror = () => reject(new Error("Failed to read file"));
+          reader.readAsDataURL(avatarFile);
+        });
+      }
+
       const res = await authenticatedFetch(`/api/students/${id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
@@ -69,6 +81,7 @@ export default function EditStudentPage() {
           parentId: form.parentId || null,
           address: form.address || null,
           stateOfOrigin: form.stateOfOrigin || null,
+          avatar: avatar || null,
         }),
       });
       if (!res.ok) throw new Error((await res.json()).message);
@@ -96,6 +109,15 @@ export default function EditStudentPage() {
         <form onSubmit={handleSubmit}>
           <div className="form-grid-2">
             <div className="form-group">
+              <label>Student Photo</label>
+              <input type="file" accept="image/*" onChange={(e) => setAvatarFile(e.target.files?.[0] || null)} />
+              {(form.avatar || avatarFile) && (
+                <div style={{ marginTop: "0.5rem", fontSize: "0.9rem", color: "#64748b" }}>
+                  {avatarFile ? "Image selected" : "Current image set"}
+                </div>
+              )}
+            </div>
+            <div className="form-group">
               <label>First Name *</label>
               <input value={form.firstName} onChange={(e) => set("firstName", e.target.value)} required />
             </div>
@@ -115,8 +137,8 @@ export default function EditStudentPage() {
               <label>Gender</label>
               <select value={form.gender} onChange={(e) => set("gender", e.target.value)}>
                 <option value="">Select</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
               </select>
             </div>
             <div className="form-group">

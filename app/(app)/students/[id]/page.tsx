@@ -40,9 +40,11 @@ export default function StudentDetailPage() {
   const [history, setHistory] = useState<AcademicResult[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<"profile" | "history">("profile");
+  const [refreshKey, setRefreshKey] = useState(0);
 
   useEffect(() => {
     if (!id) return;
+    setLoading(true);
     Promise.all([
       authenticatedFetch(`/api/students/${id}`).then((r) => r.json()),
       authenticatedFetch(`/api/students/${id}/history`).then((r) => r.json()),
@@ -53,7 +55,7 @@ export default function StudentDetailPage() {
       })
       .catch(() => toast.error("Failed to load student"))
       .finally(() => setLoading(false));
-  }, [id]);
+  }, [id, refreshKey]);
 
   const handleDelete = async () => {
     if (!confirm("Delete this student? This cannot be undone.")) return;
@@ -79,10 +81,17 @@ export default function StudentDetailPage() {
 
   return (
     <div>
-      <div style={{ marginBottom: "2.5rem" }}>
+      <div style={{ marginBottom: "2.5rem", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <Link href="/students" style={{ textDecoration: "none", color: "#64748b", fontSize: "1.4rem", fontWeight: 700, display: "flex", alignItems: "center", gap: "0.8rem" }}>
           ← Back to Students
         </Link>
+        <button
+          onClick={() => setRefreshKey((k) => k + 1)}
+          style={{ background: "none", border: "none", cursor: "pointer", fontSize: "1.5rem" }}
+          title="Refresh"
+        >
+          🔄
+        </button>
       </div>
 
       {/* Hero */}

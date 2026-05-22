@@ -9,13 +9,10 @@ interface Student {
   id: string;
   name: string;
   admission_no?: string;
-  class_id?: string;
-  class_name?: string;
-  class_section?: string;
   gender?: string;
   phone?: string;
   parent_phone?: string;
-  status?: string;
+  is_active?: number;
   created_at?: string;
 }
 
@@ -33,19 +30,22 @@ export default function StudentsPage() {
 
   useEffect(() => {
     authenticatedFetch("/api/students")
-      .then((r) => r.json())
-      .then((d) => setStudents(Array.isArray(d.data) ? d.data : d.data?.students ?? []))
-      .catch(() => toast.error("Failed to load students"))
+      .then((r) => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        return r.json();
+      })
+      .then((d) => {
+        console.log("Students API response:", d);
+        setStudents(Array.isArray(d.data) ? d.data : []);
+      })
+      .catch((err) => {
+        console.error("Failed to load students:", err);
+        toast.error("Failed to load students");
+      })
       .finally(() => setLoading(false));
   }, []);
 
-  const classes = useMemo(() => {
-    const labels = students.map((s) => {
-      if (!s.class_name) return null;
-      return s.class_section ? `${s.class_name} ${s.class_section}` : s.class_name;
-    }).filter(Boolean) as string[];
-    return Array.from(new Set(labels)).sort();
-  }, [students]);
+  const classes: string[] = [];
 
   const filtered = useMemo(() => {
     const q = search.toLowerCase();
@@ -55,14 +55,10 @@ export default function StudentsPage() {
         (s.name ?? "").toLowerCase().includes(q) ||
         (s.admission_no ?? "").toLowerCase().includes(q) ||
         (s.parent_phone ?? s.phone ?? "").includes(q);
-      const classLabel = s.class_name
-        ? (s.class_section ? `${s.class_name} ${s.class_section}` : s.class_name)
-        : "";
-      const matchClass = !classFilter || classLabel === classFilter;
       const matchGender = !genderFilter || (s.gender ?? "") === genderFilter;
-      return matchSearch && matchClass && matchGender;
+      return matchSearch && matchGender;
     });
-  }, [students, search, classFilter, genderFilter]);
+  }, [students, search, genderFilter]);
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const paginated = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
@@ -113,14 +109,6 @@ export default function StudentsPage() {
         </div>
         <select
           className="filter-select"
-          value={classFilter}
-          onChange={(e) => { setClassFilter(e.target.value); setPage(1); }}
-        >
-          <option value="">All Classes</option>
-          {classes.map((c) => <option key={c} value={c}>{c}</option>)}
-        </select>
-        <select
-          className="filter-select"
           value={genderFilter}
           onChange={(e) => { setGenderFilter(e.target.value); setPage(1); }}
         >
@@ -128,10 +116,10 @@ export default function StudentsPage() {
           <option value="Male">Male</option>
           <option value="Female">Female</option>
         </select>
-        {(search || classFilter || genderFilter) && (
+        {(search || genderFilter) && (
           <button
             className="btn-outline"
-            onClick={() => { setSearch(""); setClassFilter(""); setGenderFilter(""); setPage(1); }}
+            onClick={() => { setSearch(""); setGenderFilter(""); setPage(1); }}
           >
             Clear
           </button>
@@ -151,7 +139,6 @@ export default function StudentsPage() {
               <tr>
                 <th>Name</th>
                 <th>Admission No.</th>
-                <th>Class</th>
                 <th>Gender</th>
                 <th>Parent Phone</th>
                 <th>Status</th>
@@ -184,20 +171,11 @@ export default function StudentsPage() {
                     </div>
                   </td>
                   <td><span className="mono">{s.admission_no ?? "—"}</span></td>
-                  <td>
-                    <span className="badge badge-green">
-                      {s.class_name
-                        ? s.class_section
-                          ? `${s.class_name} ${s.class_section}`
-                          : s.class_name
-                        : "—"}
-                    </span>
-                  </td>
                   <td>{s.gender ?? "—"}</td>
                   <td>{s.parent_phone ?? s.phone ?? "—"}</td>
                   <td>
-                    <span className={`badge ${(s.status ?? "active") === "active" ? "badge-green" : "badge-gray"}`}>
-                      {s.status ?? "Active"}
+                    <span className={`badge ${(s.is_active ?? 1) ? "badge-green" : "badge-gray"}`}>
+                      {(s.is_active ?? 1) ? "Active" : "Inactive"}
                     </span>
                   </td>
                   <td>
