@@ -32,3 +32,21 @@ export const PATCH = withAuth(
   },
   ["super_admin"]
 );
+
+// DELETE /api/admin/users/[id] — delete a user (super admin only)
+export const DELETE = withAuth(
+  async (_req: NextRequest, _ctx: AuthContext, params): Promise<NextResponse> => {
+    try {
+      const id = params?.id ?? "";
+      const existing = await queryOne("SELECT id FROM users WHERE id = ?", [id]);
+      if (!existing) return notFound("User not found");
+
+      await execute("DELETE FROM users WHERE id = ?", [id]);
+
+      return ok({ id, deleted: true });
+    } catch (err) {
+      return serverError(err);
+    }
+  },
+  ["super_admin"]
+);

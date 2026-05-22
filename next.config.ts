@@ -44,7 +44,9 @@ const withPWA = withPWAInit({
 });
 
 const nextConfig: NextConfig = {
-  turbopack: {},
+  turbopack: {
+    root: ".",
+  },
   experimental: {
     serverActions: {
       bodySizeLimit: "10mb",
