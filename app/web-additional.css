@@ -21,7 +21,7 @@
   align-items: center;
   overflow: visible;
   margin-top: 0;
-  padding-top: 8rem;
+  padding-top: 12rem;
   padding-bottom: 4rem;
   z-index: 1;
 }
@@ -1328,8 +1328,8 @@
 @media (max-width: 768px) {
   .about-hero {
     height: clamp(250px, 40vw, 400px);
-    margin-top: -60px;
-    padding-top: 60px;
+    margin-top: 0;
+    padding-top: 9rem;
   }
   .about-hero h1 {
     font-size: 3.6rem;

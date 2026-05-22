@@ -5,15 +5,41 @@ import Image from "next/image";
 import { useAppSelector } from "@/redux/hooks";
 import "./homepage.css";
 
+interface Stats {
+  schoolsOnboarded: number;
+  studentsLearning: number;
+  lessonsGenerated: number;
+}
+
 export default function Homepage() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [stats, setStats] = useState<Stats>({
+    schoolsOnboarded: 500,
+    studentsLearning: 100000,
+    lessonsGenerated: 2500000,
+  });
   const { isAuthenticated } = useAppSelector((s) => s.auth);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const res = await fetch("/api/stats/public");
+        if (res.ok) {
+          const data = await res.json();
+          setStats(data);
+        }
+      } catch (err) {
+        console.error("Failed to fetch stats:", err);
+      }
+    };
+    fetchStats();
   }, []);
 
   return (
