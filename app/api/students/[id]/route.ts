@@ -11,7 +11,7 @@ export const GET = withAuth(async (_req: NextRequest, { school }: AuthContext, p
   try {
     if (!school) return notFound("School not found");
     const student = await queryOne(
-      `SELECT u.id, u.name, u.first_name, u.last_name, u.email, u.phone, u.avatar, u.admission_no, u.dob, u.gender, u.parent_phone, u.is_active, u.created_at, u.updated_at
+      `SELECT u.id, u.name, u.first_name, u.last_name, u.email, u.phone, u.avatar, u.admission_no, u.dob, u.gender, u.parent_phone, u.is_active, u.address, u.state_of_origin, u.created_at, u.updated_at
        FROM users u
        WHERE u.id = ? AND u.school_id = ? AND u.role = 'student'`,
       [params?.id ?? "", school.id]
@@ -35,7 +35,7 @@ export const PATCH = withAuth(
       );
       if (!existing) return notFound("Student not found");
 
-      const { firstName, lastName, email, dob, gender, parentId, isActive, avatar } = await req.json();
+      const { firstName, lastName, email, dob, gender, classId, parentId, isActive, avatar, address, stateOfOrigin } = await req.json();
       const ex = existing as { first_name: string | null; last_name: string | null };
       const newFirst = firstName ?? ex.first_name ?? "";
       const newLast = lastName ?? ex.last_name ?? "";
@@ -44,14 +44,20 @@ export const PATCH = withAuth(
            last_name = COALESCE(?, last_name),
            name = ?,
            dob = COALESCE(?, dob),
-           gender = COALESCE(?, gender),
+           gender = ?,
            is_active = COALESCE(?, is_active),
            avatar = COALESCE(?, avatar),
+           class_id = COALESCE(?, class_id),
+           address = COALESCE(?, address),
+           state_of_origin = COALESCE(?, state_of_origin),
            updated_at = datetime('now')`;
       let args: (string | number | null)[] = [firstName || null, lastName || null, `${newFirst} ${newLast}`.trim(),
-         dob || null, gender || null,
+         dob || null, gender !== undefined ? gender : null,
          isActive !== undefined ? (isActive ? 1 : 0) : null,
-         avatar || null];
+         avatar || null,
+         classId || null,
+         address || null,
+         stateOfOrigin || null];
 
       if (email !== undefined) {
         setClauses = `email = COALESCE(?, email), ${setClauses}`;
@@ -80,7 +86,9 @@ export const PATCH = withAuth(
       }
 
       const updated = await queryOne(
-        "SELECT id, name, first_name, last_name, email, phone, avatar, admission_no, dob, gender, parent_phone, is_active FROM users WHERE id = ?",
+        `SELECT u.id, u.name, u.first_name, u.last_name, u.email, u.phone, u.avatar, u.admission_no, u.dob, u.gender, u.parent_phone, u.is_active, u.address, u.state_of_origin, u.created_at, u.updated_at
+         FROM users u
+         WHERE u.id = ?`,
         [id]
       );
       return ok(updated);

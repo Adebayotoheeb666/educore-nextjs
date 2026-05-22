@@ -53,9 +53,12 @@ CREATE TABLE IF NOT EXISTS users (
   avatar TEXT,
   -- Student-specific fields
   admission_no TEXT,
+  class_id TEXT REFERENCES classes(id) ON DELETE SET NULL,
   dob TEXT,
   gender TEXT CHECK(gender IN ('Male', 'Female', '')),
   parent_phone TEXT,
+  address TEXT,
+  state_of_origin TEXT,
   created_at TEXT NOT NULL DEFAULT (datetime('now')),
   updated_at TEXT NOT NULL DEFAULT (datetime('now'))
 );

@@ -76,7 +76,7 @@ export default function EditStudentPage() {
           lastName: form.lastName,
           email: form.email,
           dob: form.dob || null,
-          gender: form.gender || null,
+          gender: form.gender === "" ? "" : form.gender,
           classId: form.classId || null,
           parentId: form.parentId || null,
           address: form.address || null,
@@ -107,16 +107,32 @@ export default function EditStudentPage() {
 
       <div className="form-card">
         <form onSubmit={handleSubmit}>
-          <div className="form-grid-2">
-            <div className="form-group">
-              <label>Student Photo</label>
-              <input type="file" accept="image/*" onChange={(e) => setAvatarFile(e.target.files?.[0] || null)} />
-              {(form.avatar || avatarFile) && (
-                <div style={{ marginTop: "0.5rem", fontSize: "0.9rem", color: "#64748b" }}>
-                  {avatarFile ? "Image selected" : "Current image set"}
-                </div>
-              )}
+          <div style={{ marginBottom: "2rem", display: "flex", gap: "2rem", alignItems: "flex-start" }}>
+            <div style={{ flex: 1 }}>
+              <div className="form-group">
+                <label>Student Photo</label>
+                <input type="file" accept="image/*" onChange={(e) => setAvatarFile(e.target.files?.[0] || null)} />
+                {(form.avatar || avatarFile) && (
+                  <div style={{ marginTop: "0.8rem" }}>
+                    {avatarFile || form.avatar ? (
+                      <div style={{ width: 100, height: 100, borderRadius: 8, overflow: "hidden", border: "2px solid #e2e8f0" }}>
+                        <img
+                          src={avatarFile ? URL.createObjectURL(avatarFile) : form.avatar}
+                          alt="preview"
+                          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                        />
+                      </div>
+                    ) : null}
+                    <div style={{ marginTop: "0.5rem", fontSize: "0.9rem", color: "#64748b" }}>
+                      {avatarFile ? "New image selected" : "Current image"}
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
+          </div>
+
+          <div className="form-grid-2">
             <div className="form-group">
               <label>First Name *</label>
               <input value={form.firstName} onChange={(e) => set("firstName", e.target.value)} required />

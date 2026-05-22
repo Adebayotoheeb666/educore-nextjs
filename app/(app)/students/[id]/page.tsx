@@ -14,11 +14,7 @@ interface Student {
   admission_no?: string;
   gender?: string;
   dob?: string;
-  class_name?: string;
-  class_section?: string;
   parent_phone?: string;
-  parent_email?: string;
-  status?: string;
   address?: string;
   state_of_origin?: string;
   created_at?: string;
@@ -73,11 +69,6 @@ export default function StudentDetailPage() {
   if (!student) return <div className="table-empty">Student not found.</div>;
 
   const displayName = student.name;
-  const classLabel = student.class_name
-    ? student.class_section
-      ? `${student.class_name} ${student.class_section}`
-      : student.class_name
-    : "—";
 
   return (
     <div>
@@ -107,10 +98,7 @@ export default function StudentDetailPage() {
         <div style={{ flex: 1 }}>
           <h1 style={{ fontSize: "2.8rem", fontWeight: 800, marginBottom: "0.5rem" }}>{displayName}</h1>
           <div style={{ display: "flex", gap: "1.5rem", flexWrap: "wrap" }}>
-            <span className="badge badge-green">{classLabel}</span>
-            <span className={`badge ${student.status === "active" ? "badge-green" : "badge-gray"}`}>
-              {student.status ?? "active"}
-            </span>
+            <span className="badge badge-green">Active</span>
             <span className="mono" style={{ fontSize: "1.2rem", color: "#64748b" }}>{student.admission_no}</span>
           </div>
         </div>
@@ -153,10 +141,8 @@ export default function StudentDetailPage() {
               { label: "Email",           value: student.email ?? "—" },
               { label: "Gender",          value: student.gender ?? "—" },
               { label: "Date of Birth",   value: student.dob ? new Date(student.dob).toLocaleDateString("en-NG") : "—" },
-              { label: "Class",           value: classLabel },
               { label: "Admission No.",   value: student.admission_no ?? "—" },
               { label: "Parent Phone",    value: student.parent_phone ?? "—" },
-              { label: "Parent Email",    value: student.parent_email ?? "—" },
               { label: "Address",         value: student.address ?? "—" },
               { label: "State of Origin", value: student.state_of_origin ?? "—" },
               { label: "Enrolled",        value: student.created_at ? new Date(student.created_at).toLocaleDateString("en-NG") : "—" },
