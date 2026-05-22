@@ -33,9 +33,18 @@ export default function StudentsPage() {
 
   useEffect(() => {
     authenticatedFetch("/api/students")
-      .then((r) => r.json())
-      .then((d) => setStudents(Array.isArray(d.data) ? d.data : []))
-      .catch(() => toast.error("Failed to load students"))
+      .then((r) => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        return r.json();
+      })
+      .then((d) => {
+        console.log("Students API response:", d);
+        setStudents(Array.isArray(d.data) ? d.data : []);
+      })
+      .catch((err) => {
+        console.error("Failed to load students:", err);
+        toast.error("Failed to load students");
+      })
       .finally(() => setLoading(false));
   }, []);
 
