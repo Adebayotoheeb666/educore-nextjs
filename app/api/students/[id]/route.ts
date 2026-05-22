@@ -11,13 +11,8 @@ export const GET = withAuth(async (_req: NextRequest, { school }: AuthContext, p
   try {
     if (!school) return notFound("School not found");
     const student = await queryOne(
-      `SELECT u.id, u.name, u.first_name, u.last_name, u.email, u.phone, u.avatar, u.admission_no, u.dob, u.gender, u.parent_phone, u.class_id, u.is_active, u.created_at, u.updated_at,
-              c.name as class_name, c.section as class_section,
-              p.name as parent_name, p.email as parent_email
+      `SELECT u.id, u.name, u.first_name, u.last_name, u.email, u.phone, u.avatar, u.admission_no, u.dob, u.gender, u.parent_phone, u.is_active, u.created_at, u.updated_at
        FROM users u
-       LEFT JOIN classes c ON u.class_id = c.id
-       LEFT JOIN user_relationships ur ON u.id = ur.child_id
-       LEFT JOIN users p ON ur.parent_id = p.id AND p.role = 'parent'
        WHERE u.id = ? AND u.school_id = ? AND u.role = 'student'`,
       [params?.id ?? "", school.id]
     );
@@ -40,7 +35,7 @@ export const PATCH = withAuth(
       );
       if (!existing) return notFound("Student not found");
 
-      const { firstName, lastName, email, dob, gender, classId, parentId, isActive, avatar } = await req.json();
+      const { firstName, lastName, email, dob, gender, parentId, isActive, avatar } = await req.json();
       const ex = existing as { first_name: string | null; last_name: string | null };
       const newFirst = firstName ?? ex.first_name ?? "";
       const newLast = lastName ?? ex.last_name ?? "";
@@ -69,18 +64,6 @@ export const PATCH = withAuth(
         `UPDATE users SET ${setClauses} WHERE id = ?`,
         args
       );
-
-      if (classId !== undefined && classId) {
-        const classRecord = await queryOne(
-          "SELECT id FROM classes WHERE id = ? AND school_id = ?",
-          [classId, school.id]
-        );
-        if (classRecord) {
-          await execute("UPDATE users SET class_id = ? WHERE id = ?", [classId, id]);
-        }
-      } else if (classId === "") {
-        await execute("UPDATE users SET class_id = NULL WHERE id = ?", [id]);
-      }
 
       if (parentId) {
         const parentRecord = await queryOne(
