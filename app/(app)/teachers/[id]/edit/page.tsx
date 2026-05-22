@@ -25,6 +25,17 @@ interface Teacher {
   avatar?: string;
 }
 
+interface Subject {
+  id: string;
+  name: string;
+}
+
+interface Student {
+  id: string;
+  name: string;
+  admission_no: string;
+}
+
 export default function EditTeacherPage() {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
@@ -39,11 +50,17 @@ export default function EditTeacherPage() {
     avatar: "",
   });
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
+  const [subjects, setSubjects] = useState<Subject[]>([]);
+  const [students, setStudents] = useState<Student[]>([]);
+  const [selectedSubjects, setSelectedSubjects] = useState<string[]>([]);
+  const [selectedStudents, setSelectedStudents] = useState<string[]>([]);
+  const [loadingData, setLoadingData] = useState(true);
 
   useEffect(() => {
-    authenticatedFetch(`/api/teachers/${id}`)
-      .then((r) => r.json())
-      .then((d) => {
+    const loadTeacherData = async () => {
+      try {
+        const res = await authenticatedFetch(`/api/teachers/${id}`);
+        const d = await res.json();
         const t = d.data as Teacher;
         if (t) {
           const [first, ...rest] = (t.name ?? "").split(" ");
@@ -56,12 +73,50 @@ export default function EditTeacherPage() {
             avatar: t.avatar ?? "",
           });
         }
-      })
-      .catch(() => toast.error("Failed to load teacher"))
-      .finally(() => setLoading(false));
+      } catch (err) {
+        toast.error("Failed to load teacher");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    const loadAssignmentData = async () => {
+      try {
+        const [subjectsRes, studentsRes] = await Promise.all([
+          authenticatedFetch("/api/subjects"),
+          authenticatedFetch("/api/students"),
+        ]);
+
+        if (subjectsRes.ok) setSubjects((await subjectsRes.json()).data || []);
+        if (studentsRes.ok) setStudents((await studentsRes.json()).data || []);
+      } catch (err) {
+        console.error("Failed to load data", err);
+      } finally {
+        setLoadingData(false);
+      }
+    };
+
+    loadTeacherData();
+    loadAssignmentData();
   }, [id]);
 
   const set = (k: string, v: string) => setForm((p) => ({ ...p, [k]: v }));
+
+  const toggleSubject = (subjectId: string) => {
+    setSelectedSubjects(prev =>
+      prev.includes(subjectId)
+        ? prev.filter(s => s !== subjectId)
+        : [...prev, subjectId]
+    );
+  };
+
+  const toggleStudent = (studentId: string) => {
+    setSelectedStudents(prev =>
+      prev.includes(studentId)
+        ? prev.filter(s => s !== studentId)
+        : [...prev, studentId]
+    );
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -93,6 +148,22 @@ export default function EditTeacherPage() {
         }),
       });
       if (!res.ok) throw new Error((await res.json()).message);
+
+      // Assign subjects if any selected
+      if (selectedSubjects.length > 0) {
+        for (const subjectId of selectedSubjects) {
+          try {
+            await authenticatedFetch(`/api/subjects/${subjectId}/assign`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ teacherId: id }),
+            });
+          } catch (err) {
+            console.error("Failed to assign subject:", err);
+          }
+        }
+      }
+
       toast.success("Teacher updated");
       router.push(`/teachers/${id}`);
     } catch (err: unknown) {
@@ -169,7 +240,47 @@ export default function EditTeacherPage() {
             </div>
           </div>
 
-          <div style={{ display: "flex", gap: "1.5rem" }}>
+          <div className="form-section-title" style={{ marginTop: "2rem" }}>Subject Assignments</div>
+          {loadingData ? (
+            <div style={{ padding: "1rem", color: "#64748b" }}>Loading subjects...</div>
+          ) : subjects.length > 0 ? (
+            <div className="assignment-checklist">
+              {subjects.map((subject) => (
+                <label key={subject.id} className="assignment-item">
+                  <input
+                    type="checkbox"
+                    checked={selectedSubjects.includes(subject.id)}
+                    onChange={() => toggleSubject(subject.id)}
+                  />
+                  <span>{subject.name}</span>
+                </label>
+              ))}
+            </div>
+          ) : (
+            <div style={{ padding: "1rem", color: "#94a3b8" }}>No subjects available</div>
+          )}
+
+          <div className="form-section-title" style={{ marginTop: "2rem" }}>Student Assignments</div>
+          {loadingData ? (
+            <div style={{ padding: "1rem", color: "#64748b" }}>Loading students...</div>
+          ) : students.length > 0 ? (
+            <div className="assignment-checklist">
+              {students.map((student) => (
+                <label key={student.id} className="assignment-item">
+                  <input
+                    type="checkbox"
+                    checked={selectedStudents.includes(student.id)}
+                    onChange={() => toggleStudent(student.id)}
+                  />
+                  <span>{student.name} {student.admission_no ? `(${student.admission_no})` : ""}</span>
+                </label>
+              ))}
+            </div>
+          ) : (
+            <div style={{ padding: "1rem", color: "#94a3b8" }}>No students available</div>
+          )}
+
+          <div style={{ display: "flex", gap: "1.5rem", marginTop: "2rem" }}>
             <button type="submit" className="btn-primary" disabled={saving}>
               {saving ? "Saving…" : "Save Changes"}
             </button>
