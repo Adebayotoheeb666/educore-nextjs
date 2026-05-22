@@ -11,9 +11,9 @@ export const GET = withAuth(async (_req: NextRequest, { school }: AuthContext, p
   try {
     if (!school) return notFound("School not found");
     const student = await queryOne(
-      `SELECT u.id, u.name, u.first_name, u.last_name, u.email, u.phone, u.avatar, u.admission_no, u.dob, u.gender, u.parent_phone, u.address, u.state_of_origin, u.class_id, u.is_active, u.created_at, u.updated_at,
+      `SELECT u.id, u.name, u.first_name, u.last_name, u.email, u.phone, u.avatar, u.admission_no, u.dob, u.gender, u.parent_phone, u.class_id, u.is_active, u.created_at, u.updated_at,
               c.name as class_name, c.section as class_section,
-              p.name as parent_name, p.email as parent_email, p.phone as parent_phone_parent
+              p.name as parent_name, p.email as parent_email
        FROM users u
        LEFT JOIN classes c ON u.class_id = c.id
        LEFT JOIN user_relationships ur ON u.id = ur.child_id
@@ -40,7 +40,7 @@ export const PATCH = withAuth(
       );
       if (!existing) return notFound("Student not found");
 
-      const { firstName, lastName, email, dob, gender, classId, parentId, isActive, avatar, address, stateOfOrigin } = await req.json();
+      const { firstName, lastName, email, dob, gender, classId, parentId, isActive, avatar } = await req.json();
       const ex = existing as { first_name: string | null; last_name: string | null };
       const newFirst = firstName ?? ex.first_name ?? "";
       const newLast = lastName ?? ex.last_name ?? "";
@@ -61,14 +61,6 @@ export const PATCH = withAuth(
       if (email !== undefined) {
         setClauses = `email = COALESCE(?, email), ${setClauses}`;
         args.unshift(email || null);
-      }
-      if (address !== undefined) {
-        setClauses += `, address = COALESCE(?, address)`;
-        args.push(address || null);
-      }
-      if (stateOfOrigin !== undefined) {
-        setClauses += `, state_of_origin = COALESCE(?, state_of_origin)`;
-        args.push(stateOfOrigin || null);
       }
 
       args.push(id);
