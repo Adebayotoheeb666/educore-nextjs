@@ -24,6 +24,7 @@ export default function AddTeacherPage() {
     firstName: "", lastName: "", email: "", phone: "",
     role: "subject_teacher", qualification: "", specialization: "",
   });
+  const [avatarFile, setAvatarFile] = useState<File | null>(null);
 
   const set = (field: string, value: string) =>
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -35,10 +36,20 @@ export default function AddTeacherPage() {
     }
     setSubmitting(true);
     try {
+      let avatar: string | null = null;
+      if (avatarFile) {
+        const reader = new FileReader();
+        avatar = await new Promise<string>((resolve, reject) => {
+          reader.onload = () => resolve(reader.result as string);
+          reader.onerror = () => reject(new Error("Failed to read file"));
+          reader.readAsDataURL(avatarFile);
+        });
+      }
+
       const res = await authenticatedFetch("/api/teachers", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, avatar: avatar || null }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message);
@@ -71,6 +82,28 @@ export default function AddTeacherPage() {
 
       <div className="form-card">
         <form onSubmit={handleSubmit}>
+          <div className="form-section-title">Teacher Photo</div>
+          <div style={{ marginBottom: "2rem" }}>
+            <div className="form-group">
+              <label>Teacher Photo</label>
+              <input type="file" accept="image/*" onChange={(e) => setAvatarFile(e.target.files?.[0] || null)} />
+              {avatarFile && (
+                <div style={{ marginTop: "0.8rem" }}>
+                  <div style={{ width: 100, height: 100, borderRadius: 8, overflow: "hidden", border: "2px solid #e2e8f0" }}>
+                    <img
+                      src={URL.createObjectURL(avatarFile)}
+                      alt="preview"
+                      style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                    />
+                  </div>
+                  <div style={{ marginTop: "0.5rem", fontSize: "0.9rem", color: "#64748b" }}>
+                    Image selected
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
           <div className="form-section-title">Personal Information</div>
           <div className="form-grid-2">
             <div className="form-group">

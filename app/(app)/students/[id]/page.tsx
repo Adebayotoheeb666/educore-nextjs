@@ -18,6 +18,7 @@ interface Student {
   address?: string;
   state_of_origin?: string;
   created_at?: string;
+  avatar?: string;
 }
 
 interface AcademicResult {
@@ -90,7 +91,7 @@ export default function StudentDetailPage() {
         <div style={{ width: 80, height: 80, borderRadius: "50%", overflow: "hidden", flexShrink: 0, border: "3px solid #ede9fa" }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={`https://ui-avatars.com/api/?name=${encodeURIComponent(displayName)}&background=random&size=80`}
+            src={student.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName)}&background=random&size=80`}
             alt=""
             style={{ width: "100%", height: "100%" }}
           />

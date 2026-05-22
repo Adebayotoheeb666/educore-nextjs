@@ -10,10 +10,9 @@ export const GET = withAuth(async (_req: NextRequest, { school }: AuthContext): 
     if (!school) return badRequest("School context required");
     const parents = await query(
       `SELECT u.id, u.name, u.email, u.phone, u.avatar, u.is_active, u.created_at,
-              GROUP_CONCAT(c.id) as child_ids, GROUP_CONCAT(c.name) as child_names
+              COUNT(ur.child_id) as children_count
        FROM users u
        LEFT JOIN user_relationships ur ON ur.parent_id = u.id
-       LEFT JOIN users c ON ur.child_id = c.id
        WHERE u.school_id = ? AND u.role = 'parent'
        GROUP BY u.id
        ORDER BY u.name`,

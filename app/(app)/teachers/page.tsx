@@ -13,6 +13,7 @@ interface Teacher {
   role?: string;
   subject_count?: number;
   created_at?: string;
+  avatar?: string;
 }
 
 const PAGE_SIZE = 15;
@@ -120,7 +121,7 @@ export default function TeachersPage() {
                       <div className="avatar-sm">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
-                          src={`https://ui-avatars.com/api/?name=${encodeURIComponent(t.name)}&background=random`}
+                          src={t.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(t.name)}&background=random`}
                           alt=""
                         />
                       </div>
@@ -143,6 +144,7 @@ export default function TeachersPage() {
                   <td>
                     <div className="row-actions">
                       <Link href={`/teachers/${t.id}`} className="link-action">View</Link>
+                      <Link href={`/teachers/${t.id}/edit`} className="link-action">Edit</Link>
                       {confirmDelete === t.id ? (
                         <>
                           <button

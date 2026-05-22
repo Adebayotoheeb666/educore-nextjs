@@ -12,6 +12,7 @@ interface Parent {
   phone?: string;
   children_count?: number;
   created_at?: string;
+  avatar?: string;
 }
 
 const PAGE_SIZE = 15;
@@ -96,7 +97,7 @@ export default function ParentsPage() {
                       <div className="avatar-sm">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
-                          src={`https://ui-avatars.com/api/?name=${encodeURIComponent(p.name)}&background=random`}
+                          src={p.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(p.name)}&background=random`}
                           alt=""
                         />
                       </div>

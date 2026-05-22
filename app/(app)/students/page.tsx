@@ -14,6 +14,7 @@ interface Student {
   parent_phone?: string;
   is_active?: number;
   created_at?: string;
+  avatar?: string;
 }
 
 const PAGE_SIZE = 15;
@@ -153,7 +154,7 @@ export default function StudentsPage() {
                       <div className="avatar-sm">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
-                          src={`https://ui-avatars.com/api/?name=${encodeURIComponent(s.name)}&background=random`}
+                          src={s.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(s.name)}&background=random`}
                           alt=""
                         />
                       </div>
