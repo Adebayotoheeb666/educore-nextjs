@@ -54,6 +54,21 @@ export default function AdminUsersPage() {
     }
   };
 
+  const handleDelete = async (u: User) => {
+    if (!confirm(`Delete user "${u.name}"? This action cannot be undone.`)) return;
+    try {
+      const res = await fetch(`/api/admin/users/${u.id}`, {
+        method: "DELETE",
+        credentials: "include",
+      });
+      if (!res.ok) throw new Error((await res.json()).message);
+      setUsers((prev) => prev.filter((x) => x.id !== u.id));
+      toast.success("User deleted");
+    } catch (err: unknown) {
+      toast.error(err instanceof Error ? err.message : "Failed to delete student");
+    }
+  };
+
   return (
     <div>
       <div className="page-header-row">
@@ -108,13 +123,20 @@ export default function AdminUsersPage() {
                       {u.is_active ? "Active" : "Inactive"}
                     </span>
                   </td>
-                  <td>
+                  <td style={{ display: "flex", gap: "0.8rem" }}>
                     <button
                       className="btn-outline"
                       onClick={() => handleToggle(u)}
                       style={{ padding: "0.5rem 1.2rem", fontSize: "1.2rem", borderRadius: 8 }}
                     >
                       {u.is_active ? "Deactivate" : "Activate"}
+                    </button>
+                    <button
+                      className="btn-outline"
+                      onClick={() => handleDelete(u)}
+                      style={{ padding: "0.5rem 1.2rem", fontSize: "1.2rem", borderRadius: 8, color: "#dc2626", borderColor: "#fecaca" }}
+                    >
+                      Delete
                     </button>
                   </td>
                 </tr>
