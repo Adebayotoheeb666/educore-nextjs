@@ -11,13 +11,8 @@ export const GET = withAuth(async (_req: NextRequest, { school }: AuthContext, p
   try {
     if (!school) return notFound("School not found");
     const student = await queryOne(
-      `SELECT u.id, u.name, u.first_name, u.last_name, u.email, u.phone, u.avatar, u.admission_no, u.dob, u.gender, u.parent_phone, u.is_active, u.address, u.state_of_origin, u.created_at, u.updated_at,
-              c.name as class_name, c.section as class_section,
-              p.email as parent_email, 'active' as status
+      `SELECT u.id, u.name, u.first_name, u.last_name, u.email, u.phone, u.avatar, u.admission_no, u.dob, u.gender, u.parent_phone, u.is_active, u.address, u.state_of_origin, u.created_at, u.updated_at
        FROM users u
-       LEFT JOIN classes c ON u.class_id = c.id
-       LEFT JOIN user_relationships ur ON u.id = ur.child_id
-       LEFT JOIN users p ON ur.parent_id = p.id
        WHERE u.id = ? AND u.school_id = ? AND u.role = 'student'`,
       [params?.id ?? "", school.id]
     );
@@ -91,13 +86,8 @@ export const PATCH = withAuth(
       }
 
       const updated = await queryOne(
-        `SELECT u.id, u.name, u.first_name, u.last_name, u.email, u.phone, u.avatar, u.admission_no, u.dob, u.gender, u.parent_phone, u.is_active, u.address, u.state_of_origin, u.created_at, u.updated_at,
-                c.name as class_name, c.section as class_section,
-                p.email as parent_email, 'active' as status
+        `SELECT u.id, u.name, u.first_name, u.last_name, u.email, u.phone, u.avatar, u.admission_no, u.dob, u.gender, u.parent_phone, u.is_active, u.address, u.state_of_origin, u.created_at, u.updated_at
          FROM users u
-         LEFT JOIN classes c ON u.class_id = c.id
-         LEFT JOIN user_relationships ur ON u.id = ur.child_id
-         LEFT JOIN users p ON ur.parent_id = p.id
          WHERE u.id = ?`,
         [id]
       );
