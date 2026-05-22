@@ -9,10 +9,9 @@ export const GET = withAuth(async (_req: NextRequest, { school }: AuthContext, p
     if (!school) return notFound("School not found");
     const parent = await queryOne(
       `SELECT u.id, u.name, u.email, u.phone, u.avatar, u.is_active, u.created_at,
-              GROUP_CONCAT(c.id) as child_ids, GROUP_CONCAT(c.name) as child_names
+              COUNT(ur.child_id) as children_count
        FROM users u
        LEFT JOIN user_relationships ur ON ur.parent_id = u.id
-       LEFT JOIN users c ON ur.child_id = c.id
        WHERE u.id = ? AND u.school_id = ? AND u.role = 'parent'
        GROUP BY u.id`,
       [params?.id ?? "", school.id]
