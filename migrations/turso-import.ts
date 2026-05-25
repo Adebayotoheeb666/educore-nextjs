@@ -265,9 +265,10 @@ async function importSubjects() {
     for (const teacherId of teachers) {
       const mappedTeacher = getUserId(teacherId);
       if (mappedTeacher) {
+        const assignmentId = uuid();
         await execute(
-          "INSERT OR IGNORE INTO subject_teachers (subject_id, teacher_id) VALUES (?,?)",
-          [id, mappedTeacher]
+          "INSERT OR IGNORE INTO subject_teachers (id, subject_id, teacher_id, created_at, updated_at) VALUES (?,?,?,datetime('now'),datetime('now'))",
+          [assignmentId, id, mappedTeacher]
         );
       }
     }

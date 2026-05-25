@@ -17,6 +17,8 @@ interface Student {
   is_active?: number;
   created_at?: string;
   avatar?: string;
+  class_id?: string;
+  class_name?: string;
 }
 
 const PAGE_SIZE = 15;
@@ -145,6 +147,7 @@ export default function StudentsPage() {
               <tr>
                 <th>Name</th>
                 <th>Admission No.</th>
+                <th>Class</th>
                 <th>Gender</th>
                 <th>Parent</th>
                 <th>Status</th>
@@ -177,6 +180,7 @@ export default function StudentsPage() {
                     </div>
                   </td>
                   <td><span className="mono">{s.admission_no ?? "—"}</span></td>
+                  <td>{s.class_name ?? "—"}</td>
                   <td>{s.gender ?? "—"}</td>
                   <td>
                     <div style={{ fontSize: "1.3rem" }}>

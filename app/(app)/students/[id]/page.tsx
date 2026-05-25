@@ -23,6 +23,12 @@ interface Student {
   parent_name?: string;
   parent_email?: string;
   parent_phone_linked?: string;
+  class_id?: string;
+  class_name?: string;
+  class_section?: string;
+  class_teacher_id?: string;
+  class_teacher_name?: string;
+  class_teacher_email?: string;
 }
 
 interface AcademicResult {
@@ -34,13 +40,24 @@ interface AcademicResult {
   position?: number;
 }
 
+interface Subject {
+  id: string;
+  name: string;
+  code?: string;
+  is_compulsory?: number;
+  teacher_id?: string;
+  teacher_name?: string;
+  teacher_email?: string;
+}
+
 export default function StudentDetailPage() {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
   const [student, setStudent] = useState<Student | null>(null);
   const [history, setHistory] = useState<AcademicResult[]>([]);
+  const [subjects, setSubjects] = useState<Subject[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<"profile" | "history">("profile");
+  const [activeTab, setActiveTab] = useState<"profile" | "subjects" | "history">("profile");
   const [refreshKey, setRefreshKey] = useState(0);
 
   useEffect(() => {
@@ -49,11 +66,13 @@ export default function StudentDetailPage() {
     Promise.all([
       authenticatedFetch(`/api/students/${id}`).then((r) => r.json()),
       authenticatedFetch(`/api/students/${id}/history`).then((r) => r.json()),
+      authenticatedFetch(`/api/students/${id}/subjects`).then((r) => r.json()),
     ])
-      .then(([sd, hd]) => {
+      .then(([sd, hd, subj]) => {
         console.log("Student data received:", sd.data);
         setStudent(sd.data);
         setHistory(Array.isArray(hd.data) ? hd.data : []);
+        setSubjects(Array.isArray(subj.data) ? subj.data : []);
       })
       .catch((err) => {
         console.error("Error loading student:", err);
@@ -121,7 +140,7 @@ export default function StudentDetailPage() {
 
       {/* Tabs */}
       <div style={{ display: "flex", gap: "0.5rem", marginBottom: "2rem" }}>
-        {(["profile", "history"] as const).map((tab) => (
+        {(["profile", "subjects", "history"] as const).map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
@@ -137,7 +156,7 @@ export default function StudentDetailPage() {
               textTransform: "capitalize",
             }}
           >
-            {tab === "profile" ? "👤 Profile" : "📊 Academic History"}
+            {tab === "profile" ? "👤 Profile" : tab === "subjects" ? "📚 Subjects" : "📊 Academic History"}
           </button>
         ))}
       </div>
@@ -146,17 +165,19 @@ export default function StudentDetailPage() {
         <div className="form-card">
           <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "2rem" }}>
             {[
-              { label: "Full Name",       value: student.name },
-              { label: "Email",           value: student.email ?? "—" },
-              { label: "Phone",           value: student.phone ?? "—" },
-              { label: "Gender",          value: student.gender ?? "—" },
-              { label: "Date of Birth",   value: student.dob ? new Date(student.dob).toLocaleDateString("en-NG") : "—" },
-              { label: "Admission No.",   value: student.admission_no ?? "—" },
-              { label: "Linked Parent",   value: student.parent_name ? `${student.parent_name} (${student.parent_email})` : "—" },
-              { label: "Parent Phone",    value: student.parent_phone ?? "—" },
-              { label: "Address",         value: student.address ?? "—" },
-              { label: "State of Origin", value: student.state_of_origin ?? "—" },
-              { label: "Enrolled",        value: student.created_at ? new Date(student.created_at).toLocaleDateString("en-NG") : "—" },
+              { label: "Full Name",          value: student.name },
+              { label: "Email",              value: student.email ?? "—" },
+              { label: "Phone",              value: student.phone ?? "—" },
+              { label: "Gender",             value: student.gender ?? "—" },
+              { label: "Date of Birth",      value: student.dob ? new Date(student.dob).toLocaleDateString("en-NG") : "—" },
+              { label: "Admission No.",      value: student.admission_no ?? "—" },
+              { label: "Class",              value: student.class_name ?? "—" },
+              { label: "Homeroom Teacher",   value: student.class_teacher_name ? `${student.class_teacher_name}` : "—" },
+              { label: "Linked Parent",      value: student.parent_name ? `${student.parent_name} (${student.parent_email})` : "—" },
+              { label: "Parent Phone",       value: student.parent_phone ?? "—" },
+              { label: "Address",            value: student.address ?? "—" },
+              { label: "State of Origin",    value: student.state_of_origin ?? "—" },
+              { label: "Enrolled",           value: student.created_at ? new Date(student.created_at).toLocaleDateString("en-NG") : "—" },
             ].map((f) => (
               <div key={f.label} style={{ borderBottom: "1px solid #f1f5f9", paddingBottom: "1.5rem" }}>
                 <div style={{ fontSize: "1.1rem", fontWeight: 700, color: "#94a3b8", textTransform: "uppercase", marginBottom: "0.4rem" }}>
@@ -166,6 +187,39 @@ export default function StudentDetailPage() {
               </div>
             ))}
           </div>
+        </div>
+      )}
+
+      {activeTab === "subjects" && (
+        <div className="premium-table-card">
+          {subjects.length === 0 ? (
+            <div className="table-empty">No subjects assigned for this student.</div>
+          ) : (
+            <table className="premium-table">
+              <thead>
+                <tr>
+                  <th>Subject</th>
+                  <th>Code</th>
+                  <th>Type</th>
+                  <th>Teacher</th>
+                </tr>
+              </thead>
+              <tbody>
+                {subjects.map((subj) => (
+                  <tr key={subj.id}>
+                    <td>{subj.name}</td>
+                    <td><span className="mono">{subj.code ?? "—"}</span></td>
+                    <td>
+                      <span className={`badge ${subj.is_compulsory ? "badge-green" : "badge-yellow"}`}>
+                        {subj.is_compulsory ? "Compulsory" : "Elective"}
+                      </span>
+                    </td>
+                    <td>{subj.teacher_name ?? "—"}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
       )}
 
