@@ -19,6 +19,10 @@ interface Student {
   state_of_origin?: string;
   created_at?: string;
   avatar?: string;
+  parent_id?: string;
+  parent_name?: string;
+  parent_email?: string;
+  parent_phone_linked?: string;
 }
 
 interface AcademicResult {
@@ -47,10 +51,14 @@ export default function StudentDetailPage() {
       authenticatedFetch(`/api/students/${id}/history`).then((r) => r.json()),
     ])
       .then(([sd, hd]) => {
+        console.log("Student data received:", sd.data);
         setStudent(sd.data);
         setHistory(Array.isArray(hd.data) ? hd.data : []);
       })
-      .catch(() => toast.error("Failed to load student"))
+      .catch((err) => {
+        console.error("Error loading student:", err);
+        toast.error("Failed to load student");
+      })
       .finally(() => setLoading(false));
   }, [id, refreshKey]);
 
@@ -136,13 +144,15 @@ export default function StudentDetailPage() {
 
       {activeTab === "profile" && (
         <div className="form-card">
-          <div className="form-grid-2">
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "2rem" }}>
             {[
               { label: "Full Name",       value: student.name },
               { label: "Email",           value: student.email ?? "—" },
+              { label: "Phone",           value: student.phone ?? "—" },
               { label: "Gender",          value: student.gender ?? "—" },
               { label: "Date of Birth",   value: student.dob ? new Date(student.dob).toLocaleDateString("en-NG") : "—" },
               { label: "Admission No.",   value: student.admission_no ?? "—" },
+              { label: "Linked Parent",   value: student.parent_name ? `${student.parent_name} (${student.parent_email})` : "—" },
               { label: "Parent Phone",    value: student.parent_phone ?? "—" },
               { label: "Address",         value: student.address ?? "—" },
               { label: "State of Origin", value: student.state_of_origin ?? "—" },

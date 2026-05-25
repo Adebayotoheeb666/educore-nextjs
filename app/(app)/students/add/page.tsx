@@ -15,7 +15,7 @@ export default function AddStudentPage() {
   const [parents, setParents] = useState<Parent[]>([]);
   const [submitting, setSubmitting] = useState(false);
   const [form, setForm] = useState({
-    firstName: "", lastName: "", email: "",
+    firstName: "", lastName: "", email: "", phone: "",
     dob: "", gender: "", classId: "", parentId: "",
     address: "", stateOfOrigin: "",
   });
@@ -58,6 +58,7 @@ export default function AddStudentPage() {
           firstName: form.firstName,
           lastName: form.lastName,
           email: form.email,
+          phone: form.phone || null,
           dob: form.dob || null,
           gender: form.gender || null,
           classId: form.classId || null,
@@ -133,6 +134,10 @@ export default function AddStudentPage() {
             <div className="form-group">
               <label>Email Address *</label>
               <input type="email" value={form.email} onChange={(e) => set("email", e.target.value)} placeholder="student@example.com" required />
+            </div>
+            <div className="form-group">
+              <label>Phone Number</label>
+              <input type="tel" value={form.phone} onChange={(e) => set("phone", e.target.value)} placeholder="e.g. +234 123 456 7890" />
             </div>
             <div className="form-group">
               <label>Date of Birth</label>

@@ -4,19 +4,27 @@ import { withAuth, type AuthContext } from "@/lib/middleware/auth";
 import { badRequest, created, ok, serverError } from "@/lib/utils/response";
 import { generateId } from "@/lib/utils/id";
 
-export const GET = withAuth(async (_req: NextRequest, { school }: AuthContext): Promise<NextResponse> => {
+export const GET = withAuth(async (req: NextRequest, { school }: AuthContext): Promise<NextResponse> => {
   try {
     if (!school) return badRequest("School context required");
-    const subjects = await query(
-      `SELECT s.*, GROUP_CONCAT(u.name) as teacher_names, GROUP_CONCAT(u.id) as teacher_ids
+    const { searchParams } = new URL(req.url);
+    const teacherId = searchParams.get("teacherId");
+
+    let sql = `SELECT s.*, GROUP_CONCAT(u.name) as teacher_names, GROUP_CONCAT(u.id) as teacher_ids
        FROM subjects s
        LEFT JOIN subject_teachers st ON st.subject_id = s.id
        LEFT JOIN users u ON st.teacher_id = u.id
-       WHERE s.school_id = ?
-       GROUP BY s.id
-       ORDER BY s.name`,
-      [school.id]
-    );
+       WHERE s.school_id = ?`;
+    const params: any[] = [school.id];
+
+    if (teacherId) {
+      sql += ` AND st.teacher_id = ?`;
+      params.push(teacherId);
+    }
+
+    sql += ` GROUP BY s.id ORDER BY s.name`;
+
+    const subjects = await query(sql, params);
     return ok(subjects);
   } catch (err) {
     return serverError(err);

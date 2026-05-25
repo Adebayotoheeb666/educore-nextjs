@@ -92,7 +92,7 @@ export default function SubjectsPage() {
                   <td>
                     <div className="row-actions">
                       <Link href={`/subjects/${s.id}`} className="link-action">View</Link>
-                      <Link href={`/subjects/${s.id}/assign`} className="link-action">Assign Teacher</Link>
+                      <Link href={`/subjects/${s.id}#assign`} className="link-action">Assign Teacher</Link>
                     </div>
                   </td>
                 </tr>

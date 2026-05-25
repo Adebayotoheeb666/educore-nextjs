@@ -31,7 +31,7 @@ export const POST = withAuth(
   async (req: NextRequest, { school }: AuthContext): Promise<NextResponse> => {
     try {
       if (!school) return badRequest("School context required");
-      const { firstName, lastName, email, dob, gender, classId, parentPhone, parentId, avatar } = await req.json();
+      const { firstName, lastName, email, dob, gender, classId, parentPhone, phone, parentId, avatar, address, stateOfOrigin } = await req.json();
 
       if (!firstName || !lastName || !email) {
         return badRequest("First name, last name, and email are required");
@@ -53,10 +53,10 @@ export const POST = withAuth(
       const studentId = generateId();
       const hashed = await hashPassword(defaultPassword);
       await execute(
-        `INSERT INTO users (id, name, first_name, last_name, email, password, role, school_id, admission_no, dob, gender, parent_phone, avatar, is_active, created_at, updated_at)
-         VALUES (?, ?, ?, ?, ?, ?, 'student', ?, ?, ?, ?, ?, ?, 1, datetime('now'), datetime('now'))`,
-        [studentId, `${firstName} ${lastName}`, firstName, lastName, normalizedEmail, hashed, school.id,
-         admissionNo, dob || null, gender || null, parentPhone || null, avatar || null]
+        `INSERT INTO users (id, name, first_name, last_name, email, phone, password, role, school_id, admission_no, dob, gender, parent_phone, address, state_of_origin, avatar, class_id, is_active, created_at, updated_at)
+         VALUES (?, ?, ?, ?, ?, ?, ?, 'student', ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, datetime('now'), datetime('now'))`,
+        [studentId, `${firstName} ${lastName}`, firstName, lastName, normalizedEmail, phone || null, hashed, school.id,
+         admissionNo, dob || null, gender || null, parentPhone || null, address || null, stateOfOrigin || null, avatar || null, classId || null]
       );
 
       // Link parent if provided

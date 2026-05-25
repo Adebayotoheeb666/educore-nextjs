@@ -37,6 +37,9 @@ export default function StudentsPage() {
       })
       .then((d) => {
         console.log("Students API response:", d);
+        if (d.data && d.data.length > 0) {
+          console.log("First student sample:", d.data[0]);
+        }
         setStudents(Array.isArray(d.data) ? d.data : []);
       })
       .catch((err) => {

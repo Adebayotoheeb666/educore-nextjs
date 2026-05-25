@@ -11,6 +11,22 @@ interface Parent {
   email: string;
 }
 
+interface StudentData {
+  id: string;
+  name: string;
+  first_name?: string;
+  last_name?: string;
+  email?: string;
+  phone?: string;
+  dob?: string;
+  gender?: string;
+  class_id?: string;
+  address?: string;
+  state_of_origin?: string;
+  avatar?: string;
+  parent_id?: string;
+}
+
 export default function EditStudentPage() {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
@@ -19,7 +35,7 @@ export default function EditStudentPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [form, setForm] = useState({
-    firstName: "", lastName: "", email: "", dob: "", gender: "",
+    firstName: "", lastName: "", email: "", phone: "", dob: "", gender: "",
     classId: "", parentId: "", address: "", stateOfOrigin: "", avatar: "",
   });
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
@@ -30,17 +46,18 @@ export default function EditStudentPage() {
       authenticatedFetch("/api/classes").then((r) => r.json()),
       authenticatedFetch("/api/parents").then((r) => r.json()),
     ]).then(([sd, cd, pd]) => {
-      const s = sd.data;
+      const s = sd.data as StudentData;
       if (s) {
         const [first, ...rest] = (s.name ?? "").split(" ");
         setForm({
           firstName: s.first_name ?? first ?? "",
           lastName: s.last_name ?? rest.join(" ") ?? "",
           email: s.email ?? "",
+          phone: s.phone ?? "",
           dob: s.dob ? s.dob.slice(0, 10) : "",
           gender: s.gender ?? "",
           classId: s.class_id ?? "",
-          parentId: "",
+          parentId: s.parent_id ?? "",
           address: s.address ?? "",
           stateOfOrigin: s.state_of_origin ?? "",
           avatar: s.avatar ?? "",
@@ -75,6 +92,7 @@ export default function EditStudentPage() {
           firstName: form.firstName,
           lastName: form.lastName,
           email: form.email,
+          phone: form.phone || null,
           dob: form.dob || null,
           gender: form.gender === "" ? "" : form.gender,
           classId: form.classId || null,
