@@ -140,7 +140,7 @@ export default function StudentDetailPage() {
 
       {activeTab === "profile" && (
         <div className="form-card">
-          <div className="form-grid-2">
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "2rem" }}>
             {[
               { label: "Full Name",       value: student.name },
               { label: "Email",           value: student.email ?? "—" },
