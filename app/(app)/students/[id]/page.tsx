@@ -51,10 +51,14 @@ export default function StudentDetailPage() {
       authenticatedFetch(`/api/students/${id}/history`).then((r) => r.json()),
     ])
       .then(([sd, hd]) => {
+        console.log("Student data received:", sd.data);
         setStudent(sd.data);
         setHistory(Array.isArray(hd.data) ? hd.data : []);
       })
-      .catch(() => toast.error("Failed to load student"))
+      .catch((err) => {
+        console.error("Error loading student:", err);
+        toast.error("Failed to load student");
+      })
       .finally(() => setLoading(false));
   }, [id, refreshKey]);
 
