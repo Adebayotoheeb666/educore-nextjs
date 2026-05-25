@@ -51,7 +51,7 @@ export default function ClassEnrollmentPage() {
       const [statsRes, studentsRes, allRes] = await Promise.all([
         authenticatedFetch(`/api/classes/${classId}/enroll-students${sessionParam}`),
         authenticatedFetch(`/api/classes/${classId}/students${sessionParam}`),
-        authenticatedFetch(`/api/students`),
+        authenticatedFetch(`/api/students?classId=${classId}`),
       ]);
 
       // Handle stats

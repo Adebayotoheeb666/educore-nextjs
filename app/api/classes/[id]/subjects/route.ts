@@ -16,7 +16,8 @@ export const GET = withAuth(async (req: NextRequest, { school }: AuthContext, pa
     const session = searchParams.get("session") || (classDoc as any).academic_session || school.academic_session;
 
     const subjects = await query(
-      `SELECT cs.*, s.name, s.code, s.description,
+      `SELECT cs.id, cs.class_id, cs.subject_id, cs.is_compulsory, cs.sequence, cs.academic_session,
+              s.id as subject_id, s.name, s.code, s.description,
               GROUP_CONCAT(DISTINCT u.id) as teacher_ids,
               GROUP_CONCAT(DISTINCT u.name) as teacher_names,
               COUNT(DISTINCT st.teacher_id) as teacher_count
@@ -25,7 +26,7 @@ export const GET = withAuth(async (req: NextRequest, { school }: AuthContext, pa
        LEFT JOIN subject_teachers st ON st.subject_id = s.id AND st.class_id = ? AND st.academic_session = ?
        LEFT JOIN users u ON st.teacher_id = u.id
        WHERE cs.class_id = ? AND s.school_id = ? AND cs.academic_session = ?
-       GROUP BY cs.id
+       GROUP BY cs.id, cs.class_id, cs.subject_id, cs.is_compulsory, cs.sequence, cs.academic_session, s.id, s.name, s.code, s.description
        ORDER BY cs.sequence, s.name`,
       [classId, session, classId, school.id, session]
     );
