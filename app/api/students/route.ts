@@ -8,11 +8,13 @@ import { generateId } from "@/lib/utils/id";
 const ADMIN_ROLES = ["principal", "vp_admin", "admin_staff", "school_owner"];
 
 // GET /api/students
-export const GET = withAuth(async (_req: NextRequest, { school }: AuthContext): Promise<NextResponse> => {
+export const GET = withAuth(async (req: NextRequest, { school }: AuthContext): Promise<NextResponse> => {
   try {
     if (!school) return badRequest("School context required");
-    const students = await query(
-      `SELECT u.id, u.name, u.first_name, u.last_name, u.email, u.phone, u.avatar,
+    const { searchParams } = new URL(req.url);
+    const classId = searchParams.get("classId");
+
+    let sql = `SELECT u.id, u.name, u.first_name, u.last_name, u.email, u.phone, u.avatar,
               u.admission_no, u.dob, u.gender, u.parent_phone, u.is_active,
               u.created_at, u.updated_at,
               p.name as parent_name, p.phone as parent_phone_linked,
@@ -21,10 +23,18 @@ export const GET = withAuth(async (_req: NextRequest, { school }: AuthContext): 
        LEFT JOIN user_relationships ur ON ur.child_id = u.id
        LEFT JOIN users p ON ur.parent_id = p.id AND p.role = 'parent'
        LEFT JOIN classes c ON u.class_id = c.id
-       WHERE u.school_id = ? AND u.role = 'student'
-       ORDER BY u.name`,
-      [school.id]
-    );
+       WHERE u.school_id = ? AND u.role = 'student'`;
+
+    const params: any[] = [school.id];
+
+    if (classId) {
+      sql += ` AND (u.class_id = ? OR u.class_id IS NULL)`;
+      params.push(classId);
+    }
+
+    sql += ` ORDER BY u.name`;
+
+    const students = await query(sql, params);
     return ok(students);
   } catch (err) {
     return serverError(err);
