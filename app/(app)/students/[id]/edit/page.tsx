@@ -17,6 +17,7 @@ interface StudentData {
   first_name?: string;
   last_name?: string;
   email?: string;
+  phone?: string;
   dob?: string;
   gender?: string;
   class_id?: string;
@@ -34,7 +35,7 @@ export default function EditStudentPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [form, setForm] = useState({
-    firstName: "", lastName: "", email: "", dob: "", gender: "",
+    firstName: "", lastName: "", email: "", phone: "", dob: "", gender: "",
     classId: "", parentId: "", address: "", stateOfOrigin: "", avatar: "",
   });
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
@@ -52,6 +53,7 @@ export default function EditStudentPage() {
           firstName: s.first_name ?? first ?? "",
           lastName: s.last_name ?? rest.join(" ") ?? "",
           email: s.email ?? "",
+          phone: s.phone ?? "",
           dob: s.dob ? s.dob.slice(0, 10) : "",
           gender: s.gender ?? "",
           classId: s.class_id ?? "",
@@ -90,6 +92,7 @@ export default function EditStudentPage() {
           firstName: form.firstName,
           lastName: form.lastName,
           email: form.email,
+          phone: form.phone || null,
           dob: form.dob || null,
           gender: form.gender === "" ? "" : form.gender,
           classId: form.classId || null,
