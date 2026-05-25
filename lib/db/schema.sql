@@ -117,12 +117,55 @@ CREATE TABLE IF NOT EXISTS subjects (
   updated_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
 
+-- ============================================================
+-- ACADEMIC: Student-Class Enrollments
+-- ============================================================
+-- Track which students are in which classes for which academic session
+-- Allows students to move between classes across sessions
+CREATE TABLE IF NOT EXISTS students_classes (
+  id TEXT PRIMARY KEY,
+  student_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  class_id TEXT NOT NULL REFERENCES classes(id) ON DELETE CASCADE,
+  academic_session TEXT NOT NULL,
+  term TEXT,
+  status TEXT NOT NULL DEFAULT 'active' CHECK(status IN ('active', 'transferred', 'promoted', 'retained', 'graduated', 'withdrawn')),
+  enrolled_date TEXT NOT NULL DEFAULT (datetime('now')),
+  left_date TEXT,
+  created_at TEXT NOT NULL DEFAULT (datetime('now')),
+  updated_at TEXT NOT NULL DEFAULT (datetime('now')),
+  UNIQUE(student_id, class_id, academic_session)
+);
+
+-- ============================================================
+-- ACADEMIC: Class-Subject Curriculum
+-- ============================================================
+-- Define which subjects are taught in which classes
+CREATE TABLE IF NOT EXISTS class_subjects (
+  id TEXT PRIMARY KEY,
+  class_id TEXT NOT NULL REFERENCES classes(id) ON DELETE CASCADE,
+  subject_id TEXT NOT NULL REFERENCES subjects(id) ON DELETE CASCADE,
+  is_compulsory INTEGER NOT NULL DEFAULT 1,
+  sequence INTEGER,
+  academic_session TEXT,
+  added_date TEXT NOT NULL DEFAULT (datetime('now')),
+  created_at TEXT NOT NULL DEFAULT (datetime('now')),
+  updated_at TEXT NOT NULL DEFAULT (datetime('now')),
+  UNIQUE(class_id, subject_id, academic_session)
+);
+
 -- Subject-Teacher assignments (many-to-many)
+-- Teachers assigned to teach specific subjects in specific classes
 CREATE TABLE IF NOT EXISTS subject_teachers (
+  id TEXT PRIMARY KEY,
   subject_id TEXT NOT NULL REFERENCES subjects(id) ON DELETE CASCADE,
   teacher_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   class_id TEXT REFERENCES classes(id) ON DELETE CASCADE,
-  PRIMARY KEY (subject_id, teacher_id, class_id)
+  academic_session TEXT,
+  term TEXT,
+  assigned_date TEXT NOT NULL DEFAULT (datetime('now')),
+  created_at TEXT NOT NULL DEFAULT (datetime('now')),
+  updated_at TEXT NOT NULL DEFAULT (datetime('now')),
+  UNIQUE(subject_id, teacher_id, class_id, academic_session)
 );
 
 -- ============================================================
@@ -543,6 +586,14 @@ CREATE INDEX IF NOT EXISTS idx_users_role ON users(role);
 CREATE INDEX IF NOT EXISTS idx_classes_school_id ON classes(school_id);
 CREATE INDEX IF NOT EXISTS idx_subjects_school_id ON subjects(school_id);
 CREATE INDEX IF NOT EXISTS idx_subjects_class_id ON subjects(class_id);
+CREATE INDEX IF NOT EXISTS idx_students_classes_student_id ON students_classes(student_id);
+CREATE INDEX IF NOT EXISTS idx_students_classes_class_id ON students_classes(class_id);
+CREATE INDEX IF NOT EXISTS idx_students_classes_session ON students_classes(academic_session);
+CREATE INDEX IF NOT EXISTS idx_class_subjects_class_id ON class_subjects(class_id);
+CREATE INDEX IF NOT EXISTS idx_class_subjects_subject_id ON class_subjects(subject_id);
+CREATE INDEX IF NOT EXISTS idx_subject_teachers_subject_id ON subject_teachers(subject_id);
+CREATE INDEX IF NOT EXISTS idx_subject_teachers_teacher_id ON subject_teachers(teacher_id);
+CREATE INDEX IF NOT EXISTS idx_subject_teachers_class_id ON subject_teachers(class_id);
 CREATE INDEX IF NOT EXISTS idx_attendance_student_id ON attendance(student_id);
 CREATE INDEX IF NOT EXISTS idx_attendance_class_id ON attendance(class_id);
 CREATE INDEX IF NOT EXISTS idx_attendance_date ON attendance(date);
