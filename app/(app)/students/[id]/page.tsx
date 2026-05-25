@@ -19,6 +19,10 @@ interface Student {
   state_of_origin?: string;
   created_at?: string;
   avatar?: string;
+  parent_id?: string;
+  parent_name?: string;
+  parent_email?: string;
+  parent_phone_linked?: string;
 }
 
 interface AcademicResult {
@@ -143,6 +147,7 @@ export default function StudentDetailPage() {
               { label: "Gender",          value: student.gender ?? "—" },
               { label: "Date of Birth",   value: student.dob ? new Date(student.dob).toLocaleDateString("en-NG") : "—" },
               { label: "Admission No.",   value: student.admission_no ?? "—" },
+              { label: "Linked Parent",   value: student.parent_name ? `${student.parent_name} (${student.parent_email})` : "—" },
               { label: "Parent Phone",    value: student.parent_phone ?? "—" },
               { label: "Address",         value: student.address ?? "—" },
               { label: "State of Origin", value: student.state_of_origin ?? "—" },

@@ -11,6 +11,21 @@ interface Parent {
   email: string;
 }
 
+interface StudentData {
+  id: string;
+  name: string;
+  first_name?: string;
+  last_name?: string;
+  email?: string;
+  dob?: string;
+  gender?: string;
+  class_id?: string;
+  address?: string;
+  state_of_origin?: string;
+  avatar?: string;
+  parent_id?: string;
+}
+
 export default function EditStudentPage() {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
@@ -30,7 +45,7 @@ export default function EditStudentPage() {
       authenticatedFetch("/api/classes").then((r) => r.json()),
       authenticatedFetch("/api/parents").then((r) => r.json()),
     ]).then(([sd, cd, pd]) => {
-      const s = sd.data;
+      const s = sd.data as StudentData;
       if (s) {
         const [first, ...rest] = (s.name ?? "").split(" ");
         setForm({
@@ -40,7 +55,7 @@ export default function EditStudentPage() {
           dob: s.dob ? s.dob.slice(0, 10) : "",
           gender: s.gender ?? "",
           classId: s.class_id ?? "",
-          parentId: "",
+          parentId: s.parent_id ?? "",
           address: s.address ?? "",
           stateOfOrigin: s.state_of_origin ?? "",
           avatar: s.avatar ?? "",
