@@ -51,17 +51,19 @@ export default function ClassEnrollmentPage() {
 
       if (statsRes.ok) {
         const statsData = await statsRes.json();
-        setStats(statsData.stats);
+        setStats(statsData.data?.stats || statsData.stats);
       }
 
       if (studentsRes.ok) {
         const studentsData = await studentsRes.json();
-        setStudents(studentsData);
+        const studentsList = Array.isArray(studentsData) ? studentsData : (studentsData.data || []);
+        setStudents(studentsList);
       }
 
       if (allRes.ok) {
         const allData = await allRes.json();
-        setAllStudents(allData);
+        const allList = Array.isArray(allData) ? allData : (allData.data || []);
+        setAllStudents(allList);
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");

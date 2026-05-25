@@ -64,7 +64,8 @@ export default function ClassCurriculumPage() {
 
       if (!res.ok) throw new Error("Failed to fetch curriculum");
       const data = await res.json();
-      setSubjects(Array.isArray(data) ? data : []);
+      const subjectsArray = Array.isArray(data) ? data : (data?.data || []);
+      setSubjects(subjectsArray);
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
     } finally {
@@ -77,7 +78,7 @@ export default function ClassCurriculumPage() {
       const res = await fetch(`/api/subjects`);
       if (res.ok) {
         const data = await res.json();
-        const subjectsArray = Array.isArray(data) ? data : (data?.data ? data.data : []);
+        const subjectsArray = Array.isArray(data) ? data : (data?.data || []);
         setAllSubjects(subjectsArray);
       } else {
         console.error("Failed to fetch subjects:", res.status);
@@ -154,7 +155,8 @@ export default function ClassCurriculumPage() {
 
       if (res.ok) {
         const data = await res.json();
-        setStudentsInSubject((prev) => ({ ...prev, [subjectId]: data }));
+        const studentsList = Array.isArray(data) ? data : (data?.data || []);
+        setStudentsInSubject((prev) => ({ ...prev, [subjectId]: studentsList }));
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to fetch students");
