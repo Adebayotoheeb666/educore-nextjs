@@ -12,10 +12,14 @@ export const GET = withAuth(async (_req: NextRequest, { school }: AuthContext, p
     if (!school) return notFound("School not found");
     const student = await queryOne(
       `SELECT u.id, u.name, u.first_name, u.last_name, u.email, u.phone, u.avatar, u.admission_no, u.dob, u.gender, u.parent_phone, u.is_active, u.address, u.state_of_origin, u.created_at, u.updated_at,
-              p.id as parent_id, p.name as parent_name, p.email as parent_email, p.phone as parent_phone_linked
+              p.id as parent_id, p.name as parent_name, p.email as parent_email, p.phone as parent_phone_linked,
+              c.id as class_id, c.name as class_name, c.section as class_section,
+              ct.id as class_teacher_id, ct.name as class_teacher_name, ct.email as class_teacher_email
        FROM users u
        LEFT JOIN user_relationships ur ON ur.child_id = u.id
        LEFT JOIN users p ON ur.parent_id = p.id AND p.role = 'parent'
+       LEFT JOIN classes c ON u.class_id = c.id
+       LEFT JOIN users ct ON c.class_teacher_id = ct.id
        WHERE u.id = ? AND u.school_id = ? AND u.role = 'student'`,
       [params?.id ?? "", school.id]
     );
