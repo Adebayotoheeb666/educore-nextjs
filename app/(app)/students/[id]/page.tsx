@@ -144,6 +144,7 @@ export default function StudentDetailPage() {
             {[
               { label: "Full Name",       value: student.name },
               { label: "Email",           value: student.email ?? "—" },
+              { label: "Phone",           value: student.phone ?? "—" },
               { label: "Gender",          value: student.gender ?? "—" },
               { label: "Date of Birth",   value: student.dob ? new Date(student.dob).toLocaleDateString("en-NG") : "—" },
               { label: "Admission No.",   value: student.admission_no ?? "—" },
