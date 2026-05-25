@@ -64,6 +64,8 @@ export default function ClassDetailPage() {
         </div>
         <div className="header-actions">
           <Link href={`/classes/${id}/edit`} className="btn-outline">✏️ Edit</Link>
+          <Link href={`/classes/${id}/enrollment`} className="btn-outline">👥 Manage Students</Link>
+          <Link href={`/classes/${id}/curriculum`} className="btn-outline">📚 Manage Subjects</Link>
           <button className="btn-primary" onClick={handleDelete} disabled={deleting}
             style={{ background: "#ef4444" }}>
             {deleting ? "Deleting…" : "🗑 Delete"}

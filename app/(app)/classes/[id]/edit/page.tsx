@@ -91,6 +91,15 @@ export default function EditClassPage() {
         <p style={{ fontSize: "1.5rem", color: "#64748b" }}>Update class details and form teacher assignment.</p>
       </div>
 
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "1rem", marginBottom: "3rem" }}>
+        <Link href={`/classes/${id}/enrollment`} className="btn-outline" style={{ textAlign: "center", padding: "1rem", textDecoration: "none" }}>
+          👥 Manage Students
+        </Link>
+        <Link href={`/classes/${id}/curriculum`} className="btn-outline" style={{ textAlign: "center", padding: "1rem", textDecoration: "none" }}>
+          📚 Manage Subjects
+        </Link>
+      </div>
+
       <div className="form-card">
         <form onSubmit={handleSubmit}>
           <div className="form-section-title">Class Details</div>

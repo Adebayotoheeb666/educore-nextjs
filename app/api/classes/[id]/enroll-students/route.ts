@@ -51,6 +51,26 @@ export const POST = withAuth(
             [id, studentId, classId, session, term || null]
           );
 
+          // Auto-enroll student in all compulsory subjects in this class
+          const compulsorySubjects = await query(
+            "SELECT subject_id FROM class_subjects WHERE class_id = ? AND academic_session = ? AND is_compulsory = 1",
+            [classId, session]
+          );
+
+          for (const subject of compulsorySubjects || []) {
+            try {
+              const subjectId = (subject as any).subject_id;
+              const subjectEnrollmentId = generateId();
+              await execute(
+                `INSERT INTO student_subjects (id, student_id, subject_id, class_id, academic_session, term, status, enrolled_date, created_at, updated_at)
+                 VALUES (?, ?, ?, ?, ?, ?, 'active', datetime('now'), datetime('now'), datetime('now'))`,
+                [subjectEnrollmentId, studentId, subjectId, classId, session, term || null]
+              );
+            } catch (err) {
+              // Silently skip if already enrolled
+            }
+          }
+
           results.enrolled.push(studentId);
         } catch (err) {
           results.failed.push(studentId);
