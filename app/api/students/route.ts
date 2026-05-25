@@ -14,8 +14,11 @@ export const GET = withAuth(async (_req: NextRequest, { school }: AuthContext): 
     const students = await query(
       `SELECT u.id, u.name, u.first_name, u.last_name, u.email, u.phone, u.avatar,
               u.admission_no, u.dob, u.gender, u.parent_phone, u.is_active,
-              u.created_at, u.updated_at
+              u.created_at, u.updated_at,
+              p.name as parent_name, p.phone as parent_phone_linked
        FROM users u
+       LEFT JOIN user_relationships ur ON ur.child_id = u.id
+       LEFT JOIN users p ON ur.parent_id = p.id AND p.role = 'parent'
        WHERE u.school_id = ? AND u.role = 'student'
        ORDER BY u.name`,
       [school.id]

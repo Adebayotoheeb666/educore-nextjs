@@ -12,6 +12,8 @@ interface Student {
   gender?: string;
   phone?: string;
   parent_phone?: string;
+  parent_name?: string;
+  parent_phone_linked?: string;
   is_active?: number;
   created_at?: string;
   avatar?: string;
@@ -144,7 +146,7 @@ export default function StudentsPage() {
                 <th>Name</th>
                 <th>Admission No.</th>
                 <th>Gender</th>
-                <th>Parent Phone</th>
+                <th>Parent</th>
                 <th>Status</th>
                 <th>Actions</th>
               </tr>
@@ -176,7 +178,18 @@ export default function StudentsPage() {
                   </td>
                   <td><span className="mono">{s.admission_no ?? "—"}</span></td>
                   <td>{s.gender ?? "—"}</td>
-                  <td>{s.parent_phone ?? s.phone ?? "—"}</td>
+                  <td>
+                    <div style={{ fontSize: "1.3rem" }}>
+                      {s.parent_name ? (
+                        <>
+                          <div style={{ fontWeight: 600 }}>{s.parent_name}</div>
+                          <div style={{ color: "#64748b", fontSize: "1.2rem" }}>{s.parent_phone_linked ?? s.parent_phone ?? "—"}</div>
+                        </>
+                      ) : (
+                        "—"
+                      )}
+                    </div>
+                  </td>
                   <td>
                     <span className={`badge ${(s.is_active ?? 1) ? "badge-green" : "badge-gray"}`}>
                       {(s.is_active ?? 1) ? "Active" : "Inactive"}
