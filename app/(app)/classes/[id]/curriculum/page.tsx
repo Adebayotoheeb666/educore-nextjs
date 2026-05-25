@@ -77,7 +77,6 @@ export default function ClassCurriculumPage() {
       const res = await fetch(`/api/subjects`);
       if (res.ok) {
         const data = await res.json();
-        // Handle both direct array and wrapped response
         const subjectsArray = Array.isArray(data) ? data : (data?.data ? data.data : []);
         setAllSubjects(subjectsArray);
       } else {
@@ -110,6 +109,7 @@ export default function ClassCurriculumPage() {
       if (!res.ok) throw new Error("Failed to add subject");
       setSelectedSubjectId("");
       setShowAddSubject(false);
+      setError(null);
       fetchCurriculumData();
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
@@ -126,6 +126,7 @@ export default function ClassCurriculumPage() {
       });
 
       if (!res.ok) throw new Error("Failed to remove subject");
+      setError(null);
       fetchCurriculumData();
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
@@ -137,7 +138,6 @@ export default function ClassCurriculumPage() {
       setExpandedSubject(null);
     } else {
       setExpandedSubject(subjectId);
-      // Fetch students for this subject if not already loaded
       if (!studentsInSubject[subjectId]) {
         await fetchStudentsInSubject(subjectId);
       }
@@ -174,7 +174,6 @@ export default function ClassCurriculumPage() {
       );
 
       if (!res.ok) throw new Error("Failed to remove student");
-      // Refresh students list
       await fetchStudentsInSubject(subjectId);
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
@@ -184,57 +183,86 @@ export default function ClassCurriculumPage() {
   const getAddedSubjects = new Set(subjects.map((s) => s.subject_id));
   const availableSubjects = allSubjects.filter((s) => !getAddedSubjects.has(s.id));
 
-  if (loading) return <div className="page-container"><p>Loading curriculum...</p></div>;
+  if (loading) {
+    return (
+      <div className="page-container">
+        <div style={{ textAlign: "center", padding: "3rem" }}>
+          <p style={{ fontSize: "1.4rem", color: "#64748b" }}>Loading curriculum...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="page-container">
-      <div className="page-header">
-        <div>
-          <h1>Class Curriculum</h1>
-          <p className="text-muted">Manage subjects and teachers for this class</p>
+      <div className="page-header-row">
+        <div className="page-header-text">
+          <h1>Class Curriculum & Subjects</h1>
+          <p>Manage subjects, teachers, and student enrollments</p>
         </div>
         <Link href={`/classes/${classId}`} className="btn-outline">
           ← Back to Class
         </Link>
       </div>
 
-      {error && <div className="alert alert-error">{error}</div>}
+      {error && (
+        <div className="alert-banner alert-error">
+          <span>⚠️ {error}</span>
+          <button onClick={() => setError(null)} style={{ background: "none", border: "none", cursor: "pointer", fontSize: "1.4rem" }}>
+            ✕
+          </button>
+        </div>
+      )}
 
-      <div className="form-group">
-        <label>Academic Session</label>
+      <div style={{ marginBottom: "2rem" }}>
+        <label style={{ fontWeight: 700, fontSize: "1.1rem", marginBottom: "0.5rem", display: "block" }}>Academic Session</label>
         <input
           type="text"
           placeholder="e.g., 2024/2025"
           value={session}
           onChange={(e) => setSession(e.target.value)}
+          className="curriculum-input"
         />
       </div>
 
-      <div className="card">
-        <div className="card-header flex-between">
-          <h2>Subjects ({subjects.length})</h2>
-          <button className="btn-primary" onClick={() => setShowAddSubject(!showAddSubject)}>
-            {showAddSubject ? "Cancel" : "➕ Add Subject"}
+      <div className="premium-table-card">
+        <div style={{ padding: "2rem", borderBottom: "1px solid #e2e8f0", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <h2 style={{ margin: 0, fontSize: "1.6rem", fontWeight: 700, color: "#0f172a" }}>
+            Curriculum Subjects ({subjects.length})
+          </h2>
+          <button
+            className="btn-primary"
+            onClick={() => {
+              setShowAddSubject(!showAddSubject);
+              setSelectedSubjectId("");
+            }}
+          >
+            {showAddSubject ? "Cancel" : "📚 Add Subject"}
           </button>
         </div>
 
         {showAddSubject && (
-          <div className="add-subject-form">
+          <div className="add-subject-form-section">
             {availableSubjects.length === 0 ? (
-              <p className="text-muted">
-                {allSubjects.length === 0
-                  ? "No subjects available. Please create subjects first."
-                  : "All available subjects have been added to this class."}
-              </p>
+              <div style={{ padding: "2rem", textAlign: "center", color: "#64748b" }}>
+                <p style={{ fontSize: "1.3rem" }}>
+                  {allSubjects.length === 0
+                    ? "No subjects available. Please create subjects first."
+                    : "All available subjects have been added to this class."}
+                </p>
+              </div>
             ) : (
-              <div className="form-row">
-                <div className="form-group">
-                  <label>Subject ({availableSubjects.length} available)</label>
+              <div style={{ display: "flex", gap: "1rem", alignItems: "flex-end" }}>
+                <div style={{ flex: 1 }}>
+                  <label style={{ fontWeight: 700, fontSize: "1.1rem", marginBottom: "0.5rem", display: "block" }}>
+                    Select Subject ({availableSubjects.length} available)
+                  </label>
                   <select
                     value={selectedSubjectId}
                     onChange={(e) => setSelectedSubjectId(e.target.value)}
+                    className="curriculum-select"
                   >
-                    <option value="">Select a subject</option>
+                    <option value="">Choose a subject...</option>
                     {availableSubjects.map((subject) => (
                       <option key={subject.id} value={subject.id}>
                         {subject.name} {subject.code ? `(${subject.code})` : ""}
@@ -242,122 +270,125 @@ export default function ClassCurriculumPage() {
                     ))}
                   </select>
                 </div>
-                <div className="form-actions">
-                  <button className="btn-primary" onClick={handleAddSubject}>
-                    Add to Curriculum
-                  </button>
-                </div>
+                <button className="btn-primary" onClick={handleAddSubject}>
+                  Add Subject
+                </button>
               </div>
             )}
           </div>
         )}
 
-        <div className="table-responsive">
-          <table className="table">
-            <thead>
-              <tr>
-                <th>Seq</th>
-                <th>Subject</th>
-                <th>Code</th>
-                <th>Required</th>
-                <th>Teachers Assigned</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {subjects.length === 0 ? (
+        <div className="table-responsive" style={{ padding: "2rem" }}>
+          {subjects.length === 0 ? (
+            <div style={{ textAlign: "center", padding: "3rem", color: "#64748b" }}>
+              <p style={{ fontSize: "1.3rem" }}>No subjects in curriculum yet</p>
+              <p style={{ fontSize: "1.2rem", marginTop: "0.5rem" }}>Click "Add Subject" to start building your curriculum</p>
+            </div>
+          ) : (
+            <table className="premium-table">
+              <thead>
                 <tr>
-                  <td colSpan={6} className="text-center text-muted">
-                    No subjects in curriculum
-                  </td>
+                  <th style={{ width: "60px" }}>Seq</th>
+                  <th>Subject Name</th>
+                  <th style={{ width: "100px" }}>Code</th>
+                  <th style={{ width: "100px" }}>Type</th>
+                  <th>Teachers</th>
+                  <th style={{ width: "200px" }}>Actions</th>
                 </tr>
-              ) : (
-                subjects.map((subject) => (
+              </thead>
+              <tbody>
+                {subjects.map((subject) => (
                   <tr key={subject.id}>
-                    <td className="text-center">{subject.sequence}</td>
-                    <td className="font-bold">
-                      <Link href={`/subjects/${subject.subject_id}`} className="link">
+                    <td style={{ textAlign: "center", fontWeight: 700, color: "#667eea" }}>{subject.sequence}</td>
+                    <td style={{ fontWeight: 700, color: "#0f172a" }}>
+                      <Link href={`/subjects/${subject.subject_id}`} className="subject-link">
                         {subject.name}
                       </Link>
                     </td>
-                    <td>{subject.code || "—"}</td>
-                    <td className="text-center">
-                      {subject.is_compulsory ? (
-                        <span className="badge badge-required">Required</span>
-                      ) : (
-                        <span className="badge badge-elective">Elective</span>
-                      )}
+                    <td><span className="mono">{subject.code || "—"}</span></td>
+                    <td style={{ textAlign: "center" }}>
+                      <span className={`subject-badge ${subject.is_compulsory ? "badge-required" : "badge-elective"}`}>
+                        {subject.is_compulsory ? "Required" : "Elective"}
+                      </span>
                     </td>
                     <td>
                       {subject.teacher_count > 0 ? (
-                        <span className="teacher-list">
-                          {subject.teacher_names}
-                          <br />
-                          <small className="text-muted">({subject.teacher_count} teacher{subject.teacher_count !== 1 ? "s" : ""})</small>
-                        </span>
+                        <div className="teacher-info">
+                          <span style={{ fontWeight: 600, color: "#0f172a" }}>{subject.teacher_names}</span>
+                          <span style={{ fontSize: "1.1rem", color: "#64748b", display: "block" }}>
+                            ({subject.teacher_count} {subject.teacher_count === 1 ? "teacher" : "teachers"})
+                          </span>
+                        </div>
                       ) : (
-                        <span className="text-warning">⚠️ No teachers assigned</span>
+                        <span className="no-teachers-alert">⚠️ No teachers assigned</span>
                       )}
                     </td>
-                    <td style={{ display: "flex", gap: "8px" }}>
-                      <button
-                        className="btn-small btn-secondary"
-                        onClick={() => toggleExpandSubject(subject.subject_id)}
-                      >
-                        {expandedSubject === subject.subject_id ? "Hide Students" : "View Students"}
-                      </button>
-                      <button
-                        className="btn-small btn-danger"
-                        onClick={() => handleRemoveSubject(subject.subject_id)}
-                      >
-                        Remove
-                      </button>
+                    <td>
+                      <div style={{ display: "flex", gap: "0.8rem", alignItems: "center" }}>
+                        <button
+                          className="btn-action btn-view"
+                          onClick={() => toggleExpandSubject(subject.subject_id)}
+                          title={expandedSubject === subject.subject_id ? "Hide students" : "View students"}
+                        >
+                          {expandedSubject === subject.subject_id ? "▼ Hide" : "▶ View"} Students
+                        </button>
+                        <button
+                          className="btn-action btn-remove"
+                          onClick={() => handleRemoveSubject(subject.subject_id)}
+                          title="Remove subject"
+                        >
+                          ✕ Remove
+                        </button>
+                      </div>
                     </td>
                   </tr>
-                ))
-              )}
-            </tbody>
-          </table>
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
 
-        {/* Students in subject section */}
         {expandedSubject && (
-          <div className="students-section">
-            <h3 style={{ marginTop: "24px", marginBottom: "16px" }}>
-              Students taking {subjects.find((s) => s.subject_id === expandedSubject)?.name}
+          <div className="subject-enrollment-panel">
+            <h3 style={{ margin: "0 0 1.5rem 0", fontSize: "1.4rem", fontWeight: 700, color: "#0f172a" }}>
+              📋 Students Enrolled in {subjects.find((s) => s.subject_id === expandedSubject)?.name}
             </h3>
 
             {loadingStudents[expandedSubject] ? (
-              <p className="text-muted">Loading students...</p>
-            ) : studentsInSubject[expandedSubject]?.length === 0 ? (
-              <p className="text-muted">No students enrolled in this subject</p>
+              <div style={{ padding: "2rem", textAlign: "center", color: "#64748b" }}>
+                <p style={{ fontSize: "1.3rem" }}>Loading students...</p>
+              </div>
+            ) : !studentsInSubject[expandedSubject] || studentsInSubject[expandedSubject].length === 0 ? (
+              <div style={{ padding: "2rem", textAlign: "center", color: "#64748b" }}>
+                <p style={{ fontSize: "1.3rem" }}>No students enrolled in this subject</p>
+              </div>
             ) : (
               <div className="table-responsive">
-                <table className="table">
+                <table className="premium-table">
                   <thead>
                     <tr>
-                      <th>Name</th>
-                      <th>Admission No.</th>
+                      <th>Student Name</th>
+                      <th style={{ width: "120px" }}>Admission No.</th>
                       <th>Email</th>
-                      <th>Status</th>
-                      <th>Action</th>
+                      <th style={{ width: "100px" }}>Status</th>
+                      <th style={{ width: "150px" }}>Action</th>
                     </tr>
                   </thead>
                   <tbody>
                     {(studentsInSubject[expandedSubject] || []).map((student) => (
                       <tr key={student.id}>
-                        <td className="font-bold">{student.name}</td>
-                        <td>{student.admission_no || "—"}</td>
+                        <td style={{ fontWeight: 700, color: "#0f172a" }}>{student.name}</td>
+                        <td><span className="mono">{student.admission_no || "—"}</span></td>
                         <td>{student.email}</td>
-                        <td>
-                          <span className="badge badge-active">{student.status}</span>
+                        <td style={{ textAlign: "center" }}>
+                          <span className="status-badge badge-active">{student.status}</span>
                         </td>
                         <td>
                           <button
-                            className="btn-small btn-danger"
+                            className="btn-action btn-remove-student"
                             onClick={() => handleRemoveStudentFromSubject(expandedSubject, student.student_id)}
                           >
-                            Remove from Subject
+                            Remove
                           </button>
                         </td>
                       </tr>
@@ -371,103 +402,209 @@ export default function ClassCurriculumPage() {
       </div>
 
       <style jsx>{`
-        .page-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: flex-start;
-          margin-bottom: 24px;
+        .page-container {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 2rem;
         }
-        .add-subject-form {
-          background: #f5f5f5;
-          padding: 16px;
-          border-radius: 6px;
-          margin-bottom: 16px;
+
+        .curriculum-input {
+          width: 100%;
+          padding: 1rem 1.5rem;
+          border: 1px solid #e2e8f0;
+          border-radius: 10px;
+          font-size: 1.3rem;
+          background: white;
+          color: #0f172a;
+          outline: none;
+          transition: all 0.15s;
         }
-        .form-row {
-          display: flex;
-          gap: 16px;
-          align-items: flex-end;
+
+        .curriculum-input:focus {
+          border-color: #6A5ACD;
+          box-shadow: 0 0 0 3px rgba(106, 90, 205, 0.1);
         }
-        .form-group {
-          flex: 1;
-        }
-        .form-actions {
-          display: flex;
-          gap: 8px;
-        }
-        .badge {
-          display: inline-block;
-          padding: 4px 8px;
-          border-radius: 4px;
-          font-size: 12px;
-          font-weight: 600;
-        }
-        .badge-required {
-          background: #d4edda;
-          color: #155724;
-        }
-        .badge-elective {
-          background: #cfe2ff;
-          color: #084298;
-        }
-        .badge-active {
-          background: #cfe2ff;
-          color: #084298;
-        }
-        .teacher-list {
-          display: block;
-          line-height: 1.4;
-        }
-        .text-warning {
-          color: #ff9800;
-        }
-        .text-muted {
-          color: #6b7280;
-        }
-        .link {
-          color: #667eea;
-          text-decoration: none;
+
+        .curriculum-select {
+          width: 100%;
+          padding: 1rem 1.5rem;
+          border: 1px solid #e2e8f0;
+          border-radius: 10px;
+          font-size: 1.3rem;
+          background: white;
+          color: #0f172a;
+          outline: none;
           cursor: pointer;
+          transition: all 0.15s;
         }
-        .link:hover {
+
+        .curriculum-select:focus {
+          border-color: #6A5ACD;
+          box-shadow: 0 0 0 3px rgba(106, 90, 205, 0.1);
+        }
+
+        .add-subject-form-section {
+          padding: 2rem;
+          background: #f8fafc;
+          border-bottom: 1px solid #e2e8f0;
+        }
+
+        .subject-link {
+          color: #6A5ACD;
+          text-decoration: none;
+          font-weight: 700;
+          transition: all 0.15s;
+        }
+
+        .subject-link:hover {
           text-decoration: underline;
         }
-        .btn-small {
-          padding: 6px 12px;
-          font-size: 12px;
-        }
-        .btn-danger {
-          background: #dc3545;
-          color: white;
-          border: none;
-          cursor: pointer;
-          border-radius: 4px;
-        }
-        .btn-danger:hover {
-          background: #c82333;
-        }
-        .btn-secondary {
-          background: #6c757d;
-          color: white;
-          border: none;
-          cursor: pointer;
-          border-radius: 4px;
-        }
-        .btn-secondary:hover {
-          background: #5a6268;
-        }
-        .font-bold {
-          font-weight: 700;
-        }
-        .text-center {
-          text-align: center;
-        }
-        .students-section {
-          background: #f9f9f9;
-          padding: 16px;
+
+        .subject-badge {
+          padding: 0.4rem 1rem;
           border-radius: 6px;
-          margin-top: 16px;
-          border-left: 4px solid #667eea;
+          font-size: 1.1rem;
+          font-weight: 700;
+          display: inline-block;
+        }
+
+        .badge-required {
+          background: #dbeafe;
+          color: #1e40af;
+        }
+
+        .badge-elective {
+          background: #fef3c7;
+          color: #92400e;
+        }
+
+        .status-badge {
+          padding: 0.4rem 1rem;
+          border-radius: 6px;
+          font-size: 1.1rem;
+          font-weight: 700;
+          display: inline-block;
+        }
+
+        .badge-active {
+          background: #d1fae5;
+          color: #065f46;
+        }
+
+        .teacher-info {
+          line-height: 1.5;
+        }
+
+        .no-teachers-alert {
+          color: #ea580c;
+          font-weight: 600;
+        }
+
+        .btn-action {
+          padding: 0.6rem 1.2rem;
+          border: none;
+          border-radius: 8px;
+          font-size: 1.1rem;
+          font-weight: 700;
+          cursor: pointer;
+          transition: all 0.15s;
+          white-space: nowrap;
+        }
+
+        .btn-view {
+          background: #f0f4ff;
+          color: #4f46e5;
+          border: 1px solid #ddd6fe;
+        }
+
+        .btn-view:hover {
+          background: #e0e7ff;
+          border-color: #c7d2fe;
+        }
+
+        .btn-remove {
+          background: #fef2f2;
+          color: #dc2626;
+          border: 1px solid #fecaca;
+        }
+
+        .btn-remove:hover {
+          background: #fee2e2;
+          border-color: #fca5a5;
+        }
+
+        .btn-remove-student {
+          background: #fef2f2;
+          color: #dc2626;
+          border: 1px solid #fecaca;
+        }
+
+        .btn-remove-student:hover {
+          background: #fee2e2;
+          border-color: #fca5a5;
+        }
+
+        .subject-enrollment-panel {
+          padding: 2rem;
+          background: #f8fafc;
+          border-top: 2px solid #e2e8f0;
+          margin-top: 0;
+          border-radius: 0 0 16px 16px;
+        }
+
+        .alert-banner {
+          padding: 1.2rem 1.5rem;
+          border-radius: 10px;
+          margin-bottom: 2rem;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          font-size: 1.3rem;
+          font-weight: 600;
+        }
+
+        .alert-error {
+          background: #fef2f2;
+          color: #991b1b;
+          border: 1px solid #fecaca;
+        }
+
+        .table-responsive {
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
+        }
+
+        @media (max-width: 768px) {
+          .page-container {
+            padding: 1.2rem;
+          }
+
+          .add-subject-form-section {
+            padding: 1.5rem;
+          }
+
+          .btn-action {
+            padding: 0.5rem 0.8rem;
+            font-size: 1rem;
+          }
+
+          .subject-enrollment-panel {
+            padding: 1.5rem;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .page-container {
+            padding: 1rem;
+          }
+
+          .btn-action {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            padding: 0.5rem;
+            font-size: 0.9rem;
+          }
         }
       `}</style>
     </div>
