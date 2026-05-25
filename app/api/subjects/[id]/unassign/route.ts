@@ -3,8 +3,8 @@ import { queryOne, execute } from "@/lib/db/turso";
 import { withAuth, type AuthContext } from "@/lib/middleware/auth";
 import { badRequest, notFound, ok, serverError } from "@/lib/utils/response";
 
-// POST /api/subjects/[id]/unassign — remove a teacher from a subject
-export const POST = withAuth(async (req: NextRequest, { school }: AuthContext, params): Promise<NextResponse> => {
+// DELETE /api/subjects/[id]/unassign — remove a teacher from a subject
+const handleUnassign = withAuth(async (req: NextRequest, { school }: AuthContext, params): Promise<NextResponse> => {
   try {
     if (!school) return notFound("School not found");
     const { teacherId } = await req.json();
@@ -22,3 +22,6 @@ export const POST = withAuth(async (req: NextRequest, { school }: AuthContext, p
     return serverError(err);
   }
 });
+
+export const DELETE = handleUnassign;
+export const POST = handleUnassign;

@@ -10,6 +10,7 @@ interface Subject {
   name: string;
   code?: string;
   teacher_count?: number;
+  teacher_names?: string;
   created_at?: string;
 }
 
@@ -87,12 +88,15 @@ export default function SubjectsPage() {
                   </td>
                   <td><span className="mono">{s.code ?? "—"}</span></td>
                   <td>
-                    <span className="badge badge-blue">{s.teacher_count ?? 0} teachers</span>
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                      <span className="badge badge-blue">{s.teacher_count ?? 0}</span>
+                      <span style={{ fontSize: "1.3rem", color: "#64748b" }}>{s.teacher_names ? s.teacher_names.split(",").map(n => n.trim()).join(", ") : "—"}</span>
+                    </div>
                   </td>
                   <td>
                     <div className="row-actions">
                       <Link href={`/subjects/${s.id}`} className="link-action">View</Link>
-                      <Link href={`/subjects/${s.id}#assign`} className="link-action">Assign Teacher</Link>
+                      <Link href={`/subjects/${s.id}/edit`} className="link-action">Edit</Link>
                     </div>
                   </td>
                 </tr>

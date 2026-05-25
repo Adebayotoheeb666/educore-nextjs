@@ -37,8 +37,11 @@ export const POST = withAuth(
           row.EMAIL || row.email || `row${rowNum}-${Date.now()}@import.local`
         ).toLowerCase().trim();
         const parentPhone = String(row.PARENT_PHONE || row.parent_phone || "").trim();
+        const phone = String(row.PHONE || row.phone || "").trim();
         const gender = String(row.GENDER || row.gender || "").trim();
         const classLabel = String(row.CLASS_GRADE || row.class_grade || row.Class || row.CLASS || "").trim();
+        const address = String(row.ADDRESS || row.address || "").trim();
+        const stateOfOrigin = String(row.STATE_OF_ORIGIN || row.state_of_origin || row.State || row.STATE || "").trim();
 
         if (!firstName) {
           errors.push({ row: rowNum, message: "FULL_NAME is required" });
@@ -73,10 +76,10 @@ export const POST = withAuth(
 
         const studentId = generateId();
         await execute(
-          `INSERT INTO users (id, name, first_name, last_name, email, password, role, school_id, admission_no, gender, parent_phone, is_active, created_at, updated_at)
-           VALUES (?, ?, ?, ?, ?, ?, 'student', ?, ?, ?, ?, 1, datetime('now'), datetime('now'))`,
-          [studentId, fullName || `${firstName} ${lastName}`, firstName, lastName, email, hashed,
-           school.id, admissionNo, gender || null, parentPhone || null]
+          `INSERT INTO users (id, name, first_name, last_name, email, phone, password, role, school_id, admission_no, gender, parent_phone, address, state_of_origin, is_active, created_at, updated_at)
+           VALUES (?, ?, ?, ?, ?, ?, ?, 'student', ?, ?, ?, ?, ?, ?, 1, datetime('now'), datetime('now'))`,
+          [studentId, fullName || `${firstName} ${lastName}`, firstName, lastName, email, phone || null, hashed,
+           school.id, admissionNo, gender || null, parentPhone || null, address || null, stateOfOrigin || null]
         );
 
         successful++;

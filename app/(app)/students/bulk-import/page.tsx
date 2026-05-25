@@ -103,7 +103,7 @@ export default function BulkImportPage() {
         </h1>
         <p style={{ fontSize: "1.5rem", color: "#64748b" }}>
           Upload a CSV file to import multiple students at once. Required columns:{" "}
-          <strong>FULL_NAME, EMAIL</strong>. Optional: GENDER, CLASS_GRADE, PARENT_PHONE, STUDENT_ID
+          <strong>FULL_NAME, EMAIL</strong>. Optional: GENDER, CLASS_GRADE, PHONE, PARENT_PHONE, ADDRESS, STATE_OF_ORIGIN, STUDENT_ID
         </p>
       </div>
 
@@ -164,9 +164,9 @@ export default function BulkImportPage() {
                 margin: 0,
               }}
             >
-{`FULL_NAME,EMAIL,GENDER,CLASS_GRADE,PARENT_PHONE
-Chinelo Okafor,chinelo@school.com,Female,JSS 1,09012345678
-Obinna Adeyemi,obinna@school.com,Male,JSS 2,`}
+{`FULL_NAME,EMAIL,GENDER,CLASS_GRADE,PHONE,PARENT_PHONE,ADDRESS,STATE_OF_ORIGIN
+Chinelo Okafor,chinelo@school.com,Female,JSS 1,09012345601,09012345678,123 Main St,Lagos
+Obinna Adeyemi,obinna@school.com,Male,JSS 2,09087654321,09087654320,456 Oak Ave,Ogun`}
             </pre>
           </div>
 

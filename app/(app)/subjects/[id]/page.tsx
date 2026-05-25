@@ -26,7 +26,10 @@ export default function SubjectDetailPage() {
       authenticatedFetch("/api/teachers").then((r) => r.json()),
     ]).then(([sd, td]) => {
       setSubject(sd.data ?? null);
-      setAllTeachers(Array.isArray(td.data) ? td.data : []);
+      const classTeachersOnly = (Array.isArray(td.data) ? td.data : []).filter(
+        (t) => t.role === "class_teacher"
+      );
+      setAllTeachers(classTeachersOnly);
     }).catch(() => toast.error("Failed to load subject"))
       .finally(() => setLoading(false));
   }, [id]);
@@ -44,10 +47,12 @@ export default function SubjectDetailPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ teacherId: selectedTeacher }),
       });
-      if (!res.ok) throw new Error((await res.json()).message);
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData?.message || errData?.error || "Failed to assign");
+      }
       toast.success("Teacher assigned");
       setSelectedTeacher("");
-      // Refresh subject
       const sd = await authenticatedFetch(`/api/subjects/${id}`).then((r) => r.json());
       setSubject(sd.data ?? null);
     } catch (err: unknown) {
@@ -64,7 +69,10 @@ export default function SubjectDetailPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ teacherId }),
       });
-      if (!res.ok) throw new Error((await res.json()).message);
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData?.message || errData?.error || "Failed to unassign");
+      }
       toast.success("Teacher removed");
       const sd = await authenticatedFetch(`/api/subjects/${id}`).then((r) => r.json());
       setSubject(sd.data ?? null);
