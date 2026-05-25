@@ -17,23 +17,51 @@ interface ClassDetail {
   capacity?: number;
   created_at?: string;
   updated_at?: string;
-  students?: Array<{ id: string; name: string; admission_no?: string; avatar?: string }>;
-  subjects?: Array<{ id: string; name: string; code?: string }>;
+}
+
+interface ClassStudent {
+  id: string;
+  name: string;
+  admission_no?: string;
+  avatar?: string;
+}
+
+interface ClassSubject {
+  id: string;
+  name: string;
+  code?: string;
 }
 
 export default function ClassDetailPage() {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
   const [classData, setClassData] = useState<ClassDetail | null>(null);
+  const [students, setStudents] = useState<ClassStudent[]>([]);
+  const [subjects, setSubjects] = useState<ClassSubject[]>([]);
   const [loading, setLoading] = useState(true);
   const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
-    authenticatedFetch(`/api/classes/${id}`)
-      .then((r) => r.json())
-      .then((d) => setClassData(d.data ?? null))
-      .catch(() => toast.error("Failed to load class"))
-      .finally(() => setLoading(false));
+    const fetchClassData = async () => {
+      try {
+        const classRes = await authenticatedFetch(`/api/classes/${id}`);
+        const classJson = await classRes.json();
+        setClassData(classJson.data ?? null);
+
+        const studentsRes = await authenticatedFetch(`/api/classes/${id}/students`);
+        const studentsJson = await studentsRes.json();
+        setStudents(Array.isArray(studentsJson) ? studentsJson : []);
+
+        const subjectsRes = await authenticatedFetch(`/api/classes/${id}/subjects`);
+        const subjectsJson = await subjectsRes.json();
+        setSubjects(Array.isArray(subjectsJson) ? subjectsJson : []);
+      } catch (err) {
+        toast.error("Failed to load class");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchClassData();
   }, [id]);
 
   const handleDelete = async () => {
@@ -64,6 +92,8 @@ export default function ClassDetailPage() {
         </div>
         <div className="header-actions">
           <Link href={`/classes/${id}/edit`} className="btn-outline">✏️ Edit</Link>
+          <Link href={`/classes/${id}/enrollment`} className="btn-outline">👥 Manage Students</Link>
+          <Link href={`/classes/${id}/curriculum`} className="btn-outline">📚 Manage Subjects</Link>
           <button className="btn-primary" onClick={handleDelete} disabled={deleting}
             style={{ background: "#ef4444" }}>
             {deleting ? "Deleting…" : "🗑 Delete"}
@@ -92,12 +122,12 @@ export default function ClassDetailPage() {
 
       {/* Students */}
       <div className="form-card">
-        <div className="form-section-title">Students ({(classData.students ?? []).length})</div>
-        {(classData.students ?? []).length === 0 ? (
+        <div className="form-section-title">Students ({students.length})</div>
+        {students.length === 0 ? (
           <p style={{ color: "#94a3b8", fontSize: "1.4rem" }}>No students in this class yet.</p>
         ) : (
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: "1.5rem" }}>
-            {classData.students?.map((s) => (
+            {students.map((s) => (
               <div key={s.id} style={{ padding: "1rem", background: "#f8f7ff", borderRadius: 10, border: "1px solid #ede9fa" }}>
                 <div style={{ fontWeight: 700, fontSize: "1.4rem", marginBottom: "0.5rem" }}>{s.name}</div>
                 {s.admission_no && <div style={{ fontSize: "1.2rem", color: "#94a3b8" }}>{s.admission_no}</div>}
@@ -109,12 +139,12 @@ export default function ClassDetailPage() {
 
       {/* Subjects */}
       <div className="form-card">
-        <div className="form-section-title">Subjects ({(classData.subjects ?? []).length})</div>
-        {(classData.subjects ?? []).length === 0 ? (
+        <div className="form-section-title">Subjects ({subjects.length})</div>
+        {subjects.length === 0 ? (
           <p style={{ color: "#94a3b8", fontSize: "1.4rem" }}>No subjects assigned to this class yet.</p>
         ) : (
           <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
-            {classData.subjects?.map((s) => (
+            {subjects.map((s) => (
               <div key={s.id} style={{ background: "#f8f7ff", border: "1px solid #ede9fa", borderRadius: 10, padding: "1rem 1.8rem" }}>
                 <div style={{ fontWeight: 700, fontSize: "1.4rem" }}>{s.name}</div>
                 {s.code && <div style={{ fontSize: "1.2rem", color: "#94a3b8" }}>{s.code}</div>}

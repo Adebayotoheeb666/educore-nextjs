@@ -209,6 +209,25 @@ CREATE TABLE IF NOT EXISTS exams (
 );
 
 -- ============================================================
+-- ACADEMIC: Student-Subject Enrollment
+-- ============================================================
+-- Track which students are taking which subjects in which classes
+-- Not all students may take all subjects in a class
+CREATE TABLE IF NOT EXISTS student_subjects (
+  id TEXT PRIMARY KEY,
+  student_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  subject_id TEXT NOT NULL REFERENCES subjects(id) ON DELETE CASCADE,
+  class_id TEXT NOT NULL REFERENCES classes(id) ON DELETE CASCADE,
+  academic_session TEXT NOT NULL,
+  term TEXT,
+  enrolled_date TEXT NOT NULL DEFAULT (datetime('now')),
+  status TEXT NOT NULL DEFAULT 'active' CHECK(status IN ('active', 'dropped', 'transferred')),
+  created_at TEXT NOT NULL DEFAULT (datetime('now')),
+  updated_at TEXT NOT NULL DEFAULT (datetime('now')),
+  UNIQUE(student_id, subject_id, class_id, academic_session)
+);
+
+-- ============================================================
 -- ACADEMIC: Results
 -- ============================================================
 CREATE TABLE IF NOT EXISTS results (
@@ -591,6 +610,10 @@ CREATE INDEX IF NOT EXISTS idx_students_classes_class_id ON students_classes(cla
 CREATE INDEX IF NOT EXISTS idx_students_classes_session ON students_classes(academic_session);
 CREATE INDEX IF NOT EXISTS idx_class_subjects_class_id ON class_subjects(class_id);
 CREATE INDEX IF NOT EXISTS idx_class_subjects_subject_id ON class_subjects(subject_id);
+CREATE INDEX IF NOT EXISTS idx_student_subjects_student_id ON student_subjects(student_id);
+CREATE INDEX IF NOT EXISTS idx_student_subjects_subject_id ON student_subjects(subject_id);
+CREATE INDEX IF NOT EXISTS idx_student_subjects_class_id ON student_subjects(class_id);
+CREATE INDEX IF NOT EXISTS idx_student_subjects_session ON student_subjects(academic_session);
 CREATE INDEX IF NOT EXISTS idx_subject_teachers_subject_id ON subject_teachers(subject_id);
 CREATE INDEX IF NOT EXISTS idx_subject_teachers_teacher_id ON subject_teachers(teacher_id);
 CREATE INDEX IF NOT EXISTS idx_subject_teachers_class_id ON subject_teachers(class_id);

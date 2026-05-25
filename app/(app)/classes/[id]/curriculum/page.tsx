@@ -17,6 +17,16 @@ interface Subject {
   assignment_ids: string;
 }
 
+interface StudentInSubject {
+  id: string;
+  student_id: string;
+  name: string;
+  admission_no: string;
+  email: string;
+  status: string;
+  enrolled_date: string;
+}
+
 interface AllSubject {
   id: string;
   name: string;
@@ -34,6 +44,9 @@ export default function ClassCurriculumPage() {
   const [session, setSession] = useState("");
   const [selectedSubjectId, setSelectedSubjectId] = useState("");
   const [showAddSubject, setShowAddSubject] = useState(false);
+  const [expandedSubject, setExpandedSubject] = useState<string | null>(null);
+  const [studentsInSubject, setStudentsInSubject] = useState<Record<string, StudentInSubject[]>>({});
+  const [loadingStudents, setLoadingStudents] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
     fetchCurriculumData();
@@ -64,10 +77,15 @@ export default function ClassCurriculumPage() {
       const res = await fetch(`/api/subjects`);
       if (res.ok) {
         const data = await res.json();
-        setAllSubjects(Array.isArray(data) ? data : []);
+        // Handle both direct array and wrapped response
+        const subjectsArray = Array.isArray(data) ? data : (data?.data ? data.data : []);
+        setAllSubjects(subjectsArray);
+      } else {
+        console.error("Failed to fetch subjects:", res.status);
       }
     } catch (err) {
       console.error("Failed to fetch subjects:", err);
+      setError("Failed to load available subjects");
     }
   };
 
@@ -114,6 +132,55 @@ export default function ClassCurriculumPage() {
     }
   };
 
+  const toggleExpandSubject = async (subjectId: string) => {
+    if (expandedSubject === subjectId) {
+      setExpandedSubject(null);
+    } else {
+      setExpandedSubject(subjectId);
+      // Fetch students for this subject if not already loaded
+      if (!studentsInSubject[subjectId]) {
+        await fetchStudentsInSubject(subjectId);
+      }
+    }
+  };
+
+  const fetchStudentsInSubject = async (subjectId: string) => {
+    try {
+      setLoadingStudents((prev) => ({ ...prev, [subjectId]: true }));
+      const sessionParam = session ? `?session=${session}` : "";
+      const res = await fetch(
+        `/api/classes/${classId}/subjects/${subjectId}/students${sessionParam}`
+      );
+
+      if (res.ok) {
+        const data = await res.json();
+        setStudentsInSubject((prev) => ({ ...prev, [subjectId]: data }));
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to fetch students");
+    } finally {
+      setLoadingStudents((prev) => ({ ...prev, [subjectId]: false }));
+    }
+  };
+
+  const handleRemoveStudentFromSubject = async (subjectId: string, studentId: string) => {
+    if (!confirm("Remove this student from this subject?")) return;
+
+    try {
+      const sessionParam = session ? `?session=${session}` : "";
+      const res = await fetch(
+        `/api/classes/${classId}/subjects/${subjectId}/students/${studentId}${sessionParam}`,
+        { method: "DELETE" }
+      );
+
+      if (!res.ok) throw new Error("Failed to remove student");
+      // Refresh students list
+      await fetchStudentsInSubject(subjectId);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "An error occurred");
+    }
+  };
+
   const getAddedSubjects = new Set(subjects.map((s) => s.subject_id));
   const availableSubjects = allSubjects.filter((s) => !getAddedSubjects.has(s.id));
 
@@ -153,27 +220,35 @@ export default function ClassCurriculumPage() {
 
         {showAddSubject && (
           <div className="add-subject-form">
-            <div className="form-row">
-              <div className="form-group">
-                <label>Subject</label>
-                <select
-                  value={selectedSubjectId}
-                  onChange={(e) => setSelectedSubjectId(e.target.value)}
-                >
-                  <option value="">Select a subject</option>
-                  {availableSubjects.map((subject) => (
-                    <option key={subject.id} value={subject.id}>
-                      {subject.name} {subject.code ? `(${subject.code})` : ""}
-                    </option>
-                  ))}
-                </select>
+            {availableSubjects.length === 0 ? (
+              <p className="text-muted">
+                {allSubjects.length === 0
+                  ? "No subjects available. Please create subjects first."
+                  : "All available subjects have been added to this class."}
+              </p>
+            ) : (
+              <div className="form-row">
+                <div className="form-group">
+                  <label>Subject ({availableSubjects.length} available)</label>
+                  <select
+                    value={selectedSubjectId}
+                    onChange={(e) => setSelectedSubjectId(e.target.value)}
+                  >
+                    <option value="">Select a subject</option>
+                    {availableSubjects.map((subject) => (
+                      <option key={subject.id} value={subject.id}>
+                        {subject.name} {subject.code ? `(${subject.code})` : ""}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="form-actions">
+                  <button className="btn-primary" onClick={handleAddSubject}>
+                    Add to Curriculum
+                  </button>
+                </div>
               </div>
-              <div className="form-actions">
-                <button className="btn-primary" onClick={handleAddSubject}>
-                  Add to Curriculum
-                </button>
-              </div>
-            </div>
+            )}
           </div>
         )}
 
@@ -224,7 +299,13 @@ export default function ClassCurriculumPage() {
                         <span className="text-warning">⚠️ No teachers assigned</span>
                       )}
                     </td>
-                    <td>
+                    <td style={{ display: "flex", gap: "8px" }}>
+                      <button
+                        className="btn-small btn-secondary"
+                        onClick={() => toggleExpandSubject(subject.subject_id)}
+                      >
+                        {expandedSubject === subject.subject_id ? "Hide Students" : "View Students"}
+                      </button>
                       <button
                         className="btn-small btn-danger"
                         onClick={() => handleRemoveSubject(subject.subject_id)}
@@ -238,6 +319,55 @@ export default function ClassCurriculumPage() {
             </tbody>
           </table>
         </div>
+
+        {/* Students in subject section */}
+        {expandedSubject && (
+          <div className="students-section">
+            <h3 style={{ marginTop: "24px", marginBottom: "16px" }}>
+              Students taking {subjects.find((s) => s.subject_id === expandedSubject)?.name}
+            </h3>
+
+            {loadingStudents[expandedSubject] ? (
+              <p className="text-muted">Loading students...</p>
+            ) : studentsInSubject[expandedSubject]?.length === 0 ? (
+              <p className="text-muted">No students enrolled in this subject</p>
+            ) : (
+              <div className="table-responsive">
+                <table className="table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Admission No.</th>
+                      <th>Email</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {(studentsInSubject[expandedSubject] || []).map((student) => (
+                      <tr key={student.id}>
+                        <td className="font-bold">{student.name}</td>
+                        <td>{student.admission_no || "—"}</td>
+                        <td>{student.email}</td>
+                        <td>
+                          <span className="badge badge-active">{student.status}</span>
+                        </td>
+                        <td>
+                          <button
+                            className="btn-small btn-danger"
+                            onClick={() => handleRemoveStudentFromSubject(expandedSubject, student.student_id)}
+                          >
+                            Remove from Subject
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
       <style jsx>{`
@@ -280,12 +410,19 @@ export default function ClassCurriculumPage() {
           background: #cfe2ff;
           color: #084298;
         }
+        .badge-active {
+          background: #cfe2ff;
+          color: #084298;
+        }
         .teacher-list {
           display: block;
           line-height: 1.4;
         }
         .text-warning {
           color: #ff9800;
+        }
+        .text-muted {
+          color: #6b7280;
         }
         .link {
           color: #667eea;
@@ -308,6 +445,29 @@ export default function ClassCurriculumPage() {
         }
         .btn-danger:hover {
           background: #c82333;
+        }
+        .btn-secondary {
+          background: #6c757d;
+          color: white;
+          border: none;
+          cursor: pointer;
+          border-radius: 4px;
+        }
+        .btn-secondary:hover {
+          background: #5a6268;
+        }
+        .font-bold {
+          font-weight: 700;
+        }
+        .text-center {
+          text-align: center;
+        }
+        .students-section {
+          background: #f9f9f9;
+          padding: 16px;
+          border-radius: 6px;
+          margin-top: 16px;
+          border-left: 4px solid #667eea;
         }
       `}</style>
     </div>
