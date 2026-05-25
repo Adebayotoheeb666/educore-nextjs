@@ -77,10 +77,15 @@ export default function ClassCurriculumPage() {
       const res = await fetch(`/api/subjects`);
       if (res.ok) {
         const data = await res.json();
-        setAllSubjects(Array.isArray(data) ? data : []);
+        // Handle both direct array and wrapped response
+        const subjectsArray = Array.isArray(data) ? data : (data?.data ? data.data : []);
+        setAllSubjects(subjectsArray);
+      } else {
+        console.error("Failed to fetch subjects:", res.status);
       }
     } catch (err) {
       console.error("Failed to fetch subjects:", err);
+      setError("Failed to load available subjects");
     }
   };
 
@@ -215,27 +220,35 @@ export default function ClassCurriculumPage() {
 
         {showAddSubject && (
           <div className="add-subject-form">
-            <div className="form-row">
-              <div className="form-group">
-                <label>Subject</label>
-                <select
-                  value={selectedSubjectId}
-                  onChange={(e) => setSelectedSubjectId(e.target.value)}
-                >
-                  <option value="">Select a subject</option>
-                  {availableSubjects.map((subject) => (
-                    <option key={subject.id} value={subject.id}>
-                      {subject.name} {subject.code ? `(${subject.code})` : ""}
-                    </option>
-                  ))}
-                </select>
+            {availableSubjects.length === 0 ? (
+              <p className="text-muted">
+                {allSubjects.length === 0
+                  ? "No subjects available. Please create subjects first."
+                  : "All available subjects have been added to this class."}
+              </p>
+            ) : (
+              <div className="form-row">
+                <div className="form-group">
+                  <label>Subject ({availableSubjects.length} available)</label>
+                  <select
+                    value={selectedSubjectId}
+                    onChange={(e) => setSelectedSubjectId(e.target.value)}
+                  >
+                    <option value="">Select a subject</option>
+                    {availableSubjects.map((subject) => (
+                      <option key={subject.id} value={subject.id}>
+                        {subject.name} {subject.code ? `(${subject.code})` : ""}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="form-actions">
+                  <button className="btn-primary" onClick={handleAddSubject}>
+                    Add to Curriculum
+                  </button>
+                </div>
               </div>
-              <div className="form-actions">
-                <button className="btn-primary" onClick={handleAddSubject}>
-                  Add to Curriculum
-                </button>
-              </div>
-            </div>
+            )}
           </div>
         )}
 
