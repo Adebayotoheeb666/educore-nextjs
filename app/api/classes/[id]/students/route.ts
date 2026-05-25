@@ -3,19 +3,24 @@ import { query, queryOne } from "@/lib/db/turso";
 import { withAuth, type AuthContext } from "@/lib/middleware/auth";
 import { notFound, ok, serverError } from "@/lib/utils/response";
 
-export const GET = withAuth(async (_req: NextRequest, { school }: AuthContext, params): Promise<NextResponse> => {
+export const GET = withAuth(async (req: NextRequest, { school }: AuthContext, params): Promise<NextResponse> => {
   try {
     if (!school) return notFound("School not found");
-    const classDoc = await queryOne("SELECT id FROM classes WHERE id = ? AND school_id = ?", [params?.id ?? "", school.id]);
+    const classId = params?.id ?? "";
+    const classDoc = await queryOne("SELECT id, academic_session FROM classes WHERE id = ? AND school_id = ?", [classId, school.id]);
     if (!classDoc) return notFound("Class not found");
 
-    // Students are linked to a class via attendance records or direct assignment
+    const { searchParams } = new URL(req.url);
+    const session = searchParams.get("session") || (classDoc as any).academic_session || school.academic_session;
+
     const students = await query(
-      `SELECT DISTINCT u.id, u.name, u.first_name, u.last_name, u.admission_no, u.avatar, u.gender
+      `SELECT u.id, u.name, u.first_name, u.last_name, u.admission_no, u.avatar, u.gender, u.email,
+              sc.status, sc.enrolled_date, sc.academic_session
        FROM users u
-       WHERE u.school_id = ? AND u.role = 'student'
+       INNER JOIN students_classes sc ON sc.student_id = u.id
+       WHERE sc.class_id = ? AND u.school_id = ? AND u.role = 'student' AND sc.academic_session = ?
        ORDER BY u.name`,
-      [school.id]
+      [classId, school.id, session]
     );
     return ok(students);
   } catch (err) {
