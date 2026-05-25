@@ -3,6 +3,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 
 interface Student {
   id: string;
@@ -48,9 +49,9 @@ export default function ClassEnrollmentPage() {
       const sessionParam = session ? `?session=${session}` : "";
 
       const [statsRes, studentsRes, allRes] = await Promise.all([
-        fetch(`/api/classes/${classId}/enroll-students${sessionParam}`),
-        fetch(`/api/classes/${classId}/students${sessionParam}`),
-        fetch(`/api/students`),
+        authenticatedFetch(`/api/classes/${classId}/enroll-students${sessionParam}`),
+        authenticatedFetch(`/api/classes/${classId}/students${sessionParam}`),
+        authenticatedFetch(`/api/students`),
       ]);
 
       // Handle stats
@@ -102,7 +103,7 @@ export default function ClassEnrollmentPage() {
     }
 
     try {
-      const res = await fetch(`/api/classes/${classId}/enroll-students`, {
+      const res = await authenticatedFetch(`/api/classes/${classId}/enroll-students`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

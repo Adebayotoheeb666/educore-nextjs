@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 
 interface Subject {
   id: string;
@@ -61,7 +62,7 @@ export default function ClassCurriculumPage() {
       setLoading(true);
       setError(null);
       const sessionParam = session ? `?session=${session}` : "";
-      const res = await fetch(`/api/classes/${classId}/subjects${sessionParam}`);
+      const res = await authenticatedFetch(`/api/classes/${classId}/subjects${sessionParam}`);
 
       if (!res.ok) {
         throw new Error(`Failed to fetch curriculum (${res.status})`);
@@ -78,7 +79,7 @@ export default function ClassCurriculumPage() {
 
   const fetchAllSubjects = async () => {
     try {
-      const res = await fetch(`/api/subjects`);
+      const res = await authenticatedFetch(`/api/subjects`);
       if (res.ok) {
         const data = await res.json();
         const subjectsArray = Array.isArray(data) ? data : (data?.data || []);
@@ -100,7 +101,7 @@ export default function ClassCurriculumPage() {
     }
 
     try {
-      const res = await fetch(`/api/classes/${classId}/subjects`, {
+      const res = await authenticatedFetch(`/api/classes/${classId}/subjects`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -126,7 +127,7 @@ export default function ClassCurriculumPage() {
 
     try {
       const sessionParam = session ? `?session=${session}` : "";
-      const res = await fetch(`/api/classes/${classId}/subjects/${subjectId}${sessionParam}`, {
+      const res = await authenticatedFetch(`/api/classes/${classId}/subjects/${subjectId}${sessionParam}`, {
         method: "DELETE",
       });
 
@@ -153,7 +154,7 @@ export default function ClassCurriculumPage() {
     try {
       setLoadingStudents((prev) => ({ ...prev, [subjectId]: true }));
       const sessionParam = session ? `?session=${session}` : "";
-      const res = await fetch(
+      const res = await authenticatedFetch(
         `/api/classes/${classId}/subjects/${subjectId}/students${sessionParam}`
       );
 
@@ -174,7 +175,7 @@ export default function ClassCurriculumPage() {
 
     try {
       const sessionParam = session ? `?session=${session}` : "";
-      const res = await fetch(
+      const res = await authenticatedFetch(
         `/api/classes/${classId}/subjects/${subjectId}/students/${studentId}${sessionParam}`,
         { method: "DELETE" }
       );
