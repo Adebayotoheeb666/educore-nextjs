@@ -59,10 +59,13 @@ export default function ClassCurriculumPage() {
   const fetchCurriculumData = async () => {
     try {
       setLoading(true);
+      setError(null);
       const sessionParam = session ? `?session=${session}` : "";
       const res = await fetch(`/api/classes/${classId}/subjects${sessionParam}`);
 
-      if (!res.ok) throw new Error("Failed to fetch curriculum");
+      if (!res.ok) {
+        throw new Error(`Failed to fetch curriculum (${res.status})`);
+      }
       const data = await res.json();
       const subjectsArray = Array.isArray(data) ? data : (data?.data || []);
       setSubjects(subjectsArray);
@@ -82,6 +85,7 @@ export default function ClassCurriculumPage() {
         setAllSubjects(subjectsArray);
       } else {
         console.error("Failed to fetch subjects:", res.status);
+        setError(`Failed to load subjects (${res.status})`);
       }
     } catch (err) {
       console.error("Failed to fetch subjects:", err);
@@ -245,13 +249,19 @@ export default function ClassCurriculumPage() {
 
         {showAddSubject && (
           <div className="add-subject-form-section">
-            {availableSubjects.length === 0 ? (
+            {error && error.includes("Failed to load") ? (
+              <div style={{ padding: "1.5rem", textAlign: "center", color: "#991b1b", background: "#fef2f2", border: "1px solid #fecaca", borderRadius: "8px" }}>
+                <p style={{ fontSize: "1.3rem", margin: 0 }}>⚠️ {error}</p>
+              </div>
+            ) : allSubjects.length === 0 ? (
               <div style={{ padding: "2rem", textAlign: "center", color: "#64748b" }}>
                 <p style={{ fontSize: "1.3rem" }}>
-                  {allSubjects.length === 0
-                    ? "No subjects available. Please create subjects first."
-                    : "All available subjects have been added to this class."}
+                  {subjects.length === 0 ? "Loading subjects..." : "No subjects available. Please create subjects first."}
                 </p>
+              </div>
+            ) : availableSubjects.length === 0 ? (
+              <div style={{ padding: "2rem", textAlign: "center", color: "#64748b" }}>
+                <p style={{ fontSize: "1.3rem" }}>All available subjects ({allSubjects.length}) have been added to this class.</p>
               </div>
             ) : (
               <div style={{ display: "flex", gap: "1rem", alignItems: "flex-end" }}>

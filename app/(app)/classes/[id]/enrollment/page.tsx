@@ -12,11 +12,14 @@ interface Student {
 }
 
 interface EnrollmentStats {
-  total_enrolled: number;
+  total?: number;
+  total_enrolled?: number;
   active: number;
-  transferred: number;
-  promoted: number;
-  graduated: number;
+  transferred?: number;
+  promoted?: number;
+  graduated?: number;
+  retained?: number;
+  withdrawn?: number;
 }
 
 export default function ClassEnrollmentPage() {
@@ -41,6 +44,7 @@ export default function ClassEnrollmentPage() {
   const fetchEnrollmentData = async () => {
     try {
       setLoading(true);
+      setError(null);
       const sessionParam = session ? `?session=${session}` : "";
 
       const [statsRes, studentsRes, allRes] = await Promise.all([
@@ -49,21 +53,40 @@ export default function ClassEnrollmentPage() {
         fetch(`/api/students`),
       ]);
 
+      // Handle stats
       if (statsRes.ok) {
         const statsData = await statsRes.json();
-        setStats(statsData.data?.stats || statsData.stats);
+        const statsObj = statsData.data?.stats || statsData.stats || {};
+        // Transform API response to match our interface
+        setStats({
+          total_enrolled: statsObj.total || 0,
+          active: statsObj.active || 0,
+          transferred: statsObj.transferred || 0,
+          promoted: statsObj.promoted || 0,
+          graduated: statsObj.graduated || 0,
+          retained: statsObj.retained || 0,
+          withdrawn: statsObj.withdrawn || 0,
+        });
+      } else {
+        setError(`Failed to load enrollment stats (${statsRes.status})`);
       }
 
+      // Handle enrolled students
       if (studentsRes.ok) {
         const studentsData = await studentsRes.json();
         const studentsList = Array.isArray(studentsData) ? studentsData : (studentsData.data || []);
         setStudents(studentsList);
+      } else if (studentsRes.status !== 404) {
+        setError(`Failed to load enrolled students (${studentsRes.status})`);
       }
 
+      // Handle all students
       if (allRes.ok) {
         const allData = await allRes.json();
         const allList = Array.isArray(allData) ? allData : (allData.data || []);
         setAllStudents(allList);
+      } else {
+        setError(`Failed to load available students (${allRes.status})`);
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
@@ -125,8 +148,10 @@ export default function ClassEnrollmentPage() {
     }
   };
 
-  const enrolledStudentIds = new Set(students.map((s) => s.id));
-  const availableStudents = allStudents.filter((s) => !enrolledStudentIds.has(s.id));
+  const enrolledStudentIds = useMemo(() => new Set(students.map((s) => s.id)), [students]);
+  const availableStudents = useMemo(() => {
+    return allStudents.filter((s) => !enrolledStudentIds.has(s.id));
+  }, [allStudents, enrolledStudentIds]);
 
   const filteredAvailableStudents = useMemo(() => {
     return availableStudents.filter(
@@ -182,19 +207,19 @@ export default function ClassEnrollmentPage() {
       {stats && (
         <div className="enrollment-stats-grid">
           <div className="enrollment-stat-card">
-            <div className="enrollment-stat-number">{stats.total_enrolled}</div>
+            <div className="enrollment-stat-number">{stats.total_enrolled ?? 0}</div>
             <div className="enrollment-stat-label">Total Enrolled</div>
           </div>
           <div className="enrollment-stat-card enrollment-stat-active">
-            <div className="enrollment-stat-number">{stats.active}</div>
+            <div className="enrollment-stat-number">{stats.active ?? 0}</div>
             <div className="enrollment-stat-label">Active</div>
           </div>
           <div className="enrollment-stat-card enrollment-stat-promoted">
-            <div className="enrollment-stat-number">{stats.promoted}</div>
+            <div className="enrollment-stat-number">{stats.promoted ?? 0}</div>
             <div className="enrollment-stat-label">Promoted</div>
           </div>
           <div className="enrollment-stat-card enrollment-stat-graduated">
-            <div className="enrollment-stat-number">{stats.graduated}</div>
+            <div className="enrollment-stat-number">{stats.graduated ?? 0}</div>
             <div className="enrollment-stat-label">Graduated</div>
           </div>
         </div>
@@ -253,30 +278,40 @@ export default function ClassEnrollmentPage() {
             <div style={{ marginBottom: "1.5rem" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
                 <h3 style={{ margin: 0, fontSize: "1.5rem", fontWeight: 700, color: "#0f172a" }}>
-                  Available Students ({filteredAvailableStudents.length})
+                  Available Students ({filteredAvailableStudents.length} of {allStudents.length})
                 </h3>
               </div>
 
-              <div style={{ position: "relative", marginBottom: "1.5rem" }}>
-                <span style={{ position: "absolute", left: "1.5rem", top: "50%", transform: "translateY(-50%)", fontSize: "1.4rem" }}>🔍</span>
-                <input
-                  type="text"
-                  placeholder="Search by name, admission no., or email"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="search-input-enrollment"
-                />
-              </div>
-
-              {availableStudents.length === 0 ? (
-                <div style={{ padding: "2rem", textAlign: "center", color: "#64748b" }}>
-                  <p style={{ fontSize: "1.3rem" }}>All students are already enrolled in this class</p>
+              {allStudents.length === 0 && (
+                <div style={{ padding: "1.2rem", background: "#fef3c7", border: "1px solid #fcd34d", borderRadius: "8px", marginBottom: "1.5rem" }}>
+                  <p style={{ fontSize: "1.2rem", color: "#92400e", margin: 0 }}>
+                    ⚠️ No students found in the system. Please create students first.
+                  </p>
                 </div>
-              ) : filteredAvailableStudents.length === 0 ? (
+              )}
+
+              {allStudents.length > 0 && (
+                <div style={{ position: "relative", marginBottom: "1.5rem" }}>
+                  <span style={{ position: "absolute", left: "1.5rem", top: "50%", transform: "translateY(-50%)", fontSize: "1.4rem" }}>🔍</span>
+                  <input
+                    type="text"
+                    placeholder="Search by name, admission no., or email"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="search-input-enrollment"
+                  />
+                </div>
+              )}
+
+              {allStudents.length > 0 && availableStudents.length === 0 ? (
+                <div style={{ padding: "2rem", textAlign: "center", color: "#64748b" }}>
+                  <p style={{ fontSize: "1.3rem" }}>All {allStudents.length} students are already enrolled in this class</p>
+                </div>
+              ) : allStudents.length > 0 && filteredAvailableStudents.length === 0 ? (
                 <div style={{ padding: "2rem", textAlign: "center", color: "#64748b" }}>
                   <p style={{ fontSize: "1.3rem" }}>No students match your search</p>
                 </div>
-              ) : (
+              ) : allStudents.length > 0 ? (
                 <>
                   <div style={{ marginBottom: "1rem", paddingBottom: "1rem", borderBottom: "1px solid #e2e8f0" }}>
                     <label className="checkbox-label">
@@ -306,7 +341,7 @@ export default function ClassEnrollmentPage() {
                     ))}
                   </div>
                 </>
-              )}
+              ) : null}
             </div>
 
             <div style={{ display: "flex", gap: "1rem", borderTop: "1px solid #e2e8f0", paddingTop: "2rem" }}>
