@@ -74,6 +74,33 @@ export const POST = withAuth(
          admissionNo, dob || null, gender || null, parentPhone || null, address || null, stateOfOrigin || null, avatar || null, classId || null]
       );
 
+      // If assigning to a class, also insert into students_classes join table
+      if (classId) {
+        const session = school.academic_session || new Date().getFullYear().toString();
+        const enrollmentId = generateId();
+        await execute(
+          `INSERT INTO students_classes (id, student_id, class_id, academic_session, status, enrolled_date, created_at, updated_at)
+           VALUES (?, ?, ?, ?, 'active', datetime('now'), datetime('now'), datetime('now'))`,
+          [enrollmentId, studentId, classId, session]
+        );
+
+        // Auto-enroll in compulsory subjects for this class
+        const compulsorySubjects = await query(
+          "SELECT subject_id FROM class_subjects WHERE class_id = ? AND academic_session = ? AND is_compulsory = 1",
+          [classId, session]
+        );
+
+        for (const subject of compulsorySubjects || []) {
+          const subjectId = (subject as any).subject_id;
+          const subjectEnrollmentId = generateId();
+          await execute(
+            `INSERT INTO student_subjects (id, student_id, subject_id, class_id, academic_session, status, enrolled_date, created_at, updated_at)
+             VALUES (?, ?, ?, ?, ?, 'active', datetime('now'), datetime('now'), datetime('now'))`,
+            [subjectEnrollmentId, studentId, subjectId, classId, session]
+          );
+        }
+      }
+
       // Link parent if provided
       if (parentId) {
         const relId = generateId();

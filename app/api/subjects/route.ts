@@ -44,6 +44,18 @@ export const POST = withAuth(async (req: NextRequest, { school }: AuthContext): 
        VALUES (?, ?, ?, ?, ?, ?, datetime('now'), datetime('now'))`,
       [id, name, code || null, school.id, classId || null, isCompulsory !== false ? 1 : 0]
     );
+
+    // If assigning to a class, also insert into class_subjects join table
+    if (classId) {
+      const session = school.academic_session || new Date().getFullYear().toString();
+      const classSubjectId = generateId();
+      await execute(
+        `INSERT INTO class_subjects (id, class_id, subject_id, is_compulsory, academic_session, added_date, created_at, updated_at)
+         VALUES (?, ?, ?, ?, ?, datetime('now'), datetime('now'), datetime('now'))`,
+        [classSubjectId, classId, id, isCompulsory !== false ? 1 : 0, session]
+      );
+    }
+
     return created({ id, name, code: code || null });
   } catch (err) {
     return serverError(err);
