@@ -21,14 +21,47 @@ export default function ClassesPage() {
   const [classes, setClasses] = useState<ClassItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
+  const [deleting, setDeleting] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
-    authenticatedFetch("/api/classes")
-      .then((r) => r.json())
-      .then((d) => setClasses(Array.isArray(d.data) ? d.data : []))
-      .catch(() => toast.error("Failed to load classes"))
-      .finally(() => setLoading(false));
+    fetchClasses();
   }, []);
+
+  const fetchClasses = async () => {
+    try {
+      setLoading(true);
+      const res = await authenticatedFetch("/api/classes");
+      const d = await res.json();
+      setClasses(Array.isArray(d) ? d : (Array.isArray(d.data) ? d.data : []));
+    } catch (err) {
+      toast.error("Failed to load classes");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDelete = async (id: string, name: string) => {
+    if (!confirm(`Delete class "${name}"? This action cannot be undone.`)) return;
+
+    try {
+      setDeleting((prev) => ({ ...prev, [id]: true }));
+      const res = await authenticatedFetch(`/api/classes/${id}`, {
+        method: "DELETE",
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.message || "Failed to delete class");
+      }
+
+      toast.success("Class deleted successfully");
+      setClasses((prev) => prev.filter((c) => c.id !== id));
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Failed to delete class");
+    } finally {
+      setDeleting((prev) => ({ ...prev, [id]: false }));
+    }
+  };
 
   const filtered = useMemo(() => {
     const q = search.toLowerCase();
@@ -105,6 +138,22 @@ export default function ClassesPage() {
                     <div className="row-actions">
                       <Link href={`/classes/${c.id}`} className="link-action">View</Link>
                       <Link href={`/classes/${c.id}/edit`} className="link-action">Edit</Link>
+                      <button
+                        onClick={() => handleDelete(c.id, c.name)}
+                        disabled={deleting[c.id]}
+                        className="link-action link-action-delete"
+                        style={{
+                          color: deleting[c.id] ? "#cbd5e1" : "#dc2626",
+                          cursor: deleting[c.id] ? "not-allowed" : "pointer",
+                          textDecoration: "none",
+                          border: "none",
+                          background: "none",
+                          padding: 0,
+                          font: "inherit",
+                        }}
+                      >
+                        {deleting[c.id] ? "Deleting..." : "Delete"}
+                      </button>
                     </div>
                   </td>
                 </tr>

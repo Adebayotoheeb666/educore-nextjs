@@ -18,14 +18,47 @@ export default function SubjectsPage() {
   const [subjects, setSubjects] = useState<Subject[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
+  const [deleting, setDeleting] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
-    authenticatedFetch("/api/subjects")
-      .then((r) => r.json())
-      .then((d) => setSubjects(Array.isArray(d.data) ? d.data : []))
-      .catch(() => toast.error("Failed to load subjects"))
-      .finally(() => setLoading(false));
+    fetchSubjects();
   }, []);
+
+  const fetchSubjects = async () => {
+    try {
+      setLoading(true);
+      const res = await authenticatedFetch("/api/subjects");
+      const d = await res.json();
+      setSubjects(Array.isArray(d) ? d : (Array.isArray(d.data) ? d.data : []));
+    } catch (err) {
+      toast.error("Failed to load subjects");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDelete = async (id: string, name: string) => {
+    if (!confirm(`Delete subject "${name}"? This action cannot be undone.`)) return;
+
+    try {
+      setDeleting((prev) => ({ ...prev, [id]: true }));
+      const res = await authenticatedFetch(`/api/subjects/${id}`, {
+        method: "DELETE",
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.message || "Failed to delete subject");
+      }
+
+      toast.success("Subject deleted successfully");
+      setSubjects((prev) => prev.filter((s) => s.id !== id));
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Failed to delete subject");
+    } finally {
+      setDeleting((prev) => ({ ...prev, [id]: false }));
+    }
+  };
 
   const filtered = useMemo(() => {
     const q = search.toLowerCase();
@@ -97,6 +130,22 @@ export default function SubjectsPage() {
                     <div className="row-actions">
                       <Link href={`/subjects/${s.id}`} className="link-action">View</Link>
                       <Link href={`/subjects/${s.id}/edit`} className="link-action">Edit</Link>
+                      <button
+                        onClick={() => handleDelete(s.id, s.name)}
+                        disabled={deleting[s.id]}
+                        className="link-action link-action-delete"
+                        style={{
+                          color: deleting[s.id] ? "#cbd5e1" : "#dc2626",
+                          cursor: deleting[s.id] ? "not-allowed" : "pointer",
+                          textDecoration: "none",
+                          border: "none",
+                          background: "none",
+                          padding: 0,
+                          font: "inherit",
+                        }}
+                      >
+                        {deleting[s.id] ? "Deleting..." : "Delete"}
+                      </button>
                     </div>
                   </td>
                 </tr>
