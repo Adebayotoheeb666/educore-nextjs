@@ -28,6 +28,13 @@ interface StudentInSubject {
   enrolled_date: string;
 }
 
+interface ClassStudent {
+  id: string;
+  name: string;
+  admission_no: string;
+  email: string;
+}
+
 interface AllSubject {
   id: string;
   name: string;
@@ -48,6 +55,11 @@ export default function ClassCurriculumPage() {
   const [expandedSubject, setExpandedSubject] = useState<string | null>(null);
   const [studentsInSubject, setStudentsInSubject] = useState<Record<string, StudentInSubject[]>>({});
   const [loadingStudents, setLoadingStudents] = useState<Record<string, boolean>>({});
+  const [classStudents, setClassStudents] = useState<ClassStudent[]>([]);
+  const [loadingClassStudents, setLoadingClassStudents] = useState(false);
+  const [showOptionalAssignment, setShowOptionalAssignment] = useState<string | null>(null);
+  const [selectedStudentIds, setSelectedStudentIds] = useState<Record<string, Set<string>>>({});
+  const [assigningOptional, setAssigningOptional] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
     fetchCurriculumData();
@@ -106,7 +118,7 @@ export default function ClassCurriculumPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           subjectId: selectedSubjectId,
-          isCompulsory: true,
+          isCompulsory: false,
           sequence: (subjects.length || 0) + 1,
           academicSession: session,
         }),
@@ -187,8 +199,79 @@ export default function ClassCurriculumPage() {
     }
   };
 
+  const fetchClassStudents = async () => {
+    try {
+      setLoadingClassStudents(true);
+      const sessionParam = session ? `?session=${session}` : "";
+      const res = await authenticatedFetch(`/api/classes/${classId}/students${sessionParam}`);
+
+      if (res.ok) {
+        const data = await res.json();
+        const studentsList = Array.isArray(data) ? data : (data?.data || []);
+        setClassStudents(studentsList);
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to fetch class students");
+    } finally {
+      setLoadingClassStudents(false);
+    }
+  };
+
+  const handleOptionalSubjectAssignment = async (subjectId: string) => {
+    if (!selectedStudentIds[subjectId] || selectedStudentIds[subjectId].size === 0) {
+      setError("Please select at least one student");
+      return;
+    }
+
+    try {
+      setAssigningOptional((prev) => ({ ...prev, [subjectId]: true }));
+      const sessionParam = session ? `?session=${session}` : "";
+      const res = await authenticatedFetch(
+        `/api/classes/${classId}/subjects/${subjectId}/students${sessionParam}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            studentIds: Array.from(selectedStudentIds[subjectId]),
+            academicSession: session || undefined,
+          }),
+        }
+      );
+
+      if (!res.ok) throw new Error("Failed to assign students to subject");
+      setSelectedStudentIds((prev) => {
+        const updated = { ...prev };
+        delete updated[subjectId];
+        return updated;
+      });
+      setShowOptionalAssignment(null);
+      await fetchStudentsInSubject(subjectId);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "An error occurred");
+    } finally {
+      setAssigningOptional((prev) => ({ ...prev, [subjectId]: false }));
+    }
+  };
+
+  const toggleStudentSelection = (subjectId: string, studentId: string) => {
+    setSelectedStudentIds((prev) => {
+      const newSet = new Set(prev[subjectId] || []);
+      if (newSet.has(studentId)) {
+        newSet.delete(studentId);
+      } else {
+        newSet.add(studentId);
+      }
+      return { ...prev, [subjectId]: newSet };
+    });
+  };
+
   const getAddedSubjects = new Set(subjects.map((s) => s.subject_id));
   const availableSubjects = allSubjects.filter((s) => !getAddedSubjects.has(s.id));
+  const getEnrolledStudentIds = (subjectId: string) => new Set((studentsInSubject[subjectId] || []).map((s) => s.student_id));
+  const getAvailableStudentsForSubject = (subjectId: string) => {
+    const enrolledIds = getEnrolledStudentIds(subjectId);
+    return classStudents.filter((s) => !enrolledIds.has(s.id));
+  };
 
   if (loading) {
     return (
@@ -337,7 +420,7 @@ export default function ClassCurriculumPage() {
                       )}
                     </td>
                     <td>
-                      <div style={{ display: "flex", gap: "0.8rem", alignItems: "center" }}>
+                      <div style={{ display: "flex", gap: "0.8rem", alignItems: "center", flexWrap: "wrap" }}>
                         <button
                           className="btn-action btn-view"
                           onClick={() => toggleExpandSubject(subject.subject_id)}
@@ -345,6 +428,20 @@ export default function ClassCurriculumPage() {
                         >
                           {expandedSubject === subject.subject_id ? "▼ Hide" : "▶ View"} Students
                         </button>
+                        {!subject.is_compulsory && (
+                          <button
+                            className="btn-action btn-assign"
+                            onClick={() => {
+                              setShowOptionalAssignment(subject.subject_id);
+                              if (classStudents.length === 0) {
+                                fetchClassStudents();
+                              }
+                            }}
+                            title="Assign students to optional subject"
+                          >
+                            + Assign Students
+                          </button>
+                        )}
                         <button
                           className="btn-action btn-remove"
                           onClick={() => handleRemoveSubject(subject.subject_id)}
@@ -409,6 +506,123 @@ export default function ClassCurriculumPage() {
                   </tbody>
                 </table>
               </div>
+            )}
+          </div>
+        )}
+
+        {showOptionalAssignment && (
+          <div className="optional-assignment-panel">
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
+              <h3 style={{ margin: 0, fontSize: "1.4rem", fontWeight: 700, color: "#0f172a" }}>
+                Assign Students to {subjects.find((s) => s.subject_id === showOptionalAssignment)?.name} (Optional)
+              </h3>
+              <button
+                onClick={() => {
+                  setShowOptionalAssignment(null);
+                  setSelectedStudentIds((prev) => {
+                    const updated = { ...prev };
+                    delete updated[showOptionalAssignment];
+                    return updated;
+                  });
+                }}
+                style={{
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                  fontSize: "1.6rem",
+                  color: "#64748b",
+                }}
+              >
+                ✕
+              </button>
+            </div>
+
+            {loadingClassStudents ? (
+              <div style={{ padding: "2rem", textAlign: "center", color: "#64748b" }}>
+                <p style={{ fontSize: "1.3rem" }}>Loading students...</p>
+              </div>
+            ) : getAvailableStudentsForSubject(showOptionalAssignment).length === 0 ? (
+              <div style={{ padding: "2rem", textAlign: "center", color: "#64748b" }}>
+                <p style={{ fontSize: "1.3rem" }}>All students in the class are already assigned to this subject</p>
+              </div>
+            ) : (
+              <>
+                <div className="table-responsive">
+                  <table className="premium-table">
+                    <thead>
+                      <tr>
+                        <th style={{ width: "40px", textAlign: "center" }}>
+                          <input
+                            type="checkbox"
+                            checked={
+                              getAvailableStudentsForSubject(showOptionalAssignment).length > 0 &&
+                              getAvailableStudentsForSubject(showOptionalAssignment).every((s) =>
+                                (selectedStudentIds[showOptionalAssignment] || new Set()).has(s.id)
+                              )
+                            }
+                            onChange={(e) => {
+                              setSelectedStudentIds((prev) => {
+                                const newSet = new Set(
+                                  e.target.checked
+                                    ? getAvailableStudentsForSubject(showOptionalAssignment).map((s) => s.id)
+                                    : []
+                                );
+                                return { ...prev, [showOptionalAssignment]: newSet };
+                              });
+                            }}
+                            style={{ cursor: "pointer", width: "18px", height: "18px" }}
+                          />
+                        </th>
+                        <th>Student Name</th>
+                        <th style={{ width: "120px" }}>Admission No.</th>
+                        <th>Email</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {getAvailableStudentsForSubject(showOptionalAssignment).map((student) => (
+                        <tr key={student.id}>
+                          <td style={{ textAlign: "center" }}>
+                            <input
+                              type="checkbox"
+                              checked={(selectedStudentIds[showOptionalAssignment] || new Set()).has(student.id)}
+                              onChange={() => toggleStudentSelection(showOptionalAssignment, student.id)}
+                              style={{ cursor: "pointer", width: "18px", height: "18px" }}
+                            />
+                          </td>
+                          <td style={{ fontWeight: 700, color: "#0f172a" }}>{student.name}</td>
+                          <td><span className="mono">{student.admission_no || "—"}</span></td>
+                          <td>{student.email}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+
+                <div style={{ display: "flex", gap: "1rem", marginTop: "1.5rem", justifyContent: "flex-end" }}>
+                  <button
+                    className="btn-outline"
+                    onClick={() => {
+                      setShowOptionalAssignment(null);
+                      setSelectedStudentIds((prev) => {
+                        const updated = { ...prev };
+                        delete updated[showOptionalAssignment];
+                        return updated;
+                      });
+                    }}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    className="btn-primary"
+                    onClick={() => handleOptionalSubjectAssignment(showOptionalAssignment)}
+                    disabled={assigningOptional[showOptionalAssignment] || (selectedStudentIds[showOptionalAssignment] || new Set()).size === 0}
+                  >
+                    {assigningOptional[showOptionalAssignment]
+                      ? "Assigning..."
+                      : `Assign ${(selectedStudentIds[showOptionalAssignment] || new Set()).size} Student${(selectedStudentIds[showOptionalAssignment] || new Set()).size !== 1 ? "s" : ""}`}
+                  </button>
+                </div>
+              </>
             )}
           </div>
         )}
@@ -535,6 +749,17 @@ export default function ClassCurriculumPage() {
           border-color: #c7d2fe;
         }
 
+        .btn-assign {
+          background: #f0fdf4;
+          color: #16a34a;
+          border: 1px solid #bbf7d0;
+        }
+
+        .btn-assign:hover {
+          background: #dcfce7;
+          border-color: #86efac;
+        }
+
         .btn-remove {
           background: #fef2f2;
           color: #dc2626;
@@ -561,6 +786,14 @@ export default function ClassCurriculumPage() {
           padding: 2rem;
           background: #f8fafc;
           border-top: 2px solid #e2e8f0;
+          margin-top: 0;
+          border-radius: 0 0 16px 16px;
+        }
+
+        .optional-assignment-panel {
+          padding: 2rem;
+          background: #f0fdf4;
+          border-top: 2px solid #86efac;
           margin-top: 0;
           border-radius: 0 0 16px 16px;
         }
