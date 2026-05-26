@@ -10,8 +10,9 @@ export const GET = withAuth(async (req: NextRequest, { school }: AuthContext): P
     const { searchParams } = new URL(req.url);
     const teacherId = searchParams.get("teacherId");
 
-    let sql = `SELECT s.*, GROUP_CONCAT(u.name) as teacher_names, GROUP_CONCAT(u.id) as teacher_ids, COUNT(DISTINCT st.teacher_id) as teacher_count
+    let sql = `SELECT s.*, c.name as class_name, GROUP_CONCAT(u.name) as teacher_names, GROUP_CONCAT(u.id) as teacher_ids, COUNT(DISTINCT st.teacher_id) as teacher_count
        FROM subjects s
+       LEFT JOIN classes c ON s.class_id = c.id
        LEFT JOIN subject_teachers st ON st.subject_id = s.id
        LEFT JOIN users u ON st.teacher_id = u.id
        WHERE s.school_id = ?`;
