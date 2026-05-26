@@ -8,12 +8,17 @@ export const GET = withAuth(async (_req: NextRequest, { school }: AuthContext): 
   try {
     if (!school) return badRequest("School context required");
     const classes = await query(
-      `SELECT c.*, u.name as teacher_name, u.email as teacher_email
+      `SELECT c.*, u.name as teacher_name, u.email as teacher_email,
+              COUNT(DISTINCT sc.student_id) as student_count,
+              COUNT(DISTINCT cs.subject_id) as subject_count
        FROM classes c
        LEFT JOIN users u ON c.class_teacher_id = u.id
+       LEFT JOIN students_classes sc ON c.id = sc.class_id AND sc.academic_session = ?
+       LEFT JOIN class_subjects cs ON c.id = cs.class_id AND cs.academic_session = ?
        WHERE c.school_id = ?
+       GROUP BY c.id
        ORDER BY c.level, c.name`,
-      [school.id]
+      [school.academic_session, school.academic_session, school.id]
     );
     return ok(classes);
   } catch (err) {

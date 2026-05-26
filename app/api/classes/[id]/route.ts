@@ -6,21 +6,35 @@ import { notFound, ok, serverError } from "@/lib/utils/response";
 export const GET = withAuth(async (_req: NextRequest, { school }: AuthContext, params): Promise<NextResponse> => {
   try {
     if (!school) return notFound("School not found");
+    const classId = params?.id ?? "";
+
     const classDoc = await queryOne(
       `SELECT c.*, u.name as teacher_name, u.email as teacher_email
        FROM classes c LEFT JOIN users u ON c.class_teacher_id = u.id
        WHERE c.id = ? AND c.school_id = ?`,
-      [params?.id ?? "", school.id]
+      [classId, school.id]
     );
     if (!classDoc) return notFound("Class not found");
 
+    const session = (classDoc as any).academic_session || school.academic_session;
+
+    // Get enrolled students in this class for the current session
     const students = await query(
-      "SELECT id, name, first_name, last_name, admission_no, avatar FROM users WHERE school_id = ? AND role = 'student' ORDER BY name",
-      [school.id]
+      `SELECT u.id, u.name, u.admission_no, u.avatar FROM users u
+       INNER JOIN students_classes sc ON sc.student_id = u.id
+       WHERE sc.class_id = ? AND u.school_id = ? AND u.role = 'student' AND sc.academic_session = ?
+       ORDER BY u.name`,
+      [classId, school.id, session]
     );
+
+    // Get curriculum subjects for this class in the current session
     const subjects = await query(
-      "SELECT id, name, code FROM subjects WHERE school_id = ? AND class_id = ?",
-      [school.id, params?.id ?? ""]
+      `SELECT cs.id, cs.subject_id as id, s.name, s.code, cs.is_compulsory
+       FROM class_subjects cs
+       LEFT JOIN subjects s ON cs.subject_id = s.id
+       WHERE cs.class_id = ? AND s.school_id = ? AND cs.academic_session = ?
+       ORDER BY s.name`,
+      [classId, school.id, session]
     );
 
     return ok({ ...classDoc, students, subjects });

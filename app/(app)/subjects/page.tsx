@@ -9,6 +9,9 @@ interface Subject {
   id: string;
   name: string;
   code?: string;
+  class_id?: string;
+  class_name?: string;
+  is_compulsory?: number;
   teacher_count?: number;
   teacher_names?: string;
   created_at?: string;
@@ -109,6 +112,7 @@ export default function SubjectsPage() {
               <tr>
                 <th>Subject</th>
                 <th>Code</th>
+                <th>Class Assignment</th>
                 <th>Teachers Assigned</th>
                 <th>Actions</th>
               </tr>
@@ -120,6 +124,18 @@ export default function SubjectsPage() {
                     <span style={{ fontWeight: 700, fontSize: "1.4rem" }}>{s.name}</span>
                   </td>
                   <td><span className="mono">{s.code ?? "—"}</span></td>
+                  <td>
+                    {s.class_name ? (
+                      <div>
+                        <span style={{ fontWeight: 600, color: "#0f172a" }}>{s.class_name}</span>
+                        <span className={`badge ${s.is_compulsory ? "badge-blue" : "badge-yellow"}`} style={{ marginLeft: "0.5rem" }}>
+                          {s.is_compulsory ? "Compulsory" : "Optional"}
+                        </span>
+                      </div>
+                    ) : (
+                      <span style={{ color: "#94a3b8" }}>Not assigned</span>
+                    )}
+                  </td>
                   <td>
                     <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
                       <span className="badge badge-blue">{s.teacher_count ?? 0}</span>

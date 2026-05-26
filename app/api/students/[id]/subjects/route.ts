@@ -23,17 +23,19 @@ export const GET = withAuth(async (_req: NextRequest, { school }: AuthContext, p
     const classId = student[0]?.class_id;
     if (!classId) return ok([]);
 
-    // Get subjects offered by the student's class and their teachers
+    // Get subjects from student_subjects (which are explicitly enrolled)
+    // These include both compulsory and optional subjects the student is taking
     const subjects = await query(
-      `SELECT DISTINCT s.id, s.name, s.code, s.is_compulsory,
+      `SELECT DISTINCT s.id, s.name, s.code, cs.is_compulsory,
               t.id as teacher_id, t.name as teacher_name, t.email as teacher_email
-       FROM class_subjects cs
-       LEFT JOIN subjects s ON cs.subject_id = s.id
-       LEFT JOIN subject_teachers st ON s.id = st.subject_id AND st.class_id = cs.class_id
+       FROM student_subjects ss
+       LEFT JOIN subjects s ON ss.subject_id = s.id
+       LEFT JOIN class_subjects cs ON ss.subject_id = cs.subject_id AND ss.class_id = cs.class_id
+       LEFT JOIN subject_teachers st ON s.id = st.subject_id AND st.class_id = ss.class_id
        LEFT JOIN users t ON st.teacher_id = t.id
-       WHERE cs.class_id = ? AND s.school_id = ?
+       WHERE ss.student_id = ? AND ss.class_id = ? AND s.school_id = ?
        ORDER BY s.name`,
-      [classId, school.id]
+      [studentId, classId, school.id]
     );
 
     return ok(subjects);
