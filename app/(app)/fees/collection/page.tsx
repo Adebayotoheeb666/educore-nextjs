@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Script from "next/script";
 import { toast } from "sonner";
+import { ServiceGate } from "@/lib/components/ServiceGate";
 import "../../shared.css";
 
 interface Payment {
@@ -36,6 +37,7 @@ declare global {
 }
 
 export default function FeeCollectionPage() {
+
   const [payments, setPayments] = useState<Payment[]>([]);
   const [students, setStudents] = useState<Student[]>([]);
   const [fees, setFees] = useState<FeeSchedule[]>([]);
@@ -298,10 +300,12 @@ export default function FeeCollectionPage() {
                   {fees.map((f) => {
                     const amt = f.total_amount ?? f.amount ?? 0;
                     return (
+    <ServiceGate slug="fees">
                       <option key={f.id} value={f.id}>
                         {f.title ?? f.name}{amt ? ` — ₦${amt.toLocaleString()}` : ""}
                       </option>
-                    );
+                        </ServiceGate>
+  );
                   })}
                 </select>
               </div>

@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { toast } from "sonner";
 import { authenticatedFetch } from "@/lib/utils/fetch";
+import { ServiceGate } from "@/lib/components/ServiceGate";
 import "../shared.css";
 
 interface Subject {
@@ -18,6 +19,7 @@ interface Subject {
 }
 
 export default function SubjectsPage() {
+
   const [subjects, setSubjects] = useState<Subject[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
@@ -74,6 +76,7 @@ export default function SubjectsPage() {
   }, [subjects, search]);
 
   return (
+    <ServiceGate slug="subjects">
     <div>
       <div className="page-header-row">
         <div className="page-header-text">
@@ -171,5 +174,6 @@ export default function SubjectsPage() {
         )}
       </div>
     </div>
+      </ServiceGate>
   );
 }

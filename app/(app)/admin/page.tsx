@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { toast } from "sonner";
 import "../shared.css";
@@ -30,9 +30,6 @@ const QUICK_ACTIONS = [
 export default function AdminOverviewPage() {
   const [data, setData] = useState<AdminStats | null>(null);
   const [loading, setLoading] = useState(true);
-  const [testEmailTo, setTestEmailTo] = useState("");
-  const [sendingTest, setSendingTest] = useState(false);
-  const testEmailRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     fetch("/api/admin", { credentials: "include" })
@@ -42,26 +39,7 @@ export default function AdminOverviewPage() {
       .finally(() => setLoading(false));
   }, []);
 
-  const handleTestEmail = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setSendingTest(true);
-    try {
-      const res = await fetch("/api/admin/test-email", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ to: testEmailTo || undefined }),
-      });
-      const d = await res.json();
-      if (!res.ok) throw new Error(d.message ?? "Failed");
-      toast.success(d.data?.message ?? "Test email sent");
-      setTestEmailTo("");
-    } catch (err: unknown) {
-      toast.error(err instanceof Error ? err.message : "Email send failed");
-    } finally {
-      setSendingTest(false);
-    }
-  };
+
 
   return (
     <div>
@@ -106,55 +84,7 @@ export default function AdminOverviewPage() {
             ))}
           </div>
 
-          {/* System tools */}
-          <div style={{ background: "white", borderRadius: 16, border: "1px solid #f1f5f9", padding: "2.5rem", marginBottom: "2.5rem" }}>
-            <h2 style={{ fontSize: "1.8rem", fontWeight: 700, marginBottom: "0.5rem" }}>System Tools</h2>
-            <p style={{ color: "#64748b", fontSize: "1.3rem", marginBottom: "2rem" }}>Test platform integrations and configuration.</p>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2rem" }}>
-              {/* Email test */}
-              <div style={{ background: "#f8fafc", borderRadius: 12, padding: "1.8rem" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: "0.8rem", marginBottom: "1rem" }}>
-                  <span style={{ fontSize: "2rem" }}>📧</span>
-                  <div>
-                    <p style={{ fontWeight: 700, margin: 0, fontSize: "1.4rem" }}>SMTP Email Test</p>
-                    <p style={{ margin: 0, color: "#64748b", fontSize: "1.2rem" }}>Verify email delivery is working</p>
-                  </div>
-                </div>
-                <form onSubmit={handleTestEmail} style={{ display: "flex", gap: "0.8rem" }}>
-                  <input
-                    ref={testEmailRef}
-                    type="email"
-                    placeholder="Recipient (leave blank for your email)"
-                    value={testEmailTo}
-                    onChange={(e) => setTestEmailTo(e.target.value)}
-                    style={{ flex: 1, padding: "0.8rem 1.2rem", border: "1px solid #e2e8f0", borderRadius: 8, fontSize: "1.3rem" }}
-                  />
-                  <button
-                    type="submit"
-                    disabled={sendingTest}
-                    className="btn-primary"
-                    style={{ padding: "0.8rem 1.6rem", whiteSpace: "nowrap" }}
-                  >
-                    {sendingTest ? "Sending…" : "Send Test"}
-                  </button>
-                </form>
-              </div>
-              {/* DB health placeholder */}
-              <div style={{ background: "#f8fafc", borderRadius: 12, padding: "1.8rem" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: "0.8rem", marginBottom: "1rem" }}>
-                  <span style={{ fontSize: "2rem" }}>🗄️</span>
-                  <div>
-                    <p style={{ fontWeight: 700, margin: 0, fontSize: "1.4rem" }}>Database</p>
-                    <p style={{ margin: 0, color: "#64748b", fontSize: "1.2rem" }}>Turso / SQLite edge DB</p>
-                  </div>
-                </div>
-                <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
-                  <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#22c55e", display: "inline-block" }} />
-                  <span style={{ fontSize: "1.3rem", color: "#16a34a", fontWeight: 600 }}>Connected — data loaded successfully</span>
-                </div>
-              </div>
-            </div>
-          </div>
+
 
           {/* School status breakdown */}
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2.5rem" }}>

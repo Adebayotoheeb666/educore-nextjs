@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { toast } from "sonner";
+import { ServiceGate } from "@/lib/components/ServiceGate";
 import "../shared.css";
 
 interface Announcement {
@@ -16,6 +17,7 @@ interface Announcement {
 }
 
 export default function AnnouncementsPage() {
+
   const [items, setItems] = useState<Announcement[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -28,6 +30,7 @@ export default function AnnouncementsPage() {
   }, []);
 
   return (
+    <ServiceGate slug="announcements">
     <div>
       <div className="page-header-row">
         <div className="page-header-text">
@@ -93,5 +96,6 @@ export default function AnnouncementsPage() {
         </div>
       )}
     </div>
+      </ServiceGate>
   );
 }

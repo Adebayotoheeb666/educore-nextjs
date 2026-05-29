@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { toast } from "sonner";
+import { ServiceGate } from "@/lib/components/ServiceGate";
 import "../shared.css";
 
 interface ClassItem { id: string; name: string; section?: string; }
@@ -16,6 +17,7 @@ interface AttendanceRecord {
 const today = new Date().toISOString().slice(0, 10);
 
 export default function AttendancePage() {
+
   const [classes, setClasses] = useState<ClassItem[]>([]);
   const [selectedClass, setSelectedClass] = useState("");
   const [selectedDate, setSelectedDate] = useState(today);
@@ -121,6 +123,7 @@ export default function AttendancePage() {
   const className = classes.find((c) => c.id === selectedClass)?.name ?? "";
 
   return (
+    <ServiceGate slug="attendance">
     <div>
       <div className="page-header-row">
         <div className="page-header-text">
@@ -308,5 +311,6 @@ export default function AttendancePage() {
         </div>
       )}
     </div>
+      </ServiceGate>
   );
 }

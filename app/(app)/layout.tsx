@@ -19,20 +19,20 @@ const navConfig = [
   { label: "Parents",      path: "/parents",             icon: "👪", roles: ADMIN_ROLES },
   { label: "Teachers",     path: "/teachers",            icon: "👩‍🏫", roles: ADMIN_ROLES },
   { label: "Classes",      path: "/classes",             icon: "🏫", roles: ADMIN_ROLES },
-  { label: "Subjects",     path: "/subjects",            icon: "📚", roles: ADMIN_ROLES },
-  { label: "Attendance",   path: "/attendance",          icon: "✅", roles: [...ADMIN_ROLES, ...TEACHER_ROLES] },
-  { label: "Lesson Plans", path: "/lesson-plans",        icon: "📝", roles: [...ADMIN_ROLES, ...TEACHER_ROLES] },
-  { label: "Exams",        path: "/exams",               icon: "📋", roles: [...ADMIN_ROLES, ...TEACHER_ROLES] },
-  { label: "Results",      path: "/results",             icon: "📊", roles: [...ADMIN_ROLES, ...TEACHER_ROLES] },
-  { label: "Broadsheet",   path: "/broadsheet",          icon: "📄", roles: ADMIN_ROLES },
-  { label: "Fee Schedules",path: "/fees/schedules",      icon: "💰", roles: [...ADMIN_ROLES, "bursar"] },
-  { label: "Collections",  path: "/fees/collection",     icon: "🧾", roles: [...ADMIN_ROLES, "bursar"] },
-  { label: "Defaulters",   path: "/fees/defaulters",     icon: "⚠️",  roles: [...ADMIN_ROLES, "bursar"] },
-  { label: "Timetable",    path: "/timetable",           icon: "🗓️",  roles: [...STAFF_ROLES, "bursar", "librarian"] },
-  { label: "Library",      path: "/library",             icon: "📖", roles: [...ADMIN_ROLES, "librarian"] },
-  { label: "Announcements",path: "/announcements",       icon: "📢", roles: [...STAFF_ROLES, "bursar", "librarian"] },
-  { label: "Analytics",    path: "/analytics",           icon: "📈", roles: ADMIN_ROLES },
-  { label: "Feedback",     path: "/feedback",            icon: "💬", roles: [...STAFF_ROLES, "bursar", "librarian"] },
+  { label: "Subjects",     path: "/subjects",            icon: "📚", roles: ADMIN_ROLES, serviceSlug: "subjects" },
+  { label: "Attendance",   path: "/attendance",          icon: "✅", roles: [...ADMIN_ROLES, ...TEACHER_ROLES], serviceSlug: "attendance" },
+  { label: "Lesson Plans", path: "/lesson-plans",        icon: "📝", roles: [...ADMIN_ROLES, ...TEACHER_ROLES], serviceSlug: "lesson-plans" },
+  { label: "Exams",        path: "/exams",               icon: "📋", roles: [...ADMIN_ROLES, ...TEACHER_ROLES], serviceSlug: "exams" },
+  { label: "Results",      path: "/results",             icon: "📊", roles: [...ADMIN_ROLES, ...TEACHER_ROLES], serviceSlug: "results" },
+  { label: "Broadsheet",   path: "/broadsheet",          icon: "📄", roles: ADMIN_ROLES, serviceSlug: "results" },
+  { label: "Fee Schedules",path: "/fees/schedules",      icon: "💰", roles: [...ADMIN_ROLES, "bursar"], serviceSlug: "fees" },
+  { label: "Collections",  path: "/fees/collection",     icon: "🧾", roles: [...ADMIN_ROLES, "bursar"], serviceSlug: "fees" },
+  { label: "Defaulters",   path: "/fees/defaulters",     icon: "⚠️",  roles: [...ADMIN_ROLES, "bursar"], serviceSlug: "fees" },
+  { label: "Timetable",    path: "/timetable",           icon: "🗓️",  roles: [...STAFF_ROLES, "bursar", "librarian"], serviceSlug: "timetable" },
+  { label: "Library",      path: "/library",             icon: "📖", roles: [...ADMIN_ROLES, "librarian"], serviceSlug: "library" },
+  { label: "Announcements",path: "/announcements",       icon: "📢", roles: [...STAFF_ROLES, "bursar", "librarian"], serviceSlug: "announcements" },
+  { label: "Analytics",    path: "/analytics",           icon: "📈", roles: ADMIN_ROLES, serviceSlug: "analytics" },
+  { label: "Feedback",     path: "/feedback",            icon: "💬", roles: [...STAFF_ROLES, "bursar", "librarian"], serviceSlug: "feedback" },
   { label: "School Settings", path: "/school/settings",  icon: "⚙️",  roles: ["school_owner", "principal"] },
   { label: "Services",     path: "/school/services",     icon: "🔧", roles: ["school_owner", "principal"] },
   { label: "Billing",      path: "/billing",             icon: "💳", roles: ["school_owner"] },
@@ -40,17 +40,17 @@ const navConfig = [
 
 const parentNav = [
   { label: "Dashboard",    path: "/parent",              icon: "🏠" },
-  { label: "Results",      path: "/parent/results",      icon: "📊" },
-  { label: "Fees",         path: "/parent/fees",         icon: "💰" },
-  { label: "Timetable",    path: "/timetable",           icon: "🗓️" },
-  { label: "Announcements",path: "/announcements",       icon: "📢" },
+  { label: "Results",      path: "/parent/results",      icon: "📊", serviceSlug: "results" },
+  { label: "Fees",         path: "/parent/fees",         icon: "💰", serviceSlug: "fees" },
+  { label: "Timetable",    path: "/timetable",           icon: "🗓️", serviceSlug: "timetable" },
+  { label: "Announcements",path: "/announcements",       icon: "📢", serviceSlug: "announcements" },
 ];
 
 const studentNav = [
   { label: "Dashboard",    path: "/student",             icon: "🏠" },
-  { label: "My Results",   path: "/student/results",     icon: "📊" },
-  { label: "Timetable",    path: "/timetable",           icon: "🗓️" },
-  { label: "Announcements",path: "/announcements",       icon: "📢" },
+  { label: "My Results",   path: "/student/results",     icon: "📊", serviceSlug: "results" },
+  { label: "Timetable",    path: "/timetable",           icon: "🗓️", serviceSlug: "timetable" },
+  { label: "Announcements",path: "/announcements",       icon: "📢", serviceSlug: "announcements" },
 ];
 
 const superAdminNav = [
@@ -80,6 +80,9 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
+  const [activeServices, setActiveServices] = useState<string[]>([
+    "auth", "school", "students", "teachers", "parents", "classes"
+  ]);
 
   // Bootstrap: verify auth on mount
   useEffect(() => {
@@ -104,6 +107,24 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     };
     init();
   }, []);
+
+  // Fetch active services once user is authenticated and ready
+  useEffect(() => {
+    if (!ready || !user) return;
+    if (user.role === "super_admin") return;
+
+    fetch("/api/services", { credentials: "include" })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && Array.isArray(data.data)) {
+          const active = data.data
+            .filter((s: any) => s.is_compulsory === 1 || s.subscription_status === "active")
+            .map((s: any) => s.slug);
+          setActiveServices(active);
+        }
+      })
+      .catch(() => {});
+  }, [ready, user]);
 
   // Sync dark mode preference
   useEffect(() => {
@@ -139,10 +160,19 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
   const getNavItems = () => {
     if (!user) return [];
-    if (user.role === "super_admin") return superAdminNav;
-    if (user.role === "parent") return parentNav;
-    if (user.role === "student") return studentNav;
-    return navConfig.filter((n) => n.roles.includes(user.role));
+    
+    let rawItems: any[] = [];
+    if (user.role === "super_admin") rawItems = superAdminNav;
+    else if (user.role === "parent") rawItems = parentNav;
+    else if (user.role === "student") rawItems = studentNav;
+    else rawItems = navConfig.filter((n) => n.roles.includes(user.role));
+
+    if (user.role === "super_admin") return rawItems;
+
+    return rawItems.filter((item) => {
+      if (!item.serviceSlug) return true;
+      return activeServices.includes(item.serviceSlug);
+    });
   };
 
   const getPageTitle = () => {
@@ -296,7 +326,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               <div className="user-avatar">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={`https://ui-avatars.com/api/?name=${encodeURIComponent(displayName)}&background=random`}
+                  src={(user?.avatar as string) || `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName)}&background=6A5ACD&color=fff`}
                   alt="Avatar"
                 />
               </div>
@@ -311,6 +341,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       <style>{`
         @media (max-width: 768px) {
           .dashboard-wrapper > div { margin-left: 0 !important; }
+          .user-info-text { display: none !important; }
         }
       `}</style>
     </div>

@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
+import { ServiceGate } from "@/lib/components/ServiceGate";
 import "../shared.css";
 
 interface Result {
@@ -13,6 +14,7 @@ interface Result {
 }
 
 export default function BroadsheetPage() {
+
   const [results, setResults] = useState<Result[]>([]);
   const [classes, setClasses] = useState<{ id: string; name: string; section?: string }[]>([]);
   const [classId, setClassId] = useState("");
@@ -120,6 +122,7 @@ export default function BroadsheetPage() {
                     {subjects.map((subj) => {
                       const cell = row?.get(subj);
                       return (
+    <ServiceGate slug="results">
                         <td key={subj} style={{ padding: "1.2rem 1rem", textAlign: "center" }}>
                           {cell?.score != null ? (
                             <span style={{ fontWeight: 700 }}>{cell.score}</span>
@@ -132,7 +135,8 @@ export default function BroadsheetPage() {
                             </span>
                           )}
                         </td>
-                      );
+                          </ServiceGate>
+  );
                     })}
                     <td style={{ padding: "1.2rem", textAlign: "center", fontWeight: 800, color: "#6A5ACD" }}>{avg}</td>
                   </tr>

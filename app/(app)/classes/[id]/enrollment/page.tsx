@@ -115,10 +115,11 @@ export default function ClassEnrollmentPage() {
 
       if (!res.ok) throw new Error("Failed to enroll students");
       const result = await res.json();
+      const data = result.data ?? result;
 
       setError(null);
       alert(
-        `✓ Enrolled: ${result.enrolled.length}, Duplicates: ${result.duplicates.length}, Failed: ${result.failed.length}`
+        `✓ Enrolled: ${data.enrolled?.length ?? 0}, Duplicates: ${data.duplicates?.length ?? 0}, Failed: ${data.failed?.length ?? 0}`
       );
 
       setSelectedStudents([]);

@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
+import { ServiceGate } from "@/lib/components/ServiceGate";
 import "../shared.css";
 
 interface Result {
@@ -21,6 +22,7 @@ interface ClassItem { id: string; name: string; section?: string; }
 const TERMS = ["First Term", "Second Term", "Third Term"];
 
 export default function ResultsPage() {
+
   const [results, setResults] = useState<Result[]>([]);
   const [classes, setClasses] = useState<ClassItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -106,6 +108,7 @@ export default function ResultsPage() {
   };
 
   return (
+    <ServiceGate slug="results">
     <div>
       <div className="page-header-row">
         <div className="page-header-text">
@@ -224,5 +227,6 @@ export default function ResultsPage() {
         )}
       </div>
     </div>
+      </ServiceGate>
   );
 }

@@ -23,12 +23,12 @@ export const GET = withAuth(async (req: NextRequest, { school }: AuthContext, pa
               COUNT(DISTINCT st.teacher_id) as teacher_count
        FROM class_subjects cs
        LEFT JOIN subjects s ON cs.subject_id = s.id
-       LEFT JOIN subject_teachers st ON st.subject_id = s.id AND st.class_id = ? AND st.academic_session = ?
+       LEFT JOIN subject_teachers st ON st.subject_id = s.id AND st.class_id = ?
        LEFT JOIN users u ON st.teacher_id = u.id
        WHERE cs.class_id = ? AND s.school_id = ? AND cs.academic_session = ?
        GROUP BY cs.id, cs.class_id, cs.subject_id, cs.is_compulsory, cs.sequence, cs.academic_session, s.id, s.name, s.code, s.description
        ORDER BY cs.sequence, s.name`,
-      [classId, session, classId, school.id, session]
+      [classId, classId, school.id, session]
     );
     return ok(subjects);
   } catch (err) {

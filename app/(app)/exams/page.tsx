@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { toast } from "sonner";
+import { ServiceGate } from "@/lib/components/ServiceGate";
 import "../shared.css";
 
 interface Exam {
@@ -24,6 +25,7 @@ const STATUS_COLORS: Record<string, string> = {
 };
 
 export default function ExamsPage() {
+
   const [exams, setExams] = useState<Exam[]>([]);
   const [loading, setLoading] = useState(true);
   const [publishing, setPublishing] = useState<string | null>(null);
@@ -63,6 +65,7 @@ export default function ExamsPage() {
   const draft = exams.filter((e) => e.status === "draft").length;
 
   return (
+    <ServiceGate slug="exams">
     <div>
       <div className="page-header-row">
         <div className="page-header-text">
@@ -168,5 +171,6 @@ export default function ExamsPage() {
         )}
       </div>
     </div>
+      </ServiceGate>
   );
 }

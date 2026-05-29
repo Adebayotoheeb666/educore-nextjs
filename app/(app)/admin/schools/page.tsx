@@ -37,6 +37,7 @@ interface SubscriptionModalProps {
 }
 
 function SubscriptionModal({ school, onClose, onSaved }: SubscriptionModalProps) {
+  const [activeTab, setActiveTab] = useState<"subscription" | "services">("subscription");
   const [form, setForm] = useState({
     status: school.subscription_status ?? "trial",
     plan: school.subscription_plan ?? "basic",
@@ -47,6 +48,32 @@ function SubscriptionModal({ school, onClose, onSaved }: SubscriptionModalProps)
       : "",
   });
   const [saving, setSaving] = useState(false);
+  const [services, setServices] = useState<any[]>([]);
+  const [loadingServices, setLoadingServices] = useState(false);
+  const [serviceActionSlug, setServiceActionSlug] = useState<string | null>(null);
+
+  const fetchServices = async () => {
+    setLoadingServices(true);
+    try {
+      const res = await fetch(`/api/admin/schools/${school.id}/services`, { credentials: "include" });
+      const data = await res.json();
+      if (res.ok) {
+        setServices(data.data?.services ?? []);
+      } else {
+        toast.error(data.message ?? "Failed to load services");
+      }
+    } catch {
+      toast.error("Failed to load services");
+    } finally {
+      setLoadingServices(false);
+    }
+  };
+
+  useEffect(() => {
+    if (activeTab === "services") {
+      fetchServices();
+    }
+  }, [activeTab]);
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -75,6 +102,30 @@ function SubscriptionModal({ school, onClose, onSaved }: SubscriptionModalProps)
     }
   };
 
+  const handleToggleService = async (slug: string, currentActive: boolean) => {
+    const action = currentActive ? "deactivate" : "activate";
+    setServiceActionSlug(slug);
+    try {
+      const res = await fetch(`/api/admin/schools/${school.id}/services`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ slug, action }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        toast.error(data.message ?? "Action failed");
+        return;
+      }
+      toast.success(data.message ?? `Service updated successfully`);
+      fetchServices();
+    } catch {
+      toast.error("Network error");
+    } finally {
+      setServiceActionSlug(null);
+    }
+  };
+
   return (
     <div
       style={{
@@ -86,90 +137,211 @@ function SubscriptionModal({ school, onClose, onSaved }: SubscriptionModalProps)
     >
       <div style={{
         background: "#fff", borderRadius: 16, padding: "3rem",
-        width: "100%", maxWidth: 520, maxHeight: "90vh", overflowY: "auto",
+        width: "100%", maxWidth: activeTab === "services" ? 720 : 520,
+        maxHeight: "90vh", overflowY: "auto", transition: "max-width 0.2s ease-in-out",
       }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "2.5rem" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "2rem" }}>
           <div>
             <h2 style={{ margin: "0 0 0.3rem", fontSize: "1.8rem", fontWeight: 800 }}>
-              Manage Subscription
+              Manage School Settings
             </h2>
             <p style={{ margin: 0, color: "#64748b", fontSize: "1.3rem" }}>{school.name}</p>
           </div>
           <button onClick={onClose} style={{ background: "none", border: "none", fontSize: "2rem", cursor: "pointer", color: "#94a3b8", lineHeight: 1 }}>✕</button>
         </div>
 
-        {/* School stats */}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "1rem", marginBottom: "2.5rem" }}>
-          {[
-            { label: "Students", value: school.student_count ?? "—" },
-            { label: "Teachers", value: school.teacher_count ?? "—" },
-            { label: "AI Used", value: school.used_ai_tokens != null ? `${((school.used_ai_tokens / (school.ai_token_budget || 1)) * 100).toFixed(0)}%` : "—" },
-          ].map((stat) => (
-            <div key={stat.label} style={{ textAlign: "center", padding: "1rem", background: "#f8fafc", borderRadius: 8 }}>
-              <p style={{ fontSize: "1.8rem", fontWeight: 800, margin: "0 0 0.2rem", color: "#1e293b" }}>{stat.value}</p>
-              <p style={{ margin: 0, fontSize: "1.1rem", color: "#64748b" }}>{stat.label}</p>
-            </div>
-          ))}
+        {/* Tabs navigation */}
+        <div style={{ display: "flex", borderBottom: "1px solid #e2e8f0", marginBottom: "2rem", gap: "1.5rem" }}>
+          <button
+            onClick={() => setActiveTab("subscription")}
+            style={{
+              padding: "0.8rem 0.2rem",
+              background: "none",
+              border: "none",
+              borderBottom: activeTab === "subscription" ? "2px solid #6A5ACD" : "2px solid transparent",
+              color: activeTab === "subscription" ? "#6A5ACD" : "#64748b",
+              fontWeight: 700,
+              fontSize: "1.3rem",
+              cursor: "pointer",
+            }}
+          >
+            Subscription Details
+          </button>
+          <button
+            onClick={() => setActiveTab("services")}
+            style={{
+              padding: "0.8rem 0.2rem",
+              background: "none",
+              border: "none",
+              borderBottom: activeTab === "services" ? "2px solid #6A5ACD" : "2px solid transparent",
+              color: activeTab === "services" ? "#6A5ACD" : "#64748b",
+              fontWeight: 700,
+              fontSize: "1.3rem",
+              cursor: "pointer",
+            }}
+          >
+            School Services
+          </button>
         </div>
 
-        <form onSubmit={handleSave}>
-          <div className="form-grid-2" style={{ marginBottom: "2rem" }}>
-            <div className="form-group">
-              <label>Subscription Status</label>
-              <select value={form.status} onChange={(e) => setForm((p) => ({ ...p, status: e.target.value }))}>
-                {STATUSES.map((s) => <option key={s} value={s}>{s.charAt(0).toUpperCase() + s.slice(1)}</option>)}
-              </select>
+        {activeTab === "subscription" ? (
+          <>
+            {/* School stats */}
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "1rem", marginBottom: "2.5rem" }}>
+              {[
+                { label: "Students", value: school.student_count ?? "—" },
+                { label: "Teachers", value: school.teacher_count ?? "—" },
+                { label: "AI Used", value: school.used_ai_tokens != null ? `${((school.used_ai_tokens / (school.ai_token_budget || 1)) * 100).toFixed(0)}%` : "—" },
+              ].map((stat) => (
+                <div key={stat.label} style={{ textAlign: "center", padding: "1rem", background: "#f8fafc", borderRadius: 8 }}>
+                  <p style={{ fontSize: "1.8rem", fontWeight: 800, margin: "0 0 0.2rem", color: "#1e293b" }}>{stat.value}</p>
+                  <p style={{ margin: 0, fontSize: "1.1rem", color: "#64748b" }}>{stat.label}</p>
+                </div>
+              ))}
             </div>
-            <div className="form-group">
-              <label>Plan</label>
-              <select value={form.plan} onChange={(e) => setForm((p) => ({ ...p, plan: e.target.value }))}>
-                {PLANS.map((p) => <option key={p} value={p}>{p.charAt(0).toUpperCase() + p.slice(1)}</option>)}
-              </select>
-            </div>
-            <div className="form-group">
-              <label>AI Token Budget</label>
-              <input
-                type="number"
-                value={form.aiTokenBudget}
-                onChange={(e) => setForm((p) => ({ ...p, aiTokenBudget: e.target.value }))}
-                min={0}
-              />
-            </div>
-            <div className="form-group">
-              <label>Used AI Tokens</label>
-              <input
-                type="number"
-                value={form.usedAiTokens}
-                onChange={(e) => setForm((p) => ({ ...p, usedAiTokens: e.target.value }))}
-                min={0}
-              />
-            </div>
-          </div>
-          <div className="form-group" style={{ marginBottom: "2.5rem" }}>
-            <label>Subscription Expires</label>
-            <input
-              type="date"
-              value={form.expiresAt}
-              onChange={(e) => setForm((p) => ({ ...p, expiresAt: e.target.value }))}
-            />
-          </div>
 
-          {/* Status colour hint */}
-          {form.status === "suspended" && (
-            <div style={{ background: "#fee2e2", border: "1px solid #fca5a5", borderRadius: 8, padding: "1rem 1.2rem", marginBottom: "1.5rem" }}>
-              <p style={{ margin: 0, fontSize: "1.3rem", color: "#dc2626" }}>
-                ⚠️ Suspending will prevent all school users from accessing the platform.
-              </p>
-            </div>
-          )}
+            <form onSubmit={handleSave}>
+              <div className="form-grid-2" style={{ marginBottom: "2rem" }}>
+                <div className="form-group">
+                  <label>Subscription Status</label>
+                  <select value={form.status} onChange={(e) => setForm((p) => ({ ...p, status: e.target.value }))}>
+                    {STATUSES.map((s) => <option key={s} value={s}>{s.charAt(0).toUpperCase() + s.slice(1)}</option>)}
+                  </select>
+                </div>
+                <div className="form-group">
+                  <label>Plan</label>
+                  <select value={form.plan} onChange={(e) => setForm((p) => ({ ...p, plan: e.target.value }))}>
+                    {PLANS.map((p) => <option key={p} value={p}>{p.charAt(0).toUpperCase() + p.slice(1)}</option>)}
+                  </select>
+                </div>
+                <div className="form-group">
+                  <label>AI Token Budget</label>
+                  <input
+                    type="number"
+                    value={form.aiTokenBudget}
+                    onChange={(e) => setForm((p) => ({ ...p, aiTokenBudget: e.target.value }))}
+                    min={0}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Used AI Tokens</label>
+                  <input
+                    type="number"
+                    value={form.usedAiTokens}
+                    onChange={(e) => setForm((p) => ({ ...p, usedAiTokens: e.target.value }))}
+                    min={0}
+                  />
+                </div>
+              </div>
+              <div className="form-group" style={{ marginBottom: "2.5rem" }}>
+                <label>Subscription Expires</label>
+                <input
+                  type="date"
+                  value={form.expiresAt}
+                  onChange={(e) => setForm((p) => ({ ...p, expiresAt: e.target.value }))}
+                />
+              </div>
 
-          <div style={{ display: "flex", gap: "1rem" }}>
-            <button type="button" onClick={onClose} className="btn-secondary" style={{ flex: 1 }}>Cancel</button>
-            <button type="submit" className="btn-primary" disabled={saving} style={{ flex: 1 }}>
-              {saving ? "Saving…" : "Save Changes"}
-            </button>
+              {/* Status colour hint */}
+              {form.status === "suspended" && (
+                <div style={{ background: "#fee2e2", border: "1px solid #fca5a5", borderRadius: 8, padding: "1rem 1.2rem", marginBottom: "1.5rem" }}>
+                  <p style={{ margin: 0, fontSize: "1.3rem", color: "#dc2626" }}>
+                    ⚠️ Suspending will prevent all school users from accessing the platform.
+                  </p>
+                </div>
+              )}
+
+              <div style={{ display: "flex", gap: "1rem" }}>
+                <button type="button" onClick={onClose} className="btn-secondary" style={{ flex: 1 }}>Cancel</button>
+                <button type="submit" className="btn-primary" disabled={saving} style={{ flex: 1 }}>
+                  {saving ? "Saving…" : "Save Changes"}
+                </button>
+              </div>
+            </form>
+          </>
+        ) : (
+          <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+            <p style={{ margin: 0, color: "#64748b", fontSize: "1.2rem" }}>
+              Manually activate or deactivate modules for this school. Super Admin overrides will apply instantly.
+            </p>
+            {loadingServices ? (
+              <div style={{ padding: "3rem", textAlign: "center", color: "#64748b", fontSize: "1.3rem" }}>
+                Loading services…
+              </div>
+            ) : (
+              <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                {services.map((svc) => {
+                  const isActive = svc.subscription_status === "active";
+                  const isCompulsory = Boolean(svc.is_compulsory);
+                  const isBusy = serviceActionSlug === svc.slug;
+
+                  return (
+                    <div
+                      key={svc.id}
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        padding: "1.2rem 1.5rem",
+                        border: "1px solid #e2e8f0",
+                        borderRadius: 10,
+                        background: isActive ? "#f8fafd" : "#fff",
+                      }}
+                    >
+                      <div style={{ flex: 1, paddingRight: "1.5rem" }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: "0.8rem", marginBottom: "0.3rem" }}>
+                          <span style={{ fontWeight: 700, fontSize: "1.3rem", color: "#1e293b" }}>{svc.name}</span>
+                          <span
+                            style={{
+                              fontSize: "1rem",
+                              padding: "0.15rem 0.5rem",
+                              borderRadius: 12,
+                              fontWeight: 700,
+                              background: isCompulsory ? "#dcfce7" : (isActive ? "#e0f2fe" : "#f1f5f9"),
+                              color: isCompulsory ? "#15803d" : (isActive ? "#0369a1" : "#475569"),
+                            }}
+                          >
+                            {isCompulsory ? "Core Service" : (isActive ? "Active" : "Inactive")}
+                          </span>
+                        </div>
+                        <p style={{ margin: 0, color: "#64748b", fontSize: "1.15rem", lineHeight: 1.4 }}>{svc.description}</p>
+                      </div>
+                      <div>
+                        {isCompulsory ? (
+                          <span style={{ fontSize: "1.15rem", color: "#16a34a", fontWeight: 600 }}>Included</span>
+                        ) : (
+                          <button
+                            onClick={() => handleToggleService(svc.slug, isActive)}
+                            disabled={isBusy}
+                            style={{
+                              padding: "0.5rem 1.2rem",
+                              borderRadius: 6,
+                              border: "none",
+                              cursor: isBusy ? "wait" : "pointer",
+                              fontWeight: 700,
+                              fontSize: "1.15rem",
+                              background: isActive ? "#fee2e2" : "#6A5ACD",
+                              color: isActive ? "#dc2626" : "#fff",
+                              transition: "opacity 0.15s",
+                              opacity: isBusy ? 0.7 : 1,
+                            }}
+                          >
+                            {isBusy ? "…" : (isActive ? "Deactivate" : "Activate")}
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+            <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "1rem" }}>
+              <button type="button" onClick={onClose} className="btn-secondary" style={{ padding: "0.8rem 2rem" }}>
+                Close
+              </button>
+            </div>
           </div>
-        </form>
+        )}
       </div>
     </div>
   );

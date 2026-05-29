@@ -27,7 +27,7 @@ export default function SubjectDetailPage() {
     ]).then(([sd, td]) => {
       setSubject(sd.data ?? null);
       const classTeachersOnly = (Array.isArray(td.data) ? td.data : []).filter(
-        (t) => t.role === "class_teacher"
+        (t: Teacher) => t.role === "class_teacher"
       );
       setAllTeachers(classTeachersOnly);
     }).catch(() => toast.error("Failed to load subject"))

@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { toast } from "sonner";
+import { ServiceGate } from "@/lib/components/ServiceGate";
 import "../shared.css";
 
 interface LessonPlan {
@@ -25,6 +26,7 @@ const STATUS_CLASS: Record<string, string> = {
 };
 
 export default function LessonPlansPage() {
+
   const [plans, setPlans] = useState<LessonPlan[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
@@ -59,6 +61,7 @@ export default function LessonPlansPage() {
   };
 
   return (
+    <ServiceGate slug="lesson-plans">
     <div>
       <div className="page-header-row">
         <div className="page-header-text">
@@ -158,5 +161,6 @@ export default function LessonPlansPage() {
         )}
       </div>
     </div>
+      </ServiceGate>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { ServiceGate } from "@/lib/components/ServiceGate";
 import "../../shared.css";
 
 interface FeeItem { name: string; amount: number | string; }
@@ -20,6 +21,7 @@ const TERMS = ["First Term", "Second Term", "Third Term"];
 const EMPTY_FORM = { title: "", term: "First Term", session: "2024/2025", classId: "", dueDate: "" };
 
 export default function FeeSchedulesPage() {
+
   const [schedules, setSchedules] = useState<FeeSchedule[]>([]);
   const [classes, setClasses] = useState<ClassItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -100,6 +102,7 @@ export default function FeeSchedulesPage() {
   };
 
   return (
+    <ServiceGate slug="fees">
     <div>
       <div className="page-header-row">
         <div className="page-header-text">
@@ -232,5 +235,6 @@ export default function FeeSchedulesPage() {
         )}
       </div>
     </div>
+      </ServiceGate>
   );
 }

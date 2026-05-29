@@ -54,13 +54,42 @@ export const POST = withAuth(
       if (!classDoc) return notFound("Class not found");
 
       const id = generateId();
+      const finalStatus = status || "active";
       await execute(
         `INSERT INTO students_classes (id, student_id, class_id, academic_session, term, status, enrolled_date, created_at, updated_at)
          VALUES (?, ?, ?, ?, ?, ?, datetime('now'), datetime('now'), datetime('now'))`,
-        [id, studentId, classId, academicSession, term || null, status || "active"]
+        [id, studentId, classId, academicSession, term || null, finalStatus]
       );
 
-      return created({ id, studentId, classId, academicSession, status: status || "active" });
+      // Keep users.class_id and compulsory subject enrollments in sync
+      if (finalStatus === "active") {
+        await execute(
+          "UPDATE users SET class_id = ?, updated_at = datetime('now') WHERE id = ?",
+          [classId, studentId]
+        );
+
+        // Auto-enroll in all compulsory subjects in this class
+        const compulsorySubjects = await query(
+          "SELECT subject_id FROM class_subjects WHERE class_id = ? AND academic_session = ? AND is_compulsory = 1",
+          [classId, academicSession]
+        );
+
+        for (const subject of compulsorySubjects || []) {
+          try {
+            const subjectId = (subject as any).subject_id;
+            const subjectEnrollmentId = generateId();
+            await execute(
+              `INSERT INTO student_subjects (id, student_id, subject_id, class_id, academic_session, term, status, enrolled_date, created_at, updated_at)
+               VALUES (?, ?, ?, ?, ?, ?, 'active', datetime('now'), datetime('now'), datetime('now'))`,
+              [subjectEnrollmentId, studentId, subjectId, classId, academicSession, term || null]
+            );
+          } catch (err) {
+            // Silently skip if already enrolled
+          }
+        }
+      }
+
+      return created({ id, studentId, classId, academicSession, status: finalStatus });
     } catch (err) {
       return serverError(err);
     }

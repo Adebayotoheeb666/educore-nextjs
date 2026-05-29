@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { authenticatedFetch } from "@/lib/utils/fetch";
 import { useAppSelector } from "@/redux/hooks";
+import { useActiveServices } from "@/lib/hooks/useActiveServices";
 
 const formatNaira = (n?: number | null) => `₦${Number(n ?? 0).toLocaleString()}`;
 
@@ -37,16 +38,16 @@ const ADMIN_ROLES = ["school_owner", "principal", "vp_academics", "vp_admin", "a
 const QUICK_ACTIONS = [
   { href: "/students/add",          icon: "➕", label: "Add Student" },
   { href: "/teachers/add",          icon: "👩‍🏫", label: "Add Teacher" },
-  { href: "/attendance",            icon: "✅", label: "Attendance" },
-  { href: "/exams/create",          icon: "📝", label: "Create Exam" },
-  { href: "/fees/collection",       icon: "💰", label: "Record Payment" },
-  { href: "/announcements/create",  icon: "📢", label: "Announcement" },
-  { href: "/lesson-plans",          icon: "📋", label: "Lesson Plans" },
-  { href: "/timetable",             icon: "🗓️",  label: "Timetable" },
+  { href: "/attendance",            icon: "✅", label: "Attendance",      serviceSlug: "attendance" },
+  { href: "/exams/create",          icon: "📝", label: "Create Exam",     serviceSlug: "exams" },
+  { href: "/fees/collection",       icon: "💰", label: "Record Payment",  serviceSlug: "fees" },
+  { href: "/announcements/create",  icon: "📢", label: "Announcement",    serviceSlug: "announcements" },
+  { href: "/lesson-plans",          icon: "📋", label: "Lesson Plans",    serviceSlug: "lesson-plans" },
+  { href: "/timetable",             icon: "🗓️",  label: "Timetable",       serviceSlug: "timetable" },
   { href: "/classes",               icon: "🏫", label: "Classes" },
-  { href: "/analytics",             icon: "📈", label: "Analytics" },
-  { href: "/broadsheet",            icon: "📄", label: "Broadsheet" },
-  { href: "/library",               icon: "📖", label: "Library" },
+  { href: "/analytics",             icon: "📈", label: "Analytics",       serviceSlug: "analytics" },
+  { href: "/broadsheet",            icon: "📄", label: "Broadsheet",      serviceSlug: "results" },
+  { href: "/library",               icon: "📖", label: "Library",         serviceSlug: "library" },
 ];
 
 function StatCard({
@@ -91,6 +92,7 @@ function StatCard({
 
 export default function DashboardPage() {
   const { user } = useAppSelector((s) => s.auth);
+  const { hasService } = useActiveServices();
   const [stats, setStats] = useState<Stats | null>(null);
   const [school, setSchool] = useState<School | null>(null);
   const [loading, setLoading] = useState(true);
@@ -181,29 +183,37 @@ export default function DashboardPage() {
             <StatCard label="Teachers"   value={stats?.totalTeachers}  icon="🎓" href="/teachers" />
             <StatCard label="Parents"    value={stats?.totalParents}   icon="👪" href="/parents" />
             <StatCard label="Classes"    value={stats?.totalClasses}   icon="🏫" href="/classes" />
-            <StatCard
-              label="Attendance"
-              value={stats?.avgAttendance != null ? `${stats.avgAttendance}%` : "—"}
-              sub="School average"
-              icon="✅"
-              isSuccess={(stats?.avgAttendance ?? 0) >= 75}
-              href="/attendance"
-            />
-            <StatCard
-              label="Fee collection"
-              value={stats?.collectionRate != null ? `${stats.collectionRate}%` : "—"}
-              sub={formatNaira(stats?.feeCollected)}
-              icon="💳"
-              href="/fees/collection"
-            />
-            <StatCard
-              label="Fee defaulters"
-              value={stats?.feeDefaulters}
-              icon="💸"
-              isDanger={(stats?.feeDefaulters ?? 0) > 0}
-              href="/fees/defaulters"
-            />
-            <StatCard label="Subjects" value={stats?.totalSubjects} icon="📚" href="/subjects" />
+            {hasService("attendance") && (
+              <StatCard
+                label="Attendance"
+                value={stats?.avgAttendance != null ? `${stats.avgAttendance}%` : "—"}
+                sub="School average"
+                icon="✅"
+                isSuccess={(stats?.avgAttendance ?? 0) >= 75}
+                href="/attendance"
+              />
+            )}
+            {hasService("fees") && (
+              <StatCard
+                label="Fee collection"
+                value={stats?.collectionRate != null ? `${stats.collectionRate}%` : "—"}
+                sub={formatNaira(stats?.feeCollected)}
+                icon="💳"
+                href="/fees/collection"
+              />
+            )}
+            {hasService("fees") && (
+              <StatCard
+                label="Fee defaulters"
+                value={stats?.feeDefaulters}
+                icon="💸"
+                isDanger={(stats?.feeDefaulters ?? 0) > 0}
+                href="/fees/defaulters"
+              />
+            )}
+            {hasService("subjects") && (
+              <StatCard label="Subjects" value={stats?.totalSubjects} icon="📚" href="/subjects" />
+            )}
           </section>
 
           <div className="dashboard-grid">
@@ -289,54 +299,15 @@ export default function DashboardPage() {
               <div className="quick-controls-card">
                 <h3>Quick controls</h3>
                 <div className="quick-controls-grid">
-                  <Link href="/students/add" className="quick-control-btn">
-                    <span>➕</span>
-                    <span>Add Student</span>
-                  </Link>
-                  <Link href="/teachers/add" className="quick-control-btn">
-                    <span>👩‍🏫</span>
-                    <span>Add Teacher</span>
-                  </Link>
-                  <Link href="/attendance" className="quick-control-btn">
-                    <span>✅</span>
-                    <span>Attendance</span>
-                  </Link>
-                  <Link href="/exams/create" className="quick-control-btn">
-                    <span>📝</span>
-                    <span>Create Exam</span>
-                  </Link>
-                  <Link href="/fees/collection" className="quick-control-btn">
-                    <span>💰</span>
-                    <span>Record Payment</span>
-                  </Link>
-                  <Link href="/announcements/create" className="quick-control-btn">
-                    <span>📢</span>
-                    <span>Announcement</span>
-                  </Link>
-                  <Link href="/lesson-plans" className="quick-control-btn">
-                    <span>📋</span>
-                    <span>Lesson Plans</span>
-                  </Link>
-                  <Link href="/timetable" className="quick-control-btn">
-                    <span>🗓️</span>
-                    <span>Timetable</span>
-                  </Link>
-                  <Link href="/classes" className="quick-control-btn">
-                    <span>🏫</span>
-                    <span>Classes</span>
-                  </Link>
-                  <Link href="/analytics" className="quick-control-btn">
-                    <span>📈</span>
-                    <span>Analytics</span>
-                  </Link>
-                  <Link href="/broadsheet" className="quick-control-btn">
-                    <span>📄</span>
-                    <span>Broadsheet</span>
-                  </Link>
-                  <Link href="/library" className="quick-control-btn">
-                    <span>📖</span>
-                    <span>Library</span>
-                  </Link>
+                  {QUICK_ACTIONS
+                    .filter((a) => !a.serviceSlug || hasService(a.serviceSlug))
+                    .map((a) => (
+                      <Link key={a.href} href={a.href} className="quick-control-btn">
+                        <span>{a.icon}</span>
+                        <span>{a.label}</span>
+                      </Link>
+                    ))
+                  }
                 </div>
               </div>
 

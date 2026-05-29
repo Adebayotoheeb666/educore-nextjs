@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { toast } from "sonner";
+import { ServiceGate } from "@/lib/components/ServiceGate";
 import "../shared.css";
 
 interface TimetableSlot {
@@ -21,6 +22,7 @@ const DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 const TERMS = ["First Term", "Second Term", "Third Term"];
 
 export default function TimetablePage() {
+
   const [slots, setSlots] = useState<TimetableSlot[]>([]);
   const [classes, setClasses] = useState<ClassItem[]>([]);
   const [selectedClass, setSelectedClass] = useState("");
@@ -146,6 +148,7 @@ export default function TimetablePage() {
                     {times.map((t) => {
                       const slot = byDay[day].find((s) => s.start_time === t);
                       return (
+    <ServiceGate slug="timetable">
                         <td key={t} style={{ minWidth: 140 }}>
                           {slot ? (
                             <div style={{ background: "#f3f0ff", borderRadius: 8, padding: "0.8rem 1rem" }}>
@@ -162,7 +165,8 @@ export default function TimetablePage() {
                             <span style={{ color: "#e2e8f0", fontSize: "1.2rem" }}>—</span>
                           )}
                         </td>
-                      );
+                          </ServiceGate>
+  );
                     })}
                   </tr>
                 ))}

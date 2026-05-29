@@ -20,7 +20,7 @@ export const GET = withAuth(async (_req: NextRequest, { school }: AuthContext, p
 
     if (!student || student.length === 0) return notFound("Student not found");
 
-    const classId = student[0]?.class_id;
+    const classId = (student[0]?.class_id ?? "") as string;
     if (!classId) return ok([]);
 
     // Get subjects from student_subjects (which are explicitly enrolled)

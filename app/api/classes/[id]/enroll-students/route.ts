@@ -44,6 +44,20 @@ export const POST = withAuth(
             continue;
           }
 
+          // Mark any existing active enrollment in this session for this student as transferred
+          await execute(
+            `UPDATE students_classes SET status = 'transferred', left_date = datetime('now'), updated_at = datetime('now')
+             WHERE student_id = ? AND academic_session = ? AND status = 'active'`,
+            [studentId, session]
+          );
+
+          // Mark any existing active subjects in this session for this student as transferred
+          await execute(
+            `UPDATE student_subjects SET status = 'transferred', updated_at = datetime('now')
+             WHERE student_id = ? AND academic_session = ? AND status = 'active'`,
+            [studentId, session]
+          );
+
           const id = generateId();
           await execute(
             `INSERT INTO students_classes (id, student_id, class_id, academic_session, term, status, enrolled_date, created_at, updated_at)
@@ -70,6 +84,12 @@ export const POST = withAuth(
               // Silently skip if already enrolled
             }
           }
+
+          // Keep users.class_id in sync
+          await execute(
+            "UPDATE users SET class_id = ?, updated_at = datetime('now') WHERE id = ?",
+            [classId, studentId]
+          );
 
           results.enrolled.push(studentId);
         } catch (err) {

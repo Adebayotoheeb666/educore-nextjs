@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { toast } from "sonner";
+import { ServiceGate } from "@/lib/components/ServiceGate";
 import "../shared.css";
 
 interface Book {
@@ -18,6 +19,7 @@ interface Book {
 const PAGE_SIZE = 12;
 
 export default function LibraryPage() {
+
   const [books, setBooks] = useState<Book[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
@@ -80,6 +82,7 @@ export default function LibraryPage() {
   const borrowedBooks = books.reduce((s, b) => s + Math.max(0, (Number(b.quantity) || 0) - (Number(b.available_quantity) || Number(b.quantity) || 0)), 0);
 
   return (
+    <ServiceGate slug="library">
     <div>
       <div className="page-header-row">
         <div className="page-header-text">
@@ -211,5 +214,6 @@ export default function LibraryPage() {
         )}
       </div>
     </div>
+      </ServiceGate>
   );
 }

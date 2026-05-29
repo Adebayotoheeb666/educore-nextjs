@@ -137,12 +137,12 @@ export default function ProfilePage() {
           </button>
           <input ref={fileRef} type="file" accept="image/*" style={{ display: "none" }} onChange={handleAvatarChange} />
         </div>
-        <div>
-          <h2 style={{ fontSize: "2.4rem", fontWeight: 800, margin: 0 }}>{displayName}</h2>
-          <p style={{ color: "#64748b", margin: "0.4rem 0 0", fontSize: "1.4rem" }}>
+        <div style={{ minWidth: 0, width: "100%" }}>
+          <h2 style={{ fontSize: "clamp(1.8rem, 4vw + 1rem, 2.4rem)", fontWeight: 800, margin: 0, wordBreak: "break-word" }}>{displayName}</h2>
+          <p style={{ color: "#64748b", margin: "0.4rem 0 0", fontSize: "clamp(1.1rem, 2vw + 0.5rem, 1.4rem)" }}>
             {user?.role?.replace(/_/g, " ").toUpperCase() ?? "USER"}
           </p>
-          <p style={{ color: "#94a3b8", margin: "0.2rem 0 0", fontSize: "1.2rem" }}>
+          <p style={{ color: "#94a3b8", margin: "0.2rem 0 0", fontSize: "clamp(1rem, 1.5vw + 0.4rem, 1.2rem)" }}>
             Click the pencil icon to update your photo
           </p>
         </div>

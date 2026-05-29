@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
+import { ServiceGate } from "@/lib/components/ServiceGate";
 import "../../shared.css";
 
 interface Defaulter {
@@ -16,6 +17,7 @@ interface Defaulter {
 }
 
 export default function FeeDefaultersPage() {
+
   const [defaulters, setDefaulters] = useState<Defaulter[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
@@ -41,6 +43,7 @@ export default function FeeDefaultersPage() {
   const totalOutstanding = filtered.reduce((s, d) => s + (Number(d.outstanding) || 0), 0);
 
   return (
+    <ServiceGate slug="fees">
     <div>
       <div className="page-header-row">
         <div className="page-header-text">
@@ -119,5 +122,6 @@ export default function FeeDefaultersPage() {
         )}
       </div>
     </div>
+      </ServiceGate>
   );
 }

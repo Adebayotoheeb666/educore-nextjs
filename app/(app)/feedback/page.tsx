@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { ServiceGate } from "@/lib/components/ServiceGate";
 import "../shared.css";
 
 interface FeedbackItem {
@@ -15,6 +16,7 @@ interface FeedbackItem {
 }
 
 export default function FeedbackPage() {
+
   const [items, setItems] = useState<FeedbackItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
@@ -58,6 +60,7 @@ export default function FeedbackPage() {
   const stars = (n?: number) => "★".repeat(n ?? 0) + "☆".repeat(5 - (n ?? 0));
 
   return (
+    <ServiceGate slug="feedback">
     <div>
       <div className="page-header-row">
         <div className="page-header-text">
@@ -128,5 +131,6 @@ export default function FeedbackPage() {
         </div>
       )}
     </div>
+      </ServiceGate>
   );
 }

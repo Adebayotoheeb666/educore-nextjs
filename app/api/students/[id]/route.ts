@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { queryOne, execute } from "@/lib/db/turso";
+import { query, queryOne, execute } from "@/lib/db/turso";
 import { withAuth, type AuthContext } from "@/lib/middleware/auth";
 import { notFound, ok, serverError } from "@/lib/utils/response";
 import { generateId } from "@/lib/utils/id";
@@ -37,13 +37,13 @@ export const PATCH = withAuth(
       if (!school) return notFound("School not found");
       const id = params?.id ?? "";
       const existing = await queryOne(
-        "SELECT id, first_name, last_name FROM users WHERE id = ? AND school_id = ? AND role = 'student'",
+        "SELECT id, first_name, last_name, class_id FROM users WHERE id = ? AND school_id = ? AND role = 'student'",
         [id, school.id]
       );
       if (!existing) return notFound("Student not found");
 
       const { firstName, lastName, email, dob, gender, classId, parentId, isActive, avatar, address, stateOfOrigin } = await req.json();
-      const ex = existing as { first_name: string | null; last_name: string | null };
+      const ex = existing as { first_name: string | null; last_name: string | null; class_id: string | null };
       const newFirst = firstName ?? ex.first_name ?? "";
       const newLast = lastName ?? ex.last_name ?? "";
 
@@ -62,7 +62,7 @@ export const PATCH = withAuth(
          dob || null, gender !== undefined ? gender : null,
          isActive !== undefined ? (isActive ? 1 : 0) : null,
          avatar || null,
-         classId || null,
+         classId !== undefined ? classId : null,
          address || null,
          stateOfOrigin || null];
 
@@ -77,6 +77,76 @@ export const PATCH = withAuth(
         `UPDATE users SET ${setClauses} WHERE id = ?`,
         args
       );
+
+      // Keep class enrollment and subject enrollment in sync
+      if (classId !== undefined && classId !== ex.class_id) {
+        const session = school.academic_session || new Date().getFullYear().toString();
+
+        if (ex.class_id) {
+          // Mark old enrollment in the current academic session as transferred
+          await execute(
+            `UPDATE students_classes SET status = 'transferred', left_date = datetime('now'), updated_at = datetime('now')
+             WHERE student_id = ? AND class_id = ? AND academic_session = ? AND status = 'active'`,
+            [id, ex.class_id, session]
+          );
+
+          // Mark old subjects in current session as transferred
+          await execute(
+            `UPDATE student_subjects SET status = 'transferred', updated_at = datetime('now')
+             WHERE student_id = ? AND class_id = ? AND academic_session = ? AND status = 'active'`,
+            [id, ex.class_id, session]
+          );
+        }
+
+        if (classId) {
+          // Check if there is an existing enrollment in the new class
+          const newExisting = await queryOne(
+            "SELECT id FROM students_classes WHERE student_id = ? AND class_id = ? AND academic_session = ?",
+            [id, classId, session]
+          );
+
+          if (!newExisting) {
+            const enrollmentId = generateId();
+            await execute(
+              `INSERT INTO students_classes (id, student_id, class_id, academic_session, status, enrolled_date, created_at, updated_at)
+               VALUES (?, ?, ?, ?, 'active', datetime('now'), datetime('now'), datetime('now'))`,
+              [enrollmentId, id, classId, session]
+            );
+          } else {
+            // Update its status back to active
+            await execute(
+              `UPDATE students_classes SET status = 'active', left_date = null, updated_at = datetime('now')
+               WHERE student_id = ? AND class_id = ? AND academic_session = ?`,
+              [id, classId, session]
+            );
+          }
+
+          // Auto-enroll in compulsory subjects for this new class
+          const compulsorySubjects = await query(
+            "SELECT subject_id FROM class_subjects WHERE class_id = ? AND academic_session = ? AND is_compulsory = 1",
+            [classId, session]
+          );
+
+          for (const subject of compulsorySubjects || []) {
+            const subjectId = (subject as any).subject_id;
+            const subjectEnrollmentId = generateId();
+            try {
+              await execute(
+                `INSERT INTO student_subjects (id, student_id, subject_id, class_id, academic_session, status, enrolled_date, created_at, updated_at)
+                 VALUES (?, ?, ?, ?, ?, 'active', datetime('now'), datetime('now'), datetime('now'))`,
+                [subjectEnrollmentId, id, subjectId, classId, session]
+              );
+            } catch (err) {
+              // already enrolled or constraints, update status to active
+              await execute(
+                `UPDATE student_subjects SET status = 'active', updated_at = datetime('now')
+                 WHERE student_id = ? AND subject_id = ? AND class_id = ? AND academic_session = ?`,
+                [id, subjectId, classId, session]
+              );
+            }
+          }
+        }
+      }
 
       if (parentId) {
         const parentRecord = await queryOne(

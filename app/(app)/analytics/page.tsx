@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { ServiceGate } from "@/lib/components/ServiceGate";
 import "../shared.css";
 
 interface DashboardStats {
@@ -38,6 +39,7 @@ const fmt = (n?: number | null) => `₦${Number(n ?? 0).toLocaleString()}`;
 const pct = (n?: number | null) => `${Number(n ?? 0).toFixed(1)}%`;
 
 export default function AnalyticsPage() {
+
   const [dashboard, setDashboard] = useState<DashboardStats | null>(null);
   const [feeData, setFeeData] = useState<FeeAnalytics | null>(null);
   const [attendanceData, setAttendanceData] = useState<AttendanceAnalytics | null>(null);
@@ -84,6 +86,7 @@ export default function AnalyticsPage() {
   }
 
   return (
+    <ServiceGate slug="analytics">
     <div>
       <div className="page-header-row">
         <div className="page-header-text">
@@ -207,5 +210,6 @@ export default function AnalyticsPage() {
         </div>
       </div>
     </div>
+      </ServiceGate>
   );
 }
