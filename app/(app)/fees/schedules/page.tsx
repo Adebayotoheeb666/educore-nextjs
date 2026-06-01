@@ -67,7 +67,13 @@ export default function FeeSchedulesPage() {
     });
     setItems(s.items?.length ? s.items.map((i) => ({ name: i.name, amount: String(i.amount) })) : [{ name: "Tuition", amount: "" }]);
     setShowForm(true);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    try {
+      if (typeof window !== "undefined" && typeof window.scrollTo === "function") {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    } catch (_) {
+      // ignore in restricted environments (SSR / WebView without scroll API)
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {

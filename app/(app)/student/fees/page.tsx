@@ -43,27 +43,41 @@ export default function StudentFeesPage() {
 
       const { authorizationUrl, reference, amount } = json.data;
 
-      if (!window.PaystackPop) {
-        window.open(authorizationUrl, "_blank");
-        return;
-      }
+      try {
+        if (typeof window === "undefined") {
+          toast.info("Open the payment link in an external browser: " + authorizationUrl);
+          return;
+        }
 
-      window.PaystackPop.setup({
-        key: publicKey,
-        email: user.email,
-        amount: amount * 100,
-        ref: reference,
-        onClose: () => toast.info("Payment window closed"),
-        callback: async (response) => {
-          const verify = await fetch(`/api/payments/verify?reference=${response.reference}`, { credentials: "include" }).then((r) => r.json());
-          if (verify.data?.verified) {
-            toast.success("Payment confirmed!");
-            setFees((prev) => prev.map((f) => f.id === fee.id ? { ...f, is_paid: true, paid_amount: amount } : f));
-          } else {
-            toast.error("Could not verify payment");
+        if (!window.PaystackPop) {
+          try {
+            window.open(authorizationUrl, "_blank");
+            return;
+          } catch (err) {
+            toast.error("Unable to open payment link in this environment");
+            return;
           }
-        },
-      }).openIframe();
+        }
+
+        window.PaystackPop.setup({
+          key: publicKey,
+          email: user.email,
+          amount: amount * 100,
+          ref: reference,
+          onClose: () => toast.info("Payment window closed"),
+          callback: async (response) => {
+            const verify = await fetch(`/api/payments/verify?reference=${response.reference}`, { credentials: "include" }).then((r) => r.json());
+            if (verify.data?.verified) {
+              toast.success("Payment confirmed!");
+              setFees((prev) => prev.map((f) => f.id === fee.id ? { ...f, is_paid: true, paid_amount: amount } : f));
+            } else {
+              toast.error("Could not verify payment");
+            }
+          },
+        }).openIframe();
+      } catch (err: unknown) {
+        toast.error(err instanceof Error ? err.message : "Payment failed");
+      }
     } catch (err: unknown) {
       toast.error(err instanceof Error ? err.message : "Payment failed");
     } finally {

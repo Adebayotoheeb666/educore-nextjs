@@ -102,8 +102,14 @@ export default function SchoolServicesPage() {
         
         if (!paymentRes.ok) throw new Error(paymentResult.message || paymentJson.message || "Payment initialization failed");
 
-        // Redirect to Paystack
-        window.location.href = paymentResult.authorizationUrl;
+        // Redirect to Paystack (guarded for SSR / WebView)
+        try {
+          if (typeof window !== "undefined" && paymentResult?.authorizationUrl) {
+            window.location.href = paymentResult.authorizationUrl;
+          }
+        } catch (err) {
+          // In environments without full browser navigation, consider opening in system browser via native bridge
+        }
         return;
       }
 

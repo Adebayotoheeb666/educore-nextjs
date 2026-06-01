@@ -426,15 +426,15 @@ export default function ClassEnrollmentPage() {
           border: 1px solid #e2e8f0;
           border-radius: 10px;
           font-size: 1.3rem;
-          background: white;
-          color: #0f172a;
+          background: var(--bg-card);
+          color: var(--text-main);
           outline: none;
           transition: all 0.15s;
         }
 
         .enrollment-input:focus {
           border-color: #6A5ACD;
-          background: white;
+          background: var(--bg-card);
           box-shadow: 0 0 0 3px rgba(106, 90, 205, 0.1);
         }
 
@@ -448,8 +448,8 @@ export default function ClassEnrollmentPage() {
           border: 1px solid #e2e8f0;
           border-radius: 10px;
           font-size: 1.3rem;
-          background: white;
-          color: #0f172a;
+          background: var(--bg-card);
+          color: var(--text-main);
           outline: none;
           transition: all 0.15s;
         }
@@ -473,7 +473,7 @@ export default function ClassEnrollmentPage() {
           align-items: flex-start;
           gap: 1rem;
           padding: 1.2rem;
-          background: white;
+          background: var(--bg-card);
           border: 1px solid #e2e8f0;
           border-radius: 10px;
           cursor: pointer;

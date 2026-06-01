@@ -258,7 +258,7 @@ export default function ClassOverviewPage() {
         .quick-link-btn {
           padding: 16px;
           text-align: center;
-          background: white;
+          background: var(--bg-card);
           border: 2px solid #667eea;
           border-radius: 6px;
           color: #667eea;

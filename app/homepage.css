@@ -105,7 +105,7 @@
 
 .homepage-wrapper {
   font-family: var(--font-inter, 'Inter', sans-serif);
-  color: #111827;
+  color: var(--text-main);
   overflow-x: hidden;
 }
 
@@ -184,7 +184,7 @@
    1. HERO
    ======================================================== */
 .hp-hero {
-  background: #fff;
+  background: var(--bg-card);
   padding: 13rem 0 7rem;
   position: relative;
   overflow: hidden;
@@ -206,7 +206,7 @@
   font-size: 2.8rem;
   font-weight: 800;
   line-height: 1.12;
-  color: #0f172a;
+  color: var(--text-main);
   margin-bottom: 2rem;
 }
 
@@ -329,7 +329,7 @@
 .hp-section-head h2 {
   font-size: 3.4rem;
   font-weight: 800;
-  color: #0f172a;
+  color: var(--text-main);
   margin-bottom: 1.2rem;
 }
 
@@ -364,7 +364,7 @@
 
 /* Light variant */
 .hp-feat-card--light {
-  background: #fff;
+  background: var(--bg-card);
   border: 1px solid #e5e7eb;
 }
 
@@ -417,7 +417,7 @@
 .hp-feat-card h3 {
   font-size: 2rem;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--text-main);
   margin: 0;
 }
 
@@ -468,7 +468,7 @@
    ======================================================== */
 .hp-teachers {
   padding: 9rem 0;
-  background: #fff;
+  background: var(--bg-card);
 }
 
 .hp-teachers__inner {
@@ -484,7 +484,7 @@
 .hp-teachers__left h2 {
   font-size: 4rem;
   font-weight: 800;
-  color: #0f172a;
+  color: var(--text-main);
   line-height: 1.15;
   margin-bottom: 2rem;
 }
@@ -533,7 +533,7 @@
 .hp-check-list li strong {
   font-size: 1.65rem;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--text-main);
 }
 
 .hp-check-list li span {
@@ -650,7 +650,7 @@
   position: absolute;
   bottom: 2.5rem;
   right: 0;
-  background: #fff;
+  background: var(--bg-card);
   border-radius: 14px;
   padding: 1.4rem 1.8rem;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
@@ -672,7 +672,7 @@
 
 .hp-parents__phone-badge strong {
   font-weight: 700;
-  color: #0f172a;
+  color: var(--text-main);
 }
 
 .hp-parents__right {
@@ -682,7 +682,7 @@
 .hp-parents__right h2 {
   font-size: 4rem;
   font-weight: 800;
-  color: #0f172a;
+  color: var(--text-main);
   line-height: 1.15;
   margin-bottom: 2rem;
 }
@@ -704,7 +704,7 @@
   display: flex;
   align-items: flex-start;
   gap: 1.6rem;
-  background: #fff;
+  background: var(--bg-card);
   border: 1px solid #e5e7eb;
   border-radius: 14px;
   padding: 2rem 2.4rem;
@@ -723,7 +723,7 @@
 .hp-parents__feat h4 {
   font-size: 1.7rem;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--text-main);
   margin-bottom: 0.5rem;
 }
 
@@ -909,7 +909,7 @@
 }
 
 .hp-comms-msg--out {
-  background: #fff;
+  background: var(--bg-card);
   color: #374151;
   border: 1px solid #e5e7eb;
 }
@@ -1052,7 +1052,7 @@
     top: 100%;
     left: 0;
     width: 100%;
-    background: #fff;
+    background: var(--bg-card);
     padding: 2rem 2.4rem;
     box-shadow: 0 8px 24px rgba(0,0,0,0.08);
     gap: 2rem;
@@ -1630,7 +1630,7 @@
   text-decoration: none;
   font-size: 2rem;
   font-weight: 800;
-  color: #0f172a;
+  color: var(--text-main);
   letter-spacing: -0.02em;
   white-space: nowrap;
 }
@@ -1816,7 +1816,7 @@
 }
 
 .btn-secondary-web {
-  background: white;
+  background: var(--bg-card);
   color: var(--brand-color);
   padding: 1.5rem 3.5rem;
   border-radius: 50px;
@@ -1831,7 +1831,7 @@
 /* Features Section */
 .features-section {
   padding: 10rem 0;
-  background: white;
+  background: var(--bg-card);
 }
 
 .section-header {
@@ -1868,7 +1868,7 @@
 }
 
 .feature-card:hover {
-  background: white;
+  background: var(--bg-card);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
   transform: translateY(-10px);
   border-color: #c8c1e8;
@@ -1962,7 +1962,7 @@
 /* Floating Cards */
 .floating-card {
   position: absolute;
-  background: white;
+  background: var(--bg-card);
   padding: 1.5rem 2rem;
   border-radius: 16px;
   display: flex;
@@ -2134,7 +2134,7 @@
     top: 100%;
     left: 0;
     width: 100%;
-    background: #fff;
+    background: var(--bg-card);
     padding: 2rem 2.4rem;
     box-shadow: 0 8px 24px rgba(0,0,0,0.08);
     gap: 2rem;
@@ -2150,7 +2150,7 @@
    ======================================================== */
 .hp-nigeria {
   padding: 9rem 0;
-  background: #fff;
+  background: var(--bg-card);
 }
 
 .hp-nigeria__grid {
@@ -2175,7 +2175,7 @@
 .hp-nigeria__item h4 {
   font-size: 1.8rem;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--text-main);
   margin-bottom: 0.5rem;
 }
 

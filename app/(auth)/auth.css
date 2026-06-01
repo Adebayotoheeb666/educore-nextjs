@@ -5,7 +5,7 @@
 .auth-page-wrapper {
   font-family: 'Inter', sans-serif;
   min-height: 100vh;
-  background-color: #f8fafc;
+  background-color: var(--bg-main);
   display: flex;
   flex-direction: column;
 }
@@ -16,20 +16,20 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: white;
-  border-bottom: 1px solid #f1f5f9;
+  background-color: var(--bg-card);
+  border-bottom: 1px solid var(--border-color);
 }
 
 .auth-logo {
   font-size: 2.2rem;
   font-weight: 800;
-  color: #0f172a;
+  color: var(--text-main);
   text-decoration: none;
 }
 
 .auth-header-link {
   font-size: 1.4rem;
-  color: #64748b;
+  color: var(--text-muted);
   text-decoration: none;
 }
 
@@ -43,26 +43,26 @@
 }
 
 .auth-card {
-  background: white;
+  background: var(--bg-card);
   width: 100%;
   max-width: 480px;
   border-radius: 16px;
   padding: 4.5rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
-  border: 1px solid #f1f5f9;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--border-color);
   text-align: center;
 }
 
 .auth-card h1 {
   font-size: 2.8rem;
   font-weight: 800;
-  color: #0f172a;
+  color: var(--text-main);
   margin-bottom: 1rem;
 }
 
 .auth-card p.subtitle {
   font-size: 1.4rem;
-  color: #64748b;
+  color: var(--text-muted);
   margin-bottom: 3.5rem;
 }
 
@@ -91,7 +91,7 @@
 .auth-group label {
   font-size: 1.1rem;
   font-weight: 800;
-  color: #334155;
+  color: var(--text-main);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -99,24 +99,24 @@
 .auth-group input {
   padding: 1.2rem 1.6rem;
   border-radius: 8px;
-  border: 1px solid #e2e8f0;
-  background-color: #f0f4f8;
+  border: 1px solid var(--border-color);
+  background-color: var(--input-bg);
   font-size: 1.4rem;
-  color: #0f172a;
+  color: var(--text-main);
   outline: none;
   transition: all 0.2s;
 }
 
 .auth-group input:focus {
-  border-color: #6A5ACD;
-  background-color: #fff;
+  border-color: var(--link-color);
+  background-color: var(--input-focus-bg);
   box-shadow: 0 0 0 3px rgba(106, 90, 205, 0.05);
 }
 
 .auth-link {
   font-size: 1.2rem;
   font-weight: 700;
-  color: #6A5ACD;
+  color: var(--link-color);
   text-decoration: none;
 }
 
@@ -150,14 +150,14 @@
   margin-top: 2.5rem;
   font-size: 1.3rem;
   font-weight: 700;
-  color: #475569;
+  color: var(--text-muted);
   text-decoration: none;
 }
 
 /* ─── Insight Box ─── */
 .auth-insight {
   margin-top: 3rem;
-  background-color: #f3f0ff;
+  background-color: var(--bg-hover);
   border-left: 4px solid #FFD700;
   padding: 1.5rem 2rem;
   border-radius: 0 8px 8px 0;
@@ -172,14 +172,14 @@
 .auth-insight-text h5 {
   font-size: 1.1rem;
   font-weight: 800;
-  color: #b8860b;
+  color: var(--text-main);
   text-transform: uppercase;
   margin-bottom: 0.4rem;
 }
 
 .auth-insight-text p {
   font-size: 1.25rem;
-  color: #6A5ACD;
+  color: var(--link-color);
   line-height: 1.4;
   margin: 0;
 }
@@ -189,12 +189,12 @@
   text-align: center;
   margin-top: 2.5rem;
   font-size: 1.4rem;
-  color: #64748b;
+  color: var(--text-muted);
 }
 
 .auth-bottom-text a {
   font-weight: 800;
-  color: #0f172a;
+  color: var(--text-main);
   text-decoration: underline;
 }
 
@@ -214,21 +214,22 @@
   border: none;
   cursor: pointer;
   font-size: 1.6rem;
-  color: #64748b;
+  color: var(--text-muted);
 }
 
 /* ─── Footer ─── */
 .auth-footer {
   padding: 3rem 4rem;
-  border-top: 1px solid #f1f5f9;
+  border-top: 1px solid var(--border-color);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: var(--bg-card);
 }
 
-.auth-footer p { font-size: 1.3rem; color: #94a3b8; }
+.auth-footer p { font-size: 1.3rem; color: var(--text-muted); }
 .auth-footer-links { display: flex; gap: 2rem; }
-.auth-footer-links a { font-size: 1.3rem; color: #64748b; text-decoration: none; }
+.auth-footer-links a { font-size: 1.3rem; color: var(--text-muted); text-decoration: none; }
 
 /* ─── Mission Badge ─── */
 .mission-badge {

@@ -32,7 +32,13 @@ export default function OfflinePage() {
         </p>
         <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
           <button
-            onClick={() => window.location.reload()}
+            onClick={() => {
+              try {
+                if (typeof window !== "undefined" && window.location) window.location.reload();
+              } catch (err) {
+                // ignore
+              }
+            }}
             style={{
               background: "#6A5ACD",
               color: "#fff",

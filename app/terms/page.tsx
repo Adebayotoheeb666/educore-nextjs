@@ -11,16 +11,25 @@ export default function TermsPage() {
   const [activeSection, setActiveSection] = useState(1);
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const handleScroll = () => {
+      if (typeof window !== "undefined") setIsScrolled(window.scrollY > 50);
+    };
+    if (typeof window !== "undefined") {
+      window.addEventListener("scroll", handleScroll);
+      return () => window.removeEventListener("scroll", handleScroll);
+    }
+    return () => {};
   }, []);
 
   const scrollToSection = (num: number) => {
     setActiveSection(num);
-    const element = document.getElementById(`section-${num}`);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "center" });
+    try {
+      if (typeof document !== "undefined") {
+        const element = document.getElementById(`section-${num}`);
+        if (element) element.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    } catch (err) {
+      // ignore
     }
   };
 

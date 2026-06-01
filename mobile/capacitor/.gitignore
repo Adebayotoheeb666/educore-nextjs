@@ -1,0 +1,7 @@
+node_modules/
+android/
+ios/
+*.iml
+.gradle/
+build/
+capacitor.config.json

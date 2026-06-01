@@ -55,13 +55,24 @@ export default function ParentFeesPage() {
 
       const { authorizationUrl, reference, amount } = json.data;
 
-      if (!window.PaystackPop) {
-        window.open(authorizationUrl, "_blank");
-        toast.info("Complete payment in the new tab");
-        return;
-      }
+      try {
+        if (typeof window === "undefined") {
+          toast.info("Open the payment link in an external browser: " + authorizationUrl);
+          return;
+        }
 
-      const handler = window.PaystackPop.setup({
+        if (!window.PaystackPop) {
+          try {
+            window.open(authorizationUrl, "_blank");
+            toast.info("Complete payment in the new tab");
+            return;
+          } catch (err) {
+            toast.error("Unable to open payment link in this environment");
+            return;
+          }
+        }
+
+        const handler = window.PaystackPop.setup({
         key: publicKey,
         email: child.email,
         amount: amount * 100,
@@ -80,7 +91,9 @@ export default function ParentFeesPage() {
           }
         },
       });
-      handler.openIframe();
+      } catch (err: unknown) {
+        toast.error(err instanceof Error ? err.message : "Payment failed");
+      }
     } catch (err: unknown) {
       toast.error(err instanceof Error ? err.message : "Payment failed");
     } finally {

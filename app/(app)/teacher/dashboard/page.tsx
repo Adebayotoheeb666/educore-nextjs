@@ -1,5 +1,6 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import Link from "next/link";
 import { toast } from "sonner";
 import { useAppSelector } from "@/redux/hooks";
 import "../../shared.css";
@@ -10,14 +11,10 @@ interface TeacherClass {
   level?: string;
   section?: string;
   student_count?: number;
+  class_teacher_id?: string;
 }
 
-interface Attendance {
-  status: string;
-  date: string;
-}
-
-interface Lesson {
+interface LessonPlan {
   id: string;
   title: string;
   class_name: string;
@@ -31,16 +28,43 @@ interface Announcement {
   created_at: string;
 }
 
+interface WorkloadSubject {
+  class_id: string;
+  class_name: string;
+  subject_id: string;
+  subject_name: string;
+}
+
+interface TeacherWorkload {
+  teacherId: string;
+  subjects: WorkloadSubject[];
+  subjectCount: number;
+}
+
+const QUICK_LINKS = [
+  { href: "/teacher/classes", label: "My Classes", icon: "🏫" },
+  { href: "/teacher/timetable", label: "Timetable", icon: "🗓️" },
+  { href: "/teacher/lesson-plans", label: "Lesson Plans", icon: "📋" },
+  { href: "/teacher/attendance", label: "Attendance", icon: "✅" },
+  { href: "/teacher/announcements", label: "Announcements", icon: "📢" },
+  { href: "/teacher/profile", label: "Profile", icon: "👤" },
+];
+
 export default function TeacherDashboardPage() {
   const { user } = useAppSelector((s) => s.auth);
   const [classes, setClasses] = useState<TeacherClass[]>([]);
-  const [lessons, setLessons] = useState<Lesson[]>([]);
+  const [workload, setWorkload] = useState<TeacherWorkload>({ teacherId: "", subjects: [], subjectCount: 0 });
+  const [lessons, setLessons] = useState<LessonPlan[]>([]);
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!user?.id) return;
+
     Promise.all([
+      fetch(`/api/teachers/${user.id}/workload`, { credentials: "include" })
+        .then((r) => r.json())
+        .catch(() => ({ data: { teacherId: "", subjects: [], subjectCount: 0 } })),
       fetch("/api/classes", { credentials: "include" })
         .then((r) => r.json())
         .catch(() => ({ data: [] })),
@@ -51,9 +75,11 @@ export default function TeacherDashboardPage() {
         .then((r) => r.json())
         .catch(() => ({ data: [] })),
     ])
-      .then(([cd, ld, ad]) => {
-        setClasses(Array.isArray(cd.data) ? cd.data : []);
-        setLessons(Array.isArray(ld.data) ? ld.data.slice(0, 5) : []);
+      .then(([wd, cd, ld, ad]) => {
+        setWorkload(wd.data ?? { teacherId: "", subjects: [], subjectCount: 0 });
+        const allClasses = Array.isArray(cd.data) ? cd.data : [];
+        setClasses(allClasses.filter((cls) => cls.class_teacher_id === user.id));
+        setLessons(Array.isArray(ld.data) ? ld.data.slice(0, 6) : []);
         setAnnouncements(Array.isArray(ad.data) ? ad.data.slice(0, 4) : []);
       })
       .catch(() => toast.error("Failed to load dashboard"))
@@ -62,125 +88,134 @@ export default function TeacherDashboardPage() {
 
   const displayName = (user as Record<string, unknown>)?.name as string ?? "Teacher";
 
+  const classesBySubject = useMemo(() => {
+    return workload.subjects.reduce<Record<string, WorkloadSubject[]>>((acc, item) => {
+      acc[item.class_name] = acc[item.class_name] || [];
+      acc[item.class_name].push(item);
+      return acc;
+    }, {});
+  }, [workload.subjects]);
+
+  const plannedLessonCount = lessons.length;
+  const pendingLessonCount = lessons.filter((lesson) => lesson.status === "pending").length;
+
   return (
     <div>
       <div className="page-header-row">
         <div className="page-header-text">
           <h1>Teacher Dashboard</h1>
-          <p>Welcome back, {displayName}!</p>
+          <p>Welcome back, {displayName}! Here’s a summary of your teaching load and classroom tools.</p>
         </div>
       </div>
 
       {loading ? (
-        <div className="table-empty">Loading…</div>
+        <div className="table-empty">Loading dashboard…</div>
       ) : (
         <>
-          {/* Stats Section */}
-          <section style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", gap: "1.5rem", marginBottom: "2rem" }}>
-            <div style={{ padding: "1.5rem", border: "1px solid #e2e8f0", borderRadius: "8px", background: "#fff" }}>
-              <p style={{ margin: "0 0 0.5rem", color: "#64748b", fontSize: "0.9rem" }}>My Classes</p>
-              <h2 style={{ margin: 0, fontSize: "2.5rem" }}>{classes.length}</h2>
+          <section className="teacher-stats-grid" style={{ marginBottom: "2rem" }}>
+            <div className="teacher-overview-card">
+              <p>Form classes</p>
+              <h2>{classes.length}</h2>
             </div>
-            <div style={{ padding: "1.5rem", border: "1px solid #e2e8f0", borderRadius: "8px", background: "#fff" }}>
-              <p style={{ margin: "0 0 0.5rem", color: "#64748b", fontSize: "0.9rem" }}>Lesson Plans</p>
-              <h2 style={{ margin: 0, fontSize: "2.5rem" }}>{lessons.length}</h2>
+            <div className="teacher-overview-card">
+              <p>Subjects</p>
+              <h2>{workload.subjectCount}</h2>
             </div>
-            <div style={{ padding: "1.5rem", border: "1px solid #e2e8f0", borderRadius: "8px", background: "#fff" }}>
-              <p style={{ margin: "0 0 0.5rem", color: "#64748b", fontSize: "0.9rem" }}>Pending Approvals</p>
-              <h2 style={{ margin: 0, fontSize: "2.5rem" }}>{lessons.filter((l) => l.status === "pending").length}</h2>
+            <div className="teacher-overview-card">
+              <p>Lesson plans</p>
+              <h2>{plannedLessonCount}</h2>
+            </div>
+            <div className="teacher-overview-card">
+              <p>Pending reviews</p>
+              <h2>{pendingLessonCount}</h2>
             </div>
           </section>
 
-          {/* My Classes */}
-          <section style={{ marginBottom: "2rem" }}>
-            <h3 style={{ marginBottom: "1rem", fontSize: "1.3rem", fontWeight: 600 }}>My Classes</h3>
-            {classes.length === 0 ? (
-              <div style={{ padding: "2rem", textAlign: "center", background: "#f8fafc", borderRadius: "8px" }}>
-                <p style={{ color: "#64748b" }}>No classes assigned yet</p>
-              </div>
+          <section className="teacher-action-grid" style={{ marginBottom: "2rem" }}>
+            {QUICK_LINKS.map((link) => (
+              <Link key={link.href} href={link.href} className="teacher-action-card">
+                <span className="teacher-action-icon">{link.icon}</span>
+                <span>{link.label}</span>
+              </Link>
+            ))}
+          </section>
+
+          <section className="form-card" style={{ marginBottom: "2rem" }}>
+            <h2 className="form-section-title">Active teaching load</h2>
+            {workload.subjects.length === 0 ? (
+              <p>No workload assignments available yet.</p>
             ) : (
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))", gap: "1.5rem" }}>
-                {classes.map((cls) => (
-                  <div key={cls.id} style={{ padding: "1.5rem", border: "1px solid #e2e8f0", borderRadius: "8px", background: "#fff" }}>
-                    <h4 style={{ margin: "0 0 0.5rem", fontSize: "1.1rem", fontWeight: 600 }}>{cls.name}</h4>
-                    <p style={{ margin: "0 0 1rem", color: "#64748b", fontSize: "0.9rem" }}>
-                      {cls.level && cls.section ? `${cls.level} - ${cls.section}` : "No level"}
-                    </p>
-                    <p style={{ margin: "0.5rem 0", color: "#64748b", fontSize: "0.9rem" }}>
-                      👥 {cls.student_count ?? 0} students
-                    </p>
+              <div style={{ display: "grid", gap: "1rem" }}>
+                {Object.entries(classesBySubject).map(([className, subjects]) => (
+                  <div key={className} style={{ padding: "1.5rem", border: "1px solid #e2e8f0", borderRadius: 16 }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
+                      <h3 style={{ margin: 0 }}>{className}</h3>
+                      <span style={{ color: "#64748b", fontSize: "0.95rem" }}>{subjects.length} subject{subjects.length === 1 ? "" : "s"}</span>
+                    </div>
+                    <div style={{ display: "grid", gap: "0.5rem" }}>
+                      {subjects.map((subject) => (
+                        <div key={subject.subject_id} style={{ display: "flex", justifyContent: "space-between", gap: "1rem" }}>
+                          <span>{subject.subject_name}</span>
+                          <span style={{ color: "#475569", fontSize: "0.95rem" }}>{subject.class_name}</span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 ))}
               </div>
             )}
           </section>
 
-          {/* Lesson Plans */}
-          <section style={{ marginBottom: "2rem" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
-              <h3 style={{ margin: 0, fontSize: "1.3rem", fontWeight: 600 }}>Recent Lesson Plans</h3>
-              <a href="/lesson-plans" style={{ color: "#6a5acd", textDecoration: "none", fontSize: "0.9rem" }}>
-                View all →
-              </a>
+          <section className="form-card" style={{ marginBottom: "2rem" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
+              <h2 className="form-section-title">Recent lesson plans</h2>
+              <Link href="/teacher/lesson-plans" className="btn-outline">
+                View all
+              </Link>
             </div>
             {lessons.length === 0 ? (
-              <div style={{ padding: "2rem", textAlign: "center", background: "#f8fafc", borderRadius: "8px" }}>
-                <p style={{ color: "#64748b" }}>No lesson plans yet</p>
-              </div>
+              <p>No lesson plans created yet.</p>
             ) : (
-              <table style={{ width: "100%", borderCollapse: "collapse" }}>
-                <thead>
-                  <tr style={{ borderBottom: "2px solid #e2e8f0" }}>
-                    <th style={{ padding: "1rem", textAlign: "left", fontWeight: 600, color: "#475569" }}>Title</th>
-                    <th style={{ padding: "1rem", textAlign: "left", fontWeight: 600, color: "#475569" }}>Class</th>
-                    <th style={{ padding: "1rem", textAlign: "left", fontWeight: 600, color: "#475569" }}>Status</th>
-                    <th style={{ padding: "1rem", textAlign: "left", fontWeight: 600, color: "#475569" }}>Date</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {lessons.map((lesson) => (
-                    <tr key={lesson.id} style={{ borderBottom: "1px solid #e2e8f0" }}>
-                      <td style={{ padding: "1rem", color: "#1e293b" }}>{lesson.title}</td>
-                      <td style={{ padding: "1rem", color: "#64748b" }}>{lesson.class_name}</td>
-                      <td style={{ padding: "1rem" }}>
-                        <span
-                          style={{
-                            padding: "0.25rem 0.75rem",
-                            borderRadius: "4px",
-                            fontSize: "0.85rem",
-                            fontWeight: 500,
-                            background: lesson.status === "approved" ? "#d1fae5" : "#fef3c7",
-                            color: lesson.status === "approved" ? "#065f46" : "#92400e",
-                          }}
-                        >
-                          {lesson.status === "approved" ? "✓ Approved" : "⏳ Pending"}
-                        </span>
-                      </td>
-                      <td style={{ padding: "1rem", color: "#64748b", fontSize: "0.9rem" }}>
-                        {new Date(lesson.created_at).toLocaleDateString()}
-                      </td>
+              <div className="teacher-table-wrapper">
+                <table className="premium-table">
+                  <thead>
+                    <tr>
+                      <th>Title</th>
+                      <th>Class</th>
+                      <th>Status</th>
+                      <th>Date</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {lessons.map((lesson) => (
+                      <tr key={lesson.id}>
+                        <td>{lesson.title}</td>
+                        <td>{lesson.class_name}</td>
+                        <td>{lesson.status}</td>
+                        <td>{new Date(lesson.created_at).toLocaleDateString()}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             )}
           </section>
 
-          {/* Announcements */}
-          <section>
-            <h3 style={{ marginBottom: "1rem", fontSize: "1.3rem", fontWeight: 600 }}>Latest Announcements</h3>
+          <section className="form-card">
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
+              <h2 className="form-section-title">Latest announcements</h2>
+              <Link href="/notifications" className="btn-outline">
+                All announcements
+              </Link>
+            </div>
             {announcements.length === 0 ? (
-              <div style={{ padding: "2rem", textAlign: "center", background: "#f8fafc", borderRadius: "8px" }}>
-                <p style={{ color: "#64748b" }}>No announcements yet</p>
-              </div>
+              <p>No announcements published yet.</p>
             ) : (
-              <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+              <div style={{ display: "grid", gap: "1rem" }}>
                 {announcements.map((ann) => (
-                  <div key={ann.id} style={{ padding: "1rem", border: "1px solid #e2e8f0", borderRadius: "8px", background: "#f8fafc" }}>
-                    <h4 style={{ margin: "0 0 0.5rem", color: "#1e293b", fontSize: "1rem", fontWeight: 600 }}>{ann.title}</h4>
-                    <p style={{ margin: 0, color: "#64748b", fontSize: "0.9rem" }}>
-                      {new Date(ann.created_at).toLocaleDateString()}
-                    </p>
+                  <div key={ann.id} style={{ padding: "1.25rem", background: "#f8fafc", borderRadius: 12, border: "1px solid #e2e8f0" }}>
+                    <h3 style={{ margin: 0, fontSize: "1.1rem" }}>{ann.title}</h3>
+                    <p style={{ margin: "0.5rem 0 0", color: "#64748b" }}>{new Date(ann.created_at).toLocaleDateString()}</p>
                   </div>
                 ))}
               </div>

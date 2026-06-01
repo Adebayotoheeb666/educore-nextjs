@@ -40,8 +40,10 @@ const authSlice = createSlice({
       state.token = u.token ?? state.token;
       state.isAuthenticated = true;
       try {
-        localStorage.setItem("educore_user", JSON.stringify(u));
-        if (u.token) localStorage.setItem("accessToken", u.token);
+        if (typeof window !== "undefined" && typeof window.localStorage !== "undefined") {
+          localStorage.setItem("educore_user", JSON.stringify(u));
+          if (u.token) localStorage.setItem("accessToken", u.token);
+        }
       } catch {}
     },
     clearUser(state) {
@@ -49,8 +51,10 @@ const authSlice = createSlice({
       state.token = null;
       state.isAuthenticated = false;
       try {
-        localStorage.removeItem("educore_user");
-        localStorage.removeItem("accessToken");
+        if (typeof window !== "undefined" && typeof window.localStorage !== "undefined") {
+          localStorage.removeItem("educore_user");
+          localStorage.removeItem("accessToken");
+        }
       } catch {}
     },
     setLoading(state, action: PayloadAction<boolean>) {

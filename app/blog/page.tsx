@@ -35,9 +35,14 @@ export default function Blog() {
   const canManage = user && BLOG_ADMIN_ROLES.includes(user.role);
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const handleScroll = () => {
+      if (typeof window !== "undefined") setIsScrolled(window.scrollY > 50);
+    };
+    if (typeof window !== "undefined") {
+      window.addEventListener("scroll", handleScroll);
+      return () => window.removeEventListener("scroll", handleScroll);
+    }
+    return () => {};
   }, []);
 
   const loadPosts = useCallback(async () => {

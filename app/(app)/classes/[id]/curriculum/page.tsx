@@ -641,8 +641,8 @@ export default function ClassCurriculumPage() {
           border: 1px solid #e2e8f0;
           border-radius: 10px;
           font-size: 1.3rem;
-          background: white;
-          color: #0f172a;
+          background: var(--bg-card);
+          color: var(--text-main);
           outline: none;
           transition: all 0.15s;
         }
@@ -658,8 +658,8 @@ export default function ClassCurriculumPage() {
           border: 1px solid #e2e8f0;
           border-radius: 10px;
           font-size: 1.3rem;
-          background: white;
-          color: #0f172a;
+          background: var(--bg-card);
+          color: var(--text-main);
           outline: none;
           cursor: pointer;
           transition: all 0.15s;

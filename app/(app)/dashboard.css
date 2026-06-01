@@ -186,7 +186,7 @@
   padding: 1.2rem 1.5rem;
   border-radius: 10px;
   border: 1px solid #fee2e2;
-  background-color: #fff1f2;
+  background: var(--bg-card);
   color: #e11d48;
   font-size: 1.3rem;
   font-weight: 700;
@@ -197,7 +197,7 @@
   cursor: pointer;
   transition: all 0.2s;
 }
-.btn-signout:hover { background-color: #ffe4e6; }
+.btn-signout:hover { background: var(--bg-hover); }
 
 /* ─── Topbar ─── */
 .topbar-premium {
@@ -605,6 +605,8 @@
 @media (max-width: 768px) {
   .dashboard-main {
     padding: 1.5rem 1.2rem;
+    max-height: none;
+    min-height: auto;
   }
   .dashboard-welcome {
     margin-bottom: 2rem;
@@ -823,7 +825,7 @@
 .btn-dashboard-primary:hover { opacity: 0.9; }
 
 .btn-dashboard-outline {
-  background: white;
+  background: var(--bg-card);
   color: var(--primary);
   padding: 1rem 2rem;
   border-radius: 10px;
@@ -1115,6 +1117,7 @@
 
 /* ─── Responsive Laptop (1024px) ─── */
 @media (max-width: 1024px) {
+  .hamburger-btn { display: flex; }
   .sidebar-premium { width: 240px; }
   .dashboard-main-container { margin-left: 240px; width: calc(100% - 240px); }
   .sidebar-logo-text h2 { font-size: 1.6rem; }
@@ -1136,6 +1139,46 @@
   .quick-controls-grid { grid-template-columns: repeat(3, 1fr); }
   .ai-tools-grid { grid-template-columns: repeat(2, 1fr); }
   .dashboard-sidebar { position: static; top: auto; }
+}
+
+/* Mobile bottom navigation */
+.mobile-bottom-nav {
+  display: none;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 56px;
+  background: var(--bg-card);
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  gap: 0.25rem;
+  padding: 0.4rem 0.6rem;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 1050;
+}
+.mobile-bottom-nav a {
+  flex: 1;
+  text-align: center;
+  color: var(--text-muted);
+  text-decoration: none;
+  padding: 0.35rem;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.9rem;
+}
+.mobile-bottom-nav a.active { color: var(--primary); background: var(--bg-hover); }
+.mobile-bottom-nav .mbn-icon { font-size: 1.3rem; }
+.mobile-bottom-nav .mbn-label { font-size: 0.75rem; }
+
+@media (max-width: 1024px) {
+  .mobile-bottom-nav { display: flex; }
+  /* ensure main content doesn't get hidden behind bottom nav */
+  .dashboard-main { padding-bottom: 80px; }
 }
 
 /* ─── Responsive Tablet (768px) ─── */

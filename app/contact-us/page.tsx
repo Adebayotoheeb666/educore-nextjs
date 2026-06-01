@@ -19,9 +19,14 @@ export default function ContactPage() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const handleScroll = () => {
+      if (typeof window !== "undefined") setIsScrolled(window.scrollY > 50);
+    };
+    if (typeof window !== "undefined") {
+      window.addEventListener("scroll", handleScroll);
+      return () => window.removeEventListener("scroll", handleScroll);
+    }
+    return () => {};
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {

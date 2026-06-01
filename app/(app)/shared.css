@@ -209,7 +209,7 @@
 .btn-danger-sm {
   padding: 0.5rem 1.2rem;
   border-radius: 6px;
-  background: #fff0f0;
+  background: var(--bg-card);
   color: #ef4444;
   border: 1px solid #fecaca;
   font-size: 1.2rem;
@@ -379,6 +379,106 @@
   font-weight: 500;
 }
 
+.teacher-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  margin-bottom: 2rem;
+}
+
+.teacher-nav-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.9rem 1.3rem;
+  border: 1px solid var(--border-color);
+  border-radius: 9999px;
+  background: var(--bg-card);
+  color: var(--text-main);
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.teacher-nav-link:hover {
+  background: var(--bg-hover);
+  border-color: var(--border-color);
+}
+
+.teacher-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.2rem;
+}
+
+.teacher-overview-card,
+.teacher-action-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 1.6rem;
+  min-height: 130px;
+}
+
+.teacher-overview-card p {
+  margin: 0 0 0.4rem;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.92rem;
+}
+
+.teacher-overview-card h2 {
+  margin: 0;
+  font-size: 2.5rem;
+}
+
+.teacher-action-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 1rem;
+}
+
+.teacher-action-card {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  color: var(--text-main);
+  transition: all 0.15s ease-in-out;
+}
+
+.teacher-action-card:hover {
+  transform: translateY(-1px);
+  border-color: var(--primary);
+  background: var(--bg-hover);
+}
+
+.teacher-action-icon {
+  display: inline-flex;
+  width: 3rem;
+  height: 3rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100%;
+  background: #eef2ff;
+  color: #4338ca;
+  font-size: 1.4rem;
+}
+
+.teacher-table-wrapper {
+  overflow-x: auto;
+}
+
+.teacher-portal-shell {
+  padding-top: 0;
+}
+
+.teacher-main-content {
+  width: 100%;
+}
+
 @media (max-width: 768px) {
   .assignment-checklist {
     max-height: 300px;
@@ -521,9 +621,9 @@
 
 /* ─── Profile Page ─── */
 .profile-hero-card {
-  background: white;
+  background: var(--bg-card);
   border-radius: 20px;
-  border: 1px solid #f1f5f9;
+  border: 1px solid var(--border-color);
   padding: 3rem;
   margin-bottom: 3rem;
   display: flex;
@@ -574,11 +674,23 @@
     text-align: center;
     padding: 2rem;
     gap: 1.5rem;
+    width: 100%;
+  }
+
+  .profile-hero-card > div {
+    min-width: 0;
+    width: 100%;
   }
   
   .profile-forms-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
     gap: 2rem;
+    width: 100%;
+  }
+
+  .profile-forms-grid > .form-card {
+    width: 100%;
+    max-width: none;
   }
 }
 
@@ -604,10 +716,12 @@
     padding: 1.5rem;
     gap: 1.2rem;
     border-radius: 16px;
+    width: 100%;
   }
-  
+
   .profile-forms-grid {
     gap: 1.5rem;
+    width: 100%;
   }
 }
 
@@ -806,5 +920,68 @@
   .form-group textarea {
     padding: 0.9rem 1rem;
     font-size: 1.2rem;
+  }
+}
+
+/* Phase 3: Mobile table -> card conversion for better readability on small screens */
+@media (max-width: 600px) {
+  .premium-table thead { display: none; }
+  .premium-table tbody { display: block; }
+
+  .premium-table tr {
+    display: block;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .premium-table td {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.375rem 0;
+    border: none;
+  }
+
+  .premium-table td:nth-child(1) {
+    font-weight: 600;
+    color: var(--text-main);
+    margin-right: 1rem;
+  }
+
+  /* ensure wrappers don't clip the new card layout */
+  .premium-table-card,
+  .table-wrapper {
+    overflow: visible;
+  }
+}
+
+/* Accessibility and touch-target improvements (Phase 4) */
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* increase hit targets for important interactive elements */
+.btn-primary,
+.btn-secondary,
+.btn-outline,
+.btn-icon {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* prefer-reduced-motion support */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
   }
 }

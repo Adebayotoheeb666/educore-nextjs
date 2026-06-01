@@ -142,13 +142,24 @@ export default function FeeCollectionPage() {
 
       const { authorizationUrl, reference, amount } = json.data;
 
-      if (!window.PaystackPop) {
-        window.open(authorizationUrl, "_blank");
-        toast.info("Complete payment in the new tab, then refresh the page.");
-        return;
-      }
+      try {
+        if (typeof window === "undefined") {
+          toast.info("Open the payment link in an external browser: " + authorizationUrl);
+          return;
+        }
 
-      const handler = window.PaystackPop.setup({
+        if (!window.PaystackPop) {
+          try {
+            window.open(authorizationUrl, "_blank");
+            toast.info("Complete payment in the new tab, then refresh the page.");
+            return;
+          } catch (err) {
+            toast.error("Unable to open payment link in this environment");
+            return;
+          }
+        }
+
+        const handler = window.PaystackPop.setup({
         key: publicKey,
         email: selectedStudent.email,
         amount: amount * 100, // kobo
@@ -176,7 +187,9 @@ export default function FeeCollectionPage() {
           }
         },
       });
-      handler.openIframe();
+      } catch (err: unknown) {
+        toast.error(err instanceof Error ? err.message : "Payment initialization failed");
+      }
     } catch (err: unknown) {
       toast.error(err instanceof Error ? err.message : "Payment initialization failed");
     } finally {

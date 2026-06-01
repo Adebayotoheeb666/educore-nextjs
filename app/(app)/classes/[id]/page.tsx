@@ -440,7 +440,7 @@ export default function ClassDetailPage() {
         }
 
         .metric-card {
-          background: white;
+          background: var(--bg-card);
           border-radius: 20px;
           border: 1px solid rgba(226, 232, 240, 0.8);
           padding: 2rem;
@@ -489,7 +489,7 @@ export default function ClassDetailPage() {
         .metric-value {
           font-size: 2.4rem;
           font-weight: 800;
-          color: #0f172a;
+          color: var(--text-main);
           margin-top: 0.2rem;
         }
 
@@ -601,7 +601,7 @@ export default function ClassDetailPage() {
         }
 
         .details-card {
-          background: white;
+          background: var(--bg-card);
           border: 1px solid rgba(226, 232, 240, 0.8);
           border-radius: 20px;
           padding: 2.5rem;
@@ -612,7 +612,7 @@ export default function ClassDetailPage() {
           margin: 0 0 1.8rem 0;
           font-size: 1.5rem;
           font-weight: 800;
-          color: #0f172a;
+          color: var(--text-main);
         }
 
         .teacher-profile-box {
@@ -641,7 +641,7 @@ export default function ClassDetailPage() {
         .teacher-name {
           font-size: 1.5rem;
           font-weight: 700;
-          color: #0f172a;
+          color: var(--text-main);
         }
 
         .teacher-email {
@@ -718,7 +718,7 @@ export default function ClassDetailPage() {
         }
 
         .student-profile-card {
-          background: white;
+          background: var(--bg-card);
           border: 1px solid rgba(226, 232, 240, 0.8);
           border-radius: 16px;
           padding: 1.5rem;
@@ -750,7 +750,7 @@ export default function ClassDetailPage() {
         .student-name-text {
           font-size: 1.3rem;
           font-weight: 700;
-          color: #0f172a;
+          color: var(--text-main);
         }
 
         .student-admission-text {
@@ -767,7 +767,7 @@ export default function ClassDetailPage() {
         }
 
         .subject-item-card {
-          background: white;
+          background: var(--bg-card);
           border: 1px solid rgba(226, 232, 240, 0.8);
           border-radius: 16px;
           padding: 1.8rem;
@@ -791,7 +791,7 @@ export default function ClassDetailPage() {
         .subject-name-tag {
           font-size: 1.5rem;
           font-weight: 800;
-          color: #0f172a;
+          color: var(--text-main);
         }
 
         .badge-type {

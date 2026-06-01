@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setUser, clearUser } from "@/redux/features/auth/authSlice";
 import { RiNotificationLine, RiMoonLine, RiSunLine, RiQuestionLine } from "react-icons/ri";
 import "./dashboard.css";
+import MobileBottomNav from "./MobileBottomNav";
 
 const ADMIN_ROLES = [
   "school_owner","principal","vp_academics","vp_admin","admin_staff","super_admin",
@@ -134,28 +135,46 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
   // Sync dark mode preference
   useEffect(() => {
-    const saved = typeof window !== "undefined" ? localStorage.getItem("theme") : null;
-    if (saved === "dark") setDarkMode(true);
+    try {
+      const saved = typeof window !== "undefined" && typeof window.localStorage !== "undefined"
+        ? window.localStorage.getItem("theme")
+        : null;
+      if (saved === "dark") setDarkMode(true);
+    } catch (err) {
+      // Ignore localStorage access errors in restrictive WebViews
+    }
   }, []);
 
   useEffect(() => {
-    if (typeof document !== "undefined") {
-      document.documentElement.setAttribute("data-theme", darkMode ? "dark" : "light");
-      localStorage.setItem("theme", darkMode ? "dark" : "light");
+    try {
+      if (typeof document !== "undefined") {
+        document.documentElement.setAttribute("data-theme", darkMode ? "dark" : "light");
+        if (typeof window !== "undefined" && typeof window.localStorage !== "undefined") {
+          window.localStorage.setItem("theme", darkMode ? "dark" : "light");
+        }
+      }
+    } catch (err) {
+      // Ignore storage/setAttribute errors
     }
   }, [darkMode]);
 
   // Live notification count via SSE
   useEffect(() => {
     if (!ready) return;
-    const es = new EventSource("/api/realtime");
-    es.onmessage = (e) => {
-      try {
-        const data = JSON.parse(e.data);
-        if (data.type === "count") setUnreadCount(data.unread ?? 0);
-      } catch { /* ignore malformed */ }
-    };
-    return () => es.close();
+    try {
+      if (typeof window !== "undefined" && 'EventSource' in window) {
+        const es = new EventSource("/api/realtime");
+        es.onmessage = (e) => {
+          try {
+            const data = JSON.parse(e.data);
+            if (data.type === "count") setUnreadCount(data.unread ?? 0);
+          } catch { /* ignore malformed */ }
+        };
+        return () => es.close();
+      }
+    } catch (err) {
+      // SSE may be unavailable in some environments; fallback to polling later
+    }
   }, [ready]);
 
   const handleLogout = async () => {
@@ -352,6 +371,9 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
         {/* Page content */}
         <main className="dashboard-main">{children}</main>
+
+        {/* Mobile bottom navigation (tablet/phone) */}
+        <MobileBottomNav user={user} activeServices={activeServices} />
       </div>
 
       <style>{`

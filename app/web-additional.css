@@ -5,8 +5,8 @@
 
 /* ─── ABOUT PAGE STYLES (from About.css) ─── */
 .about-wrapper {
-  color: #111827;
-  background-color: #fff;
+  color: var(--text-main);
+  background-color: var(--bg-card);
   padding-top: 0;
 }
 .about-container {
@@ -167,7 +167,7 @@
 .excellence-content h2 {
   font-size: 3.2rem;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--text-main);
   margin-bottom: 2rem;
 }
 .excellence-content > p {
@@ -209,7 +209,7 @@
 .feat-text h4 {
   font-size: 1.6rem;
   font-weight: 700;
-  color: #111827;
+  color: var(--text-main);
   margin-bottom: 0.4rem;
 }
 .feat-text p {
@@ -225,7 +225,7 @@
 .stats-header h2 {
   font-size: 3.6rem;
   font-weight: 800;
-  color: #0f172a;
+  color: var(--text-main);
   margin-bottom: 1.5rem;
 }
 .stats-header p {
@@ -249,7 +249,7 @@
   }
 }
 .stat-card {
-  background: white;
+  background: var(--bg-card);
   padding: 3.5rem 2rem;
   border-radius: 16px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
@@ -285,7 +285,7 @@
 .stat-card h3 {
   font-size: 2.4rem;
   font-weight: 800;
-  color: #111827;
+  color: var(--text-main);
 }
 .stat-card p {
   font-size: 1.3rem;
@@ -364,7 +364,7 @@
   background-color: #f5f5f5;
 }
 .side-card-blue h4 {
-  color: #111827;
+  color: var(--text-main);
 }
 .side-card-blue p {
   color: #6b7280;
@@ -407,8 +407,8 @@
 
 /* ─── CONTACT PAGE STYLES (from Contact.css) ─── */
 .contact-wrapper {
-  color: #111827;
-  background-color: #fff;
+  color: var(--text-main);
+  background-color: var(--bg-card);
   padding-top: 0;
 }
 .contact-hero {
@@ -430,7 +430,7 @@
 .contact-hero h1 {
   font-size: 4.8rem;
   font-weight: 800;
-  color: #0f172a;
+  color: var(--text-main);
   margin-bottom: 1.5rem;
 }
 .contact-hero p {
@@ -456,7 +456,7 @@
 .office-card h2 {
   font-size: 2.4rem;
   font-weight: 800;
-  color: #0f172a;
+  color: var(--text-main);
   margin-bottom: 3.5rem;
 }
 .contact-method {
@@ -467,7 +467,7 @@
 .contact-icon {
   width: 44px;
   height: 44px;
-  background-color: #fff;
+  background-color: var(--bg-card);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -479,7 +479,7 @@
 .contact-details h4 {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #111827;
+  color: var(--text-main);
   margin-bottom: 0.5rem;
 }
 .contact-details p {
@@ -500,7 +500,7 @@
   object-fit: cover;
 }
 .form-card {
-  background-color: #fff;
+  background-color: var(--bg-card);
   border-radius: 24px;
   padding: 5rem;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05);
@@ -509,7 +509,7 @@
 .form-card h2 {
   font-size: 2.4rem;
   font-weight: 800;
-  color: #0f172a;
+  color: var(--text-main);
   margin-bottom: 1rem;
 }
 .form-card > p {
@@ -543,7 +543,7 @@
   border: 1px solid #e5e7eb;
   font-family: inherit;
   font-size: 1.5rem;
-  color: #111827;
+  color: var(--text-main);
   outline: none;
   transition: border-color 0.3s, box-shadow 0.3s;
   background-color: #f9fafb;
@@ -638,7 +638,7 @@
 
 /* ─── BLOG MAIN PAGE STYLES (from Blog.css) ─── */
 .blog-wrapper {
-  color: #111827;
+  color: var(--text-main);
   background-color: #f9fafb;
   padding-top: 0;
 }
@@ -657,7 +657,7 @@
 .blog-header-content h1 {
   font-size: 3.2rem;
   font-weight: 800;
-  color: #0f172a;
+  color: var(--text-main);
   margin-bottom: 0.5rem;
 }
 .blog-header-content p {
@@ -711,7 +711,7 @@
 }
 .featured-post-card {
   display: flex;
-  background: white;
+  background: var(--bg-card);
   border-radius: 16px;
   overflow: visible;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
@@ -756,7 +756,7 @@
 .featured-post-content h2 {
   font-size: 2.8rem;
   font-weight: 800;
-  color: #0f172a;
+  color: var(--text-main);
   margin-bottom: 1.5rem;
   line-height: 1.2;
 }
@@ -780,7 +780,7 @@
 .author-info span {
   font-size: 1.4rem;
   font-weight: 600;
-  color: #111827;
+  color: var(--text-main);
 }
 .read-time {
   font-size: 1.3rem;
@@ -802,7 +802,7 @@
   margin-bottom: 6rem;
 }
 .post-card {
-  background: white;
+  background: var(--bg-card);
   border-radius: 16px;
   overflow: visible;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
@@ -842,7 +842,7 @@
 .post-card-content h3 {
   font-size: 1.8rem;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--text-main);
   margin-bottom: 1.5rem;
   line-height: 1.4;
 }
@@ -888,7 +888,7 @@
   justify-content: center;
   border: 1px solid #e5e7eb;
   border-radius: 8px;
-  background: white;
+  background: var(--bg-card);
   font-size: 1.4rem;
   color: #374151;
   cursor: pointer;
@@ -907,8 +907,8 @@
 
 /* ─── BLOG DETAILS PAGE STYLES (from BlogPost.css) ─── */
 .bp-root {
-  color: #111827;
-  background: #fff;
+  color: var(--text-main);
+  background: var(--bg-card);
   overflow-x: hidden;
 }
 .bp-container {
@@ -1044,7 +1044,7 @@
 }
 .bp-body {
   padding: 5.5rem 0 7rem;
-  background: #fff;
+  background: var(--bg-card);
 }
 .bp-layout {
   display: grid;
@@ -1180,7 +1180,7 @@
   gap: 0.8rem;
 }
 .bp-related {
-  background: #fff;
+  background: var(--bg-card);
   border: 1px solid #e5e7eb;
   border-radius: 18px;
   padding: 2.4rem;
@@ -1233,7 +1233,7 @@
 .bp-related__post-title {
   font-size: 1.35rem;
   font-weight: 600;
-  color: #111827;
+  color: var(--text-main);
   line-height: 1.4;
 }
 .bp-related__view-all {
@@ -1264,7 +1264,7 @@
   backdrop-filter: blur(4px);
 }
 .bp-modal {
-  background: #fff;
+  background: var(--bg-card);
   border-radius: 20px;
   padding: 3.5rem;
   max-width: 440px;
@@ -1277,7 +1277,7 @@
 .bp-modal h3 {
   font-size: 2rem;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--text-main);
   margin-bottom: 1rem;
 }
 .bp-modal p {
