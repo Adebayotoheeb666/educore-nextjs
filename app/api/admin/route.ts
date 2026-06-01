@@ -20,16 +20,32 @@ export const GET = withAuth(async (_req: NextRequest): Promise<NextResponse> => 
     const totalStudents = students?.count ?? 0;
     const totalTeachers = teachers?.count ?? 0;
 
+    // Compute platform revenue from billing_history (paid)
+    const revenueRow = await queryOne<{ total: number }>(
+      `SELECT COALESCE(SUM(amount),0) as total FROM billing_history WHERE status = 'paid'`
+    );
+
+    // School counts by subscription_status
+    const activeSchoolsRow = await queryOne<{ c: number }>(
+      `SELECT COUNT(*) as c FROM schools WHERE subscription_status = 'active'`
+    );
+    const inactiveSchoolsRow = await queryOne<{ c: number }>(
+      `SELECT COUNT(*) as c FROM schools WHERE subscription_status = 'inactive'`
+    );
+    const trialSchoolsRow = await queryOne<{ c: number }>(
+      `SELECT COUNT(*) as c FROM schools WHERE subscription_status = 'trial'`
+    );
+
     return ok({
       totals: {
         schools: totalSchools,
         users: totalUsers,
         students: totalStudents,
         teachers: totalTeachers,
-        revenue: 0,
-        activeSchools: 0,
-        inactiveSchools: 0,
-        trialSchools: 0,
+        revenue: revenueRow?.total ?? 0,
+        activeSchools: activeSchoolsRow?.c ?? 0,
+        inactiveSchools: inactiveSchoolsRow?.c ?? 0,
+        trialSchools: trialSchoolsRow?.c ?? 0,
       },
       recentSchools,
       services,

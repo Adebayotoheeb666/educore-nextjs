@@ -36,7 +36,13 @@ export default function BillingPage() {
     ])
       .then(([bd, sd]) => {
         setHistory(Array.isArray(bd.data) ? bd.data : []);
-        setServices(Array.isArray(sd.data) ? sd.data : []);
+        // Normalize services: API returns `subscription_status` and `is_compulsory`.
+        const rawServices = Array.isArray(sd.data) ? sd.data : [];
+        const norm = rawServices.map((s: any) => ({
+          ...s,
+          active: Boolean(s.is_compulsory) || s.subscription_status === "active",
+        }));
+        setServices(norm);
       })
       .catch(() => toast.error("Failed to load billing"))
       .finally(() => setLoading(false));
@@ -48,7 +54,7 @@ export default function BillingPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify({ serviceSlug: slug }),
+        body: JSON.stringify({ slug }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message);

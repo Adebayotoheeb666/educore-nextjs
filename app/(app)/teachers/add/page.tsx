@@ -9,12 +9,11 @@ import "../../shared.css";
 const ROLES = [
   { value: "subject_teacher", label: "Subject Teacher" },
   { value: "class_teacher",   label: "Class Teacher" },
-  { value: "vp_academics",   label: "VP Academics" },
-  { value: "vp_admin",       label: "VP Admin" },
-  { value: "principal",      label: "Principal" },
-  { value: "bursar",         label: "Bursar" },
-  { value: "librarian",      label: "Librarian" },
-  { value: "admin_staff",    label: "Admin Staff" },
+  { value: "vp_academics",    label: "VP Academics" },
+  { value: "vp_admin",        label: "VP Admin" },
+  { value: "principal",       label: "Principal" },
+  { value: "bursar",          label: "Bursar" },
+  { value: "admin_staff",     label: "Admin Staff" },
 ];
 
 interface Class {

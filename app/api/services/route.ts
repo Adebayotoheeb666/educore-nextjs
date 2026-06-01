@@ -13,11 +13,12 @@ export const GET = withAuth(async (_req: NextRequest, { school }: AuthContext): 
     }
 
     // For school users: join with school_services to show subscription status
+    // Exclude super_admin_only services (Admin Panel)
     const services = await query(
       `SELECT s.*, ss.status as subscription_status, ss.subscribed_at, ss.expires_at
        FROM services s
        LEFT JOIN school_services ss ON s.id = ss.service_id AND ss.school_id = ?
-       WHERE s.is_active = 1
+       WHERE s.is_active = 1 AND s.slug != 'admin'
        ORDER BY s.category, s.name`,
       [school.id]
     );

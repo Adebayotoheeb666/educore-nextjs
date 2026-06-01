@@ -37,9 +37,14 @@ export default function LoginPage() {
         toast.error(data.message ?? "Login failed");
         return;
       }
-      dispatch(setUser(data.data ?? data));
+      const userData = data.data ?? data;
+      dispatch(setUser(userData));
       toast.success("Welcome back!");
-      router.push(data.data?.role === "super_admin" ? "/admin" : "/dashboard");
+      const role = userData.role;
+      if (role === "super_admin") router.push("/admin");
+      else if (role === "student") router.push("/student/dashboard");
+      else if (role === "parent") router.push("/parent/dashboard");
+      else router.push("/dashboard");
     } catch {
       toast.error("Login failed. Please try again.");
     } finally {

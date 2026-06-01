@@ -13,6 +13,7 @@ export interface ServiceDefinition {
   dependencies: string[];       // slugs of services this requires
   category: ServiceCategory;
   version: string;
+  super_admin_only?: boolean;   // if true, only visible/accessible to super admins
 }
 
 export type ServiceCategory =
@@ -330,6 +331,7 @@ export const SERVICE_CATALOG: ServiceDefinition[] = [
     dependencies: ["school"],
     category: "core",
     version: "1.0.0",
+    super_admin_only: true,
   },
 ];
 

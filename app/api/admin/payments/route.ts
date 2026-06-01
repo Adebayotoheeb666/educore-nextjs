@@ -15,7 +15,7 @@ export const GET = withAuth(
       if (status) { filters += " AND bh.status = ?"; args.push(status); }
 
       const payments = await query(
-        `SELECT bh.id, bh.amount, bh.status, bh.payment_method, bh.reference,
+        `SELECT bh.id, bh.amount, bh.status, NULL as payment_method, bh.reference,
                 bh.created_at, s.name as school_name, sv.name as service_name
          FROM billing_history bh
          LEFT JOIN schools s ON bh.school_id = s.id

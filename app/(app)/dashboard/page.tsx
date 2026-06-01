@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { authenticatedFetch } from "@/lib/utils/fetch";
 import { useAppSelector } from "@/redux/hooks";
@@ -34,6 +35,10 @@ interface School {
 }
 
 const ADMIN_ROLES = ["school_owner", "principal", "vp_academics", "vp_admin", "admin_staff"];
+const TEACHER_ROLES = ["class_teacher", "subject_teacher"];
+const STUDENT_ROLES = ["student"];
+const PARENT_ROLES = ["parent"];
+const BURSAR_ROLES = ["bursar"];
 
 const QUICK_ACTIONS = [
   { href: "/students/add",          icon: "➕", label: "Add Student" },
@@ -91,13 +96,38 @@ function StatCard({
 }
 
 export default function DashboardPage() {
+  const router = useRouter();
   const { user } = useAppSelector((s) => s.auth);
   const { hasService } = useActiveServices();
   const [stats, setStats] = useState<Stats | null>(null);
   const [school, setSchool] = useState<School | null>(null);
   const [loading, setLoading] = useState(true);
 
+  // Redirect users to their role-specific dashboards
   useEffect(() => {
+    if (!user?.role) return;
+
+    if (TEACHER_ROLES.includes(user.role)) {
+      router.replace("/teacher/dashboard");
+    } else if (STUDENT_ROLES.includes(user.role)) {
+      router.replace("/student/dashboard");
+    } else if (PARENT_ROLES.includes(user.role)) {
+      router.replace("/parent/dashboard");
+    } else if (BURSAR_ROLES.includes(user.role)) {
+      // Bursar can see admin dashboard or their own finance dashboard
+      // For now, let them see admin dashboard
+    } else if (!ADMIN_ROLES.includes(user.role)) {
+      // If role is not recognized, redirect to a safe page
+      router.replace("/");
+    }
+  }, [user?.role, router]);
+
+  // Only load admin dashboard data for admin roles
+  const isAdmin = ADMIN_ROLES.includes(user?.role ?? "");
+
+  useEffect(() => {
+    if (!isAdmin) return;
+
     Promise.all([
       authenticatedFetch("/api/analytics/dashboard")
         .then((r) => r.json())
@@ -108,7 +138,7 @@ export default function DashboardPage() {
         .then((d) => setSchool(d.data ?? d))
         .catch((err) => console.error("School fetch failed:", err)),
     ]).finally(() => setLoading(false));
-  }, []);
+  }, [isAdmin]);
 
   const displayName =
     user?.name ||
@@ -147,7 +177,14 @@ export default function DashboardPage() {
     },
   ].filter(Boolean) as { key: string; label: string; href: string; tone: string }[];
 
-  const isAdmin = ADMIN_ROLES.includes(user?.role ?? "");
+  // Show loading state while redirecting non-admin users
+  if (!isAdmin) {
+    return (
+      <div style={{ padding: "2rem", textAlign: "center" }}>
+        <p>Redirecting to your dashboard...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="dashboard-page">

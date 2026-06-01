@@ -37,7 +37,8 @@ export default function AdminPaymentsPage() {
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const paginated = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
-  const totalRevenue = payments.filter((p) => p.status === "completed").reduce((s, p) => s + (Number(p.amount) || 0), 0);
+  // Billing history uses 'paid' status for completed payments
+  const totalRevenue = payments.filter((p) => p.status === "paid").reduce((s, p) => s + (Number(p.amount) || 0), 0);
 
   return (
     <div>
@@ -71,7 +72,7 @@ export default function AdminPaymentsPage() {
         </div>
         <select value={status} onChange={(e) => { setStatus(e.target.value); setPage(1); }}>
           <option value="">All statuses</option>
-          <option value="completed">Completed</option>
+          <option value="paid">Completed</option>
           <option value="pending">Pending</option>
           <option value="failed">Failed</option>
         </select>
@@ -100,9 +101,9 @@ export default function AdminPaymentsPage() {
                 <tr key={p.id}>
                   <td style={{ fontWeight: 700 }}>{p.school_name ?? "—"}</td>
                   <td>{p.service_name ?? "—"}</td>
-                  <td style={{ fontWeight: 700, color: "#6A5ACD" }}>₦{Number(p.amount).toLocaleString()}</td>
+                    <td style={{ fontWeight: 700, color: "#6A5ACD" }}>₦{Number(p.amount).toLocaleString()}</td>
                   <td>
-                    <span className={`badge ${p.status === "completed" ? "badge-green" : p.status === "failed" ? "badge-red" : "badge-yellow"}`}>
+                    <span className={`badge ${p.status === "paid" ? "badge-green" : p.status === "failed" ? "badge-red" : "badge-yellow"}`}>
                       {p.status}
                     </span>
                   </td>

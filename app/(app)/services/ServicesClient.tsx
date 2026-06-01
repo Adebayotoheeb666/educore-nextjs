@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { OPTIONAL_SERVICES, type ServiceDefinition } from "@/config/services/catalog";
 
@@ -24,23 +25,69 @@ const CATEGORY_ICONS: Record<string, string> = {
 };
 
 export default function ServicesClient() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
   const [activeServices, setActiveServices] = useState<Set<string>>(new Set());
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState<string | null>(null);
+  const [verifyingPayment, setVerifyingPayment] = useState(false);
+
+  // Handle payment verification on page load
+  useEffect(() => {
+    const reference = searchParams.get("reference");
+    const status = searchParams.get("status");
+
+    if (reference && status === "success") {
+      verifyServicePayment(reference);
+    }
+  }, [searchParams]);
+
+  const verifyServicePayment = async (reference: string) => {
+    setVerifyingPayment(true);
+    try {
+      const res = await fetch(`/api/services/verify-payment?reference=${reference}`, {
+        credentials: "include",
+      });
+
+      const json = await res.json();
+      const result = json.data || json; // Unwrap data property if it exists
+      
+      if (!res.ok) throw new Error(result.message || json.message || "Payment verification failed");
+
+      if (result.verified && result.status === "success") {
+        toast.success("Service activated successfully! Payment confirmed.");
+        // Reload services list
+        loadServices();
+        // Clean up URL
+        router.replace("/services");
+      } else {
+        throw new Error(`Payment verification failed: ${result.status}`);
+      }
+    } catch (err: any) {
+      toast.error(err.message || "Payment verification failed");
+      router.replace("/services");
+    } finally {
+      setVerifyingPayment(false);
+    }
+  };
+
+  const loadServices = async () => {
+    try {
+      const response = await fetch("/api/services", { credentials: "include" });
+      const data = await response.json();
+      if (data.data) {
+        const activeSlugs = data.data
+          .filter((s: any) => s.subscription_status === "active" || s.is_compulsory)
+          .map((s: any) => s.slug);
+        setActiveServices(new Set(activeSlugs));
+      }
+    } catch {
+      toast.error("Failed to load services");
+    }
+  };
 
   useEffect(() => {
-    fetch("/api/services", { credentials: "include" })
-      .then(res => res.json())
-      .then(data => {
-        if (data.data) {
-          const activeSlugs = data.data
-            .filter((s: any) => s.subscription_status === 'active' || s.is_compulsory)
-            .map((s: any) => s.slug);
-          setActiveServices(new Set(activeSlugs));
-        }
-      })
-      .catch(() => toast.error("Failed to load services"))
-      .finally(() => setLoading(false));
+    loadServices().finally(() => setLoading(false));
   }, []);
 
   const handleToggle = async (svc: ServiceDefinition) => {
@@ -58,19 +105,49 @@ export default function ServicesClient() {
         credentials: "include"
       });
 
-      const result = await res.json();
-      if (!res.ok) throw new Error(result.message || "Failed to update service");
+      const json = await res.json();
+      const result = json.data || json; // Unwrap data property if it exists
+      
+      if (!res.ok) throw new Error(result.message || json.message || "Failed to update service");
 
-      setActiveServices(prev => {
-        const next = new Set(prev);
-        if (isSubscribed) {
-          next.delete(svc.slug);
-        } else {
+      // Check if service activation requires payment
+      if (result.requiresPayment && !isSubscribed) {
+        toast.info(`Redirecting to payment for ${svc.name}...`);
+        
+        // Initialize payment
+        const paymentRes = await fetch("/api/services/initialize-payment", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ serviceSlug: svc.slug }),
+          credentials: "include"
+        });
+
+        const paymentJson = await paymentRes.json();
+        const paymentResult = paymentJson.data || paymentJson; // Unwrap data property if it exists
+        
+        if (!paymentRes.ok) throw new Error(paymentResult.message || paymentJson.message || "Payment initialization failed");
+
+        // Redirect to Paystack
+        window.location.href = paymentResult.authorizationUrl;
+        return;
+      }
+
+      // Service activated successfully without payment
+      if (result.activated && !isSubscribed) {
+        setActiveServices(prev => {
+          const next = new Set(prev);
           next.add(svc.slug);
-        }
-        return next;
-      });
-      toast.success(result.message || `Successfully ${isSubscribed ? "unsubscribed from" : "subscribed to"} ${svc.name}`);
+          return next;
+        });
+        toast.success(result.message || `Successfully activated ${svc.name}`);
+      } else if (isSubscribed) {
+        setActiveServices(prev => {
+          const next = new Set(prev);
+          next.delete(svc.slug);
+          return next;
+        });
+        toast.success(result.message || `Successfully unsubscribed from ${svc.name}`);
+      }
     } catch (err: any) {
       toast.error(err.message);
     } finally {

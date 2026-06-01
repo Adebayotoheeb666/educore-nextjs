@@ -5,7 +5,10 @@ import { badRequest, conflict, created, ok, serverError } from "@/lib/utils/resp
 import { hashPassword } from "@/lib/utils/password";
 import { generateId } from "@/lib/utils/id";
 
-const TEACHER_ROLES = ["class_teacher", "subject_teacher"];
+const STAFF_ROLES = [
+  "class_teacher", "subject_teacher", "vp_admin", "vp_academics",
+  "principal", "bursar", "admin_staff",
+];
 
 export const GET = withAuth(async (_req: NextRequest, { school }: AuthContext): Promise<NextResponse> => {
   try {
@@ -42,18 +45,18 @@ export const POST = withAuth(
       const [existing] = await query("SELECT id FROM users WHERE email = ?", [normalizedEmail]);
       if (existing) return conflict("Email already registered");
 
-      const teacherRole = TEACHER_ROLES.includes(role) ? role : "subject_teacher";
+      const staffRole = STAFF_ROLES.includes(role) ? role : "subject_teacher";
       const hashed = await hashPassword(defaultPassword);
       const id = generateId();
 
       await execute(
         `INSERT INTO users (id, name, first_name, last_name, email, password, phone, role, school_id, avatar, is_active, created_at, updated_at)
          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, datetime('now'), datetime('now'))`,
-        [id, fullName, firstName || fullName.split(" ")[0], lastName || fullName.split(" ").slice(1).join(" "),
-         normalizedEmail, hashed, phone || null, teacherRole, school.id, avatar || null]
+         [id, fullName, firstName || fullName.split(" ")[0], lastName || fullName.split(" ").slice(1).join(" "),
+          normalizedEmail, hashed, phone || null, staffRole, school.id, avatar || null]
       );
 
-      return created({ id, name: fullName, email: normalizedEmail, role: teacherRole, defaultPassword });
+      return created({ id, name: fullName, email: normalizedEmail, role: staffRole, defaultPassword });
     } catch (err) {
       return serverError(err);
     }

@@ -39,7 +39,7 @@ const navConfig = [
 ];
 
 const parentNav = [
-  { label: "Dashboard",    path: "/parent",              icon: "🏠" },
+  { label: "Dashboard",    path: "/parent/dashboard",    icon: "🏠" },
   { label: "Results",      path: "/parent/results",      icon: "📊", serviceSlug: "results" },
   { label: "Fees",         path: "/parent/fees",         icon: "💰", serviceSlug: "fees" },
   { label: "Timetable",    path: "/timetable",           icon: "🗓️", serviceSlug: "timetable" },
@@ -47,10 +47,16 @@ const parentNav = [
 ];
 
 const studentNav = [
-  { label: "Dashboard",    path: "/student",             icon: "🏠" },
+  { label: "Dashboard",    path: "/student/dashboard",   icon: "🏠" },
+  { label: "My Subjects",  path: "/student/subjects",    icon: "📚", serviceSlug: "subjects" },
   { label: "My Results",   path: "/student/results",     icon: "📊", serviceSlug: "results" },
+  { label: "Attendance",   path: "/student/attendance",  icon: "✅", serviceSlug: "attendance" },
+  { label: "My Fees",      path: "/student/fees",        icon: "💰", serviceSlug: "fees" },
   { label: "Timetable",    path: "/timetable",           icon: "🗓️", serviceSlug: "timetable" },
+  { label: "Library",      path: "/library",             icon: "📖", serviceSlug: "library" },
   { label: "Announcements",path: "/announcements",       icon: "📢", serviceSlug: "announcements" },
+  { label: "Behavior",     path: "/student/behavior",    icon: "⭐", serviceSlug: "behavior" },
+  { label: "Feedback",     path: "/feedback",            icon: "💬", serviceSlug: "feedback" },
 ];
 
 const superAdminNav = [
@@ -216,7 +222,17 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             <div className="sidebar-logo-icon">🎓</div>
             <div className="sidebar-logo-text">
               <h2>EduCore AI</h2>
-              <p>{user?.role === "super_admin" ? "Platform Admin" : "Admin Portal"}</p>
+              <p>
+                {user?.role === "super_admin"
+                  ? "Platform Admin"
+                  : ["class_teacher", "subject_teacher"].includes(user?.role || "")
+                  ? "Teacher Portal"
+                  : user?.role === "student"
+                  ? "Student Portal"
+                  : user?.role === "parent"
+                  ? "Parent Portal"
+                  : "Admin Portal"}
+              </p>
             </div>
           </Link>
           <button

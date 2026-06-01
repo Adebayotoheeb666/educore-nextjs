@@ -6,6 +6,7 @@ import { getServiceBySlug, validateDependencies } from "@/config/services/catalo
 import { generateId } from "@/lib/utils/id";
 
 // POST /api/services/subscribe - Subscribe school to a service
+// If service requires payment, returns payment instructions instead of immediate activation
 export const POST = withAuth(
   async (req: NextRequest, { user, school }: AuthContext): Promise<NextResponse> => {
     try {
@@ -56,24 +57,42 @@ export const POST = withAuth(
         return badRequest(`Service '${slug}' is already active`);
       }
 
-      if (existing) {
-        // Reactivate
-        await execute(
-          `UPDATE school_services SET status = 'active', subscribed_at = datetime('now'), activated_by = ?, updated_at = datetime('now')
-           WHERE school_id = ? AND service_id = ?`,
-          [user.id, school.id, service.id]
-        );
-      } else {
-        // New subscription
-        const id = generateId();
-        await execute(
-          `INSERT INTO school_services (id, school_id, service_id, status, subscribed_at, price_paid, billing_period, activated_by, created_at, updated_at)
-           VALUES (?, ?, ?, 'active', datetime('now'), ?, 'monthly', ?, datetime('now'), datetime('now'))`,
-          [id, school.id, service.id, catalogEntry.base_price, user.id]
-        );
+      // If service is free (price = 0), activate immediately
+      if (catalogEntry.base_price === 0) {
+        if (existing) {
+          // Reactivate
+          await execute(
+            `UPDATE school_services SET status = 'active', subscribed_at = datetime('now'), activated_by = ?, updated_at = datetime('now')
+             WHERE school_id = ? AND service_id = ?`,
+            [user.id, school.id, service.id]
+          );
+        } else {
+          // New subscription
+          const id = generateId();
+          await execute(
+            `INSERT INTO school_services (id, school_id, service_id, status, subscribed_at, price_paid, billing_period, activated_by, created_at, updated_at)
+             VALUES (?, ?, ?, 'active', datetime('now'), 0, 'monthly', ?, datetime('now'), datetime('now'))`,
+            [id, school.id, service.id, user.id]
+          );
+        }
+        return ok({ 
+          message: `Service '${slug}' activated successfully`,
+          requiresPayment: false,
+          activated: true,
+        });
       }
 
-      return ok({ message: `Service '${slug}' activated successfully` });
+      // Service requires payment - return payment endpoint
+      return ok({
+        message: `Service '${slug}' requires payment`,
+        requiresPayment: true,
+        activated: false,
+        serviceSlug: slug,
+        serviceName: catalogEntry.name,
+        price: catalogEntry.base_price,
+        billingPeriod: catalogEntry.billing_period,
+        paymentEndpoint: `/api/services/initialize-payment`,
+      });
     } catch (err) {
       return serverError(err);
     }

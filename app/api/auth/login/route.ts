@@ -53,8 +53,8 @@ export const POST = withRateLimit(
     if (!user.is_active) return unauthorized("Account deactivated");
 
     const token = generateToken(user.id);
-    const response = NextResponse.json({
-      _id: user.id,
+    const userData = {
+      id: user.id,
       name: user.name,
       firstName: user.first_name,
       lastName: user.last_name,
@@ -62,7 +62,8 @@ export const POST = withRateLimit(
       role: user.role,
       avatar: user.avatar,
       token,
-    });
+    };
+    const response = NextResponse.json({ data: userData, success: true });
 
     return setAuthCookie(response, token);
   } catch (err) {

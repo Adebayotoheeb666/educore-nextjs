@@ -77,16 +77,47 @@ export default function SchoolServicesPage() {
         credentials: "include",
         body: JSON.stringify({ slug: svc.slug }),
       });
-      const data = await res.json();
+      const json = await res.json();
+      const result = json.data || json; // Unwrap data property if it exists
+      
       if (!res.ok) {
-        toast.error(data.message ?? "Action failed");
+        toast.error(result.message ?? json.message ?? "Action failed");
         return;
       }
-      toast.success(data.data?.message ?? (isActive ? "Service deactivated" : "Service activated"));
+
+      // Check if service activation requires payment
+      if (result.requiresPayment && !isActive) {
+        toast.info(`Redirecting to payment for ${svc.name}...`);
+        
+        // Initialize payment
+        const paymentRes = await fetch("/api/services/initialize-payment", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ serviceSlug: svc.slug }),
+          credentials: "include"
+        });
+
+        const paymentJson = await paymentRes.json();
+        const paymentResult = paymentJson.data || paymentJson; // Unwrap data property if it exists
+        
+        if (!paymentRes.ok) throw new Error(paymentResult.message || paymentJson.message || "Payment initialization failed");
+
+        // Redirect to Paystack
+        window.location.href = paymentResult.authorizationUrl;
+        return;
+      }
+
+      // Service activated successfully without payment
+      if (result.activated && !isActive) {
+        toast.success(result.message ?? `Service activated`);
+      } else if (isActive) {
+        toast.success(result.message ?? `Service deactivated`);
+      }
+      
       invalidateServiceCache();
       await load();
-    } catch {
-      toast.error("Network error");
+    } catch (err: any) {
+      toast.error(err.message || "Network error");
     } finally {
       setActionSlug(null);
     }
