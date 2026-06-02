@@ -131,9 +131,11 @@ export default function ServicesClient() {
         try {
           if (typeof window !== "undefined" && paymentResult?.authorizationUrl) {
             window.location.href = paymentResult.authorizationUrl;
+          } else {
+            toast.info(`Open this payment link in your browser: ${paymentResult?.authorizationUrl}`);
           }
         } catch (err) {
-          // In environments without full browser navigation, consider opening in system browser via native bridge
+          toast.info(`Open this payment link in your browser: ${paymentResult?.authorizationUrl}`);
         }
         return;
       }
