@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useMemo, useRef, useState } from "react";
 import Script from "next/script";
+import { openExternal } from "@/lib/utils/openExternal";
 import { toast } from "sonner";
 import { ServiceGate } from "@/lib/components/ServiceGate";
 import "../../shared.css";
@@ -150,7 +151,7 @@ export default function FeeCollectionPage() {
 
         if (!window.PaystackPop) {
           try {
-            window.open(authorizationUrl, "_blank");
+            await openExternal(authorizationUrl);
             toast.info("Complete payment in the new tab, then refresh the page.");
             return;
           } catch (err) {

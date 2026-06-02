@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import Script from "next/script";
 import "../../shared.css";
+import { openExternal } from "@/lib/utils/openExternal";
 
 interface Child { id: string; name: string; email?: string; }
 interface FeeSchedule {
@@ -63,7 +64,7 @@ export default function ParentFeesPage() {
 
         if (!window.PaystackPop) {
           try {
-            window.open(authorizationUrl, "_blank");
+            await openExternal(authorizationUrl);
             toast.info("Complete payment in the new tab");
             return;
           } catch (err) {

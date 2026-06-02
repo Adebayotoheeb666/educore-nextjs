@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import Script from "next/script";
+import { openExternal } from "@/lib/utils/openExternal";
 import { useAppSelector } from "@/redux/hooks";
 import "../../shared.css";
 
@@ -51,7 +52,7 @@ export default function StudentFeesPage() {
 
         if (!window.PaystackPop) {
           try {
-            window.open(authorizationUrl, "_blank");
+            await openExternal(authorizationUrl);
             return;
           } catch (err) {
             toast.error("Unable to open payment link in this environment");

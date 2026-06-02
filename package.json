@@ -2,9 +2,19 @@
   "name": "educore-nextjs",
   "version": "1.0.0",
   "private": true,
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "export": "next export",
+    "mobile:export": "npm run build && npm run export",
+    "mobile:cap:add:android": "npx cap add android",
+    "mobile:cap:add:ios": "npx cap add ios",
+    "mobile:cap:copy": "npx cap copy",
+    "mobile:cap:open:android": "npx cap open android",
+    "mobile:cap:open:ios": "npx cap open ios",
     "start": "next start",
     "lint": "next lint",
     "test:e2e": "playwright test",
@@ -16,6 +26,7 @@
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.92.0",
+    "@capacitor/browser": "^8.0.3",
     "@ducanh2912/next-pwa": "^10.2.9",
     "@jridgewell/sourcemap-codec": "^1.5.0",
     "@libsql/client": "^0.14.0",
@@ -45,6 +56,10 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@capacitor/android": "^8.3.4",
+    "@capacitor/cli": "^8.3.4",
+    "@capacitor/core": "^8.3.4",
+    "@capacitor/ios": "^8.3.4",
     "@playwright/test": "^1.60.0",
     "@types/bcryptjs": "^2.4.6",
     "@types/jest": "^30.0.0",
