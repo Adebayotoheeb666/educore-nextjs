@@ -5,6 +5,8 @@ import { badRequest, conflict, created, ok, serverError } from "@/lib/utils/resp
 import { hashPassword } from "@/lib/utils/password";
 import { generateId } from "@/lib/utils/id";
 
+export const dynamic = "force-dynamic";
+
 export const GET = withAuth(async (_req: NextRequest, { school }: AuthContext): Promise<NextResponse> => {
   try {
     if (!school) return badRequest("School context required");

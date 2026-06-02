@@ -4,6 +4,8 @@ import { requireService } from "@/lib/middleware/requireService";
 import { withAuth, type AuthContext } from "@/lib/middleware/auth";
 import { badRequest, ok, serverError } from "@/lib/utils/response";
 
+export const dynamic = "force-dynamic";
+
 // POST /api/ai — generic AI completion endpoint
 export const POST = withAuth(requireService("ai", async (req: NextRequest, { school }: AuthContext): Promise<NextResponse> => {
   try {

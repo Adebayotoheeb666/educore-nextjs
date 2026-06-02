@@ -5,6 +5,8 @@ import { withAuth, type AuthContext } from "@/lib/middleware/auth";
 import { badRequest, created, ok, serverError } from "@/lib/utils/response";
 import { generateId } from "@/lib/utils/id";
 
+export const dynamic = "force-dynamic";
+
 const TEACHER_ROLES = ["subject_teacher", "class_teacher", "vp_academics", "principal"];
 
 export const GET = withAuth(requireService("lesson-plans", async (req: NextRequest, { school, user }: AuthContext): Promise<NextResponse> => {
