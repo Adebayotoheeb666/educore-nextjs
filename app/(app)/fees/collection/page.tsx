@@ -187,6 +187,11 @@ export default function FeeCollectionPage() {
           }
         },
       });
+        try {
+          handler.openIframe();
+        } catch (err: unknown) {
+          toast.error("Unable to open Paystack payment iframe");
+        }
       } catch (err: unknown) {
         toast.error(err instanceof Error ? err.message : "Payment initialization failed");
       }
