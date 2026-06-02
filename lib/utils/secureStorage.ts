@@ -4,7 +4,7 @@
 export async function setItem(key: string, value: string): Promise<void> {
   // Try community secure storage plugin
   try {
-    const mod = await import('@capacitor-community/secure-storage');
+    const mod = await import(/* webpackIgnore: true */ '@capacitor-community/secure-storage');
     if (mod && (mod as any).SecureStoragePlugin && typeof (mod as any).SecureStoragePlugin.set === 'function') {
       await (mod as any).SecureStoragePlugin.set({ key, value });
       return;
@@ -13,7 +13,7 @@ export async function setItem(key: string, value: string): Promise<void> {
 
   // Try another popular plugin interface
   try {
-    const mod = await import('capacitor-secure-storage-plugin');
+    const mod = await import(/* webpackIgnore: true */ 'capacitor-secure-storage-plugin');
     if (mod && typeof (mod as any).SecureStorage?.set === 'function') {
       await (mod as any).SecureStorage.set(key, value);
       return;
@@ -42,7 +42,7 @@ export async function setItem(key: string, value: string): Promise<void> {
 
 export async function getItem(key: string): Promise<string | null> {
   try {
-    const mod = await import('@capacitor-community/secure-storage');
+    const mod = await import(/* webpackIgnore: true */ '@capacitor-community/secure-storage');
     if (mod && (mod as any).SecureStoragePlugin && typeof (mod as any).SecureStoragePlugin.get === 'function') {
       const res = await (mod as any).SecureStoragePlugin.get({ key });
       return res?.value ?? null;
@@ -50,7 +50,7 @@ export async function getItem(key: string): Promise<string | null> {
   } catch (e) {}
 
   try {
-    const mod = await import('capacitor-secure-storage-plugin');
+    const mod = await import(/* webpackIgnore: true */ 'capacitor-secure-storage-plugin');
     if (mod && typeof (mod as any).SecureStorage?.get === 'function') {
       return await (mod as any).SecureStorage.get(key);
     }
@@ -75,7 +75,7 @@ export async function getItem(key: string): Promise<string | null> {
 
 export async function removeItem(key: string): Promise<void> {
   try {
-    const mod = await import('@capacitor-community/secure-storage');
+    const mod = await import(/* webpackIgnore: true */ '@capacitor-community/secure-storage');
     if (mod && (mod as any).SecureStoragePlugin && typeof (mod as any).SecureStoragePlugin.remove === 'function') {
       await (mod as any).SecureStoragePlugin.remove({ key });
       return;
@@ -83,7 +83,7 @@ export async function removeItem(key: string): Promise<void> {
   } catch (e) {}
 
   try {
-    const mod = await import('capacitor-secure-storage-plugin');
+    const mod = await import(/* webpackIgnore: true */ 'capacitor-secure-storage-plugin');
     if (mod && typeof (mod as any).SecureStorage?.remove === 'function') {
       await (mod as any).SecureStorage.remove(key);
       return;
