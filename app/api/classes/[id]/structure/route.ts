@@ -3,6 +3,8 @@ import { query, queryOne } from "@/lib/db/turso";
 import { withAuth, type AuthContext } from "@/lib/middleware/auth";
 import { notFound, ok, serverError, badRequest } from "@/lib/utils/response";
 
+export const dynamic = "force-dynamic";
+
 // GET /api/classes/[id]/structure — Get complete class structure (class teacher, students, subjects, subject teachers)
 export const GET = withAuth(async (req: NextRequest, { school }: AuthContext, params): Promise<NextResponse> => {
   try {

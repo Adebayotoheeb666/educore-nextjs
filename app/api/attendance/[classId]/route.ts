@@ -4,6 +4,8 @@ import { requireService } from "@/lib/middleware/requireService";
 import { withAuth, type AuthContext } from "@/lib/middleware/auth";
 import { badRequest, ok, serverError } from "@/lib/utils/response";
 
+export const dynamic = "force-dynamic";
+
 // GET /api/attendance/[classId]?date=YYYY-MM-DD
 export const GET = withAuth(requireService("attendance", async (req: NextRequest, { school }: AuthContext, params): Promise<NextResponse> => {
   try {

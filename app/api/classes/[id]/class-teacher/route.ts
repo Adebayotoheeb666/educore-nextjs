@@ -3,6 +3,8 @@ import { queryOne, execute } from "@/lib/db/turso";
 import { withAuth, type AuthContext } from "@/lib/middleware/auth";
 import { badRequest, notFound, ok, serverError } from "@/lib/utils/response";
 
+export const dynamic = "force-dynamic";
+
 // POST /api/classes/[id]/class-teacher — assign a class teacher
 export const POST = withAuth(
   async (req: NextRequest, { school }: AuthContext, params): Promise<NextResponse> => {

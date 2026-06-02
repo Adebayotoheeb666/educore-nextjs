@@ -4,6 +4,8 @@ import { withAuth, type AuthContext } from "@/lib/middleware/auth";
 import { badRequest, notFound, ok, serverError, created, conflict } from "@/lib/utils/response";
 import { generateId } from "@/lib/utils/id";
 
+export const dynamic = "force-dynamic";
+
 // GET /api/classes/[id]/subjects — Get subjects taught in a class
 export const GET = withAuth(async (req: NextRequest, { school }: AuthContext, params): Promise<NextResponse> => {
   try {

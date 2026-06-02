@@ -5,6 +5,8 @@ import { badRequest, created, ok, conflict, serverError } from "@/lib/utils/resp
 import { hashPassword } from "@/lib/utils/password";
 import { generateId } from "@/lib/utils/id";
 
+export const dynamic = "force-dynamic";
+
 const ADMIN_ROLES = ["principal", "vp_admin", "admin_staff", "school_owner"];
 
 // GET /api/students

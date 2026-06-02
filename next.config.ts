@@ -104,6 +104,7 @@ const nextConfig: NextConfig = {
   },
 
   images: {
+    unoptimized: true,
     remotePatterns: [
       { protocol: "https", hostname: "res.cloudinary.com" },
       { protocol: "https", hostname: "*.amazonaws.com" },
@@ -116,6 +117,7 @@ const nextConfig: NextConfig = {
     config.plugins.push(
       new webpack.IgnorePlugin({
         resourceRegExp: /^@capacitor-community\/secure-storage$|^capacitor-secure-storage-plugin$/,
+        contextRegExp: /.*/,
       })
     );
     config.externals = config.externals || [];

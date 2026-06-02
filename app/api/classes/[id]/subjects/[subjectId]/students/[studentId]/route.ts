@@ -3,6 +3,8 @@ import { queryOne, execute } from "@/lib/db/turso";
 import { withAuth, type AuthContext } from "@/lib/middleware/auth";
 import { notFound, ok, serverError } from "@/lib/utils/response";
 
+export const dynamic = "force-dynamic";
+
 // DELETE /api/classes/[id]/subjects/[subjectId]/students/[studentId] — remove student from subject
 export const DELETE = withAuth(
   async (req: NextRequest, { school }: AuthContext, params): Promise<NextResponse> => {

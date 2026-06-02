@@ -4,6 +4,8 @@ import { requireService } from "@/lib/middleware/requireService";
 import { withAuth, type AuthContext } from "@/lib/middleware/auth";
 import { notFound, ok, serverError } from "@/lib/utils/response";
 
+export const dynamic = "force-dynamic";
+
 export const GET = withAuth(requireService("exams", async (_req: NextRequest, { school }: AuthContext, params): Promise<NextResponse> => {
   try {
     if (!school) return notFound("School not found");

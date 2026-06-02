@@ -4,6 +4,8 @@ import { withAuth, type AuthContext } from "@/lib/middleware/auth";
 import { badRequest, notFound, ok, serverError } from "@/lib/utils/response";
 import { generateId } from "@/lib/utils/id";
 
+export const dynamic = "force-dynamic";
+
 // POST /api/classes/[id]/enroll-students — Bulk enroll students in a class
 export const POST = withAuth(
   async (req: NextRequest, { school }: AuthContext, params): Promise<NextResponse> => {

@@ -3,6 +3,8 @@ import { withAuth, type AuthContext } from "@/lib/middleware/auth";
 import { badRequest, ok, serverError } from "@/lib/utils/response";
 import { sendEmail } from "@/lib/services/email";
 
+export const dynamic = "force-dynamic";
+
 // POST /api/admin/test-email — super_admin only, verifies SMTP config works
 export const POST = withAuth(
   async (req: NextRequest, { user }: AuthContext): Promise<NextResponse> => {

@@ -3,6 +3,8 @@ import { withAuth, type AuthContext } from "@/lib/middleware/auth";
 import { uploadFile } from "@/lib/services/cloudinary";
 import { badRequest, ok, serverError } from "@/lib/utils/response";
 
+export const dynamic = "force-dynamic";
+
 const MAX_BYTES = 5 * 1024 * 1024; // 5 MB
 const ALLOWED = ["image/jpeg", "image/png", "image/webp", "image/gif", "application/pdf"];
 

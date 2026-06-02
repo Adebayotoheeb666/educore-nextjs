@@ -5,6 +5,8 @@ import { badRequest, conflict, created, ok, serverError } from "@/lib/utils/resp
 import { hashPassword } from "@/lib/utils/password";
 import { generateId } from "@/lib/utils/id";
 
+export const dynamic = "force-dynamic";
+
 const STAFF_ROLES = [
   "class_teacher", "subject_teacher", "vp_admin", "vp_academics",
   "principal", "bursar", "admin_staff",

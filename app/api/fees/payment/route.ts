@@ -5,6 +5,8 @@ import { withAuth, type AuthContext } from "@/lib/middleware/auth";
 import { badRequest, notFound, ok, serverError } from "@/lib/utils/response";
 import { generateId } from "@/lib/utils/id";
 
+export const dynamic = "force-dynamic";
+
 // POST /api/fees/payment — record a cash/manual payment
 export const POST = withAuth(
   requireService("fees", async (req: NextRequest, { school }: AuthContext): Promise<NextResponse> => {

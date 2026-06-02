@@ -4,6 +4,8 @@ import { requireService } from "@/lib/middleware/requireService";
 import { withAuth, type AuthContext } from "@/lib/middleware/auth";
 import { badRequest, notFound, ok, serverError } from "@/lib/utils/response";
 
+export const dynamic = "force-dynamic";
+
 // POST /api/attendance/notify-absent
 export const POST = withAuth(requireService("attendance", async (req: NextRequest, { school }: AuthContext): Promise<NextResponse> => {
   try {

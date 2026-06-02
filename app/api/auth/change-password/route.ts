@@ -5,6 +5,8 @@ import { badRequest, ok, serverError } from "@/lib/utils/response";
 import { comparePassword, hashPassword } from "@/lib/utils/password";
 import { checkRateLimit } from "@/lib/middleware/rateLimit";
 
+export const dynamic = "force-dynamic";
+
 export const POST = withAuth(async (req: NextRequest, { user }: AuthContext): Promise<NextResponse> => {
   try {
     // 5 changes per 15 minutes per IP

@@ -3,6 +3,8 @@ import { queryOne, execute } from "@/lib/db/turso";
 import { withAuth, type AuthContext } from "@/lib/middleware/auth";
 import { badRequest, ok, serverError, unauthorized } from "@/lib/utils/response";
 
+export const dynamic = "force-dynamic";
+
 // GET: Public fetch of a single blog post by ID
 export const GET = async (
   req: NextRequest,

@@ -3,6 +3,8 @@ import { execute, queryOne } from "@/lib/db/turso";
 import { hashPassword } from "@/lib/utils/password";
 import { badRequest, ok, serverError } from "@/lib/utils/response";
 
+export const dynamic = "force-dynamic";
+
 // POST /api/auth/reset-password
 // Body: { token, password }
 export async function POST(req: NextRequest): Promise<NextResponse> {

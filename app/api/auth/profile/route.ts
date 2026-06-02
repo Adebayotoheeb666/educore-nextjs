@@ -3,6 +3,8 @@ import { execute, queryOne } from "@/lib/db/turso";
 import { withAuth, type AuthContext } from "@/lib/middleware/auth";
 import { ok, serverError } from "@/lib/utils/response";
 
+export const dynamic = "force-dynamic";
+
 export const PATCH = withAuth(async (req: NextRequest, { user }: AuthContext): Promise<NextResponse> => {
   try {
     const body = await req.json();

@@ -3,6 +3,8 @@ import { query } from "@/lib/db/turso";
 import { withAuth, type AuthContext } from "@/lib/middleware/auth";
 import { ok, serverError } from "@/lib/utils/response";
 
+export const dynamic = "force-dynamic";
+
 // GET /api/services - List all available services, optionally with school subscription status
 export const GET = withAuth(async (_req: NextRequest, { school }: AuthContext): Promise<NextResponse> => {
   try {

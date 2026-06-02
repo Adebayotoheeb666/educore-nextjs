@@ -5,6 +5,8 @@ import { badRequest, forbidden, ok, serverError } from "@/lib/utils/response";
 import { SERVICE_CATALOG, getServiceBySlug } from "@/config/services/catalog";
 import { generateId } from "@/lib/utils/id";
 
+export const dynamic = "force-dynamic";
+
 /**
  * GET /api/admin/schools/[id]/services
  * Returns all services with their activation status for a specific school.
