@@ -17,12 +17,16 @@ This file is a commit-ready checklist mapping audited files to their current sta
 - [x] `app/(app)/parent/fees/page.tsx` — Done: guarded Paystack usage and fallback flows.
 - [x] `app/(app)/fees/collection/page.tsx` — Done: guarded Paystack usage and fallback flows.
 - [x] `app/(app)/student/fees/page.tsx` — Done: guarded Paystack usage and fallback flows.
-- [ ] `app/page.tsx` — TODO: review for `window`, `document`, `localStorage` usages and guard where needed.
-- [ ] `app/our-team/page.tsx` — TODO: review and guard scroll/document accesses.
-- [ ] `app/resources/page.tsx` — TODO: review and guard.
-- [ ] `app/security/page.tsx` — TODO: review and guard.
-- [ ] `app/contact-us/page.tsx` — TODO: review and guard.
-- [ ] `app/(app)/fees/schedules/page.tsx` — TODO: guard `window.scrollTo()` and other window usages.
+- [x] `app/page.tsx` — Done: guarded scroll handlers.
+- [x] `app/our-team/page.tsx` — Done: guarded scroll handlers.
+- [x] `app/resources/page.tsx` — Done: guarded scroll handlers.
+- [x] `app/security/page.tsx` — Done: guarded scroll handlers.
+- [x] `app/contact-us/page.tsx` — Done: guarded scroll handlers.
+- [x] `app/(app)/fees/schedules/page.tsx` — Done: guarded `window.scrollTo()`.
+- [x] `app/help-center/page.tsx` — Done: guarded scroll handlers.
+- [x] `redux/features/auth/authSlice.ts` — Done: guarded localStorage writes/removals.
+- [x] `lib/utils/fetch.ts` — Done: guarded localStorage access before reading token.
+- [x] `lib/hooks/useServicePayment.ts` — Done: guarded payment redirect for SSR/WebView.
 - [ ] `public/sw.js` — TODO: Verify service worker behavior on Android/iOS WebViews (manual testing).
 - [ ] `PAYMENT_INTEGRATION.md` — TODO: Update docs to include mobile/Capacitor guidance (use system browser or native SDKs).
 - [ ] `app/api/**` — TODO: Confirm mobile API access strategy (HTTPS base URL, auth tokens vs httpOnly cookies, CORS).

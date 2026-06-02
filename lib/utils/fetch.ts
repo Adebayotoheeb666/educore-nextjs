@@ -9,7 +9,7 @@ export async function authenticatedFetch(
   };
 
   // Add Authorization header if token exists in localStorage
-  if (typeof window !== "undefined") {
+  if (typeof window !== "undefined" && typeof window.localStorage !== "undefined") {
     const token = localStorage.getItem("accessToken");
     if (token) {
       newOptions.headers = new Headers(options?.headers);

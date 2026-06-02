@@ -87,7 +87,11 @@ export function useServicePayment() {
         setPaymentData(payment);
 
         // Redirect to Paystack payment page
-        window.location.href = payment.authorizationUrl;
+        if (typeof window !== "undefined" && window.location) {
+          window.location.href = payment.authorizationUrl;
+        } else {
+          toast.info(`Open this payment link in your browser: ${payment.authorizationUrl}`);
+        }
         return { success: true, requiresPayment: true, payment };
       }
 
