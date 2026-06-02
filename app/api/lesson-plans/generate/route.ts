@@ -4,6 +4,8 @@ import { requireService } from "@/lib/middleware/requireService";
 import { withAuth, type AuthContext } from "@/lib/middleware/auth";
 import { badRequest, ok, serverError } from "@/lib/utils/response";
 
+export const dynamic = "force-dynamic";
+
 // POST /api/lesson-plans/generate — AI lesson plan generation
 // Delegates to the existing AI service if token budget is available
 export const POST = withAuth(

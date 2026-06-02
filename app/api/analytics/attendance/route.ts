@@ -4,6 +4,8 @@ import { requireService } from "@/lib/middleware/requireService";
 import { withAuth, type AuthContext } from "@/lib/middleware/auth";
 import { badRequest, ok, serverError } from "@/lib/utils/response";
 
+export const dynamic = "force-dynamic";
+
 export const GET = withAuth(requireService("analytics", async (_req: NextRequest, { school }: AuthContext): Promise<NextResponse> => {
   try {
     if (!school) return badRequest("School context required");

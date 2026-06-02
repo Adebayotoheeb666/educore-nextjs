@@ -4,6 +4,8 @@ import { requireService } from "@/lib/middleware/requireService";
 import { withAuth, type AuthContext } from "@/lib/middleware/auth";
 import { forbidden, notFound, ok, serverError } from "@/lib/utils/response";
 
+export const dynamic = "force-dynamic";
+
 export const DELETE = withAuth(requireService("calendar", async (
   req: NextRequest,
   { school, user }: AuthContext,

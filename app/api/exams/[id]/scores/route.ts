@@ -5,6 +5,8 @@ import { withAuth, type AuthContext } from "@/lib/middleware/auth";
 import { badRequest, notFound, ok, serverError } from "@/lib/utils/response";
 import { generateId } from "@/lib/utils/id";
 
+export const dynamic = "force-dynamic";
+
 interface ScoreRow { student: string; caScore?: number; examScore?: number; }
 
 export const POST = withAuth(

@@ -6,6 +6,8 @@ import { setAuthCookie } from "@/lib/utils/cookies";
 import { badRequest, serverError, unauthorized } from "@/lib/utils/response";
 import { withRateLimit } from "@/lib/middleware/rateLimit";
 
+export const dynamic = "force-dynamic";
+
 interface UserRow {
   id: string;
   name: string;

@@ -4,6 +4,8 @@ import { requireService } from "@/lib/middleware/requireService";
 import { withAuth, type AuthContext } from "@/lib/middleware/auth";
 import { badRequest, ok, serverError } from "@/lib/utils/response";
 
+export const dynamic = "force-dynamic";
+
 // GET /api/fees/defaulters — students with outstanding fee payments
 export const GET = withAuth(requireService("fees", async (_req: NextRequest, { school }: AuthContext): Promise<NextResponse> => {
   try {

@@ -5,6 +5,8 @@ import { badRequest, ok, serverError } from "@/lib/utils/response";
 import { sendPasswordResetEmail } from "@/lib/services/email";
 import { withRateLimit } from "@/lib/middleware/rateLimit";
 
+export const dynamic = "force-dynamic";
+
 const GENERIC_OK = { message: "If that email exists, a reset link has been sent." };
 
 // 5 reset requests per 15 minutes per IP

@@ -3,6 +3,8 @@ import { execute, queryOne } from "@/lib/db/turso";
 import { withAuth, type AuthContext } from "@/lib/middleware/auth";
 import { notFound, ok, serverError } from "@/lib/utils/response";
 
+export const dynamic = "force-dynamic";
+
 // PATCH /api/admin/users/[id] — activate/deactivate a user (super admin only)
 export const PATCH = withAuth(
   async (req: NextRequest, _ctx: AuthContext, params): Promise<NextResponse> => {

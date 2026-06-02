@@ -3,6 +3,8 @@ import { query } from "@/lib/db/turso";
 import { withAuth } from "@/lib/middleware/auth";
 import { ok, serverError } from "@/lib/utils/response";
 
+export const dynamic = "force-dynamic";
+
 // GET /api/admin/users — get all users across platform (super admin only)
 export const GET = withAuth(
   async (_req: NextRequest): Promise<NextResponse> => {

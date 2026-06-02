@@ -9,6 +9,8 @@ import { seedServices, activateCompulsoryServices } from "@/lib/services/seedSer
 import { getServiceBySlug, validateDependencies } from "@/config/services/catalog";
 import { withRateLimit } from "@/lib/middleware/rateLimit";
 
+export const dynamic = "force-dynamic";
+
 // 5 registrations per hour per IP
 export const POST = withRateLimit(
   { prefix: "register", limit: 5, windowSecs: 3600 },
