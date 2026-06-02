@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import { ServiceGate } from "@/lib/components/ServiceGate";
 import "../../shared.css";
 
@@ -23,7 +24,7 @@ export default function FeeDefaultersPage() {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    fetch("/api/fees/defaulters", { credentials: "include" })
+    authenticatedFetch("/api/fees/defaulters")
       .then((r) => r.json())
       .then((d) => setDefaulters(Array.isArray(d.data) ? d.data : []))
       .catch(() => toast.error("Failed to load defaulters"))

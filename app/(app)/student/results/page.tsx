@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { useAppSelector } from "@/redux/hooks";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import "../../shared.css";
 
 interface Result {
@@ -20,7 +21,7 @@ export default function StudentResultsPage() {
     const params = new URLSearchParams();
     if (term) params.set("term", term);
     setLoading(true);
-    fetch(`/api/results/parent/${user.id}?${params}`, { credentials: "include" })
+    authenticatedFetch(`/api/results/parent/${user.id}?${params}`)
       .then((r) => r.json())
       .then((d) => setResults(Array.isArray(d.data) ? d.data : []))
       .catch(() => toast.error("Failed to load results"))

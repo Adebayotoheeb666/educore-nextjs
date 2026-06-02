@@ -2,7 +2,9 @@
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import Script from "next/script";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import { openExternal } from "@/lib/utils/openExternal";
+import { IS_MOBILE_WEBVIEW } from "@/lib/utils/runtimeConfig";
 import { useAppSelector } from "@/redux/hooks";
 import "../../shared.css";
 
@@ -19,7 +21,7 @@ export default function StudentFeesPage() {
 
   useEffect(() => {
     if (!user?.id) return;
-    fetch(`/api/fees/student?studentId=${user.id}`, { credentials: "include" })
+    authenticatedFetch(`/api/fees/student?studentId=${user.id}`)
       .then((r) => r.json())
       .then((d) => setFees(Array.isArray(d.data) ? d.data : []))
       .catch(() => toast.error("Failed to load fees"))
@@ -33,10 +35,9 @@ export default function StudentFeesPage() {
 
     setPaying(fee.id);
     try {
-      const res = await fetch("/api/payments/initialize", {
+      const res = await authenticatedFetch("/api/payments/initialize", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify({ studentId: user.id, feeId: fee.id }),
       });
       const json = await res.json();
@@ -45,14 +46,10 @@ export default function StudentFeesPage() {
       const { authorizationUrl, reference, amount } = json.data;
 
       try {
-        if (typeof window === "undefined") {
-          toast.info("Open the payment link in an external browser: " + authorizationUrl);
-          return;
-        }
-
-        if (!window.PaystackPop) {
+        if (typeof window === "undefined" || IS_MOBILE_WEBVIEW || !window.PaystackPop) {
           try {
             await openExternal(authorizationUrl);
+            toast.info("Open the payment link in your browser to complete checkout.");
             return;
           } catch (err) {
             toast.error("Unable to open payment link in this environment");
@@ -60,14 +57,14 @@ export default function StudentFeesPage() {
           }
         }
 
-        window.PaystackPop.setup({
+        const handler = window.PaystackPop.setup({
           key: publicKey,
           email: user.email,
           amount: amount * 100,
           ref: reference,
           onClose: () => toast.info("Payment window closed"),
           callback: async (response) => {
-            const verify = await fetch(`/api/payments/verify?reference=${response.reference}`, { credentials: "include" }).then((r) => r.json());
+            const verify = await authenticatedFetch(`/api/payments/verify?reference=${response.reference}`).then((r) => r.json());
             if (verify.data?.verified) {
               toast.success("Payment confirmed!");
               setFees((prev) => prev.map((f) => f.id === fee.id ? { ...f, is_paid: true, paid_amount: amount } : f));
@@ -75,7 +72,13 @@ export default function StudentFeesPage() {
               toast.error("Could not verify payment");
             }
           },
-        }).openIframe();
+        });
+
+        try {
+          handler.openIframe();
+        } catch (err: unknown) {
+          toast.error("Unable to open Paystack payment iframe");
+        }
       } catch (err: unknown) {
         toast.error(err instanceof Error ? err.message : "Payment failed");
       }

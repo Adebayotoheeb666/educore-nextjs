@@ -4,6 +4,10 @@ import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setUser, clearUser } from "@/redux/features/auth/authSlice";
+import { authenticatedFetch } from "@/lib/utils/fetch";
+import { getStoredUser } from "@/lib/utils/authStorage";
+import { IS_MOBILE_WEBVIEW, resolveApiUrl } from "@/lib/utils/runtimeConfig";
+import { getThemePreference, setThemePreference } from "@/lib/utils/themeStorage";
 import { RiNotificationLine, RiMoonLine, RiSunLine, RiQuestionLine } from "react-icons/ri";
 import "./dashboard.css";
 import MobileBottomNav from "./MobileBottomNav";
@@ -84,6 +88,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const { user, isAuthenticated } = useAppSelector((s) => s.auth);
   const [ready, setReady] = useState(false);
+  const [hydrated, setHydrated] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
@@ -91,36 +96,56 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     "auth", "school", "students", "teachers", "parents", "classes"
   ]);
 
-  // Bootstrap: verify auth on mount
+  // Bootstrap: hydrate auth state from secure storage, then verify session
   useEffect(() => {
-    const init = async () => {
+    const hydrate = async () => {
       if (!isAuthenticated) {
         try {
-          const res = await fetch("/api/auth/loggedin", { credentials: "include" });
-          const data = await res.json();
-          if (data?.data === true || data?.authenticated) {
-            const meRes = await fetch("/api/auth/me", { credentials: "include" });
-            const me = await meRes.json();
-            if (meRes.ok) dispatch(setUser(me.data ?? me));
-            else { dispatch(clearUser()); router.replace("/login"); return; }
-          } else {
-            router.replace("/login"); return;
+          const stored = await getStoredUser();
+          if (stored?.token) {
+            dispatch(setUser(stored));
           }
         } catch {
-          router.replace("/login"); return;
+          // secure storage may not be available yet
         }
       }
+      setHydrated(true);
+    };
+
+    hydrate();
+  }, []);
+
+  useEffect(() => {
+    if (!hydrated) return;
+
+    const init = async () => {
+      try {
+        const res = await authenticatedFetch("/api/auth/loggedin");
+        const data = await res.json();
+        if (data?.data === true || data?.authenticated) {
+          const meRes = await authenticatedFetch("/api/auth/me");
+          const me = await meRes.json();
+          if (meRes.ok) dispatch(setUser(me.data ?? me));
+          else { dispatch(clearUser()); router.replace("/login"); return; }
+        } else {
+          router.replace("/login"); return;
+        }
+      } catch {
+        router.replace("/login"); return;
+      }
+
       setReady(true);
     };
+
     init();
-  }, []);
+  }, [hydrated]);
 
   // Fetch active services once user is authenticated and ready
   useEffect(() => {
     if (!ready || !user) return;
     if (user.role === "super_admin") return;
 
-    fetch("/api/services", { credentials: "include" })
+    authenticatedFetch("/api/services")
       .then((res) => res.json())
       .then((data) => {
         if (data && Array.isArray(data.data)) {
@@ -135,35 +160,40 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
   // Sync dark mode preference
   useEffect(() => {
-    try {
-      const saved = typeof window !== "undefined" && typeof window.localStorage !== "undefined"
-        ? window.localStorage.getItem("theme")
-        : null;
-      if (saved === "dark") setDarkMode(true);
-    } catch (err) {
-      // Ignore localStorage access errors in restrictive WebViews
-    }
+    const loadTheme = async () => {
+      try {
+        const saved = await getThemePreference();
+        if (saved === "dark") setDarkMode(true);
+      } catch {
+        // Ignore storage access errors in restrictive WebViews
+      }
+    };
+
+    loadTheme();
   }, []);
 
   useEffect(() => {
-    try {
-      if (typeof document !== "undefined") {
-        document.documentElement.setAttribute("data-theme", darkMode ? "dark" : "light");
-        if (typeof window !== "undefined" && typeof window.localStorage !== "undefined") {
-          window.localStorage.setItem("theme", darkMode ? "dark" : "light");
+    const updateTheme = async () => {
+      try {
+        if (typeof document !== "undefined") {
+          document.documentElement.setAttribute("data-theme", darkMode ? "dark" : "light");
+          await setThemePreference(darkMode ? "dark" : "light");
         }
+      } catch {
+        // Ignore storage/setAttribute errors
       }
-    } catch (err) {
-      // Ignore storage/setAttribute errors
-    }
+    };
+
+    updateTheme();
   }, [darkMode]);
 
-  // Live notification count via SSE
+  // Live notification count via SSE in browsers, or polling fallback in mobile WebView.
   useEffect(() => {
     if (!ready) return;
-    try {
-      if (typeof window !== "undefined" && 'EventSource' in window) {
-        const es = new EventSource("/api/realtime");
+
+    if (typeof window !== "undefined" && !IS_MOBILE_WEBVIEW && 'EventSource' in window) {
+      try {
+        const es = new EventSource(resolveApiUrl("/api/realtime"), { withCredentials: true });
         es.onmessage = (e) => {
           try {
             const data = JSON.parse(e.data);
@@ -171,14 +201,32 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           } catch { /* ignore malformed */ }
         };
         return () => es.close();
+      } catch (err) {
+        // SSE may not work in this browser; fallback to polling below
       }
-    } catch (err) {
-      // SSE may be unavailable in some environments; fallback to polling later
     }
+
+    let interval: number | undefined;
+    const pollCount = async () => {
+      try {
+        const res = await authenticatedFetch(resolveApiUrl("/api/realtime/count"));
+        if (!res.ok) return;
+        const data = await res.json();
+        setUnreadCount(data.unread ?? 0);
+      } catch {
+        // ignore polling failure
+      }
+    };
+
+    pollCount();
+    interval = window.setInterval(pollCount, 30_000);
+    return () => {
+      if (interval) window.clearInterval(interval);
+    };
   }, [ready]);
 
   const handleLogout = async () => {
-    await fetch("/api/auth/logout", { credentials: "include" });
+    await authenticatedFetch("/api/auth/logout");
     dispatch(clearUser());
     router.push("/login");
   };

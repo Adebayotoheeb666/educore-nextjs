@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useAppSelector } from "@/redux/hooks";
 import { toast } from "sonner";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 
 export default function ContactPage() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -33,7 +34,7 @@ export default function ContactPage() {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await fetch("/api/contact", {
+      const res = await authenticatedFetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

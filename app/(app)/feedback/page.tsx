@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import { ServiceGate } from "@/lib/components/ServiceGate";
 import "../shared.css";
 
@@ -25,7 +26,7 @@ export default function FeedbackPage() {
 
   const load = () => {
     setLoading(true);
-    fetch("/api/feedback", { credentials: "include" })
+    authenticatedFetch("/api/feedback")
       .then((r) => r.json())
       .then((d) => setItems(Array.isArray(d.data) ? d.data : []))
       .catch(() => toast.error("Failed to load feedback"))
@@ -39,10 +40,9 @@ export default function FeedbackPage() {
     if (!form.message) return toast.error("Message is required");
     setSubmitting(true);
     try {
-      const res = await fetch("/api/feedback", {
+      const res = await authenticatedFetch("/api/feedback", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify({ ...form, rating: Number(form.rating) }),
       });
       if (!res.ok) throw new Error((await res.json()).message);

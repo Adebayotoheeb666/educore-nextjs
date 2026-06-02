@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 import { toast } from "sonner";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setUser } from "@/redux/features/auth/authSlice";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import "../shared.css";
 
 export default function ProfilePage() {
@@ -40,16 +41,15 @@ export default function ProfilePage() {
       const fd = new FormData();
       fd.append("file", file);
       fd.append("folder", "educore/avatars");
-      const res = await fetch("/api/upload", { method: "POST", credentials: "include", body: fd });
+      const res = await authenticatedFetch("/api/upload", { method: "POST", body: fd });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message);
       const url = data.data.url as string;
       setAvatarUrl(url);
       // Persist to profile
-      await fetch("/api/auth/profile", {
+      await authenticatedFetch("/api/auth/profile", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify({ avatar: url }),
       });
       dispatch(setUser({ ...user!, avatar: url }));
@@ -65,10 +65,9 @@ export default function ProfilePage() {
     e.preventDefault();
     setSaving(true);
     try {
-      const res = await fetch("/api/auth/profile", {
+      const res = await authenticatedFetch("/api/auth/profile", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify(form),
       });
       const data = await res.json();
@@ -88,10 +87,9 @@ export default function ProfilePage() {
     if (passwords.newPw.length < 8) return toast.error("Password must be at least 8 characters");
     setChangingPw(true);
     try {
-      const res = await fetch("/api/auth/profile", {
+      const res = await authenticatedFetch("/api/auth/profile", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify({ currentPassword: passwords.current, newPassword: passwords.newPw }),
       });
       const data = await res.json();

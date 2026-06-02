@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import { useAppSelector } from "@/redux/hooks";
 import "../../shared.css";
 
@@ -28,14 +29,14 @@ export default function StudentDashboardPage() {
   useEffect(() => {
     if (!user?.id) return;
     Promise.all([
-      fetch(`/api/results/parent/${user.id}`, { credentials: "include" }).then((r) => r.json()).catch(() => ({ data: [] })),
-      fetch(`/api/attendance/student/${user.id}`, { credentials: "include" }).then((r) => r.json()).catch(() => ({ data: [] })),
-      fetch("/api/announcements", { credentials: "include" }).then((r) => r.json()).catch(() => ({ data: [] })),
-      fetch(`/api/students/${user.id}/enrollments`, { credentials: "include" }).then((r) => r.json()).catch(() => ({ data: [] })),
-      fetch(`/api/students/${user.id}/subjects`, { credentials: "include" }).then((r) => r.json()).catch(() => ({ data: [] })),
-      fetch("/api/fees/student", { credentials: "include" }).then((r) => r.json()).catch(() => ({ data: null })),
-      fetch("/api/timetable/my", { credentials: "include" }).then((r) => r.json()).catch(() => ({ data: [] })),
-      fetch("/api/library/borrows", { credentials: "include" }).then((r) => r.json()).catch(() => ({ data: [] })),
+      authenticatedFetch(`/api/results/parent/${user.id}`).then((r) => r.json()).catch(() => ({ data: [] })),
+      authenticatedFetch(`/api/attendance/student/${user.id}`).then((r) => r.json()).catch(() => ({ data: [] })),
+      authenticatedFetch("/api/announcements").then((r) => r.json()).catch(() => ({ data: [] })),
+      authenticatedFetch(`/api/students/${user.id}/enrollments`).then((r) => r.json()).catch(() => ({ data: [] })),
+      authenticatedFetch(`/api/students/${user.id}/subjects`).then((r) => r.json()).catch(() => ({ data: [] })),
+      authenticatedFetch("/api/fees/student").then((r) => r.json()).catch(() => ({ data: null })),
+      authenticatedFetch("/api/timetable/my").then((r) => r.json()).catch(() => ({ data: [] })),
+      authenticatedFetch("/api/library/borrows").then((r) => r.json()).catch(() => ({ data: [] })),
     ]).then(([rd, ad, nd, ed, sd, fd, td, ld]) => {
       setResults(Array.isArray(rd.data) ? rd.data.slice(0, 6) : []);
       setAttendance(Array.isArray(ad.data) ? ad.data.slice(0, 10) : []);

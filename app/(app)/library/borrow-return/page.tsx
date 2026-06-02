@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import "../../shared.css";
 
 interface Borrow {
@@ -27,9 +28,9 @@ export default function BorrowReturnPage() {
   const load = () => {
     setLoading(true);
     Promise.all([
-      fetch("/api/library/borrows", { credentials: "include" }).then((r) => r.json()),
-      fetch("/api/library/books", { credentials: "include" }).then((r) => r.json()),
-      fetch("/api/students", { credentials: "include" }).then((r) => r.json()),
+      authenticatedFetch("/api/library/borrows").then((r) => r.json()),
+      authenticatedFetch("/api/library/books").then((r) => r.json()),
+      authenticatedFetch("/api/students").then((r) => r.json()),
     ]).then(([bd, bkd, sd]) => {
       setBorrows(Array.isArray(bd.data) ? bd.data : []);
       setBooks(Array.isArray(bkd.data) ? bkd.data : []);
@@ -59,10 +60,9 @@ export default function BorrowReturnPage() {
     if (!form.bookId || !form.borrowerId) return toast.error("Book and borrower are required");
     setSubmitting(true);
     try {
-      const res = await fetch(`/api/library/books/${form.bookId}/borrow`, {
+      const res = await authenticatedFetch(`/api/library/books/${form.bookId}/borrow`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify({ userId: form.borrowerId, dueDate: form.dueDate || null }),
       });
       if (!res.ok) throw new Error((await res.json()).message);
@@ -79,10 +79,9 @@ export default function BorrowReturnPage() {
 
   const handleReturn = async (b: Borrow) => {
     try {
-      const res = await fetch(`/api/library/books/${b.book_id}/return`, {
+      const res = await authenticatedFetch(`/api/library/books/${b.book_id}/return`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify({ borrowId: b.id }),
       });
       if (!res.ok) throw new Error((await res.json()).message);

@@ -63,8 +63,9 @@ export const POST = withRateLimit(
       avatar: user.avatar,
       token,
     };
-    const response = NextResponse.json({ data: userData, success: true });
 
+    // Return payload consistent with other auth endpoints (top-level fields)
+    const response = NextResponse.json(userData, { status: 200 });
     return setAuthCookie(response, token);
   } catch (err) {
     return serverError(err);

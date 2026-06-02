@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import "../../shared.css";
 
 interface Post {
@@ -17,7 +18,7 @@ export default function AdminBlogPage() {
 
   const load = () => {
     setLoading(true);
-    fetch("/api/blog", { credentials: "include" })
+    authenticatedFetch("/api/blog")
       .then((r) => r.json())
       .then((d) => setPosts(Array.isArray(d.data) ? d.data : []))
       .catch(() => toast.error("Failed to load posts"))
@@ -31,10 +32,9 @@ export default function AdminBlogPage() {
     if (!form.title || !form.content) return toast.error("Title and content are required");
     setSubmitting(true);
     try {
-      const res = await fetch("/api/blog", {
+      const res = await authenticatedFetch("/api/blog", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify(form),
       });
       if (!res.ok) throw new Error((await res.json()).message);
@@ -52,7 +52,7 @@ export default function AdminBlogPage() {
   const handleDelete = async (id: string, title: string) => {
     if (!confirm(`Delete "${title}"?`)) return;
     try {
-      const res = await fetch(`/api/blog/${id}`, { method: "DELETE", credentials: "include" });
+      const res = await authenticatedFetch(`/api/blog/${id}`, { method: "DELETE" });
       if (!res.ok) throw new Error((await res.json()).message);
       toast.success("Post deleted");
       setPosts((prev) => prev.filter((p) => p.id !== id));

@@ -4,22 +4,33 @@ import { store } from "@/redux/store";
 import { Toaster } from "sonner";
 import GlobalLoadingSpinner from "@/components/GlobalLoadingSpinner";
 import { useEffect } from "react";
+import { installMobileFetchInterceptor } from "@/lib/utils/fetch";
+import { IS_MOBILE_WEBVIEW } from "@/lib/utils/runtimeConfig";
+import { getThemePreference } from "@/lib/utils/themeStorage";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   useEffect(() => {
-    try {
-      if (typeof window !== "undefined" && typeof document !== "undefined") {
-        const theme = typeof window.localStorage !== "undefined" ? window.localStorage.getItem("theme") : null;
-        document.documentElement.setAttribute("data-theme", theme || "light");
+    installMobileFetchInterceptor();
+  }, []);
+
+  useEffect(() => {
+    const loadTheme = async () => {
+      try {
+        if (typeof document !== "undefined") {
+          const theme = await getThemePreference();
+          document.documentElement.setAttribute("data-theme", theme || "light");
+        }
+      } catch {
+        // Ignore storage access errors (e.g., private mode or WebView restrictions)
       }
-    } catch (err) {
-      // Ignore storage access errors (e.g., private mode or WebView restrictions)
-    }
+    };
+
+    loadTheme();
   }, []);
 
   useEffect(() => {
     try {
-      if (typeof navigator !== "undefined" && 'serviceWorker' in navigator) {
+      if (!IS_MOBILE_WEBVIEW && typeof navigator !== "undefined" && 'serviceWorker' in navigator) {
         navigator.serviceWorker
           .register('/sw.js')
           .then((reg) => {

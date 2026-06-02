@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { toast } from "sonner";
 import { ServiceGate } from "@/lib/components/ServiceGate";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import "../shared.css";
 
 interface ClassItem { id: string; name: string; section?: string; }
@@ -27,7 +28,7 @@ export default function AttendancePage() {
   const [notifying, setNotifying] = useState(false);
 
   useEffect(() => {
-    fetch("/api/classes", { credentials: "include" })
+    authenticatedFetch("/api/classes")
       .then((r) => r.json())
       .then((d) => {
         const list: ClassItem[] = Array.isArray(d.data) ? d.data : [];
@@ -40,7 +41,7 @@ export default function AttendancePage() {
   useEffect(() => {
     if (!selectedClass) return;
     setLoading(true);
-    fetch(`/api/attendance/${selectedClass}?date=${selectedDate}`, { credentials: "include" })
+    authenticatedFetch(`/api/attendance/${selectedClass}?date=${selectedDate}`)
       .then((r) => r.json())
       .then((d) => {
         const roster = Array.isArray(d.data) ? d.data : d.data?.records ?? [];
@@ -71,10 +72,9 @@ export default function AttendancePage() {
   const handleSave = async () => {
     setSaving(true);
     try {
-      const res = await fetch("/api/attendance", {
+      const res = await authenticatedFetch("/api/attendance", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify({
           classId: selectedClass,
           date: selectedDate,
@@ -99,10 +99,9 @@ export default function AttendancePage() {
     if (!absent.length) { toast.info("No absent students"); return; }
     setNotifying(true);
     try {
-      await fetch("/api/attendance/notify-absent", {
+      await authenticatedFetch("/api/attendance/notify-absent", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify({
           classId: selectedClass,
           date: selectedDate,

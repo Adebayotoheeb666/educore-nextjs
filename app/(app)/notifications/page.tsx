@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import "../shared.css";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 
 interface Notification {
   id: string;
@@ -32,7 +33,7 @@ export default function NotificationsPage() {
   const [filter, setFilter] = useState<"all" | "announcement" | "activity">("all");
 
   useEffect(() => {
-    fetch("/api/notifications?limit=50", { credentials: "include" })
+    authenticatedFetch("/api/notifications?limit=50")
       .then((r) => r.json())
       .then((d) => setItems(Array.isArray(d.data) ? d.data : []))
       .catch(() => {})

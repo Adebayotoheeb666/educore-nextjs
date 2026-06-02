@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import { useAppSelector } from "@/redux/hooks";
 import "../../shared.css";
 
@@ -21,7 +22,7 @@ export default function StudentBehaviorPage() {
 
   useEffect(() => {
     if (!user?.id) return;
-    fetch(`/api/behavior?student_id=${user.id}`, { credentials: "include" })
+    authenticatedFetch(`/api/behavior?student_id=${user.id}`)
       .then((r) => r.json())
       .then((d) => setLogs(Array.isArray(d.data) ? d.data : []))
       .catch(() => toast.error("Failed to load behavior records"))

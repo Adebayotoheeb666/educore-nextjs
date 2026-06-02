@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import "../../shared.css";
 
 interface Announcement {
@@ -25,7 +26,7 @@ export default function AnnouncementDetailPage() {
   const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
-    fetch(`/api/announcements/${id}`, { credentials: "include" })
+    authenticatedFetch(`/api/announcements/${id}`)
       .then((r) => r.json())
       .then((d) => setItem(d.data ?? null))
       .catch(() => toast.error("Failed to load announcement"))
@@ -36,9 +37,8 @@ export default function AnnouncementDetailPage() {
     if (!confirm("Delete this announcement?")) return;
     setDeleting(true);
     try {
-      const res = await fetch(`/api/announcements/${id}`, {
+      const res = await authenticatedFetch(`/api/announcements/${id}`, {
         method: "DELETE",
-        credentials: "include",
       });
       if (!res.ok) throw new Error((await res.json()).message);
       toast.success("Announcement deleted");

@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import "../../shared.css";
 
 export default function GenerateLessonPlanPage() {
@@ -15,8 +16,8 @@ export default function GenerateLessonPlanPage() {
 
   useEffect(() => {
     Promise.all([
-      fetch("/api/classes", { credentials: "include" }).then((r) => r.json()),
-      fetch("/api/subjects", { credentials: "include" }).then((r) => r.json()),
+      authenticatedFetch("/api/classes").then((r) => r.json()),
+      authenticatedFetch("/api/subjects").then((r) => r.json()),
     ]).then(([cd, sd]) => {
       setClasses(Array.isArray(cd.data) ? cd.data : []);
       setSubjects(Array.isArray(sd.data) ? sd.data : []);
@@ -56,10 +57,9 @@ Format the lesson plan with these sections:
 
 Write in a clear, professional tone suitable for a Nigerian secondary school teacher.`;
 
-      const res = await fetch("/api/ai", {
+      const res = await authenticatedFetch("/api/ai", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify({ prompt, type: "lesson_plan" }),
       });
       const data = await res.json();
@@ -77,10 +77,9 @@ Write in a clear, professional tone suitable for a Nigerian secondary school tea
     if (!generated) return;
     setSaving(true);
     try {
-      const res = await fetch("/api/lesson-plans", {
+      const res = await authenticatedFetch("/api/lesson-plans", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify({
           title: `${selectedSubject?.name ?? "Lesson"} — ${form.topic}`,
           classId: form.classId,

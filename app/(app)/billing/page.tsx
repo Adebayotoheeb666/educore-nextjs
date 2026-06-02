@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { toast } from "sonner";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import "../shared.css";
 
 interface BillingRecord {
@@ -31,8 +32,8 @@ export default function BillingPage() {
 
   useEffect(() => {
     Promise.all([
-      fetch("/api/billing", { credentials: "include" }).then((r) => r.json()),
-      fetch("/api/services", { credentials: "include" }).then((r) => r.json()),
+      authenticatedFetch("/api/billing").then((r) => r.json()),
+      authenticatedFetch("/api/services").then((r) => r.json()),
     ])
       .then(([bd, sd]) => {
         setHistory(Array.isArray(bd.data) ? bd.data : []);
@@ -50,10 +51,9 @@ export default function BillingPage() {
 
   const handleSubscribe = async (slug: string) => {
     try {
-      const res = await fetch("/api/services/subscribe", {
+      const res = await authenticatedFetch("/api/services/subscribe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify({ slug }),
       });
       const data = await res.json();

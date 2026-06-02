@@ -6,6 +6,7 @@ import { useAppDispatch } from "@/redux/hooks";
 import { setUser } from "@/redux/features/auth/authSlice";
 import { toast } from "sonner";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import "../auth.css";
 
 export default function LoginPage() {
@@ -26,11 +27,10 @@ export default function LoginPage() {
     }
     setIsLoading(true);
     try {
-      const res = await fetch("/api/auth/login", {
+      const res = await authenticatedFetch("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...formData, email: formData.email.trim().toLowerCase() }),
-        credentials: "include",
       });
       const data = await res.json();
       if (!res.ok) {

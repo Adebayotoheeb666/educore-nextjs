@@ -3,7 +3,9 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import Script from "next/script";
 import "../../shared.css";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import { openExternal } from "@/lib/utils/openExternal";
+import { IS_MOBILE_WEBVIEW } from "@/lib/utils/runtimeConfig";
 
 interface Child { id: string; name: string; email?: string; }
 interface FeeSchedule {
@@ -18,7 +20,7 @@ export default function ParentFeesPage() {
   const [paying, setPaying] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch("/api/parents/children", { credentials: "include" })
+    authenticatedFetch("/api/parents/children")
       .then((r) => r.json())
       .then((d) => {
         const list: Child[] = Array.isArray(d.data) ? d.data : [];
@@ -30,7 +32,7 @@ export default function ParentFeesPage() {
 
   useEffect(() => {
     if (!selectedChild) return;
-    fetch(`/api/fees/student?studentId=${selectedChild}`, { credentials: "include" })
+    authenticatedFetch(`/api/fees/student?studentId=${selectedChild}`)
       .then((r) => r.json())
       .then((d) => setFees(Array.isArray(d.data) ? d.data : []))
       .catch(() => toast.error("Failed to load fees"));
@@ -45,10 +47,9 @@ export default function ParentFeesPage() {
 
     setPaying(fee.id);
     try {
-      const res = await fetch("/api/payments/initialize", {
+      const res = await authenticatedFetch("/api/payments/initialize", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify({ studentId: selectedChild, feeId: fee.id }),
       });
       const json = await res.json();
@@ -57,15 +58,10 @@ export default function ParentFeesPage() {
       const { authorizationUrl, reference, amount } = json.data;
 
       try {
-        if (typeof window === "undefined") {
-          toast.info("Open the payment link in an external browser: " + authorizationUrl);
-          return;
-        }
-
-        if (!window.PaystackPop) {
+        if (typeof window === "undefined" || IS_MOBILE_WEBVIEW || !window.PaystackPop) {
           try {
             await openExternal(authorizationUrl);
-            toast.info("Complete payment in the new tab");
+            toast.info("Open the payment link in your browser to complete checkout.");
             return;
           } catch (err) {
             toast.error("Unable to open payment link in this environment");
@@ -74,24 +70,24 @@ export default function ParentFeesPage() {
         }
 
         const handler = window.PaystackPop.setup({
-        key: publicKey,
-        email: child.email,
-        amount: amount * 100,
-        ref: reference,
-        onClose: () => toast.info("Payment window closed"),
-        callback: async (response) => {
-          const verify = await fetch(
-            `/api/payments/verify?reference=${response.reference}`,
-            { credentials: "include" }
-          ).then((r) => r.json());
-          if (verify.data?.verified) {
-            toast.success(`Payment of ₦${amount.toLocaleString()} confirmed!`);
-            setFees((prev) => prev.map((f) => f.id === fee.id ? { ...f, is_paid: true, paid_amount: amount } : f));
-          } else {
-            toast.error("Payment could not be verified");
-          }
-        },
-      });
+          key: publicKey,
+          email: child.email,
+          amount: amount * 100,
+          ref: reference,
+          onClose: () => toast.info("Payment window closed"),
+          callback: async (response) => {
+            const verify = await authenticatedFetch(
+              `/api/payments/verify?reference=${response.reference}`
+            ).then((r) => r.json());
+            if (verify.data?.verified) {
+              toast.success(`Payment of ₦${amount.toLocaleString()} confirmed!`);
+              setFees((prev) => prev.map((f) => f.id === fee.id ? { ...f, is_paid: true, paid_amount: amount } : f));
+            } else {
+              toast.error("Payment could not be verified");
+            }
+          },
+        });
+
         try {
           handler.openIframe();
         } catch (err: unknown) {

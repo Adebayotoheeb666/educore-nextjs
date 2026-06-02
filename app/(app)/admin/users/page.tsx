@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import "../../shared.css";
 
 interface User {
@@ -19,7 +20,7 @@ export default function AdminUsersPage() {
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    fetch("/api/admin/users", { credentials: "include" })
+    authenticatedFetch("/api/admin/users")
       .then((r) => r.json())
       .then((d) => setUsers(Array.isArray(d.data) ? d.data : d.data?.users ?? []))
       .catch(() => toast.error("Failed to load users"))
@@ -40,10 +41,9 @@ export default function AdminUsersPage() {
 
   const handleToggle = async (u: User) => {
     try {
-      const res = await fetch(`/api/admin/users/${u.id}`, {
+      const res = await authenticatedFetch(`/api/admin/users/${u.id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify({ is_active: u.is_active ? 0 : 1 }),
       });
       if (!res.ok) throw new Error((await res.json()).message);
@@ -57,9 +57,8 @@ export default function AdminUsersPage() {
   const handleDelete = async (u: User) => {
     if (!confirm(`Delete user "${u.name}"? This action cannot be undone.`)) return;
     try {
-      const res = await fetch(`/api/admin/users/${u.id}`, {
+      const res = await authenticatedFetch(`/api/admin/users/${u.id}`, {
         method: "DELETE",
-        credentials: "include",
       });
       if (!res.ok) throw new Error((await res.json()).message);
       setUsers((prev) => prev.filter((x) => x.id !== u.id));

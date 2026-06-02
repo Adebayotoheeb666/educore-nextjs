@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import "../../shared.css";
 
 interface OverdueBorrow {
@@ -15,7 +16,7 @@ export default function OverdueLibraryPage() {
 
   const load = () => {
     setLoading(true);
-    fetch("/api/library/borrows?status=borrowed", { credentials: "include" })
+    authenticatedFetch("/api/library/borrows?status=borrowed")
       .then((r) => r.json())
       .then((d) => {
         const all: OverdueBorrow[] = Array.isArray(d.data) ? d.data : [];
@@ -31,10 +32,9 @@ export default function OverdueLibraryPage() {
   const handleReturn = async (b: OverdueBorrow) => {
     setReturning(b.id);
     try {
-      const res = await fetch(`/api/library/books/${b.book_id}/return`, {
+      const res = await authenticatedFetch(`/api/library/books/${b.book_id}/return`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify({ borrowId: b.id }),
       });
       if (!res.ok) throw new Error((await res.json()).message);

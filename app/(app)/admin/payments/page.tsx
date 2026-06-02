@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import "../../shared.css";
 
 interface Payment {
@@ -19,7 +20,7 @@ export default function AdminPaymentsPage() {
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    fetch("/api/admin/payments", { credentials: "include" })
+    authenticatedFetch("/api/admin/payments")
       .then((r) => r.json())
       .then((d) => setPayments(Array.isArray(d.data) ? d.data : []))
       .catch(() => toast.error("Failed to load payments"))

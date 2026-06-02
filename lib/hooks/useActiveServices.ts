@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useAppSelector } from "@/redux/hooks";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 
 // Compulsory slugs are always active — no need to fetch them from the server.
 const ALWAYS_ACTIVE = ["auth", "school", "students", "teachers", "parents", "classes"];
@@ -12,7 +13,7 @@ async function fetchActiveSlugs(): Promise<string[]> {
   if (cachedSlugs) return cachedSlugs;
   if (fetchPromise) return fetchPromise;
 
-  fetchPromise = fetch("/api/services", { credentials: "include" })
+  fetchPromise = authenticatedFetch("/api/services")
     .then((r) => r.json())
     .then((data) => {
       if (!data || !Array.isArray(data.data)) return ALWAYS_ACTIVE;

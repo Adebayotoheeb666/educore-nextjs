@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setUser } from "@/redux/features/auth/authSlice";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import "../../shared.css";
 
 interface SchoolData {
@@ -61,7 +62,7 @@ export default function SchoolSettingsPage() {
   });
 
   useEffect(() => {
-    fetch("/api/school", { credentials: "include" })
+    authenticatedFetch("/api/school")
       .then((r) => r.json())
       .then((d) => {
         const s: SchoolData = d.data;
@@ -92,15 +93,14 @@ export default function SchoolSettingsPage() {
       const fd = new FormData();
       fd.append("file", file);
       fd.append("folder", "educore/logos");
-      const res = await fetch("/api/upload", { method: "POST", credentials: "include", body: fd });
+      const res = await authenticatedFetch("/api/upload", { method: "POST", body: fd });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message);
       const url = data.data.url as string;
       // Persist logo URL to school record
-      await fetch("/api/school", {
+      await authenticatedFetch("/api/school", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify({ logo: url }),
       });
       setSchool((prev) => prev ? { ...prev, logo: url } : prev);
@@ -117,10 +117,9 @@ export default function SchoolSettingsPage() {
     if (!info.name.trim()) return toast.error("School name is required");
     setSavingInfo(true);
     try {
-      const res = await fetch("/api/school", {
+      const res = await authenticatedFetch("/api/school", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify(info),
       });
       const data = await res.json();
@@ -138,10 +137,9 @@ export default function SchoolSettingsPage() {
     e.preventDefault();
     setSavingTerm(true);
     try {
-      const res = await fetch("/api/school/settings", {
+      const res = await authenticatedFetch("/api/school/settings", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify(termSettings),
       });
       const data = await res.json();

@@ -1,7 +1,9 @@
 "use client";
 import { useEffect, useMemo, useRef, useState } from "react";
 import Script from "next/script";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import { openExternal } from "@/lib/utils/openExternal";
+import { IS_MOBILE_WEBVIEW } from "@/lib/utils/runtimeConfig";
 import { toast } from "sonner";
 import { ServiceGate } from "@/lib/components/ServiceGate";
 import "../../shared.css";
@@ -55,9 +57,9 @@ export default function FeeCollectionPage() {
   const load = () => {
     setLoading(true);
     Promise.all([
-      fetch("/api/fees/payment", { credentials: "include" }).then((r) => r.json()),
-      fetch("/api/students", { credentials: "include" }).then((r) => r.json()),
-      fetch("/api/fees", { credentials: "include" }).then((r) => r.json()),
+      authenticatedFetch("/api/fees/payment").then((r) => r.json()),
+      authenticatedFetch("/api/students").then((r) => r.json()),
+      authenticatedFetch("/api/fees").then((r) => r.json()),
     ])
       .then(([pd, sd, fd]) => {
         setPayments(Array.isArray(pd.data) ? pd.data : []);
@@ -95,10 +97,9 @@ export default function FeeCollectionPage() {
     }
     setSubmitting(true);
     try {
-      const res = await fetch("/api/fees/payment", {
+      const res = await authenticatedFetch("/api/fees/payment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify({
           studentId: form.studentId,
           feeId: form.feeId,
@@ -132,10 +133,9 @@ export default function FeeCollectionPage() {
     }
     setSubmitting(true);
     try {
-      const res = await fetch("/api/payments/initialize", {
+      const res = await authenticatedFetch("/api/payments/initialize", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify({ studentId: form.studentId, feeId: form.feeId }),
       });
       const json = await res.json();
@@ -144,15 +144,10 @@ export default function FeeCollectionPage() {
       const { authorizationUrl, reference, amount } = json.data;
 
       try {
-        if (typeof window === "undefined") {
-          toast.info("Open the payment link in an external browser: " + authorizationUrl);
-          return;
-        }
-
-        if (!window.PaystackPop) {
+        if (typeof window === "undefined" || IS_MOBILE_WEBVIEW || !window.PaystackPop) {
           try {
             await openExternal(authorizationUrl);
-            toast.info("Complete payment in the new tab, then refresh the page.");
+            toast.info("Open the payment link in your browser to complete checkout.");
             return;
           } catch (err) {
             toast.error("Unable to open payment link in this environment");
@@ -161,33 +156,32 @@ export default function FeeCollectionPage() {
         }
 
         const handler = window.PaystackPop.setup({
-        key: publicKey,
-        email: selectedStudent.email,
-        amount: amount * 100, // kobo
-        ref: reference,
-        onClose: () => toast.info("Payment window closed"),
-        callback: async (response) => {
-          const tid = toast.loading("Verifying payment…");
-          try {
-            const verify = await fetch(
-              `/api/payments/verify?reference=${response.reference}`,
-              { credentials: "include" }
-            ).then((r) => r.json());
-            toast.dismiss(tid);
-            if (verify.data?.verified) {
-              toast.success(`Payment of ₦${amount.toLocaleString()} confirmed!`);
-              setMode(null);
-              setForm({ studentId: "", feeId: "", amountPaid: "", paymentMethod: "cash", reference: "" });
-              load();
-            } else {
-              toast.error("Payment could not be verified — contact admin if deducted.");
+          key: publicKey,
+          email: selectedStudent.email,
+          amount: amount * 100, // kobo
+          ref: reference,
+          onClose: () => toast.info("Payment window closed"),
+          callback: async (response) => {
+            const tid = toast.loading("Verifying payment…");
+            try {
+              const verify = await authenticatedFetch(
+                `/api/payments/verify?reference=${response.reference}`
+              ).then((r) => r.json());
+              toast.dismiss(tid);
+              if (verify.data?.verified) {
+                toast.success(`Payment of ₦${amount.toLocaleString()} confirmed!`);
+                setMode(null);
+                setForm({ studentId: "", feeId: "", amountPaid: "", paymentMethod: "cash", reference: "" });
+                load();
+              } else {
+                toast.error("Payment could not be verified — contact admin if deducted.");
+              }
+            } catch {
+              toast.dismiss(tid);
+              toast.error("Verification request failed");
             }
-          } catch {
-            toast.dismiss(tid);
-            toast.error("Verification request failed");
-          }
-        },
-      });
+          },
+        });
         try {
           handler.openIframe();
         } catch (err: unknown) {

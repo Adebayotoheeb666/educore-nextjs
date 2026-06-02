@@ -320,8 +320,8 @@ function ServiceCard({ service }) {
 }
 
 // 2. subscribe() calls /api/services/subscribe
-// 3. If paid, redirects to /api/services/initialize-payment
-// 4. Which redirects to Paystack checkout
+// 3. If paid, calls /api/services/initialize-payment
+// 4. The app opens the returned Paystack checkout URL using the Capacitor Browser plugin or a browser fallback
 // 5. After payment, user returns to /services?ref=SVC-...&status=success
 // 6. ServicesClient verifies payment
 // 7. Service is activated in school_services
@@ -338,9 +338,21 @@ async function initializeServicePayment(serviceSlug: string) {
   });
 
   const { authorizationUrl } = await response.json();
-  window.location.href = authorizationUrl; // Redirect to Paystack
+
+  if (typeof window !== 'undefined') {
+    window.location.href = authorizationUrl; // Redirect to Paystack in web
+  }
 }
 ```
+
+### Mobile / Capacitor Payment Guidance
+
+For mobile builds inside Capacitor, avoid direct browser redirects via `window.location.href`.
+Use the shared `openExternal(url)` helper from `lib/utils/openExternal.ts`, which opens external URLs through Capacitor Browser when available and falls back to a normal browser tab.
+
+- Prefer `openExternal(authorizationUrl)` for Paystack checkout links.
+- For WebView builds, use system browser or Capacitor Browser so the payment session can complete reliably.
+- If the Capacitor Browser plugin is unavailable, display the URL and let the user open it externally.
 
 ## References
 

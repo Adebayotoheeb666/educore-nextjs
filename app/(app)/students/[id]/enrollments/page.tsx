@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 
 interface Enrollment {
   id: string;
@@ -42,7 +43,7 @@ export default function StudentEnrollmentsPage() {
   const fetchEnrollments = async () => {
     try {
       setLoading(true);
-      const res = await fetch(`/api/students/${studentId}/enrollments`);
+      const res = await authenticatedFetch(`/api/students/${studentId}/enrollments`);
       if (!res.ok) throw new Error("Failed to fetch enrollments");
       const data = await res.json();
       setEnrollments(data);
@@ -56,7 +57,7 @@ export default function StudentEnrollmentsPage() {
   const handleEnrollmentSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch(`/api/students/${studentId}/enrollments`, {
+      const res = await authenticatedFetch(`/api/students/${studentId}/enrollments`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -73,7 +74,7 @@ export default function StudentEnrollmentsPage() {
 
   const handleStatusUpdate = async (enrollmentId: string, newStatus: string, leftDate?: string) => {
     try {
-      const res = await fetch(`/api/students/${studentId}/enrollments`, {
+      const res = await authenticatedFetch(`/api/students/${studentId}/enrollments`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

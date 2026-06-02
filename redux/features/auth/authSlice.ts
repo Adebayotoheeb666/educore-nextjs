@@ -18,19 +18,14 @@ interface AuthState {
   loading: boolean;
 }
 
-const readLocal = (key: string): AuthUser | null => {
-  if (typeof window === "undefined") return null;
-  try { return JSON.parse(localStorage.getItem(key) ?? "null"); } catch { return null; }
-};
-
 const initialState: AuthState = {
-  user: readLocal("educore_user"),
-  token: typeof window !== "undefined" ? localStorage.getItem("accessToken") : null,
-  isAuthenticated: typeof window !== "undefined" ? Boolean(localStorage.getItem("accessToken")) : false,
+  user: null,
+  token: null,
+  isAuthenticated: false,
   loading: false,
 };
 
-import { setItem as secureSetItem, removeItem as secureRemoveItem } from '@/lib/utils/secureStorage';
+import { setAuthToken, removeAuthToken, setStoredUser, removeStoredUser } from '@/lib/utils/authStorage';
 
 const authSlice = createSlice({
   name: "auth",
@@ -47,11 +42,10 @@ const authSlice = createSlice({
           try { window.localStorage.setItem("educore_user", JSON.stringify(u)); } catch {}
           if (u.token) {
             try { window.localStorage.setItem("accessToken", u.token); } catch {}
-            // async secure storage write (non-blocking)
-            secureSetItem('accessToken', u.token).catch(() => {});
+            setAuthToken(u.token).catch(() => {});
           }
           // store user as well in secure storage (optional)
-          secureSetItem('educore_user', JSON.stringify(u)).catch(() => {});
+          setStoredUser(u).catch(() => {});
         }
       } catch {}
     },
@@ -63,8 +57,8 @@ const authSlice = createSlice({
         if (typeof window !== "undefined") {
           try { window.localStorage.removeItem("educore_user"); } catch {}
           try { window.localStorage.removeItem("accessToken"); } catch {}
-          secureRemoveItem('accessToken').catch(() => {});
-          secureRemoveItem('educore_user').catch(() => {});
+          removeAuthToken().catch(() => {});
+          removeStoredUser().catch(() => {});
         }
       } catch {}
     },

@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import { ServiceGate } from "@/lib/components/ServiceGate";
 import "../shared.css";
 
@@ -48,9 +49,9 @@ export default function AnalyticsPage() {
 
   useEffect(() => {
     Promise.all([
-      fetch("/api/analytics/dashboard", { credentials: "include" }).then((r) => r.json()),
-      fetch("/api/analytics/fees", { credentials: "include" }).then((r) => r.json()),
-      fetch("/api/analytics/attendance", { credentials: "include" }).then((r) => r.json()),
+      authenticatedFetch("/api/analytics/dashboard").then((r) => r.json()),
+      authenticatedFetch("/api/analytics/fees").then((r) => r.json()),
+      authenticatedFetch("/api/analytics/attendance").then((r) => r.json()),
     ])
       .then(([d, f, a]) => {
         setDashboard(d.data ?? d);
@@ -64,9 +65,7 @@ export default function AnalyticsPage() {
   const handleExport = async () => {
     setExporting(true);
     try {
-      const res = await fetch("/api/analytics/emis-report?term=First+Term&session=2024/2025", {
-        credentials: "include",
-      });
+      const res = await authenticatedFetch("/api/analytics/emis-report?term=First+Term&session=2024/2025");
       if (!res.ok) throw new Error();
       toast.success("EMIS report export initiated");
     } catch {

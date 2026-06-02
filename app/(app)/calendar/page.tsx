@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import "../shared.css";
 
 interface CalendarEvent {
@@ -27,7 +28,7 @@ export default function CalendarPage() {
 
   const load = () => {
     setLoading(true);
-    fetch("/api/calendar", { credentials: "include" })
+    authenticatedFetch("/api/calendar")
       .then((r) => r.json())
       .then((d) => setEvents(Array.isArray(d.data) ? d.data : []))
       .catch(() => toast.error("Failed to load calendar"))
@@ -57,10 +58,9 @@ export default function CalendarPage() {
     if (!form.title || !form.startDate) return toast.error("Title and start date are required");
     setSubmitting(true);
     try {
-      const res = await fetch("/api/calendar", {
+      const res = await authenticatedFetch("/api/calendar", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify({
           title: form.title,
           description: form.description || null,
@@ -85,7 +85,7 @@ export default function CalendarPage() {
 
   const handleDelete = async (id: string) => {
     try {
-      const res = await fetch(`/api/calendar/${id}`, { method: "DELETE", credentials: "include" });
+      const res = await authenticatedFetch(`/api/calendar/${id}`, { method: "DELETE" });
       if (!res.ok) throw new Error((await res.json()).message);
       toast.success("Event deleted");
       setEvents((prev) => prev.filter((e) => e.id !== id));

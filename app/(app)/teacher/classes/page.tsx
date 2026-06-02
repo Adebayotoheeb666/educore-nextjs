@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import { useAppSelector } from "@/redux/hooks";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import "../../shared.css";
 
 interface TeacherClass {
@@ -31,14 +32,14 @@ export default function TeacherClassesPage() {
     if (!user?.id) return;
 
     Promise.all([
-      fetch("/api/classes", { credentials: "include" }).then((r) => r.json()).catch(() => ({ data: [] })),
-      fetch(`/api/teachers/${user.id}/workload`, { credentials: "include" })
+      authenticatedFetch("/api/classes").then((r) => r.json()).catch(() => ({ data: [] })),
+      authenticatedFetch(`/api/teachers/${user.id}/workload`)
         .then((r) => r.json())
         .catch(() => ({ data: { subjects: [] } })),
     ])
       .then(([classData, workloadData]) => {
         const allClasses = Array.isArray(classData.data) ? classData.data : [];
-        setClasses(allClasses.filter((c) => c.class_teacher_id === user.id));
+        setClasses(allClasses.filter((c: TeacherClass) => c.class_teacher_id === user.id));
 
         const subjects = Array.isArray(workloadData.data?.subjects)
           ? workloadData.data.subjects

@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 
 interface Assignment {
   id: string;
@@ -55,7 +56,7 @@ export default function SubjectAssignmentsPage() {
       setLoading(true);
 
       // Fetch subject details
-      const subjectRes = await fetch(`/api/subjects/${subjectId}`);
+      const subjectRes = await authenticatedFetch(`/api/subjects/${subjectId}`);
       if (subjectRes.ok) {
         const subjectData = await subjectRes.json();
         setSubject(subjectData);
@@ -63,21 +64,21 @@ export default function SubjectAssignmentsPage() {
 
       // Fetch assignments
       const sessionParam = session ? `?session=${session}` : "";
-      const assignRes = await fetch(`/api/subjects/${subjectId}/teachers${sessionParam}`);
+      const assignRes = await authenticatedFetch(`/api/subjects/${subjectId}/teachers${sessionParam}`);
       if (assignRes.ok) {
         const assignData = await assignRes.json();
         setAssignments(Array.isArray(assignData) ? assignData : []);
       }
 
       // Fetch teachers
-      const teachersRes = await fetch(`/api/teachers`);
+      const teachersRes = await authenticatedFetch(`/api/teachers`);
       if (teachersRes.ok) {
         const teachersData = await teachersRes.json();
         setTeachers(Array.isArray(teachersData) ? teachersData : []);
       }
 
       // Fetch classes
-      const classesRes = await fetch(`/api/classes`);
+      const classesRes = await authenticatedFetch(`/api/classes`);
       if (classesRes.ok) {
         const classesData = await classesRes.json();
         setClasses(Array.isArray(classesData) ? classesData : []);
@@ -98,7 +99,7 @@ export default function SubjectAssignmentsPage() {
     }
 
     try {
-      const res = await fetch(`/api/subjects/${subjectId}/teachers`, {
+      const res = await authenticatedFetch(`/api/subjects/${subjectId}/teachers`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -126,7 +127,7 @@ export default function SubjectAssignmentsPage() {
     if (!confirm("Remove this assignment?")) return;
 
     try {
-      const res = await fetch(`/api/subjects/${subjectId}/teachers?assignmentId=${assignmentId}`, {
+      const res = await authenticatedFetch(`/api/subjects/${subjectId}/teachers?assignmentId=${assignmentId}`, {
         method: "DELETE",
       });
 

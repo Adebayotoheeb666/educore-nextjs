@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import { useAppSelector } from "@/redux/hooks";
 import "../../shared.css";
 
@@ -29,7 +30,7 @@ export default function TeacherTimetablePage() {
     if (!user?.id) return;
     setLoading(true);
 
-    fetch(`/api/teachers/${user.id}/workload`, { credentials: "include" })
+    authenticatedFetch(`/api/teachers/${user.id}/workload`)
       .then((r) => r.json())
       .then(async (data) => {
         const subjects = Array.isArray(data.data?.subjects) ? data.data.subjects : [];
@@ -43,7 +44,7 @@ export default function TeacherTimetablePage() {
         }
 
         const timetablePromises = classIds.map((classId) =>
-          fetch(`/api/timetable?classId=${encodeURIComponent(classId)}`, { credentials: "include" })
+          authenticatedFetch(`/api/timetable?classId=${encodeURIComponent(String(classId))}`)
             .then((r) => r.json())
             .then((classData) => (Array.isArray(classData.data) ? classData.data : []))
             .catch(() => [])

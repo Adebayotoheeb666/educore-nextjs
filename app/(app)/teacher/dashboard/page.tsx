@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { toast } from "sonner";
 import { useAppSelector } from "@/redux/hooks";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import "../../shared.css";
 
 interface TeacherClass {
@@ -62,22 +63,22 @@ export default function TeacherDashboardPage() {
     if (!user?.id) return;
 
     Promise.all([
-      fetch(`/api/teachers/${user.id}/workload`, { credentials: "include" })
+      authenticatedFetch(`/api/teachers/${user.id}/workload`)
         .then((r) => r.json())
         .catch(() => ({ data: { teacherId: "", subjects: [], subjectCount: 0 } })),
-      fetch("/api/classes", { credentials: "include" })
+      authenticatedFetch("/api/classes")
         .then((r) => r.json())
         .catch(() => ({ data: [] })),
-      fetch("/api/lesson-plans", { credentials: "include" })
+      authenticatedFetch("/api/lesson-plans")
         .then((r) => r.json())
         .catch(() => ({ data: [] })),
-      fetch("/api/announcements", { credentials: "include" })
+      authenticatedFetch("/api/announcements")
         .then((r) => r.json())
         .catch(() => ({ data: [] })),
     ])
       .then(([wd, cd, ld, ad]) => {
         setWorkload(wd.data ?? { teacherId: "", subjects: [], subjectCount: 0 });
-        const allClasses = Array.isArray(cd.data) ? cd.data : [];
+        const allClasses = Array.isArray(cd.data) ? (cd.data as TeacherClass[]) : [];
         setClasses(allClasses.filter((cls) => cls.class_teacher_id === user.id));
         setLessons(Array.isArray(ld.data) ? ld.data.slice(0, 6) : []);
         setAnnouncements(Array.isArray(ad.data) ? ad.data.slice(0, 4) : []);

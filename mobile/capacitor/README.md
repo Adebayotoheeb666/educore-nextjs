@@ -18,9 +18,22 @@ Quick start (from repository root)
 
 ```bash
 npm run build
-# export static files (ensure your Next config supports `next export`)
 npm run export
 ```
+
+Alternatively, use the repo convenience script:
+
+```bash
+npm run mobile:export
+```
+
+Optional local dev configuration
+
+```bash
+CAPACITOR_DEV_SERVER_URL=http://10.0.2.2:3000 npx cap open android
+```
+
+If `CAPACITOR_DEV_SERVER_URL` is set, the native WebView will point at that URL instead of the exported `out/` files.
 
 2. Initialize Capacitor (one-time)
 
@@ -35,18 +48,20 @@ npx cap init Educore com.educore.app --web-dir=out
 ```bash
 # add Android
 npx cap add android
-npx cap copy
+npm run mobile:cap:sync
 npx cap open android
 
 # add iOS (macOS only)
 npx cap add ios
-npx cap copy
+npm run mobile:cap:sync
 npx cap open ios
 ```
 
 Notes
-- `webDir` in `capacitor.config.json` is set to `../../out` because this file lives under `mobile/capacitor` and the export output is at the repository root `out/`.
+- `webDir` in `capacitor.config.js` is set to `../../out` because this file lives under `mobile/capacitor` and the export output is at the repository root `out/`.
 - Next.js features that rely on server-side rendering or API routes will not work in a purely static export. For dynamic features, prefer calling your server-side `app/api/**` endpoints over HTTPS from the mobile app.
+- Set `NEXT_PUBLIC_MOBILE_API_BASE_URL` when building the mobile app so API calls from the packaged WebView resolve to the correct server origin.
+  - Example: `NEXT_PUBLIC_MOBILE_API_BASE_URL=https://app.educore.ng npm run mobile:export`
 - For tokens and sensitive storage, use Capacitor `SecureStorage` or the `@capacitor/preferences` plugin instead of `localStorage`.
 
 Next steps I can take for you

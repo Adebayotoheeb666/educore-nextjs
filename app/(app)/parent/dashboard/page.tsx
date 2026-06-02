@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import { useAppSelector } from "@/redux/hooks";
 import "../../shared.css";
 
@@ -19,7 +20,7 @@ export default function ParentDashboardPage() {
   const [selectedChild, setSelectedChild] = useState<string>("");
 
   useEffect(() => {
-    fetch("/api/parents/children", { credentials: "include" })
+    authenticatedFetch("/api/parents/children")
       .then((r) => r.json())
       .then((d) => {
         const list: Child[] = Array.isArray(d.data) ? d.data : [];
@@ -33,8 +34,8 @@ export default function ParentDashboardPage() {
   useEffect(() => {
     if (!selectedChild) return;
     Promise.all([
-      fetch(`/api/results/parent/${selectedChild}`, { credentials: "include" }).then((r) => r.json()),
-      fetch(`/api/attendance/student/${selectedChild}`, { credentials: "include" }).then((r) => r.json()).catch(() => ({ data: [] })),
+      authenticatedFetch(`/api/results/parent/${selectedChild}`).then((r) => r.json()),
+      authenticatedFetch(`/api/attendance/student/${selectedChild}`).then((r) => r.json()).catch(() => ({ data: [] })),
     ]).then(([rd, ad]) => {
       setResults(Array.isArray(rd.data) ? rd.data.slice(0, 5) : []);
       setAttendance(Array.isArray(ad.data) ? ad.data.slice(0, 5) : []);

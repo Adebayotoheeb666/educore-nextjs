@@ -28,8 +28,9 @@ This file is a commit-ready checklist mapping audited files to their current sta
 - [x] `lib/utils/fetch.ts` — Done: guarded localStorage access before reading token.
 - [x] `lib/hooks/useServicePayment.ts` — Done: guarded payment redirect for SSR/WebView.
 - [ ] `public/sw.js` — TODO: Verify service worker behavior on Android/iOS WebViews (manual testing).
-- [ ] `PAYMENT_INTEGRATION.md` — TODO: Update docs to include mobile/Capacitor guidance (use system browser or native SDKs).
+- [x] `PAYMENT_INTEGRATION.md` — Done: updated docs to include mobile/Capacitor guidance and external URL handling.
 - [ ] `app/api/**` — TODO: Confirm mobile API access strategy (HTTPS base URL, auth tokens vs httpOnly cookies, CORS).
+- [x] `lib/utils/fetch.ts` — Done: resolves `/api/*` calls to `NEXT_PUBLIC_MOBILE_API_BASE_URL` when configured.
 
 Notes:
 - Completed items were patched to avoid direct crashes in SSR and restricted WebView environments.

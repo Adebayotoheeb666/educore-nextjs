@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import { useAppSelector } from "@/redux/hooks";
 import "../../shared.css";
 
@@ -17,7 +18,7 @@ export default function StudentTimetablePage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/timetable/my", { credentials: "include" })
+    authenticatedFetch("/api/timetable/my")
       .then((r) => r.json())
       .then((d) => setEntries(Array.isArray(d.data) ? d.data : []))
       .catch(() => toast.error("Failed to load timetable"))

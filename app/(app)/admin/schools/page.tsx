@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import "../../shared.css";
 
 interface School {
@@ -55,7 +56,7 @@ function SubscriptionModal({ school, onClose, onSaved }: SubscriptionModalProps)
   const fetchServices = async () => {
     setLoadingServices(true);
     try {
-      const res = await fetch(`/api/admin/schools/${school.id}/services`, { credentials: "include" });
+      const res = await authenticatedFetch(`/api/admin/schools/${school.id}/services`);
       const data = await res.json();
       if (res.ok) {
         setServices(data.data?.services ?? []);
@@ -79,10 +80,9 @@ function SubscriptionModal({ school, onClose, onSaved }: SubscriptionModalProps)
     e.preventDefault();
     setSaving(true);
     try {
-      const res = await fetch(`/api/school/admin/schools/${school.id}/subscription`, {
+      const res = await authenticatedFetch(`/api/school/admin/schools/${school.id}/subscription`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify({
           status: form.status,
           plan: form.plan,
@@ -106,10 +106,9 @@ function SubscriptionModal({ school, onClose, onSaved }: SubscriptionModalProps)
     const action = currentActive ? "deactivate" : "activate";
     setServiceActionSlug(slug);
     try {
-      const res = await fetch(`/api/admin/schools/${school.id}/services`, {
+      const res = await authenticatedFetch(`/api/admin/schools/${school.id}/services`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify({ slug, action }),
       });
       const data = await res.json();
@@ -356,7 +355,7 @@ export default function AdminSchoolsPage() {
   const [managing, setManaging] = useState<School | null>(null);
 
   useEffect(() => {
-    fetch("/api/admin/schools", { credentials: "include" })
+    authenticatedFetch("/api/admin/schools")
       .then((r) => r.json())
       .then((d) => setSchools(Array.isArray(d.data) ? d.data : d.data?.schools ?? []))
       .catch(() => toast.error("Failed to load schools"))

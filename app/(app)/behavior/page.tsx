@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import "../shared.css";
 
 interface BehaviorLog {
@@ -27,8 +28,8 @@ export default function BehaviorPage() {
   const load = () => {
     setLoading(true);
     Promise.all([
-      fetch("/api/behavior", { credentials: "include" }).then((r) => r.json()),
-      fetch("/api/students", { credentials: "include" }).then((r) => r.json()),
+      authenticatedFetch("/api/behavior").then((r) => r.json()),
+      authenticatedFetch("/api/students").then((r) => r.json()),
     ]).then(([bd, sd]) => {
       setLogs(Array.isArray(bd.data) ? bd.data : []);
       setStudents(Array.isArray(sd.data) ? sd.data : sd.data?.students ?? []);
@@ -55,10 +56,9 @@ export default function BehaviorPage() {
     if (!form.studentId || !form.description) return toast.error("Student and description are required");
     setSubmitting(true);
     try {
-      const res = await fetch("/api/behavior", {
+      const res = await authenticatedFetch("/api/behavior", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify({
           studentId: form.studentId,
           type: form.type,

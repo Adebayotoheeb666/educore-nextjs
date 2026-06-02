@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { OPTIONAL_SERVICES, type ServiceDefinition } from "@/config/services/catalog";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import "../auth.css";
 
 type Step = "details" | "services";
@@ -94,11 +95,10 @@ export default function RegisterPage() {
   const handleSubmit = async () => {
     setIsLoading(true);
     try {
-      const res = await fetch("/api/auth/register", {
+      const res = await authenticatedFetch("/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...formData, selectedServices: Array.from(selectedServices) }),
-        credentials: "include",
       });
       const data = await res.json();
       if (!res.ok) {

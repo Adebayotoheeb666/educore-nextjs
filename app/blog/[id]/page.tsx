@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { useAppSelector } from "@/redux/hooks";
 import { toast } from "sonner";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 
 const BLOG_ADMIN_ROLES = ["super_admin", "school_owner", "admin_staff"];
 
@@ -70,14 +71,14 @@ export default function BlogPost() {
   useEffect(() => {
     if (!id) return;
     setLoading(true);
-    fetch(`/api/blog/${id}`)
+    authenticatedFetch(`/api/blog/${id}`)
       .then((res) => {
         if (!res.ok) throw new Error("Post not found");
         return res.json();
       })
       .then((data) => {
         setPost(data);
-        return fetch(`/api/blog?category=${encodeURIComponent(data.category)}&limit=4`);
+        return authenticatedFetch(`/api/blog?category=${encodeURIComponent(data.category)}&limit=4`);
       })
       .then((res) => res.json())
       .then((list) => {
@@ -102,7 +103,7 @@ export default function BlogPost() {
   const handleDelete = async () => {
     setDeleting(true);
     try {
-      const res = await fetch(`/api/blog/${id}`, {
+      const res = await authenticatedFetch(`/api/blog/${id}`, {
         method: "DELETE",
       });
       if (!res.ok) throw new Error("Failed to delete post");

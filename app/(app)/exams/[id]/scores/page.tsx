@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import "../../../shared.css";
 
 interface Exam {
@@ -21,14 +22,14 @@ export default function ExamScoresPage() {
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-    fetch(`/api/exams/${id}`, { credentials: "include" })
+    authenticatedFetch(`/api/exams/${id}`)
       .then((r) => r.json())
       .then(async (d) => {
         const examData = d.data as Exam;
         setExam(examData);
 
         if (examData.class_id) {
-          const sd = await fetch(`/api/students?classId=${examData.class_id}`, { credentials: "include" }).then((r) => r.json());
+          const sd = await authenticatedFetch(`/api/students?classId=${examData.class_id}`).then((r) => r.json());
           const list: Student[] = Array.isArray(sd.data) ? sd.data : sd.data?.students ?? [];
           setStudents(list);
           const init: Record<string, Score> = {};
@@ -46,10 +47,9 @@ export default function ExamScoresPage() {
     if (entries.length === 0) return toast.error("Enter at least one score");
     setSaving(true);
     try {
-      const res = await fetch(`/api/exams/${id}/scores`, {
+      const res = await authenticatedFetch(`/api/exams/${id}/scores`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify({ scores: entries }),
       });
       if (!res.ok) throw new Error((await res.json()).message);

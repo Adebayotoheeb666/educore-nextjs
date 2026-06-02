@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import "../../shared.css";
 
 const ROLES = ["all", "admin", "class_teacher", "subject_teacher", "parent", "student"];
@@ -20,7 +21,7 @@ export default function CreateAnnouncementPage() {
   });
 
   useEffect(() => {
-    fetch("/api/classes", { credentials: "include" })
+    authenticatedFetch("/api/classes")
       .then((r) => r.json())
       .then((d) => setClasses(Array.isArray(d.data) ? d.data : []))
       .catch(() => {});
@@ -43,10 +44,9 @@ export default function CreateAnnouncementPage() {
     if (!form.title || !form.content) return toast.error("Title and content are required");
     setSubmitting(true);
     try {
-      const res = await fetch("/api/announcements", {
+      const res = await authenticatedFetch("/api/announcements", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify({
           title: form.title,
           content: form.content,

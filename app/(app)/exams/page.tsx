@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { toast } from "sonner";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import { ServiceGate } from "@/lib/components/ServiceGate";
 import "../shared.css";
 
@@ -32,7 +33,7 @@ export default function ExamsPage() {
 
   const load = () => {
     setLoading(true);
-    fetch("/api/exams", { credentials: "include" })
+    authenticatedFetch("/api/exams")
       .then((r) => r.json())
       .then((d) => setExams(Array.isArray(d.data) ? d.data : d.data?.exams ?? []))
       .catch(() => toast.error("Failed to load exams"))
@@ -44,9 +45,8 @@ export default function ExamsPage() {
   const handlePublish = async (id: string) => {
     setPublishing(id);
     try {
-      const res = await fetch(`/api/exams/${id}/publish`, {
+      const res = await authenticatedFetch(`/api/exams/${id}/publish`, {
         method: "POST",
-        credentials: "include",
       });
       if (!res.ok) throw new Error();
       setExams((prev) =>

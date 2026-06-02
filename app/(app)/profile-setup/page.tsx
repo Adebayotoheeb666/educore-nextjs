@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import { setUser } from "@/redux/features/auth/authSlice";
 import "../shared.css";
 
@@ -53,7 +54,7 @@ export default function ProfileSetupPage() {
     `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName)}&background=6A5ACD&color=fff&size=80&bold=true`;
 
   useEffect(() => {
-    fetch("/api/school/stats", { credentials: "include" })
+    authenticatedFetch("/api/school/stats")
       .then((r) => r.json())
       .then((d) => setStats(d.data))
       .catch(() => null);
@@ -122,15 +123,14 @@ export default function ProfileSetupPage() {
       const fd = new FormData();
       fd.append("file", file);
       fd.append("folder", "educore/avatars");
-      const res = await fetch("/api/upload", { method: "POST", credentials: "include", body: fd });
+      const res = await authenticatedFetch("/api/upload", { method: "POST", body: fd });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message);
       const url = data.data.url as string;
       setAvatarUrl(url);
-      await fetch("/api/auth/profile", {
+      await authenticatedFetch("/api/auth/profile", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify({ avatar: url }),
       });
       dispatch(setUser({ ...user!, avatar: url }));
@@ -146,10 +146,9 @@ export default function ProfileSetupPage() {
     e.preventDefault();
     setSaving(true);
     try {
-      const res = await fetch("/api/auth/profile", {
+      const res = await authenticatedFetch("/api/auth/profile", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify(form),
       });
       const data = await res.json();
@@ -169,10 +168,9 @@ export default function ProfileSetupPage() {
     if (passwords.newPw.length < 8) return toast.error("New password must be at least 8 characters");
     setChangingPw(true);
     try {
-      const res = await fetch("/api/auth/change-password", {
+      const res = await authenticatedFetch("/api/auth/change-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify({ currentPassword: passwords.current, newPassword: passwords.newPw }),
       });
       const data = await res.json();

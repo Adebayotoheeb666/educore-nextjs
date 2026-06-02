@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import { useAppSelector } from "@/redux/hooks";
 import "../../shared.css";
 
@@ -20,7 +21,7 @@ export default function StudentAttendancePage() {
 
   useEffect(() => {
     if (!user?.id) return;
-    fetch(`/api/attendance/student/${user.id}`, { credentials: "include" })
+    authenticatedFetch(`/api/attendance/student/${user.id}`)
       .then((r) => r.json())
       .then((d) => setAttendance(Array.isArray(d.data) ? d.data : []))
       .catch(() => toast.error("Failed to load attendance"))

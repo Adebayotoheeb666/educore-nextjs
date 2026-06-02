@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import { ServiceGate } from "@/lib/components/ServiceGate";
 import "../shared.css";
 
@@ -22,7 +23,7 @@ export default function BroadsheetPage() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    fetch("/api/classes", { credentials: "include" })
+    authenticatedFetch("/api/classes")
       .then((r) => r.json())
       .then((d) => setClasses(Array.isArray(d.data) ? d.data : []))
       .catch(() => {});
@@ -33,7 +34,7 @@ export default function BroadsheetPage() {
     setLoading(true);
     const params = new URLSearchParams({ classId });
     if (term) params.set("term", term);
-    fetch(`/api/results?${params}`, { credentials: "include" })
+    authenticatedFetch(`/api/results?${params}`)
       .then((r) => r.json())
       .then((d) => setResults(Array.isArray(d.data) ? d.data : []))
       .catch(() => toast.error("Failed to load results"))

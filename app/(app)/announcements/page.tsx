@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { toast } from "sonner";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import { ServiceGate } from "@/lib/components/ServiceGate";
 import "../shared.css";
 
@@ -22,7 +23,7 @@ export default function AnnouncementsPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/announcements", { credentials: "include" })
+    authenticatedFetch("/api/announcements")
       .then((r) => r.json())
       .then((d) => setItems(Array.isArray(d.data) ? d.data : []))
       .catch(() => toast.error("Failed to load announcements"))

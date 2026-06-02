@@ -3,6 +3,8 @@
 
 import { useState } from 'react';
 import { toast } from 'sonner';
+import { openExternal } from '@/lib/utils/openExternal';
+import { authenticatedFetch } from '@/lib/utils/fetch';
 
 interface PaymentResponse {
   authorizationUrl: string;
@@ -51,7 +53,7 @@ export function useServicePayment() {
       setIsLoading(true);
 
       // Step 1: Call subscribe endpoint to validate and check if payment is needed
-      const subscribeRes = await fetch('/api/services/subscribe', {
+      const subscribeRes = await authenticatedFetch('/api/services/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ slug: serviceSlug }),
@@ -72,7 +74,7 @@ export function useServicePayment() {
 
       // Service requires payment - initialize payment
       if (subscribeData.requiresPayment) {
-        const paymentRes = await fetch('/api/services/initialize-payment', {
+        const paymentRes = await authenticatedFetch('/api/services/initialize-payment', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ serviceSlug }),
@@ -86,9 +88,13 @@ export function useServicePayment() {
         const payment: PaymentResponse = await paymentRes.json();
         setPaymentData(payment);
 
-        // Redirect to Paystack payment page
-        if (typeof window !== "undefined" && window.location) {
-          window.location.href = payment.authorizationUrl;
+        // Redirect to Paystack payment page using native-capable browser handling
+        if (payment.authorizationUrl) {
+          try {
+            await openExternal(payment.authorizationUrl);
+          } catch {
+            toast.info(`Open this payment link in your browser: ${payment.authorizationUrl}`);
+          }
         } else {
           toast.info(`Open this payment link in your browser: ${payment.authorizationUrl}`);
         }
@@ -113,7 +119,7 @@ export function useServicePayment() {
     try {
       setIsLoading(true);
 
-      const verifyRes = await fetch(`/api/services/verify-payment?reference=${reference}`);
+      const verifyRes = await authenticatedFetch(`/api/services/verify-payment?reference=${reference}`);
 
       if (!verifyRes.ok) {
         const error = await verifyRes.json();

@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import "../../shared.css";
 
 interface LessonPlan {
@@ -27,7 +28,7 @@ export default function LessonPlanDetailPage() {
   const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
-    fetch(`/api/lesson-plans/${id}`, { credentials: "include" })
+    authenticatedFetch(`/api/lesson-plans/${id}`)
       .then((r) => r.json())
       .then((d) => setPlan(d.data ?? null))
       .catch(() => toast.error("Failed to load lesson plan"))
@@ -37,10 +38,9 @@ export default function LessonPlanDetailPage() {
   const handleStatus = async (newStatus: string) => {
     setUpdating(true);
     try {
-      const res = await fetch(`/api/lesson-plans/${id}`, {
+      const res = await authenticatedFetch(`/api/lesson-plans/${id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify({ status: newStatus }),
       });
       if (!res.ok) throw new Error((await res.json()).message);
@@ -57,7 +57,7 @@ export default function LessonPlanDetailPage() {
     if (!confirm("Delete this lesson plan?")) return;
     setDeleting(true);
     try {
-      const res = await fetch(`/api/lesson-plans/${id}`, { method: "DELETE", credentials: "include" });
+      const res = await authenticatedFetch(`/api/lesson-plans/${id}`, { method: "DELETE" });
       if (!res.ok) throw new Error((await res.json()).message);
       toast.success("Lesson plan deleted");
       router.push("/lesson-plans");

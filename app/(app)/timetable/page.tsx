@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { toast } from "sonner";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import { ServiceGate } from "@/lib/components/ServiceGate";
 import "../shared.css";
 
@@ -33,7 +34,7 @@ export default function TimetablePage() {
   const load = (classId: string, t: string) => {
     if (!classId) return;
     setLoading(true);
-    fetch(`/api/timetable?classId=${classId}&term=${encodeURIComponent(t)}`, { credentials: "include" })
+    authenticatedFetch(`/api/timetable?classId=${classId}&term=${encodeURIComponent(t)}`)
       .then((r) => r.json())
       .then((d) => setSlots(Array.isArray(d.data) ? d.data : []))
       .catch(() => toast.error("Failed to load timetable"))
@@ -41,7 +42,7 @@ export default function TimetablePage() {
   };
 
   useEffect(() => {
-    fetch("/api/classes", { credentials: "include" })
+    authenticatedFetch("/api/classes")
       .then((r) => r.json())
       .then((d) => {
         const list: ClassItem[] = Array.isArray(d.data) ? d.data : [];
@@ -64,10 +65,9 @@ export default function TimetablePage() {
     if (!selectedClass) return toast.error("Select a class first");
     setGenerating(true);
     try {
-      const res = await fetch("/api/timetable/generate", {
+      const res = await authenticatedFetch("/api/timetable/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify({ classId: selectedClass, term }),
       });
       if (!res.ok) throw new Error();

@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useAppSelector } from "@/redux/hooks";
 import { toast } from "sonner";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 
 const CATEGORIES = [
   "All Posts",
@@ -49,7 +50,7 @@ export default function Blog() {
     setLoading(true);
     try {
       const catParam = activeCategory === "All Posts" ? "" : encodeURIComponent(activeCategory);
-      const res = await fetch(`/api/blog?page=${page}&limit=9&category=${catParam}`);
+      const res = await authenticatedFetch(`/api/blog?page=${page}&limit=9&category=${catParam}`);
       if (!res.ok) throw new Error("Failed to load posts");
       const data = await res.json();
       setPosts(data.blogPosts || []);

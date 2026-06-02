@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import { ServiceGate } from "@/lib/components/ServiceGate";
 import "../shared.css";
 
@@ -36,8 +37,8 @@ export default function ResultsPage() {
   useEffect(() => {
     setLoading(true);
     Promise.all([
-      fetch("/api/results", { credentials: "include" }).then((r) => r.json()),
-      fetch("/api/classes", { credentials: "include" }).then((r) => r.json()),
+      authenticatedFetch("/api/results").then((r) => r.json()),
+      authenticatedFetch("/api/classes").then((r) => r.json()),
     ])
       .then(([rd, cd]) => {
         setResults(Array.isArray(rd.data) ? rd.data : rd.data?.results ?? []);
@@ -74,10 +75,9 @@ export default function ResultsPage() {
     if (!selectedClass) return toast.error("Select a class first");
     setComputing(true);
     try {
-      const res = await fetch("/api/results/compute", {
+      const res = await authenticatedFetch("/api/results/compute", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify({ classId: selectedClass, term, session }),
       });
       if (!res.ok) throw new Error();
@@ -92,10 +92,9 @@ export default function ResultsPage() {
   const handleRelease = async () => {
     setReleasing(true);
     try {
-      const res = await fetch("/api/results/release", {
+      const res = await authenticatedFetch("/api/results/release", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify({ classId: selectedClass, term, session }),
       });
       if (!res.ok) throw new Error();

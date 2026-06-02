@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { toast } from "sonner";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import { useAppSelector } from "@/redux/hooks";
 import "../../shared.css";
 
@@ -24,7 +25,7 @@ export default function TeacherProfilePage() {
   useEffect(() => {
     if (!user?.id) return;
 
-    fetch(`/api/teachers/${user.id}`, { credentials: "include" })
+    authenticatedFetch(`/api/teachers/${user.id}`)
       .then((r) => r.json())
       .then((data) => {
         setProfile(data.data ?? null);

@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { toast } from "sonner";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import { ServiceGate } from "@/lib/components/ServiceGate";
 import "../shared.css";
 
@@ -30,7 +31,7 @@ export default function LibraryPage() {
 
   const load = () => {
     setLoading(true);
-    fetch("/api/library/books", { credentials: "include" })
+    authenticatedFetch("/api/library/books")
       .then((r) => r.json())
       .then((d) => setBooks(Array.isArray(d.data) ? d.data : []))
       .catch(() => toast.error("Failed to load books"))
@@ -59,10 +60,9 @@ export default function LibraryPage() {
     if (!form.title.trim()) return toast.error("Title is required");
     setSubmitting(true);
     try {
-      const res = await fetch("/api/library/books", {
+      const res = await authenticatedFetch("/api/library/books", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify({ ...form, quantity: Number(form.quantity) }),
       });
       if (!res.ok) throw new Error((await res.json()).message);

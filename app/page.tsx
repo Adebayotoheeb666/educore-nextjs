@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useAppSelector } from "@/redux/hooks";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import "./homepage.css";
 
 interface Stats {
@@ -35,7 +36,7 @@ export default function Homepage() {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const res = await fetch("/api/stats/public");
+        const res = await authenticatedFetch("/api/stats/public");
         if (res.ok) {
           const data = await res.json();
           setStats(data);

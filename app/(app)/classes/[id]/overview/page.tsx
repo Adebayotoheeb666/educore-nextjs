@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 
 interface ClassStructure {
   class: {
@@ -48,7 +49,7 @@ export default function ClassOverviewPage() {
     try {
       setLoading(true);
       const sessionParam = session ? `?session=${session}` : "";
-      const res = await fetch(`/api/classes/${classId}/structure${sessionParam}`);
+      const res = await authenticatedFetch(`/api/classes/${classId}/structure${sessionParam}`);
 
       if (!res.ok) throw new Error("Failed to fetch class structure");
       const classData = await res.json();

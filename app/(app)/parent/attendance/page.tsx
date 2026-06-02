@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import "../../shared.css";
 
 interface Child { id: string; name: string; class_name?: string; }
@@ -20,7 +21,7 @@ export default function ParentAttendancePage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/parents/children", { credentials: "include" })
+    authenticatedFetch("/api/parents/children")
       .then((r) => r.json())
       .then((d) => {
         const list: Child[] = Array.isArray(d.data) ? d.data : [];
@@ -33,7 +34,7 @@ export default function ParentAttendancePage() {
 
   useEffect(() => {
     if (!selectedChild) return;
-    fetch(`/api/attendance/student/${selectedChild}`, { credentials: "include" })
+    authenticatedFetch(`/api/attendance/student/${selectedChild}`)
       .then((r) => r.json())
       .then((d) => setRecords(Array.isArray(d.data) ? d.data : []))
       .catch(() => toast.error("Failed to load attendance"));

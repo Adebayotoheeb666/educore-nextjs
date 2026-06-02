@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { toast } from "sonner";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import "../auth.css";
 
 export default function ForgotPasswordPage() {
@@ -14,7 +15,7 @@ export default function ForgotPasswordPage() {
     if (!email) return toast.error("Please enter your email");
     setIsLoading(true);
     try {
-      const res = await fetch("/api/auth/forgot-password", {
+      const res = await authenticatedFetch("/api/auth/forgot-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: email.trim().toLowerCase() }),

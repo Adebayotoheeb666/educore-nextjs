@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { toast } from "sonner";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import { ServiceGate } from "@/lib/components/ServiceGate";
 import "../shared.css";
 
@@ -33,7 +34,7 @@ export default function LessonPlansPage() {
   const [statusFilter, setStatusFilter] = useState("");
 
   useEffect(() => {
-    fetch("/api/lesson-plans", { credentials: "include" })
+    authenticatedFetch("/api/lesson-plans")
       .then((r) => r.json())
       .then((d) => setPlans(Array.isArray(d.data) ? d.data : []))
       .catch(() => toast.error("Failed to load lesson plans"))

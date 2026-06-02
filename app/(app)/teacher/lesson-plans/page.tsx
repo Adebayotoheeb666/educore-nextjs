@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { toast } from "sonner";
 import { useAppSelector } from "@/redux/hooks";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import "../../shared.css";
 
 interface LessonPlan {
@@ -23,7 +24,7 @@ export default function TeacherLessonPlansPage() {
   useEffect(() => {
     if (!user?.id) return;
 
-    fetch("/api/lesson-plans", { credentials: "include" })
+    authenticatedFetch("/api/lesson-plans")
       .then((r) => r.json())
       .then((data) => {
         const list = Array.isArray(data.data) ? data.data : [];

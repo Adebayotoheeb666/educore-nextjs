@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { toast } from "sonner";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import "../shared.css";
 
 interface AdminStats {
@@ -32,7 +33,7 @@ export default function AdminOverviewPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/admin", { credentials: "include" })
+    authenticatedFetch("/api/admin")
       .then((r) => r.json())
       .then((d) => setData(d.data ?? d))
       .catch(() => toast.error("Failed to load dashboard"))

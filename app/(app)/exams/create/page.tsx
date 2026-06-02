@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import "../../shared.css";
 
 const EXAM_TYPES = ["CA", "Mid-Term", "Final", "Mock", "Quiz", "Assignment"];
@@ -19,8 +20,8 @@ export default function CreateExamPage() {
 
   useEffect(() => {
     Promise.all([
-      fetch("/api/classes", { credentials: "include" }).then((r) => r.json()),
-      fetch("/api/subjects", { credentials: "include" }).then((r) => r.json()),
+      authenticatedFetch("/api/classes").then((r) => r.json()),
+      authenticatedFetch("/api/subjects").then((r) => r.json()),
     ]).then(([cd, sd]) => {
       setClasses(Array.isArray(cd.data) ? cd.data : []);
       setSubjects(Array.isArray(sd.data) ? sd.data : []);
@@ -34,10 +35,9 @@ export default function CreateExamPage() {
     if (!form.title) return toast.error("Exam title is required");
     setSubmitting(true);
     try {
-      const res = await fetch("/api/exams", {
+      const res = await authenticatedFetch("/api/exams", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify({
           title: form.title,
           classId: form.classId || null,

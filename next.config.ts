@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import webpack from "webpack";
 import withPWAInit from "@ducanh2912/next-pwa";
 
 const withPWA = withPWAInit({
@@ -44,6 +45,7 @@ const withPWA = withPWAInit({
 });
 
 const nextConfig: NextConfig = {
+  output: "export",
   turbopack: {
     root: ".",
   },
@@ -110,6 +112,12 @@ const nextConfig: NextConfig = {
   },
 
   webpack(config) {
+    config.plugins = config.plugins || [];
+    config.plugins.push(
+      new webpack.IgnorePlugin({
+        resourceRegExp: /^@capacitor-community\/secure-storage$|^capacitor-secure-storage-plugin$/,
+      })
+    );
     config.externals = config.externals || [];
     config.externals.push({
       "pdfkit": "commonjs pdfkit",

@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 import { ServiceGate } from "@/lib/components/ServiceGate";
 import "../../shared.css";
 
@@ -34,8 +35,8 @@ export default function FeeSchedulesPage() {
   const load = () => {
     setLoading(true);
     Promise.all([
-      fetch("/api/fees", { credentials: "include" }).then((r) => r.json()),
-      fetch("/api/classes", { credentials: "include" }).then((r) => r.json()),
+      authenticatedFetch("/api/fees").then((r) => r.json()),
+      authenticatedFetch("/api/classes").then((r) => r.json()),
     ])
       .then(([fd, cd]) => {
         setSchedules(Array.isArray(fd.data) ? fd.data : []);

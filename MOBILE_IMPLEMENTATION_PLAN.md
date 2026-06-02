@@ -62,9 +62,10 @@ Recommendation: Start with a Capacitor wrapper (WebView-hosted Next.js app built
 
 3. Add Capacitor wrapper
    - Scaffold a Capacitor project at `mobile/capacitor/`.
-   - Configure `capacitor.config.ts` with appId and serverURL for dev mode.
+   - Configure `capacitor.config.js` with appId and serverURL for dev mode.
    - Configure the WebView to load the built static files for production.
    - Add plugins for Push, Camera, FilePicker, Clipboard, Device, and SecureStorage.
+   - Add runtime mobile API config with `NEXT_PUBLIC_MOBILE_API_BASE_URL` so the packaged app can call backend `/api/*` endpoints from the WebView.
 
 4. Authentication & Sessions
    - Choose token storage: migrate to JWT stored in secure storage or adapt http-only cookie flows via WebView if safe.

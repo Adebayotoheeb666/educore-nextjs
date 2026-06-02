@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { OPTIONAL_SERVICES, SERVICE_CATALOG, type ServiceDefinition } from "@/config/services/catalog";
 import { invalidateServiceCache } from "@/lib/hooks/useActiveServices";
+import { openExternal } from "@/lib/utils/openExternal";
+import { authenticatedFetch } from "@/lib/utils/fetch";
 
 interface ServiceStatus {
   id: string;
@@ -49,7 +51,7 @@ export default function SchoolServicesPage() {
 
   async function load() {
     try {
-      const res  = await fetch("/api/services", { credentials: "include" });
+      const res  = await authenticatedFetch("/api/services");
       const data = await res.json();
       setServices(data.data ?? []);
     } catch {
@@ -71,10 +73,9 @@ export default function SchoolServicesPage() {
     const endpoint = isActive ? "/api/services/unsubscribe" : "/api/services/subscribe";
     setActionSlug(svc.slug);
     try {
-      const res  = await fetch(endpoint, {
+      const res  = await authenticatedFetch(endpoint, {
         method:  "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify({ slug: svc.slug }),
       });
       const json = await res.json();
@@ -90,11 +91,10 @@ export default function SchoolServicesPage() {
         toast.info(`Redirecting to payment for ${svc.name}...`);
         
         // Initialize payment
-        const paymentRes = await fetch("/api/services/initialize-payment", {
+        const paymentRes = await authenticatedFetch("/api/services/initialize-payment", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ serviceSlug: svc.slug }),
-          credentials: "include"
         });
 
         const paymentJson = await paymentRes.json();
@@ -103,13 +103,13 @@ export default function SchoolServicesPage() {
         if (!paymentRes.ok) throw new Error(paymentResult.message || paymentJson.message || "Payment initialization failed");
 
         // Redirect to Paystack (guarded for SSR / WebView)
-        try {
-          if (typeof window !== "undefined" && paymentResult?.authorizationUrl) {
-            window.location.href = paymentResult.authorizationUrl;
-          } else {
+        if (paymentResult?.authorizationUrl) {
+          try {
+            await openExternal(paymentResult.authorizationUrl);
+          } catch {
             toast.info(`Open this payment link in your browser: ${paymentResult?.authorizationUrl}`);
           }
-        } catch (err) {
+        } else {
           toast.info(`Open this payment link in your browser: ${paymentResult?.authorizationUrl}`);
         }
         return;
