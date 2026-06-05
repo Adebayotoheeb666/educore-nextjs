@@ -425,6 +425,13 @@ export default function ClassCurriculumPage() {
                     </td>
                     <td>
                       <div style={{ display: "flex", gap: "0.8rem", alignItems: "center", flexWrap: "wrap" }}>
+                        <Link
+                          href={`/subjects/${subject.subject_id}`}
+                          className="btn-action btn-manage"
+                          title="Manage teachers for this subject"
+                        >
+                          👨‍🏫 Teachers
+                        </Link>
                         <button
                           className="btn-action btn-view"
                           onClick={() => toggleExpandSubject(subject.subject_id)}
@@ -751,6 +758,19 @@ export default function ClassCurriculumPage() {
         .btn-view:hover {
           background: #e0e7ff;
           border-color: #c7d2fe;
+        }
+
+        .btn-manage {
+          background: #fef3c7;
+          color: #92400e;
+          border: 1px solid #fde68a;
+          text-decoration: none;
+          display: inline-block;
+        }
+
+        .btn-manage:hover {
+          background: #fcd34d;
+          border-color: #fbbf24;
         }
 
         .btn-assign {
