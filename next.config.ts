@@ -4,8 +4,8 @@ import withPWAInit from "@ducanh2912/next-pwa";
 
 const withPWA = withPWAInit({
   dest: "public",
-  cacheOnFrontEndNav: true,
-  aggressiveFrontEndNavCaching: true,
+  cacheOnFrontEndNav: false,
+  aggressiveFrontEndNavCaching: false,
   reloadOnOnline: true,
   disable: process.env.NODE_ENV === "development",
   workboxOptions: {
@@ -32,12 +32,13 @@ const withPWA = withPWAInit({
         },
       },
       {
-        // Pages: stale-while-revalidate
+        // Pages: network first to prevent stale 404s
         urlPattern: /^https?:\/\/[^/]+(?!\/?api\/).*/i,
-        handler: "StaleWhileRevalidate",
+        handler: "NetworkFirst",
         options: {
           cacheName: "pages-cache",
           expiration: { maxEntries: 64, maxAgeSeconds: 60 * 60 * 24 }, // 1 day
+          networkTimeoutSeconds: 5,
         },
       },
     ],
@@ -45,7 +46,6 @@ const withPWA = withPWAInit({
 });
 
 const nextConfig: NextConfig = {
-  output: "export",
   turbopack: {
     root: ".",
   },

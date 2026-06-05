@@ -130,9 +130,11 @@ export default function AttendancePage() {
           <p>Mark and track daily student attendance by class.</p>
         </div>
         <div className="header-actions">
-          <Link href={`/attendance/report?classId=${selectedClass}`} className="btn-outline">
-            📊 Report
-          </Link>
+          {selectedClass && (
+            <Link href={`/attendance/report?classId=${selectedClass}`} className="btn-outline">
+              📊 Report
+            </Link>
+          )}
           <button
             className="btn-outline"
             onClick={handleNotify}

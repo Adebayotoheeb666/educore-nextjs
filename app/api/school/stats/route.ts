@@ -8,7 +8,7 @@ export const GET = withAuth(async (_req: NextRequest, { school }: AuthContext): 
   try {
     if (!school) return notFound("School not found");
 
-    const [studentCount, teacherCount, classCount, parentCount] = await Promise.all([
+    const [studentCount, teacherCount, classCount, subjectCount, activeServicesCount] = await Promise.all([
       queryOne<{ count: number }>(
         "SELECT COUNT(*) as count FROM users WHERE school_id = ? AND role = 'student' AND is_active = 1",
         [school.id]
@@ -22,16 +22,24 @@ export const GET = withAuth(async (_req: NextRequest, { school }: AuthContext): 
         [school.id]
       ),
       queryOne<{ count: number }>(
-        "SELECT COUNT(*) as count FROM users WHERE school_id = ? AND role = 'parent' AND is_active = 1",
+        "SELECT COUNT(*) as count FROM subjects WHERE school_id = ?",
+        [school.id]
+      ),
+      queryOne<{ count: number }>(
+        `SELECT COUNT(*) as count
+         FROM services s
+         LEFT JOIN school_services ss ON s.id = ss.service_id AND ss.school_id = ?
+         WHERE s.is_active = 1 AND (s.is_compulsory = 1 OR ss.status = 'active')`,
         [school.id]
       ),
     ]);
 
     return ok({
-      studentCount: studentCount?.count ?? 0,
-      teacherCount: teacherCount?.count ?? 0,
-      classCount: classCount?.count ?? 0,
-      parentCount: parentCount?.count ?? 0,
+      classes: classCount?.count ?? 0,
+      teachers: teacherCount?.count ?? 0,
+      students: studentCount?.count ?? 0,
+      subjects: subjectCount?.count ?? 0,
+      activeServices: activeServicesCount?.count ?? 0,
     });
   } catch (err) {
     return serverError(err);

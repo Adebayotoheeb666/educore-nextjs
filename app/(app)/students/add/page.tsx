@@ -17,7 +17,7 @@ export default function AddStudentPage() {
   const [form, setForm] = useState({
     firstName: "", lastName: "", email: "", phone: "",
     dob: "", gender: "", classId: "", parentId: "",
-    address: "", stateOfOrigin: "",
+    address: "", stateOfOrigin: "", parentPhone: "",
   });
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
 
@@ -63,6 +63,7 @@ export default function AddStudentPage() {
           gender: form.gender || null,
           classId: form.classId || null,
           parentId: form.parentId || null,
+          parentPhone: form.parentPhone || null,
           address: form.address || null,
           stateOfOrigin: form.stateOfOrigin || null,
           avatar: avatar || null,
@@ -174,7 +175,7 @@ export default function AddStudentPage() {
 
           <div className="form-section-title" style={{ marginTop: "2rem" }}>Parent / Guardian (Optional)</div>
           <div className="form-grid-2">
-            <div className="form-group" style={{ gridColumn: "1 / -1" }}>
+            <div className="form-group">
               <label>Link to Registered Parent/Guardian</label>
               <select value={form.parentId} onChange={(e) => set("parentId", e.target.value)}>
                 <option value="">Select Parent (optional)</option>
@@ -182,6 +183,10 @@ export default function AddStudentPage() {
                   <option key={p.id} value={p.id}>{p.name} ({p.email})</option>
                 ))}
               </select>
+            </div>
+            <div className="form-group">
+              <label>Parent/Guardian Phone</label>
+              <input type="tel" value={form.parentPhone} onChange={(e) => set("parentPhone", e.target.value)} placeholder="e.g. +234 123 456 7890" />
             </div>
           </div>
 

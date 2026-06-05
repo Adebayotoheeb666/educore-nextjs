@@ -31,7 +31,14 @@ interface Stats {
 
 interface School {
   name?: string;
+  email?: string;
+  phone?: string;
+  address?: string;
+  type?: string;
+  logo?: string;
   settings?: { currentTerm?: string; academicSession?: string };
+  current_term?: string;
+  academic_session?: string;
 }
 
 const ADMIN_ROLES = ["school_owner", "principal", "vp_academics", "vp_admin", "admin_staff"];
@@ -145,10 +152,25 @@ export default function DashboardPage() {
     `${(user as any)?.firstName ?? ""} ${(user as any)?.lastName ?? ""}`.trim() ||
     "Admin";
 
-  const termLabel = school?.settings?.currentTerm
-    ? `${school.settings.currentTerm[0].toUpperCase()}${school.settings.currentTerm.slice(1)} Term`
+  const currentTerm = school?.settings?.currentTerm || school?.current_term;
+  const academicSession = school?.settings?.academicSession || school?.academic_session;
+  const termLabel = currentTerm
+    ? `${currentTerm[0].toUpperCase()}${currentTerm.slice(1)} Term`
     : null;
-  const sessionLabel = school?.settings?.academicSession ?? null;
+  const sessionLabel = academicSession ?? null;
+
+  const onboardingChecklist = [
+    { label: "School profile", href: "/school/settings", done: !!school?.email && !!school?.phone && !!school?.address && !!school?.type },
+    { label: "Core services", href: "/school/services", done: hasService("attendance") || hasService("fees") || hasService("exams") || hasService("results") },
+    { label: "Classes", href: "/classes", done: (stats?.totalClasses ?? 0) > 0 },
+    { label: "Teachers", href: "/teachers", done: (stats?.totalTeachers ?? 0) > 0 },
+    { label: "Students", href: "/students", done: (stats?.totalStudents ?? 0) > 0 },
+    { label: "Academic term", href: "/school/settings", done: !!academicSession && !!currentTerm },
+  ];
+
+  const completedOnboardingSteps = onboardingChecklist.filter((item) => item.done).length;
+  const totalOnboardingSteps = onboardingChecklist.length;
+  const showOnboardingBanner = !!school && !loading && completedOnboardingSteps < totalOnboardingSteps;
 
   const opsAlerts = [
     (stats?.feeDefaulters ?? 0) > 0 && {
@@ -206,6 +228,43 @@ export default function DashboardPage() {
           </Link>
         </div>
       </div>
+
+      {showOnboardingBanner && (
+        <section className="onboarding-banner">
+          <div className="onboarding-banner-card">
+            <div>
+              <p className="onboarding-banner-eyebrow">Get your school started</p>
+              <h2>Finish onboarding to unlock the full dashboard</h2>
+              <p>
+                Complete your school profile, enable core services, and add classes so EduCore can support your entire school.
+              </p>
+              <p className="onboarding-banner-progress">
+                {completedOnboardingSteps} of {totalOnboardingSteps} onboarding steps completed.
+              </p>
+              {onboardingChecklist.filter((i) => !i.done).length > 0 && (
+                <ul className="onboarding-checklist">
+                  {onboardingChecklist.filter((i) => !i.done).map((it) => (
+                    <li key={it.label}>
+                      <Link href={it.href} className="onboarding-check-item">
+                        <span className="icon">➖</span>
+                        <span>{it.label}</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+            <div className="onboarding-banner-actions">
+              <Link href="/onboarding" className="btn-dashboard-primary">
+                Continue onboarding
+              </Link>
+              <Link href="/school/settings" className="btn-dashboard-outline">
+                Update school settings
+              </Link>
+            </div>
+          </div>
+        </section>
+      )}
 
       {loading ? (
         <div className="dashboard-loading">

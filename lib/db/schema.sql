@@ -32,6 +32,22 @@ CREATE TABLE IF NOT EXISTS schools (
   updated_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
 
+CREATE TABLE IF NOT EXISTS school_backup_settings (
+  id TEXT PRIMARY KEY,
+  school_id TEXT NOT NULL REFERENCES schools(id) ON DELETE CASCADE,
+  google_drive_connected INTEGER NOT NULL DEFAULT 0,
+  google_drive_folder_id TEXT,
+  google_drive_token TEXT,
+  google_drive_refresh_token TEXT,
+  google_drive_token_expires_at TEXT,
+  last_backup_at TEXT,
+  last_restore_at TEXT,
+  created_at TEXT NOT NULL DEFAULT (datetime('now')),
+  updated_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+CREATE UNIQUE INDEX IF NOT EXISTS idx_school_backup_settings_school_id ON school_backup_settings(school_id);
+
 -- ============================================================
 -- CORE: Users
 -- ============================================================
@@ -318,6 +334,20 @@ CREATE TABLE IF NOT EXISTS fee_payments (
   payment_method TEXT,
   reference TEXT,
   status TEXT NOT NULL DEFAULT 'pending' CHECK(status IN ('pending', 'completed', 'failed', 'refunded')),
+  created_at TEXT NOT NULL DEFAULT (datetime('now')),
+  updated_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+CREATE TABLE IF NOT EXISTS payroll_transactions (
+  id TEXT PRIMARY KEY,
+  school_id TEXT NOT NULL REFERENCES schools(id) ON DELETE CASCADE,
+  teacher_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  amount REAL NOT NULL,
+  payment_date TEXT NOT NULL,
+  payment_method TEXT NOT NULL,
+  reference TEXT,
+  note TEXT,
+  status TEXT NOT NULL DEFAULT 'completed' CHECK(status IN ('pending', 'completed', 'failed', 'reversed')),
   created_at TEXT NOT NULL DEFAULT (datetime('now')),
   updated_at TEXT NOT NULL DEFAULT (datetime('now'))
 );

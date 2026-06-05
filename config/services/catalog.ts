@@ -24,7 +24,8 @@ export type ServiceCategory =
   | "library"
   | "ai"
   | "analytics"
-  | "mobile";
+  | "mobile"
+  | "backup";
 
 export const SERVICE_CATALOG: ServiceDefinition[] = [
   // ── COMPULSORY (always on) ──────────────────────────────────
@@ -200,6 +201,18 @@ export const SERVICE_CATALOG: ServiceDefinition[] = [
     category: "finance",
     version: "1.0.0",
   },
+  {
+    id: "svc_payroll",
+    name: "Teacher Payroll",
+    slug: "payroll",
+    description: "Payroll management for teacher salary disbursement and pay history",
+    is_compulsory: false,
+    base_price: 4500,
+    billing_period: "monthly",
+    dependencies: ["teachers", "payments"],
+    category: "finance",
+    version: "1.0.0",
+  },
 
   // ── OPTIONAL — Communication ─────────────────────────────────
   {
@@ -316,6 +329,18 @@ export const SERVICE_CATALOG: ServiceDefinition[] = [
     billing_period: "monthly",
     dependencies: ["school"],
     category: "mobile",
+    version: "1.0.0",
+  },
+  {
+    id: "svc_backup",
+    name: "Backup & Recovery",
+    slug: "backup",
+    description: "Google Drive backup, manual restore, and scheduled recovery for school data",
+    is_compulsory: false,
+    base_price: 0,
+    billing_period: "monthly",
+    dependencies: ["school"],
+    category: "backup",
     version: "1.0.0",
   },
 

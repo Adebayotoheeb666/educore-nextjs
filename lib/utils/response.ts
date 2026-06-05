@@ -47,6 +47,12 @@ export function conflict(message: string): NextResponse {
 
 export function serverError(error: unknown): NextResponse {
   const message =
-    error instanceof Error ? error.message : "An unexpected error occurred";
+    error instanceof Error
+      ? error.message
+      : typeof error === "string"
+      ? error
+      : error && typeof error === "object"
+      ? JSON.stringify(error)
+      : "An unexpected error occurred";
   return NextResponse.json({ message }, { status: 500 });
 }

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { query, execute } from "@/lib/db/turso";
+import { query, execute, queryOne } from "@/lib/db/turso";
 import { withAuth, type AuthContext } from "@/lib/middleware/auth";
 import { badRequest, created, ok, serverError } from "@/lib/utils/response";
 import { generateId } from "@/lib/utils/id";
@@ -40,6 +40,13 @@ export const POST = withAuth(async (req: NextRequest, { school }: AuthContext): 
     const { name, code, category, classId, isCompulsory } = await req.json();
     if (!name) return badRequest("Subject name is required");
 
+    let classSession: string | null = null;
+    if (classId) {
+      const classDoc = await queryOne("SELECT academic_session FROM classes WHERE id = ? AND school_id = ?", [classId, school.id]);
+      if (!classDoc) return badRequest("Class not found");
+      classSession = (classDoc as any).academic_session || school.academic_session || new Date().getFullYear().toString();
+    }
+
     const id = generateId();
     await execute(
       `INSERT INTO subjects (id, name, code, school_id, class_id, is_compulsory, created_at, updated_at)
@@ -49,7 +56,7 @@ export const POST = withAuth(async (req: NextRequest, { school }: AuthContext): 
 
     // If assigning to a class, also insert into class_subjects join table
     if (classId) {
-      const session = school.academic_session || new Date().getFullYear().toString();
+      const session = classSession as string;
       const classSubjectId = generateId();
       await execute(
         `INSERT INTO class_subjects (id, class_id, subject_id, is_compulsory, academic_session, added_date, created_at, updated_at)

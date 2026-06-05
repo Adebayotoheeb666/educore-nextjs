@@ -18,6 +18,23 @@ const ADMIN_ROLES = [
 const TEACHER_ROLES = ["class_teacher", "subject_teacher"];
 const STAFF_ROLES = [...ADMIN_ROLES, ...TEACHER_ROLES];
 
+function getTokenExpiryMs(token: string): number | null {
+  try {
+    const payloadPart = token.split(".")[1];
+    if (!payloadPart) return null;
+    const base64 = payloadPart.replace(/-/g, "+").replace(/_/g, "/");
+    const decoded = JSON.parse(decodeURIComponent(
+      Array.prototype.map
+        .call(atob(base64), (c: string) => `%${('00' + c.charCodeAt(0).toString(16)).slice(-2)}`)
+        .join('')
+    ));
+    if (typeof decoded.exp !== "number") return null;
+    return decoded.exp * 1000;
+  } catch {
+    return null;
+  }
+}
+
 const navConfig = [
   { label: "Dashboard",    path: "/dashboard",           icon: "🏠", roles: [...STAFF_ROLES, "bursar", "librarian"] },
   { label: "Students",     path: "/students",            icon: "👨‍🎓", roles: ADMIN_ROLES },
@@ -33,6 +50,7 @@ const navConfig = [
   { label: "Fee Schedules",path: "/fees/schedules",      icon: "💰", roles: [...ADMIN_ROLES, "bursar"], serviceSlug: "fees" },
   { label: "Collections",  path: "/fees/collection",     icon: "🧾", roles: [...ADMIN_ROLES, "bursar"], serviceSlug: "fees" },
   { label: "Defaulters",   path: "/fees/defaulters",     icon: "⚠️",  roles: [...ADMIN_ROLES, "bursar"], serviceSlug: "fees" },
+  { label: "Payroll",      path: "/payroll",             icon: "💼", roles: [...ADMIN_ROLES, "bursar"], serviceSlug: "payroll" },
   { label: "Timetable",    path: "/timetable",           icon: "🗓️",  roles: [...STAFF_ROLES, "bursar", "librarian"], serviceSlug: "timetable" },
   { label: "Library",      path: "/library",             icon: "📖", roles: [...ADMIN_ROLES, "librarian"], serviceSlug: "library" },
   { label: "Announcements",path: "/announcements",       icon: "📢", roles: [...STAFF_ROLES, "bursar", "librarian"], serviceSlug: "announcements" },
@@ -41,6 +59,16 @@ const navConfig = [
   { label: "School Settings", path: "/school/settings",  icon: "⚙️",  roles: ["school_owner", "principal"] },
   { label: "Services",     path: "/school/services",     icon: "🔧", roles: ["school_owner", "principal"] },
   { label: "Billing",      path: "/billing",             icon: "💳", roles: ["school_owner"] },
+];
+
+const teacherNav = [
+  { label: "Dashboard",     path: "/teacher/dashboard", icon: "🏠", roles: TEACHER_ROLES },
+  { label: "Classes",       path: "/teacher/classes", icon: "🏫", roles: TEACHER_ROLES },
+  { label: "Timetable",     path: "/teacher/timetable", icon: "🗓️", roles: TEACHER_ROLES, serviceSlug: "timetable" },
+  { label: "Lesson Plans",  path: "/teacher/lesson-plans", icon: "📝", roles: TEACHER_ROLES, serviceSlug: "lesson-plans" },
+  { label: "Profile",       path: "/teacher/profile", icon: "👤", roles: TEACHER_ROLES },
+  { label: "Attendance",    path: "/teacher/attendance", icon: "✅", roles: TEACHER_ROLES, serviceSlug: "attendance" },
+  { label: "Announcements", path: "/teacher/announcements", icon: "📢", roles: TEACHER_ROLES, serviceSlug: "announcements" },
 ];
 
 const parentNav = [
@@ -95,6 +123,20 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   const [activeServices, setActiveServices] = useState<string[]>([
     "auth", "school", "students", "teachers", "parents", "classes"
   ]);
+  const [showMobileNav, setShowMobileNav] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const userAgent = window.navigator.userAgent || "";
+    const navigatorWithUAData = window.navigator as Navigator & { userAgentData?: { mobile?: boolean } };
+    const isMobileBrowser = Boolean(
+      navigatorWithUAData.userAgentData?.mobile ||
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent)
+    );
+
+    setShowMobileNav(isMobileBrowser);
+  }, []);
 
   // Bootstrap: hydrate auth state from secure storage, then verify session
   useEffect(() => {
@@ -128,17 +170,21 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           if (meRes.ok) dispatch(setUser(me.data ?? me));
           else { dispatch(clearUser()); router.replace("/login"); return; }
         } else {
-          router.replace("/login"); return;
+          dispatch(clearUser());
+          router.replace("/login");
+          return;
         }
       } catch {
-        router.replace("/login"); return;
+        dispatch(clearUser());
+        router.replace("/login");
+        return;
       }
 
       setReady(true);
     };
 
     init();
-  }, [hydrated]);
+  }, [hydrated, dispatch, router]);
 
   // Fetch active services once user is authenticated and ready
   useEffect(() => {
@@ -186,6 +232,55 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
     updateTheme();
   }, [darkMode]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    let expiryTimeout: number | undefined;
+    const token = user?.token;
+    if (!token) return;
+
+    const expiresAt = getTokenExpiryMs(token);
+    if (!expiresAt) return;
+
+    const remainingMs = expiresAt - Date.now();
+    if (remainingMs <= 0) {
+      dispatch(clearUser());
+      router.replace("/login");
+      return;
+    }
+
+    expiryTimeout = window.setTimeout(() => {
+      dispatch(clearUser());
+      router.replace("/login");
+    }, remainingMs + 1000);
+
+    return () => {
+      if (expiryTimeout) window.clearTimeout(expiryTimeout);
+    };
+  }, [user?.token, dispatch, router]);
+
+  // Client-side guard: neutralize anchors with href="undefined" and log occurrences
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const fixInvalidResources = () => {
+      document.querySelectorAll('[href="undefined"], [href="/undefined"], [src="undefined"], [src="/undefined"]').forEach((el) => {
+        try {
+          console.warn("[client-guard] invalid resource URL found", el);
+          if (el.hasAttribute("href")) el.removeAttribute("href");
+          if (el.hasAttribute("src")) el.removeAttribute("src");
+          (el as any).dataset.invalidUrl = "true";
+          if (el instanceof HTMLElement) el.classList.add("bad-href");
+        } catch {
+          // ignore
+        }
+      });
+    };
+    fixInvalidResources();
+    const mo = new MutationObserver(fixInvalidResources);
+    mo.observe(document.body, { childList: true, subtree: true });
+    return () => mo.disconnect();
+  }, []);
 
   // Live notification count via SSE in browsers, or polling fallback in mobile WebView.
   useEffect(() => {
@@ -238,6 +333,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     if (user.role === "super_admin") rawItems = superAdminNav;
     else if (user.role === "parent") rawItems = parentNav;
     else if (user.role === "student") rawItems = studentNav;
+    else if (TEACHER_ROLES.includes(user.role)) rawItems = teacherNav;
     else rawItems = navConfig.filter((n) => n.roles.includes(user.role));
 
     if (user.role === "super_admin") return rawItems;
@@ -249,7 +345,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   };
 
   const getPageTitle = () => {
-    const all = [...navConfig, ...superAdminNav, ...parentNav, ...studentNav];
+    const all = [...navConfig, ...teacherNav, ...superAdminNav, ...parentNav, ...studentNav];
     const match = all.find(
       (n) => pathname === n.path || pathname.startsWith(n.path + "/")
     );
@@ -421,7 +517,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         <main className="dashboard-main">{children}</main>
 
         {/* Mobile bottom navigation (tablet/phone) */}
-        <MobileBottomNav user={user} activeServices={activeServices} />
+        {showMobileNav && <MobileBottomNav user={user} activeServices={activeServices} />}
       </div>
 
       <style>{`

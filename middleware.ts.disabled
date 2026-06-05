@@ -1,0 +1,24 @@
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+
+export function middleware(req: NextRequest) {
+  try {
+    const path = req.nextUrl.pathname;
+    if (path === "/undefined") {
+      console.log("[middleware] /undefined request detected", {
+        referer: req.headers.get("referer"),
+        "user-agent": req.headers.get("user-agent"),
+        accept: req.headers.get("accept"),
+        cookie: req.headers.get("cookie"),
+      });
+      return new NextResponse("Not Found", { status: 404 });
+    }
+  } catch (err) {
+    // ignore middleware errors
+  }
+  return NextResponse.next();
+}
+
+export const config = {
+  matcher: "/undefined",
+};

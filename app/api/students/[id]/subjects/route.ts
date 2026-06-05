@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { query } from "@/lib/db/turso";
+import { query, queryOne } from "@/lib/db/turso";
 import { withAuth, type AuthContext } from "@/lib/middleware/auth";
 import { notFound, ok, serverError } from "@/lib/utils/response";
 
@@ -23,19 +23,34 @@ export const GET = withAuth(async (_req: NextRequest, { school }: AuthContext, p
     const classId = (student[0]?.class_id ?? "") as string;
     if (!classId) return ok([]);
 
-    // Get subjects from student_subjects (which are explicitly enrolled)
-    // These include both compulsory and optional subjects the student is taking
+    const classDoc = await queryOne<{ academic_session: string | null }>(
+      `SELECT academic_session FROM classes WHERE id = ? AND school_id = ?`,
+      [classId, school.id]
+    );
+
+    const session = classDoc?.academic_session || school.academic_session || new Date().getFullYear().toString();
+
+    // Get subjects from class curriculum and explicit student enrollments.
+    // This ensures students see subjects assigned to their class even if student_subjects has not been created yet.
     const subjects = await query(
       `SELECT DISTINCT s.id, s.name, s.code, cs.is_compulsory,
               t.id as teacher_id, t.name as teacher_name, t.email as teacher_email
-       FROM student_subjects ss
-       LEFT JOIN subjects s ON ss.subject_id = s.id
-       LEFT JOIN class_subjects cs ON ss.subject_id = cs.subject_id AND ss.class_id = cs.class_id
-       LEFT JOIN subject_teachers st ON s.id = st.subject_id AND st.class_id = ss.class_id
+       FROM (
+         SELECT ss.subject_id, ss.class_id, ss.academic_session
+         FROM student_subjects ss
+         WHERE ss.student_id = ? AND ss.class_id = ? AND ss.status = 'active' AND (ss.academic_session = ? OR ss.academic_session IS NULL)
+         UNION
+         SELECT cs.subject_id, cs.class_id, cs.academic_session
+         FROM class_subjects cs
+         WHERE cs.class_id = ? AND (cs.academic_session = ? OR cs.academic_session IS NULL)
+       ) AS enrolled
+       JOIN subjects s ON enrolled.subject_id = s.id
+       LEFT JOIN class_subjects cs ON cs.subject_id = s.id AND cs.class_id = enrolled.class_id AND cs.academic_session = enrolled.academic_session
+       LEFT JOIN subject_teachers st ON st.subject_id = s.id AND st.class_id = enrolled.class_id AND st.academic_session = enrolled.academic_session
        LEFT JOIN users t ON st.teacher_id = t.id
-       WHERE ss.student_id = ? AND ss.class_id = ? AND s.school_id = ?
+       WHERE s.school_id = ?
        ORDER BY s.name`,
-      [studentId, classId, school.id]
+      [studentId, classId, session, classId, session, school.id]
     );
 
     return ok(subjects);

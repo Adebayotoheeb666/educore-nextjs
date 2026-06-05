@@ -110,6 +110,20 @@ export const POST = withAuth(
           `INSERT OR IGNORE INTO user_relationships (id, parent_id, child_id, created_at) VALUES (?, ?, ?, datetime('now'))`,
           [relId, parentId, studentId]
         );
+        // Auto-populate parent_phone from the linked parent's phone if not already set
+        if (!parentPhone) {
+          const parentData = await query<{ phone: string | null }>(
+            "SELECT phone FROM users WHERE id = ? AND role = 'parent'",
+            [parentId]
+          );
+          const parent = parentData?.[0];
+          if (parent?.phone) {
+            await execute(
+              "UPDATE users SET parent_phone = ? WHERE id = ?",
+              [parent.phone, studentId]
+            );
+          }
+        }
       }
 
       return created({ studentId, admissionNo, defaultPassword });

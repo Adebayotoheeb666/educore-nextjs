@@ -2,6 +2,21 @@ import { createClient, type Client } from "@libsql/client";
 
 let _client: Client | null = null;
 
+function makeTimeoutFetch(timeoutMs = 30_000) {
+  return async (input: RequestInfo, init?: RequestInit) => {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), timeoutMs);
+    try {
+      const res = await fetch(input as any, { signal: controller.signal, ...(init ?? {}) });
+      clearTimeout(timer);
+      return res;
+    } catch (err) {
+      clearTimeout(timer);
+      throw err;
+    }
+  };
+}
+
 export function getDb(): Client {
   if (_client) return _client;
 
@@ -12,7 +27,21 @@ export function getDb(): Client {
     throw new Error("TURSO_DATABASE_URL environment variable is not set");
   }
 
-  _client = createClient({ url, authToken });
+  // Try to create a client with a wrapped fetch that increases the connect timeout.
+  // If the client library doesn't accept the `fetch` option, fall back to default.
+  try {
+    _client = createClient({ url, authToken, fetch: makeTimeoutFetch(30_000) } as any);
+  } catch (err) {
+    // Fallback: create without custom fetch
+    try {
+      _client = createClient({ url, authToken });
+    } catch (err2) {
+      // Surface a clear error for debugging
+      console.error("Failed to create Turso client:", err2);
+      throw err2;
+    }
+  }
+
   return _client;
 }
 

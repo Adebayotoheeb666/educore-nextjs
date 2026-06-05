@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
+import { usePathname } from "next/navigation";
 import "../shared.css";
 
 const TEACHER_NAV = [
@@ -13,23 +16,34 @@ const TEACHER_NAV = [
 ];
 
 export default function TeacherLayout({ children }: { children: ReactNode }) {
+  const pathname = usePathname();
+  const [open, setOpen] = useState(false);
+
   return (
     <div className="teacher-portal-shell">
-      <div className="page-header-row" style={{ marginBottom: "1.5rem" }}>
-        <div className="page-header-text">
-          <h1>Teacher Portal</h1>
-          <p>Manage your classes, schedules, lesson plans, and teacher tools from one central place.</p>
-        </div>
-      </div>
+      <button
+        className="teacher-nav-toggle"
+        aria-controls="teacher-nav-list"
+        aria-expanded={open}
+        onClick={() => setOpen((o) => !o)}
+      >
+        ☰ Menu
+      </button>
 
-      <nav className="teacher-nav">
+      <div id="teacher-nav-list" className={`teacher-nav-wrapper ${open ? "open" : ""}`}>
+        <nav className="teacher-nav" aria-label="Teacher navigation">
         {TEACHER_NAV.map((item) => (
-          <Link key={item.href} href={item.href} className="teacher-nav-link">
+          <Link
+            key={item.href}
+            href={item.href}
+            className={`teacher-nav-link ${pathname?.startsWith(item.href) ? "active" : ""}`}
+            onClick={() => setOpen(false)}
+          >
             {item.label}
           </Link>
         ))}
-      </nav>
-
+        </nav>
+      </div>
       <div className="teacher-main-content">{children}</div>
     </div>
   );

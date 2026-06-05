@@ -36,6 +36,12 @@ export function installMobileFetchInterceptor(): void {
 
   (window as any).fetch = async (input: any, init?: any) => {
     let url = typeof input === "string" ? input : input?.url;
+
+    if (url == null || url === "undefined" || url === "/undefined") {
+      console.warn("[fetch-interceptor] blocked fetch with invalid URL", { input, init, url });
+      return Promise.reject(new TypeError("Failed to execute 'fetch': request is undefined or invalid"));
+    }
+
     const isApiRequest = typeof url === "string" ? url.startsWith("/api") : false;
 
     if (isApiRequest) {

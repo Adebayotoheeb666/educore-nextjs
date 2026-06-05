@@ -6,6 +6,7 @@ import "../../shared.css";
 import { authenticatedFetch } from "@/lib/utils/fetch";
 import { openExternal } from "@/lib/utils/openExternal";
 import { IS_MOBILE_WEBVIEW } from "@/lib/utils/runtimeConfig";
+import { useActiveServices } from "@/lib/hooks/useActiveServices";
 
 interface Child { id: string; name: string; email?: string; }
 interface FeeSchedule {
@@ -18,6 +19,9 @@ export default function ParentFeesPage() {
   const [fees, setFees] = useState<FeeSchedule[]>([]);
   const [selectedChild, setSelectedChild] = useState("");
   const [paying, setPaying] = useState<string | null>(null);
+  const { hasService } = useActiveServices();
+
+  const canPayOnline = hasService("payments");
 
   useEffect(() => {
     authenticatedFetch("/api/parents/children")
@@ -138,6 +142,11 @@ export default function ParentFeesPage() {
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+          {!canPayOnline && (
+            <div style={{ padding: "1.5rem", borderRadius: 16, background: "#fef3c7", border: "1px solid #fcd34d", color: "#92400e" }}>
+              <strong>Online payments are currently inactive.</strong> Activate the Online Payments service on your school's service page to pay fees through the platform.
+            </div>
+          )}
           {fees.length === 0 ? (
             <div className="table-empty">No fee schedules found for this student.</div>
           ) : (
@@ -164,7 +173,8 @@ export default function ParentFeesPage() {
                       <button
                         className="btn-primary"
                         onClick={() => handlePay(fee)}
-                        disabled={paying === fee.id}
+                        disabled={paying === fee.id || !canPayOnline}
+                        title={!canPayOnline ? "Online payments are not enabled yet" : undefined}
                       >
                         {paying === fee.id ? "Processing…" : `Pay ₦${outstanding.toLocaleString()}`}
                       </button>

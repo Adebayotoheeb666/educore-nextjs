@@ -15,6 +15,13 @@ interface SchoolStats {
   activeServices: number;
 }
 
+interface SchoolData {
+  email?: string | null;
+  phone?: string | null;
+  address?: string | null;
+  type?: string | null;
+}
+
 interface ChecklistItem {
   id: string;
   label: string;
@@ -31,6 +38,7 @@ export default function ProfileSetupPage() {
   const [uploadingAvatar, setUploadingAvatar] = useState(false);
   const [changingPw, setChangingPw] = useState(false);
   const [stats, setStats] = useState<SchoolStats | null>(null);
+  const [school, setSchool] = useState<SchoolData | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
   const [form, setForm] = useState({
@@ -58,7 +66,16 @@ export default function ProfileSetupPage() {
       .then((r) => r.json())
       .then((d) => setStats(d.data))
       .catch(() => null);
+
+    authenticatedFetch("/api/school")
+      .then((r) => r.json())
+      .then((d) => setSchool(d.data ?? d))
+      .catch(() => null);
   }, []);
+
+  const schoolProfileComplete = Boolean(
+    school?.email && school?.phone && school?.address && school?.type
+  );
 
   const checklist: ChecklistItem[] = [
     {
@@ -67,7 +84,7 @@ export default function ProfileSetupPage() {
       description: "Add your school address, contact email, type, and logo.",
       href: "/school/settings",
       icon: "🏫",
-      done: false, // can't easily detect without extra fetch; user can mark manually via navigation
+      done: schoolProfileComplete,
     },
     {
       id: "services",

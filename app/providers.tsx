@@ -14,6 +14,27 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
+    const fixInvalidResources = () => {
+      document.querySelectorAll('[href="undefined"], [href="/undefined"], [src="undefined"], [src="/undefined"]').forEach((el) => {
+        try {
+          console.warn("[client-guard] invalid resource URL found", el);
+          if (el.hasAttribute("href")) el.removeAttribute("href");
+          if (el.hasAttribute("src")) el.removeAttribute("src");
+          (el as any).dataset.invalidUrl = "true";
+          if (el instanceof HTMLElement) el.classList.add("bad-href");
+        } catch {
+          // ignore
+        }
+      });
+    };
+    fixInvalidResources();
+    const mo = new MutationObserver(fixInvalidResources);
+    mo.observe(document.body, { childList: true, subtree: true });
+    return () => mo.disconnect();
+  }, []);
+
+  useEffect(() => {
     const loadTheme = async () => {
       try {
         if (typeof document !== "undefined") {

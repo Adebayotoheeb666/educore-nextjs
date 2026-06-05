@@ -405,6 +405,48 @@
   border-color: var(--border-color);
 }
 
+.teacher-nav-link.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+/* Mobile-friendly teacher nav wrapper and toggle */
+.teacher-nav-toggle {
+  display: none;
+  background: none;
+  border: 1px solid var(--border-color);
+  padding: 0.6rem 0.9rem;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-bottom: 0.75rem;
+}
+
+.teacher-nav-wrapper {
+  overflow: hidden;
+  max-height: none;
+  transition: max-height 0.25s ease;
+}
+
+.teacher-nav-wrapper .teacher-nav {
+  display: flex;
+  gap: 0.6rem;
+  overflow-x: auto;
+  padding-bottom: 0.3rem;
+}
+
+.teacher-nav-wrapper .teacher-nav::-webkit-scrollbar { height: 8px; }
+.teacher-nav-wrapper .teacher-nav::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.08); border-radius: 8px; }
+
+.teacher-nav-wrapper:not(.open) {
+  max-height: 0;
+}
+
+.teacher-nav-wrapper.open {
+  max-height: 200px;
+}
+
 .teacher-stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -465,6 +507,17 @@
   background: #eef2ff;
   color: #4338ca;
   font-size: 1.4rem;
+}
+
+.teacher-action-primary {
+  background: linear-gradient(90deg, #6A5ACD 0%, #7159E6 100%);
+  color: white;
+  border: none;
+}
+
+.teacher-action-primary .teacher-action-icon {
+  background: rgba(255,255,255,0.15);
+  color: white;
 }
 
 .teacher-table-wrapper {

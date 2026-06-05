@@ -409,6 +409,87 @@
   gap: 1.2rem;
 }
 
+.onboarding-banner {
+  margin-bottom: 2rem;
+}
+
+.onboarding-banner-card {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1.5rem;
+  align-items: center;
+  background: linear-gradient(135deg, rgba(106, 90, 205, 0.1), rgba(255, 255, 255, 0.95));
+  border: 1px solid rgba(106, 90, 205, 0.2);
+  border-radius: 20px;
+  padding: 2rem;
+}
+
+.onboarding-banner-eyebrow {
+  margin: 0 0 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.85rem;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.onboarding-banner-card h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1.7rem;
+  color: var(--text-main);
+}
+
+.onboarding-banner-card p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 1rem;
+  max-width: 720px;
+}
+
+.onboarding-banner-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+}
+
+.onboarding-banner-progress {
+  margin: 1rem 0 0;
+  color: var(--text-main);
+  font-weight: 700;
+}
+
+.onboarding-checklist {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.75rem;
+}
+
+.onboarding-check-item {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.onboarding-check-item .icon {
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  background: var(--primary-light);
+}
+
 /* ─── Dashboard content grid ─── */
 .dashboard-grid {
   display: grid;
@@ -1175,7 +1256,7 @@
 .mobile-bottom-nav .mbn-icon { font-size: 1.3rem; }
 .mobile-bottom-nav .mbn-label { font-size: 0.75rem; }
 
-@media (max-width: 1024px) {
+@media (max-width: 768px) and (hover: none) and (pointer: coarse) {
   .mobile-bottom-nav { display: flex; }
   /* ensure main content doesn't get hidden behind bottom nav */
   .dashboard-main { padding-bottom: 80px; }

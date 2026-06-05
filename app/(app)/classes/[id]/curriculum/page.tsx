@@ -397,9 +397,13 @@ export default function ClassCurriculumPage() {
                   <tr key={subject.id}>
                     <td style={{ textAlign: "center", fontWeight: 700, color: "#667eea" }}>{subject.sequence}</td>
                     <td style={{ fontWeight: 700, color: "#0f172a" }}>
-                      <Link href={`/subjects/${subject.subject_id}`} className="subject-link">
-                        {subject.name}
-                      </Link>
+                      {subject.subject_id ? (
+                        <Link href={`/subjects/${subject.subject_id}`} className="subject-link">
+                          {subject.name}
+                        </Link>
+                      ) : (
+                        <span>{subject.name}</span>
+                      )}
                     </td>
                     <td><span className="mono">{subject.code || "—"}</span></td>
                     <td style={{ textAlign: "center" }}>

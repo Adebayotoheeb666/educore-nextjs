@@ -18,6 +18,7 @@ const CATEGORY_LABELS: Record<string, string> = {
   ai: "AI & Intelligence",
   analytics: "Analytics",
   mobile: "Mobile & Sync",
+  backup: "Backup & Recovery",
 };
 
 const CATEGORY_ICONS: Record<string, string> = {
@@ -28,6 +29,7 @@ const CATEGORY_ICONS: Record<string, string> = {
   ai: "🤖",
   analytics: "📊",
   mobile: "📱",
+  backup: "🛡️",
 };
 
 export default function RegisterPage() {
@@ -106,8 +108,8 @@ export default function RegisterPage() {
         setStep("details");
         return;
       }
-      toast.success("School registered successfully!");
-      router.push("/dashboard");
+      toast.success("School registered successfully! Continue your setup.");
+      router.push("/onboarding");
     } catch {
       toast.error("Registration failed. Please try again.");
     } finally {

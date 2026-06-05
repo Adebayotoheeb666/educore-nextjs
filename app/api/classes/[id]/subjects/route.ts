@@ -25,12 +25,12 @@ export const GET = withAuth(async (req: NextRequest, { school }: AuthContext, pa
               COUNT(DISTINCT st.teacher_id) as teacher_count
        FROM class_subjects cs
        LEFT JOIN subjects s ON cs.subject_id = s.id
-       LEFT JOIN subject_teachers st ON st.subject_id = s.id AND st.class_id = ?
+       LEFT JOIN subject_teachers st ON st.subject_id = s.id AND st.class_id = ? AND (st.academic_session = ? OR st.academic_session IS NULL)
        LEFT JOIN users u ON st.teacher_id = u.id
-       WHERE cs.class_id = ? AND s.school_id = ? AND cs.academic_session = ?
+       WHERE cs.class_id = ? AND s.school_id = ? AND (cs.academic_session = ? OR cs.academic_session IS NULL)
        GROUP BY cs.id, cs.class_id, cs.subject_id, cs.is_compulsory, cs.sequence, cs.academic_session, s.id, s.name, s.code, s.description
        ORDER BY cs.sequence, s.name`,
-      [classId, classId, school.id, session]
+      [classId, session, classId, school.id, session]
     );
     return ok(subjects);
   } catch (err) {
@@ -54,7 +54,7 @@ export const POST = withAuth(
       const subject = await queryOne("SELECT id FROM subjects WHERE id = ? AND school_id = ?", [subjectId, school.id]);
       if (!subject) return notFound("Subject not found");
 
-      const session = academicSession || school.academic_session;
+      const session = academicSession || (classDoc as any).academic_session || school.academic_session;
 
       const existing = await queryOne(
         "SELECT id FROM class_subjects WHERE class_id = ? AND subject_id = ? AND academic_session = ?",

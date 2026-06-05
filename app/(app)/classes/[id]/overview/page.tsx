@@ -163,9 +163,13 @@ export default function ClassOverviewPage() {
               <div key={subject.id} className="subject-card">
                 <div className="subject-header">
                   <h3>
-                    <Link href={`/subjects/${subject.subject_id}`} className="subject-link">
-                      {subject.name}
-                    </Link>
+                    {subject.subject_id ? (
+                      <Link href={`/subjects/${subject.subject_id}`} className="subject-link">
+                        {subject.name}
+                      </Link>
+                    ) : (
+                      <span>{subject.name}</span>
+                    )}
                   </h3>
                   <span className={`badge ${subject.is_compulsory ? "badge-required" : "badge-elective"}`}>
                     {subject.is_compulsory ? "Required" : "Elective"}

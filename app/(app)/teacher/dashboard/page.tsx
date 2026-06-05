@@ -4,6 +4,7 @@ import Link from "next/link";
 import { toast } from "sonner";
 import { useAppSelector } from "@/redux/hooks";
 import { authenticatedFetch } from "@/lib/utils/fetch";
+import { useActiveServices } from "@/lib/hooks/useActiveServices";
 import "../../shared.css";
 
 interface TeacherClass {
@@ -42,14 +43,6 @@ interface TeacherWorkload {
   subjectCount: number;
 }
 
-const QUICK_LINKS = [
-  { href: "/teacher/classes", label: "My Classes", icon: "🏫" },
-  { href: "/teacher/timetable", label: "Timetable", icon: "🗓️" },
-  { href: "/teacher/lesson-plans", label: "Lesson Plans", icon: "📋" },
-  { href: "/teacher/attendance", label: "Attendance", icon: "✅" },
-  { href: "/teacher/announcements", label: "Announcements", icon: "📢" },
-  { href: "/teacher/profile", label: "Profile", icon: "👤" },
-];
 
 export default function TeacherDashboardPage() {
   const { user } = useAppSelector((s) => s.auth);
@@ -57,7 +50,12 @@ export default function TeacherDashboardPage() {
   const [workload, setWorkload] = useState<TeacherWorkload>({ teacherId: "", subjects: [], subjectCount: 0 });
   const [lessons, setLessons] = useState<LessonPlan[]>([]);
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
+  const [timetable, setTimetable] = useState<Array<any>>([]);
+  const [attendanceSummary, setAttendanceSummary] = useState<{ present: number; absent: number; late: number; excused: number }>({ present: 0, absent: 0, late: 0, excused: 0 });
+  const [payrollTotal, setPayrollTotal] = useState<number>(0);
+  const [payrollPayments, setPayrollPayments] = useState<Array<{ id: string; amount: number; payment_date: string; payment_method: string }>>([]);
   const [loading, setLoading] = useState(true);
+  const { hasService } = useActiveServices();
 
   useEffect(() => {
     if (!user?.id) return;
@@ -75,17 +73,75 @@ export default function TeacherDashboardPage() {
       authenticatedFetch("/api/announcements")
         .then((r) => r.json())
         .catch(() => ({ data: [] })),
+      authenticatedFetch("/api/timetable/my")
+        .then((r) => r.json())
+        .catch(() => ({ data: [] })),
+      authenticatedFetch("/api/attendance/summary")
+        .then((r) => r.json())
+        .catch(() => ({ data: { present: 0, absent: 0, late: 0, excused: 0 } })),
     ])
-      .then(([wd, cd, ld, ad]) => {
+      .then(([wd, cd, ld, ad, td, as]) => {
         setWorkload(wd.data ?? { teacherId: "", subjects: [], subjectCount: 0 });
         const allClasses = Array.isArray(cd.data) ? (cd.data as TeacherClass[]) : [];
         setClasses(allClasses.filter((cls) => cls.class_teacher_id === user.id));
         setLessons(Array.isArray(ld.data) ? ld.data.slice(0, 6) : []);
         setAnnouncements(Array.isArray(ad.data) ? ad.data.slice(0, 4) : []);
+        setTimetable(Array.isArray(td?.data) ? td.data : []);
+        const summary = as?.data ?? { present: 0, absent: 0, late: 0, excused: 0 };
+        setAttendanceSummary({
+          present: Number(summary.present ?? 0),
+          absent: Number(summary.absent ?? 0),
+          late: Number(summary.late ?? 0),
+          excused: Number(summary.excused ?? 0),
+        });
       })
       .catch(() => toast.error("Failed to load dashboard"))
       .finally(() => setLoading(false));
   }, [user?.id]);
+
+  // load timetable and attendance summary separately (after user known)
+  useEffect(() => {
+    if (!user?.id) return;
+    (async () => {
+      try {
+        const t = await authenticatedFetch(`/api/timetable/my`);
+        const tdata = await t.json();
+        setTimetable(Array.isArray(tdata?.data) ? tdata.data : []);
+      } catch (e) {
+        // ignore
+      }
+
+      try {
+        const a = await authenticatedFetch(`/api/attendance/summary`);
+        const adata = await a.json();
+        setAttendanceSummary({
+          present: Number(adata?.data?.present ?? 0),
+          absent: Number(adata?.data?.absent ?? 0),
+          late: Number(adata?.data?.late ?? 0),
+          excused: Number(adata?.data?.excused ?? 0),
+        });
+      } catch (e) {
+        // ignore
+      }
+    })();
+  }, [user?.id]);
+
+  useEffect(() => {
+    const loadPayroll = async () => {
+      if (!user?.id || !hasService("payroll")) return;
+      try {
+        const res = await authenticatedFetch(`/api/payroll?teacherId=${encodeURIComponent(user.id)}`);
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message || "Failed to load payroll");
+        setPayrollTotal(Number(data.data?.totalPaid ?? 0));
+        setPayrollPayments(Array.isArray(data.data?.payments) ? data.data.payments : []);
+      } catch {
+        toast.error("Unable to load payroll information");
+      }
+    };
+
+    loadPayroll();
+  }, [user?.id, hasService]);
 
   const displayName = (user as Record<string, unknown>)?.name as string ?? "Teacher";
 
@@ -127,22 +183,33 @@ export default function TeacherDashboardPage() {
               <h2>{plannedLessonCount}</h2>
             </div>
             <div className="teacher-overview-card">
-              <p>Pending reviews</p>
-              <h2>{pendingLessonCount}</h2>
+              <p>Attendance (today)</p>
+              <h2>
+                P:{attendanceSummary.present} • A:{attendanceSummary.absent}
+              </h2>
             </div>
           </section>
 
-          <section className="teacher-action-grid" style={{ marginBottom: "2rem" }}>
-            {QUICK_LINKS.map((link) => (
-              <Link key={link.href} href={link.href} className="teacher-action-card">
-                <span className="teacher-action-icon">{link.icon}</span>
-                <span>{link.label}</span>
-              </Link>
-            ))}
-          </section>
+          {hasService("payroll") && (
+            <section className="teacher-stats-grid" style={{ marginBottom: "2rem" }}>
+              <div className="teacher-overview-card" style={{ background: "#f8fafc" }}>
+                <p>Payroll received</p>
+                <h2>₦{payrollTotal.toLocaleString()}</h2>
+              </div>
+              <div className="teacher-overview-card" style={{ background: "#f8fafc" }}>
+                <p>Recent payouts</p>
+                <h2>{payrollPayments.length}</h2>
+              </div>
+            </section>
+          )}
+
+          {/* Navigation actions moved to teacher nav (app/(app)/teacher/layout.tsx) */}
 
           <section className="form-card" style={{ marginBottom: "2rem" }}>
             <h2 className="form-section-title">Active teaching load</h2>
+            {timetable.length > 0 && (
+              <p style={{ color: "#64748b", marginTop: "0.5rem" }}>Upcoming classes today: {timetable.length}</p>
+            )}
             {workload.subjects.length === 0 ? (
               <p>No workload assignments available yet.</p>
             ) : (

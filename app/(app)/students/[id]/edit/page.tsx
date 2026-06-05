@@ -18,6 +18,7 @@ interface StudentData {
   last_name?: string;
   email?: string;
   phone?: string;
+  parent_phone?: string;
   dob?: string;
   gender?: string;
   class_id?: string;
@@ -36,7 +37,7 @@ export default function EditStudentPage() {
   const [saving, setSaving] = useState(false);
   const [form, setForm] = useState({
     firstName: "", lastName: "", email: "", phone: "", dob: "", gender: "",
-    classId: "", parentId: "", address: "", stateOfOrigin: "", avatar: "",
+    classId: "", parentId: "", address: "", stateOfOrigin: "", avatar: "", parentPhone: "",
   });
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
 
@@ -54,6 +55,7 @@ export default function EditStudentPage() {
           lastName: s.last_name ?? rest.join(" ") ?? "",
           email: s.email ?? "",
           phone: s.phone ?? "",
+          parentPhone: s.parent_phone ?? "",
           dob: s.dob ? s.dob.slice(0, 10) : "",
           gender: s.gender ?? "",
           classId: s.class_id ?? "",
@@ -93,6 +95,7 @@ export default function EditStudentPage() {
           lastName: form.lastName,
           email: form.email,
           phone: form.phone || null,
+          parentPhone: form.parentPhone || null,
           dob: form.dob || null,
           gender: form.gender === "" ? "" : form.gender,
           classId: form.classId || null,
@@ -185,6 +188,10 @@ export default function EditStudentPage() {
               </select>
             </div>
             <div className="form-group">
+              <label>Phone Number</label>
+              <input type="tel" value={form.phone} onChange={(e) => set("phone", e.target.value)} />
+            </div>
+            <div className="form-group">
               <label>Link Parent/Guardian</label>
               <select value={form.parentId} onChange={(e) => set("parentId", e.target.value)}>
                 <option value="">Select Parent</option>
@@ -192,6 +199,10 @@ export default function EditStudentPage() {
                   <option key={p.id} value={p.id}>{p.name} ({p.email})</option>
                 ))}
               </select>
+            </div>
+            <div className="form-group">
+              <label>Parent/Guardian Phone</label>
+              <input type="tel" value={form.parentPhone} onChange={(e) => set("parentPhone", e.target.value)} />
             </div>
             <div className="form-group">
               <label>State of Origin</label>

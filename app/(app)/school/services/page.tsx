@@ -26,6 +26,7 @@ const CATEGORY_ICONS: Record<string, string> = {
   ai:            "🤖",
   analytics:     "📊",
   mobile:        "📱",
+  backup:        "🛡️",
   core:          "🏫",
 };
 
@@ -37,6 +38,7 @@ const CATEGORY_LABELS: Record<string, string> = {
   ai:            "AI & Intelligence",
   analytics:     "Analytics",
   mobile:        "Mobile & Sync",
+  backup:        "Backup & Recovery",
   core:          "Core (Always Included)",
 };
 

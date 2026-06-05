@@ -174,7 +174,7 @@ export default function StudentDetailPage() {
               { label: "Class",              value: student.class_name ?? "—" },
               { label: "Homeroom Teacher",   value: student.class_teacher_name ? `${student.class_teacher_name}` : "—" },
               { label: "Linked Parent",      value: student.parent_name ? `${student.parent_name} (${student.parent_email})` : "—" },
-              { label: "Parent Phone",       value: student.parent_phone ?? "—" },
+              { label: "Parent Phone",       value: student.parent_phone_linked ?? student.parent_phone ?? "—" },
               { label: "Address",            value: student.address ?? "—" },
               { label: "State of Origin",    value: student.state_of_origin ?? "—" },
               { label: "Enrolled",           value: student.created_at ? new Date(student.created_at).toLocaleDateString("en-NG") : "—" },

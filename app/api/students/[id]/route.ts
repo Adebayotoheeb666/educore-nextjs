@@ -42,7 +42,8 @@ export const PATCH = withAuth(
       );
       if (!existing) return notFound("Student not found");
 
-      const { firstName, lastName, email, dob, gender, classId, parentId, isActive, avatar, address, stateOfOrigin } = await req.json();
+      const body = await req.json();
+      const { firstName, lastName, email, dob, gender, classId, parentId, isActive, avatar, address, stateOfOrigin, parentPhone } = body;
       const ex = existing as { first_name: string | null; last_name: string | null; class_id: string | null };
       const newFirst = firstName ?? ex.first_name ?? "";
       const newLast = lastName ?? ex.last_name ?? "";
@@ -57,6 +58,7 @@ export const PATCH = withAuth(
            class_id = COALESCE(?, class_id),
            address = COALESCE(?, address),
            state_of_origin = COALESCE(?, state_of_origin),
+           parent_phone = COALESCE(?, parent_phone),
            updated_at = datetime('now')`;
       let args: (string | number | null)[] = [firstName || null, lastName || null, `${newFirst} ${newLast}`.trim(),
          dob || null, gender !== undefined ? gender : null,
@@ -64,7 +66,8 @@ export const PATCH = withAuth(
          avatar || null,
          classId !== undefined ? classId : null,
          address || null,
-         stateOfOrigin || null];
+         stateOfOrigin || null,
+         parentPhone || null];
 
       if (email !== undefined) {
         setClauses = `email = COALESCE(?, email), ${setClauses}`;

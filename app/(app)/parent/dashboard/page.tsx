@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { authenticatedFetch } from "@/lib/utils/fetch";
 import { useAppSelector } from "@/redux/hooks";
+import { useActiveServices } from "@/lib/hooks/useActiveServices";
 import "../../shared.css";
 
 interface Child {
@@ -16,8 +17,11 @@ export default function ParentDashboardPage() {
   const [children, setChildren] = useState<Child[]>([]);
   const [results, setResults] = useState<RecentResult[]>([]);
   const [attendance, setAttendance] = useState<Attendance[]>([]);
+  const [feeDue, setFeeDue] = useState<number>(0);
+  const [feePaid, setFeePaid] = useState<number>(0);
   const [loading, setLoading] = useState(true);
   const [selectedChild, setSelectedChild] = useState<string>("");
+  const { hasService } = useActiveServices();
 
   useEffect(() => {
     authenticatedFetch("/api/parents/children")
@@ -41,6 +45,26 @@ export default function ParentDashboardPage() {
       setAttendance(Array.isArray(ad.data) ? ad.data.slice(0, 5) : []);
     }).catch(() => {});
   }, [selectedChild]);
+
+  useEffect(() => {
+    const loadFees = async () => {
+      if (!selectedChild || !hasService("fees")) return;
+      try {
+        const res = await authenticatedFetch(`/api/fees/student?studentId=${encodeURIComponent(selectedChild)}`);
+        const data = await res.json();
+        const feeRows: any[] = Array.isArray(data.data) ? data.data : [];
+        const totalPaid = feeRows.reduce((sum: number, f: any) => sum + Number(f.paid_amount ?? 0), 0);
+        const totalDue = feeRows.reduce((sum: number, f: any) => sum + ((Number(f.total_amount ?? f.amount ?? 0) - Number(f.paid_amount ?? 0)) || 0), 0);
+        setFeeDue(totalDue);
+        setFeePaid(totalPaid);
+      } catch {
+        setFeeDue(0);
+        setFeePaid(0);
+      }
+    };
+
+    loadFees();
+  }, [selectedChild, hasService]);
 
   const child = children.find((c) => c.id === selectedChild);
   const presentCount = attendance.filter((a) => a.status === "present").length;
@@ -90,6 +114,19 @@ export default function ParentDashboardPage() {
               ))}
             </div>
           </div>
+
+          {hasService("fees") && (
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2.5rem", marginBottom: "2.5rem" }}>
+              <div style={{ background: "white", borderRadius: 20, border: "1px solid #f1f5f9", padding: "2.5rem" }}>
+                <div style={{ fontSize: "1.2rem", color: "#64748b", fontWeight: 700, textTransform: "uppercase", marginBottom: "0.75rem" }}>Total Due</div>
+                <div style={{ fontSize: "2.5rem", fontWeight: 800, color: feeDue > 0 ? "#dc2626" : "#16a34a" }}>₦{feeDue.toLocaleString()}</div>
+              </div>
+              <div style={{ background: "white", borderRadius: 20, border: "1px solid #f1f5f9", padding: "2.5rem" }}>
+                <div style={{ fontSize: "1.2rem", color: "#64748b", fontWeight: 700, textTransform: "uppercase", marginBottom: "0.75rem" }}>Total Paid</div>
+                <div style={{ fontSize: "2.5rem", fontWeight: 800, color: "#16a34a" }}>₦{feePaid.toLocaleString()}</div>
+              </div>
+            </div>
+          )}
 
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2.5rem" }}>
             {/* Recent results */}
