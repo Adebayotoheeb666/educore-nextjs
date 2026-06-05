@@ -62,6 +62,24 @@ export default function ClassCurriculumPage() {
   const [assigningOptional, setAssigningOptional] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
+    const initializeClass = async () => {
+      try {
+        const res = await authenticatedFetch(`/api/classes/${classId}`);
+        if (res.ok) {
+          const data = await res.json();
+          const classData = data.data || data;
+          if (classData.academic_session) {
+            setSession(classData.academic_session);
+          }
+        }
+      } catch (err) {
+        console.error("Failed to fetch class:", err);
+      }
+    };
+    initializeClass();
+  }, [classId]);
+
+  useEffect(() => {
     fetchCurriculumData();
   }, [classId, session]);
 
@@ -120,11 +138,14 @@ export default function ClassCurriculumPage() {
           subjectId: selectedSubjectId,
           isCompulsory: false,
           sequence: (subjects.length || 0) + 1,
-          academicSession: session,
+          academicSession: session || undefined,
         }),
       });
 
-      if (!res.ok) throw new Error("Failed to add subject");
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData?.message || "Failed to add subject");
+      }
       setSelectedSubjectId("");
       setShowAddSubject(false);
       setError(null);
