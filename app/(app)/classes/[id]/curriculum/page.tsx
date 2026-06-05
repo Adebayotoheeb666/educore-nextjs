@@ -62,6 +62,24 @@ export default function ClassCurriculumPage() {
   const [assigningOptional, setAssigningOptional] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
+    const initializeClass = async () => {
+      try {
+        const res = await authenticatedFetch(`/api/classes/${classId}`);
+        if (res.ok) {
+          const data = await res.json();
+          const classData = data.data || data;
+          if (classData.academic_session) {
+            setSession(classData.academic_session);
+          }
+        }
+      } catch (err) {
+        console.error("Failed to fetch class:", err);
+      }
+    };
+    initializeClass();
+  }, [classId]);
+
+  useEffect(() => {
     fetchCurriculumData();
   }, [classId, session]);
 
@@ -120,11 +138,14 @@ export default function ClassCurriculumPage() {
           subjectId: selectedSubjectId,
           isCompulsory: false,
           sequence: (subjects.length || 0) + 1,
-          academicSession: session,
+          academicSession: session || undefined,
         }),
       });
 
-      if (!res.ok) throw new Error("Failed to add subject");
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData?.message || "Failed to add subject");
+      }
       setSelectedSubjectId("");
       setShowAddSubject(false);
       setError(null);
@@ -425,6 +446,13 @@ export default function ClassCurriculumPage() {
                     </td>
                     <td>
                       <div style={{ display: "flex", gap: "0.8rem", alignItems: "center", flexWrap: "wrap" }}>
+                        <Link
+                          href={`/subjects/${subject.subject_id}`}
+                          className="btn-action btn-manage"
+                          title="Manage teachers for this subject"
+                        >
+                          👨‍🏫 Teachers
+                        </Link>
                         <button
                           className="btn-action btn-view"
                           onClick={() => toggleExpandSubject(subject.subject_id)}
@@ -751,6 +779,19 @@ export default function ClassCurriculumPage() {
         .btn-view:hover {
           background: #e0e7ff;
           border-color: #c7d2fe;
+        }
+
+        .btn-manage {
+          background: #fef3c7;
+          color: #92400e;
+          border: 1px solid #fde68a;
+          text-decoration: none;
+          display: inline-block;
+        }
+
+        .btn-manage:hover {
+          background: #fcd34d;
+          border-color: #fbbf24;
         }
 
         .btn-assign {

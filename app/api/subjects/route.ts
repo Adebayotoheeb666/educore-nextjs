@@ -12,22 +12,30 @@ export const GET = withAuth(async (req: NextRequest, { school }: AuthContext): P
     const { searchParams } = new URL(req.url);
     const teacherId = searchParams.get("teacherId");
 
-    let sql = `SELECT s.*, c.name as class_name, GROUP_CONCAT(u.name) as teacher_names, GROUP_CONCAT(u.id) as teacher_ids, COUNT(DISTINCT st.teacher_id) as teacher_count
+    if (teacherId) {
+      const subjects = await query(
+        `SELECT s.*, c.name as class_name, GROUP_CONCAT(u.name) as teacher_names, GROUP_CONCAT(u.id) as teacher_ids, COUNT(DISTINCT st.teacher_id) as teacher_count
+         FROM subjects s
+         LEFT JOIN classes c ON s.class_id = c.id
+         INNER JOIN subject_teachers st ON st.subject_id = s.id AND st.teacher_id = ?
+         LEFT JOIN users u ON st.teacher_id = u.id
+         WHERE s.school_id = ?
+         GROUP BY s.id ORDER BY s.name`,
+        [teacherId, school.id]
+      );
+      return ok(subjects);
+    }
+
+    const subjects = await query(
+      `SELECT s.*, c.name as class_name, GROUP_CONCAT(u.name) as teacher_names, GROUP_CONCAT(u.id) as teacher_ids, COUNT(DISTINCT st.teacher_id) as teacher_count
        FROM subjects s
        LEFT JOIN classes c ON s.class_id = c.id
        LEFT JOIN subject_teachers st ON st.subject_id = s.id
        LEFT JOIN users u ON st.teacher_id = u.id
-       WHERE s.school_id = ?`;
-    const params: any[] = [school.id];
-
-    if (teacherId) {
-      sql += ` AND st.teacher_id = ?`;
-      params.push(teacherId);
-    }
-
-    sql += ` GROUP BY s.id ORDER BY s.name`;
-
-    const subjects = await query(sql, params);
+       WHERE s.school_id = ?
+       GROUP BY s.id ORDER BY s.name`,
+      [school.id]
+    );
     return ok(subjects);
   } catch (err) {
     return serverError(err);
