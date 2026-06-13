@@ -20,13 +20,20 @@ interface UserRow {
   is_active: number;
 }
 
+export async function OPTIONS(req: NextRequest): Promise<NextResponse> {
+  return new NextResponse(null, { status: 200 });
+}
+
 // 10 attempts per minute per IP
 export const POST = withRateLimit(
   { prefix: "login", limit: 10, windowSecs: 60 },
   async function POST(req: NextRequest): Promise<NextResponse> {
   try {
-    console.log("auth/login entered", { method: req.method, headers: req.headers.get?.("content-type") });
-    const body = await req.json().catch(() => null);
+    console.log("auth/login entered", { method: req.method, contentType: req.headers.get?.("content-type") });
+    const body = await req.json().catch((e) => {
+      console.error("Failed to parse JSON:", e);
+      return null;
+    });
     console.log("auth/login parsed body", body);
     const { email, password } = body ?? {};
 
