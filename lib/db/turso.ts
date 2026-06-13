@@ -168,14 +168,14 @@ async function ensureSchema(): Promise<void> {
       const migrationStatements = cleanMigration
         .split(";")
         .map((s) => s.trim())
-        .filter((s) => s.length > 0 && !isTransactionControlStatement(s));
+        .filter((s) => s.length > 0 && !isTransactionControlStatement(s) && !s.toUpperCase().startsWith("PRAGMA"));
 
       for (const sql of migrationStatements) {
         try {
           await db.execute({ sql: sql + ";", args: [] });
         } catch (err) {
           const message = (err as Error).message;
-          if (message.includes("already exists") || message.includes("duplicate")) {
+          if (message.includes("already exists") || message.includes("duplicate") || message.includes("no such table")) {
             continue;
           }
           throw err;
