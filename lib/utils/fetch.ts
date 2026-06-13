@@ -31,6 +31,11 @@ export function installMobileFetchInterceptor(): void {
   if (typeof window === "undefined") return;
   if ((window as any).__EDUCORE_MOBILE_FETCH_INSTALLED__) return;
 
+  // Skip installing interceptor in development to avoid CORS issues
+  if (typeof window !== "undefined" && (window.location.hostname === "localhost" || window.location.hostname.includes("builderio.dev"))) {
+    return;
+  }
+
   const originalFetch = (window as any).fetch?.bind(window) ?? (() => Promise.reject(new Error('fetch not available')));
   (window as any).__EDUCORE_MOBILE_FETCH_INSTALLED__ = true;
 
