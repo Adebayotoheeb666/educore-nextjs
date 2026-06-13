@@ -105,7 +105,7 @@ export const GET = withAuth(requireService("analytics", async (req: NextRequest,
        LEFT JOIN classes c ON u.class_id = c.id
        LEFT JOIN students_classes sc ON u.id = sc.student_id${session ? " AND sc.academic_session = ?" : ""}${term ? " AND sc.term = ?" : ""}
        WHERE u.school_id = ? AND u.role = 'student'
-       ORDER BY u.name",
+       ORDER BY u.name`,
       [...(session ? [session] : []), ...(term ? [term] : []), sid]
     );
 
@@ -436,7 +436,7 @@ export const GET = withAuth(requireService("analytics", async (req: NextRequest,
         "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         "Content-Disposition": `attachment; filename="${filename}"`,
       },
-    });
+    }) as unknown as NextResponse;
   } catch (err) {
     return serverError(err);
   }

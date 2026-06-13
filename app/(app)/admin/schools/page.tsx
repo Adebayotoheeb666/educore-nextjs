@@ -353,6 +353,7 @@ export default function AdminSchoolsPage() {
   const [statusFilter, setStatusFilter] = useState("");
   const [page, setPage] = useState(1);
   const [managing, setManaging] = useState<School | null>(null);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
 
   useEffect(() => {
     authenticatedFetch("/api/admin/schools")
@@ -378,6 +379,30 @@ export default function AdminSchoolsPage() {
     setSchools((prev) => prev.map((s) => s.id === updated.id ? { ...s, ...updated } : s));
     setManaging(null);
   }
+
+  const handleDelete = async (school: School) => {
+    if (!window.confirm(`Are you sure you want to permanently delete the school "${school.name}"? This action cannot be undone and will delete all users and data associated with it.`)) {
+      return;
+    }
+
+    setDeletingId(school.id);
+    try {
+      const res = await authenticatedFetch(`/api/admin/schools/${school.id}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+      if (res.ok) {
+        toast.success(`School "${school.name}" deleted successfully.`);
+        setSchools((prev) => prev.filter((s) => s.id !== school.id));
+      } else {
+        toast.error(data.message ?? "Failed to delete school");
+      }
+    } catch {
+      toast.error("Network error when deleting school");
+    } finally {
+      setDeletingId(null);
+    }
+  };
 
   // Summary counts
   const activeCnt = schools.filter((s) => s.subscription_status === "active").length;
@@ -466,16 +491,30 @@ export default function AdminSchoolsPage() {
                   <td>{s.student_count ?? "—"}</td>
                   <td>{new Date(s.created_at).toLocaleDateString("en-NG")}</td>
                   <td>
-                    <button
-                      onClick={() => setManaging(s)}
-                      style={{
-                        padding: "0.4rem 1rem", borderRadius: 6, border: "1px solid #6A5ACD",
-                        background: "transparent", color: "#6A5ACD", cursor: "pointer",
-                        fontWeight: 700, fontSize: "1.2rem",
-                      }}
-                    >
-                      Manage
-                    </button>
+                    <div style={{ display: "flex", gap: "0.5rem" }}>
+                      <button
+                        onClick={() => setManaging(s)}
+                        style={{
+                          padding: "0.4rem 1rem", borderRadius: 6, border: "1px solid #6A5ACD",
+                          background: "transparent", color: "#6A5ACD", cursor: "pointer",
+                          fontWeight: 700, fontSize: "1.2rem",
+                        }}
+                      >
+                        Manage
+                      </button>
+                      <button
+                        onClick={() => handleDelete(s)}
+                        disabled={deletingId === s.id}
+                        style={{
+                          padding: "0.4rem 1rem", borderRadius: 6, border: "1px solid #dc2626",
+                          background: "transparent", color: "#dc2626", cursor: "pointer",
+                          fontWeight: 700, fontSize: "1.2rem",
+                          opacity: deletingId === s.id ? 0.5 : 1,
+                        }}
+                      >
+                        {deletingId === s.id ? "Deleting..." : "Delete"}
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}

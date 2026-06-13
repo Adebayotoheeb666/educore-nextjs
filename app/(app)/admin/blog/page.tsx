@@ -249,7 +249,7 @@ export default function AdminBlogPage() {
                       {p.status ?? "draft"}
                     </span>
                   </td>
-                  <td>{new Date(p.createdAt || p.created_at || undefined).toLocaleDateString("en-NG")}</td>
+                  <td>{p.createdAt ? new Date(p.createdAt).toLocaleDateString("en-NG") : "—"}</td>
                   <td>
                     <div className="row-actions">
                       <Link href={`/blog/${p.id}`} className="action-btn">

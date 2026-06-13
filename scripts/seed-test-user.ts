@@ -11,7 +11,7 @@ if (!url) {
 }
 
 async function seedTestUser() {
-  const client = createClient({ url, authToken });
+  const client = createClient({ url: url!, authToken });
   
   try {
     const hashedPassword = await bcrypt.hash("Demo@1234", 10);

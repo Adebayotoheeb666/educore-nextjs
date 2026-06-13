@@ -2,8 +2,10 @@ import { createClient, type Client } from "@libsql/client";
 import { readFileSync, readdirSync } from "fs";
 import { join } from "path";
 
-let _client: Client | null = null;
-let _initialized: Promise<void> | null = null;
+const globalForDb = globalThis as unknown as {
+  _client: Client | undefined;
+  _initialized: Promise<void> | undefined;
+};
 
 function isTransactionControlStatement(sql: string): boolean {
   const normalized = sql.trim().toUpperCase();
@@ -26,7 +28,7 @@ function makeTimeoutFetch(timeoutMs = 30_000) {
 }
 
 export function getDb(): Client {
-  if (_client) return _client;
+  if (globalForDb._client) return globalForDb._client;
 
   const url = process.env.TURSO_DATABASE_URL;
   const authToken = process.env.TURSO_AUTH_TOKEN;
@@ -39,17 +41,17 @@ export function getDb(): Client {
   // The custom timeout fetch is only a fallback when the library cannot create
   // a client without the extra fetch option.
   try {
-    _client = createClient({ url, authToken });
+    globalForDb._client = createClient({ url, authToken });
   } catch (err) {
     try {
-      _client = createClient({ url, authToken, fetch: makeTimeoutFetch(30_000) } as any);
+      globalForDb._client = createClient({ url, authToken, fetch: makeTimeoutFetch(30_000) } as any);
     } catch (err2) {
       console.error("Failed to create Turso client:", err2);
       throw err2;
     }
   }
 
-  return _client;
+  return globalForDb._client;
 }
 
 async function tableExists(db: Client, tableName: string): Promise<boolean> {
@@ -112,100 +114,105 @@ async function recoverUsersOldState(db: Client, schemaSql: string): Promise<bool
 }
 
 async function ensureSchema(): Promise<void> {
-  if (_initialized) return _initialized;
+  if (globalForDb._initialized) return globalForDb._initialized;
 
-  _initialized = (async () => {
-    const db = getDb();
-    const schemaPath = join(process.cwd(), "lib/db/schema.sql");
-    const schemaSql = readFileSync(schemaPath, "utf-8");
+  globalForDb._initialized = (async () => {
+    try {
+      const db = getDb();
+      const schemaPath = join(process.cwd(), "lib/db/schema.sql");
+      const schemaSql = readFileSync(schemaPath, "utf-8");
 
-    const cleanSql = schemaSql
-      .split("\n")
-      .map((line) => (line.trim().startsWith("--") ? "" : line))
-      .join("\n");
-
-    const statements = cleanSql
-      .split(";")
-      .map((s) => s.trim())
-      .filter((s) => s.length > 0 && !isTransactionControlStatement(s));
-
-    for (const sql of statements) {
-      try {
-        await db.execute({ sql: sql + ";", args: [] });
-      } catch (err) {
-        const message = (err as Error).message;
-        if (message.includes("already exists") || message.includes("duplicate")) {
-          continue;
-        }
-        throw err;
-      }
-    }
-
-    await ensureMigrationTable(db);
-    const recoveredUsersMigration = await recoverUsersOldState(db, schemaSql);
-    const migrationsDir = join(process.cwd(), "migrations");
-    const migrationFiles = readdirSync(migrationsDir)
-      .filter((file) => file.endsWith(".sql") && file.match(/^\d+_/))
-      .sort();
-
-    for (const file of migrationFiles) {
-      if (recoveredUsersMigration && file === "0010_add_librarian_role.sql") {
-        await markMigrationApplied(db, file);
-        continue;
-      }
-
-      if (await isMigrationApplied(db, file)) {
-        continue;
-      }
-
-      const filePath = join(migrationsDir, file);
-      const migrationSql = readFileSync(filePath, "utf-8");
-      const cleanMigration = migrationSql
+      const cleanSql = schemaSql
         .split("\n")
         .map((line) => (line.trim().startsWith("--") ? "" : line))
         .join("\n");
 
-      const migrationStatements = cleanMigration
+      const statements = cleanSql
         .split(";")
         .map((s) => s.trim())
-        .filter((s) => s.length > 0 && !isTransactionControlStatement(s) && !s.toUpperCase().startsWith("PRAGMA"));
+        .filter((s) => s.length > 0 && !isTransactionControlStatement(s));
 
-      for (const sql of migrationStatements) {
+      for (const sql of statements) {
         try {
           await db.execute({ sql: sql + ";", args: [] });
         } catch (err) {
           const message = (err as Error).message;
-          if (message.includes("already exists") || message.includes("duplicate") || message.includes("no such table")) {
+          if (message.includes("already exists") || message.includes("duplicate")) {
             continue;
           }
           throw err;
         }
       }
 
-      await markMigrationApplied(db, file);
-    }
+      await ensureMigrationTable(db);
+      const recoveredUsersMigration = await recoverUsersOldState(db, schemaSql);
+      const migrationsDir = join(process.cwd(), "migrations");
+      const migrationFiles = readdirSync(migrationsDir)
+        .filter((file) => file.endsWith(".sql") && file.match(/^\d+_/))
+        .sort();
 
-    const blogPostColumns = await db.execute({
-      sql: "SELECT name FROM pragma_table_info('blog_posts')",
-      args: []
-    });
+      for (const file of migrationFiles) {
+        if (recoveredUsersMigration && file === "0010_add_librarian_role.sql") {
+          await markMigrationApplied(db, file);
+          continue;
+        }
 
-    const existingColumns = (blogPostColumns.rows as any[] | []).map((row) => row.name);
+        if (await isMigrationApplied(db, file)) {
+          continue;
+        }
 
-    if (!existingColumns.includes("category")) {
-      await db.execute({ sql: "ALTER TABLE blog_posts ADD COLUMN category TEXT", args: [] });
-    }
-    if (!existingColumns.includes("read_time")) {
-      await db.execute({ sql: "ALTER TABLE blog_posts ADD COLUMN read_time TEXT", args: [] });
-    }
-    const relationshipColumns = await db.execute({ sql: "PRAGMA table_info('user_relationships')", args: [] });
-    const userRelationshipCols = (relationshipColumns.rows as any[] | []).map((row) => row.name);
-    if (!userRelationshipCols.includes("relationship")) {
-      await db.execute({ sql: "ALTER TABLE user_relationships ADD COLUMN relationship TEXT", args: [] });
+        const filePath = join(migrationsDir, file);
+        const migrationSql = readFileSync(filePath, "utf-8");
+        const cleanMigration = migrationSql
+          .split("\n")
+          .map((line) => (line.trim().startsWith("--") ? "" : line))
+          .join("\n");
+
+        const migrationStatements = cleanMigration
+          .split(";")
+          .map((s) => s.trim())
+          .filter((s) => s.length > 0 && !isTransactionControlStatement(s) && !s.toUpperCase().startsWith("PRAGMA"));
+
+        for (const sql of migrationStatements) {
+          try {
+            await db.execute({ sql: sql + ";", args: [] });
+          } catch (err) {
+            const message = (err as Error).message;
+            if (message.includes("already exists") || message.includes("duplicate") || message.includes("no such table")) {
+              continue;
+            }
+            throw err;
+          }
+        }
+
+        await markMigrationApplied(db, file);
+      }
+
+      const blogPostColumns = await db.execute({
+        sql: "SELECT name FROM pragma_table_info('blog_posts')",
+        args: []
+      });
+
+      const existingColumns = (blogPostColumns.rows as any[] | []).map((row) => row.name);
+
+      if (!existingColumns.includes("category")) {
+        await db.execute({ sql: "ALTER TABLE blog_posts ADD COLUMN category TEXT", args: [] });
+      }
+      if (!existingColumns.includes("read_time")) {
+        await db.execute({ sql: "ALTER TABLE blog_posts ADD COLUMN read_time TEXT", args: [] });
+      }
+      const relationshipColumns = await db.execute({ sql: "PRAGMA table_info('user_relationships')", args: [] });
+      const userRelationshipCols = (relationshipColumns.rows as any[] | []).map((row) => row.name);
+      if (!userRelationshipCols.includes("relationship")) {
+        await db.execute({ sql: "ALTER TABLE user_relationships ADD COLUMN relationship TEXT", args: [] });
+      }
+    } catch (err) {
+      globalForDb._initialized = undefined;
+      throw err;
     }
   })();
 
-  return _initialized;
+  return globalForDb._initialized;
 }
 
 // Convenience query helpers
