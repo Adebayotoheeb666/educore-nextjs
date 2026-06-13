@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 import { authenticatedFetch } from "@/lib/utils/fetch";
 import "../../shared.css";
@@ -13,6 +13,7 @@ interface Class {
 
 export default function AddSubjectPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [submitting, setSubmitting] = useState(false);
   const [classes, setClasses] = useState<Class[]>([]);
   const [form, setForm] = useState({
@@ -26,6 +27,13 @@ export default function AddSubjectPage() {
   useEffect(() => {
     fetchClasses();
   }, []);
+
+  useEffect(() => {
+    const classIdFromQuery = searchParams?.get("classId") || "";
+    if (classIdFromQuery) {
+      setForm((prev) => ({ ...prev, classId: classIdFromQuery, isCompulsory: true }));
+    }
+  }, [searchParams]);
 
   const fetchClasses = async () => {
     try {

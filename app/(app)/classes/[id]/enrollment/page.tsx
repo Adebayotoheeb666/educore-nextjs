@@ -33,14 +33,34 @@ export default function ClassEnrollmentPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [session, setSession] = useState("");
+  const [sessionOptions, setSessionOptions] = useState<string[]>([]);
   const [selectedStudents, setSelectedStudents] = useState<string[]>([]);
   const [showBulkEnroll, setShowBulkEnroll] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectAll, setSelectAll] = useState(false);
 
   useEffect(() => {
+    fetchSchoolSession();
+  }, []);
+
+  useEffect(() => {
     fetchEnrollmentData();
   }, [classId, session]);
+
+  const fetchSchoolSession = async () => {
+    try {
+      const res = await authenticatedFetch("/api/school");
+      if (!res.ok) return;
+      const data = await res.json();
+      const academicSession = data.data?.academic_session ?? data.academic_session ?? "";
+      if (academicSession) {
+        setSessionOptions([academicSession]);
+        setSession(academicSession);
+      }
+    } catch {
+      // ignore
+    }
+  };
 
   const fetchEnrollmentData = async () => {
     try {
@@ -51,7 +71,7 @@ export default function ClassEnrollmentPage() {
       const [statsRes, studentsRes, allRes] = await Promise.all([
         authenticatedFetch(`/api/classes/${classId}/enroll-students${sessionParam}`),
         authenticatedFetch(`/api/classes/${classId}/students${sessionParam}`),
-        authenticatedFetch(`/api/students?classId=${classId}`),
+        authenticatedFetch(`/api/students`),
       ]);
 
       // Handle stats
@@ -197,13 +217,17 @@ export default function ClassEnrollmentPage() {
 
       <div style={{ marginBottom: "2rem" }}>
         <label style={{ fontWeight: 700, fontSize: "1.1rem", marginBottom: "0.5rem", display: "block" }}>Academic Session</label>
-        <input
-          type="text"
-          placeholder="e.g., 2024/2025"
+        <select
           value={session}
           onChange={(e) => setSession(e.target.value)}
           className="enrollment-input"
-        />
+          disabled={sessionOptions.length === 0}
+        >
+          <option value="">Select academic session</option>
+          {sessionOptions.map((option) => (
+            <option key={option} value={option}>{option}</option>
+          ))}
+        </select>
       </div>
 
       {stats && (

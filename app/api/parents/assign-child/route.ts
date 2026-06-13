@@ -8,7 +8,7 @@ export const POST = withAuth(
   async (req: NextRequest, { school }: AuthContext): Promise<NextResponse> => {
     try {
       if (!school) return notFound("School not found");
-      const { parentId, studentId } = await req.json();
+      const { parentId, studentId, relationship } = await req.json();
       if (!parentId || !studentId) return badRequest("parentId and studentId are required");
 
       const [parent, student] = await Promise.all([
@@ -19,8 +19,8 @@ export const POST = withAuth(
 
       const id = generateId();
       await execute(
-        "INSERT OR IGNORE INTO user_relationships (id, parent_id, child_id, created_at) VALUES (?, ?, ?, datetime('now'))",
-        [id, parentId, studentId]
+        "INSERT OR IGNORE INTO user_relationships (id, parent_id, child_id, relationship, created_at) VALUES (?, ?, ?, ?, datetime('now'))",
+        [id, parentId, studentId, relationship || null]
       );
       return ok({ message: "Child assigned to parent" });
     } catch (err) {

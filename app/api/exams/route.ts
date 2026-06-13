@@ -11,7 +11,7 @@ export const GET = withAuth(requireService("exams", async (_req: NextRequest, { 
   try {
     if (!school) return badRequest("School context required");
     const exams = await query(
-      `SELECT e.*, s.name as subject_name, s.code as subject_code, c.name as class_name, c.section as class_section
+      `SELECT e.*, e.type as exam_type, s.name as subject_name, s.code as subject_code, c.name as class_name, c.section as class_section
        FROM exams e
        LEFT JOIN subjects s ON e.subject_id = s.id
        LEFT JOIN classes c ON e.class_id = c.id
@@ -45,5 +45,5 @@ export const POST = withAuth(
       return serverError(err);
     }
   }),
-  ["subject_teacher", "class_teacher", "vp_academics"]
+  ["principal", "vp_admin", "vp_academics", "school_owner", "admin_staff", "subject_teacher", "class_teacher"]
 );

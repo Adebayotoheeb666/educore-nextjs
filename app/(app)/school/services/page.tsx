@@ -46,6 +46,10 @@ function getServiceName(slug: string): string {
   return SERVICE_CATALOG.find((s) => s.slug === slug)?.name ?? slug;
 }
 
+function isServiceActive(svc: ServiceStatus) {
+  return Boolean(svc.is_compulsory) || svc.subscription_status === "active";
+}
+
 export default function SchoolServicesPage() {
   const [services, setServices]     = useState<ServiceStatus[]>([]);
   const [loading, setLoading]       = useState(true);
@@ -55,7 +59,16 @@ export default function SchoolServicesPage() {
     try {
       const res  = await authenticatedFetch("/api/services");
       const data = await res.json();
-      setServices(data.data ?? []);
+      const apiServices = data.data ?? [];
+      const visibleCatalog = OPTIONAL_SERVICES.filter((svc) => svc.slug !== "admin");
+      const mergedServices = visibleCatalog.map((catalogSvc) => {
+        const found = apiServices.find((svc: any) => svc.slug === catalogSvc.slug);
+        return {
+          ...catalogSvc,
+          ...found,
+        } as ServiceStatus;
+      });
+      setServices(mergedServices);
     } catch {
       toast.error("Failed to load services");
     } finally {
@@ -67,7 +80,7 @@ export default function SchoolServicesPage() {
 
   // slugs currently active for this school
   const activeSlugs = new Set(
-    services.filter((s) => s.is_compulsory || s.subscription_status === "active").map((s) => s.slug)
+    services.filter(isServiceActive).map((s) => s.slug)
   );
 
   async function handleToggle(svc: ServiceStatus) {
@@ -209,7 +222,7 @@ export default function SchoolServicesPage() {
           </h2>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(290px, 1fr))", gap: "1.4rem" }}>
             {svcs.map((svc) => {
-              const isActive   = svc.subscription_status === "active";
+              const isActive   = isServiceActive(svc);
               const busy       = actionSlug === svc.slug;
               const catalogSvc = OPTIONAL_SERVICES.find((s) => s.slug === svc.slug);
               const deps       = catalogSvc?.dependencies ?? [];
@@ -223,9 +236,9 @@ export default function SchoolServicesPage() {
 
               // Services that depend on THIS service (active ones)
               const activeDependent = services.filter((s) => {
-                if (!s.subscription_status === true) return false;
+                if (!isServiceActive(s)) return false;
                 const cat2 = OPTIONAL_SERVICES.find((x) => x.slug === s.slug);
-                return cat2?.dependencies.includes(svc.slug) && s.subscription_status === "active";
+                return cat2?.dependencies.includes(svc.slug);
               });
 
               return (
@@ -245,15 +258,20 @@ export default function SchoolServicesPage() {
                 >
                   {/* Title row */}
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "0.5rem" }}>
-                    <p style={{ fontWeight: 700, margin: 0, color: isActive ? "#6A5ACD" : "#1e293b", fontSize: "1.4rem", flex: 1 }}>
+                    <p style={{ fontWeight: 700, margin: 0, color: isActive ? "#6A5ACD" : "#1e293b", fontSize: "1.4rem", flex: 1, minWidth: 0 }}>
                       {svc.name}
                     </p>
                     <span style={{
+                      display:      "inline-flex",
+                      alignItems:   "center",
                       padding:      "0.25rem 0.8rem",
                       borderRadius: 20,
                       fontSize:     "1.05rem",
                       fontWeight:   700,
                       whiteSpace:   "nowrap",
+                      overflow:     "hidden",
+                      textOverflow: "ellipsis",
+                      maxWidth:     "7.5rem",
                       background:   isActive ? "#6A5ACD" : "#f1f5f9",
                       color:        isActive ? "#fff" : "#64748b",
                     }}>
@@ -270,7 +288,7 @@ export default function SchoolServicesPage() {
                   {deps.length > 0 && (
                     <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
                       {deps.map((dep) => {
-                        const depActive = activeSlugs.has(dep);
+                        const depActive = SERVICE_CATALOG.some((item) => item.slug === dep && item.is_compulsory) || activeSlugs.has(dep);
                         return (
                           <span key={dep} style={{
                             padding:      "0.2rem 0.7rem",

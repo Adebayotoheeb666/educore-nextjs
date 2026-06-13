@@ -7,6 +7,16 @@ import { generateId } from "@/lib/utils/id";
 
 export const dynamic = "force-dynamic";
 
+const FEE_MANAGEMENT_ROLES = [
+  "principal",
+  "bursar",
+  "school_owner",
+  "vp_admin",
+  "vp_academics",
+  "admin_staff",
+  "super_admin",
+];
+
 export const GET = withAuth(requireService("fees", async (_req: NextRequest, { school }: AuthContext): Promise<NextResponse> => {
   try {
     if (!school) return badRequest("School context required");
@@ -37,10 +47,10 @@ export const POST = withAuth(
          term || school.current_term, session || school.academic_session, dueDate || null]
       );
 
-      return created({ id, name: title, amount: totalAmount });
+      return created({ id, title, total_amount: totalAmount, name: title, amount: totalAmount });
     } catch (err) {
       return serverError(err);
     }
   }),
-  ["principal", "bursar"]
+  FEE_MANAGEMENT_ROLES
 );

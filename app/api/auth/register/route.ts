@@ -16,7 +16,7 @@ export const POST = withRateLimit(
   { prefix: "register", limit: 5, windowSecs: 3600 },
   async function POST(req: NextRequest): Promise<NextResponse> {
   try {
-    const body = await req.json();
+    const body = await req.json().catch(() => null);
     const {
       schoolName,
       schoolSubDomain,
@@ -28,7 +28,7 @@ export const POST = withRateLimit(
       phone,
       phoneNumber,
       selectedServices = [], // optional service slugs chosen at signup
-    } = body;
+    } = body ?? {};
 
     const finalName = name || `${firstName || ""} ${lastName || ""}`.trim();
     const finalPhone = phone || phoneNumber;

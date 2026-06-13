@@ -6,7 +6,16 @@ import { notFound, ok, serverError } from "@/lib/utils/response";
 
 export const dynamic = "force-dynamic";
 
-const TEACHER_ROLES = ["subject_teacher", "class_teacher", "vp_academics", "principal"];
+const LESSON_PLANNING_ROLES = [
+  "subject_teacher",
+  "class_teacher",
+  "vp_academics",
+  "principal",
+  "vp_admin",
+  "admin_staff",
+  "school_owner",
+  "super_admin",
+];
 
 export const GET = withAuth(requireService("lesson-plans", async (_req: NextRequest, { school }: AuthContext, params): Promise<NextResponse> => {
   try {
@@ -59,7 +68,7 @@ export const PATCH = withAuth(
       return serverError(err);
     }
   }),
-  TEACHER_ROLES
+  LESSON_PLANNING_ROLES
 );
 
 export const DELETE = withAuth(

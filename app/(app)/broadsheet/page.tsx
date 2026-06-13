@@ -14,18 +14,34 @@ interface Result {
   term: string;
 }
 
+const TERM_OPTIONS = [
+  { label: "1st Term", value: "first" },
+  { label: "2nd Term", value: "second" },
+  { label: "3rd Term", value: "third" },
+];
+
 export default function BroadsheetPage() {
 
   const [results, setResults] = useState<Result[]>([]);
   const [classes, setClasses] = useState<{ id: string; name: string; section?: string }[]>([]);
   const [classId, setClassId] = useState("");
   const [term, setTerm] = useState("");
+  const [session, setSession] = useState("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    authenticatedFetch("/api/classes")
-      .then((r) => r.json())
-      .then((d) => setClasses(Array.isArray(d.data) ? d.data : []))
+    Promise.all([
+      authenticatedFetch("/api/classes").then((r) => r.json()),
+      authenticatedFetch("/api/school").then((r) => r.json()),
+    ])
+      .then(([cd, sd]) => {
+        const classList = Array.isArray(cd.data) ? cd.data : [];
+        setClasses(classList);
+        if (classList.length === 1) setClassId(classList[0].id);
+
+        const schoolData = sd.data ?? {};
+        if (schoolData.academic_session) setSession(schoolData.academic_session);
+      })
       .catch(() => {});
   }, []);
 
@@ -34,6 +50,7 @@ export default function BroadsheetPage() {
     setLoading(true);
     const params = new URLSearchParams({ classId });
     if (term) params.set("term", term);
+    if (session) params.set("session", session);
     authenticatedFetch(`/api/results?${params}`)
       .then((r) => r.json())
       .then((d) => setResults(Array.isArray(d.data) ? d.data : []))
@@ -54,7 +71,9 @@ export default function BroadsheetPage() {
       gridMap.get(r.student_name)!.set(r.subject_name, { score: r.score, grade: r.grade });
     });
 
-    const studentList = Array.from(studentMap.keys()).sort();
+    const studentList = Array.from(studentMap.entries())
+      .map(([name, admission_no]) => ({ name, admission_no }))
+      .sort((a, b) => a.name.localeCompare(b.name));
     const subjectList = Array.from(subjectSet).sort();
     return { students: studentList, subjects: subjectList, grid: gridMap };
   }, [results]);
@@ -85,9 +104,9 @@ export default function BroadsheetPage() {
         </select>
         <select value={term} onChange={(e) => setTerm(e.target.value)}>
           <option value="">All terms</option>
-          <option value="1st Term">1st Term</option>
-          <option value="2nd Term">2nd Term</option>
-          <option value="3rd Term">3rd Term</option>
+          {TERM_OPTIONS.map((option) => (
+            <option key={option.value} value={option.value}>{option.label}</option>
+          ))}
         </select>
         <button className="btn-primary" onClick={loadResults} disabled={loading || !classId}>
           {loading ? "Loading…" : "Generate Broadsheet"}
@@ -111,14 +130,14 @@ export default function BroadsheetPage() {
             </thead>
             <tbody>
               {students.map((student, i) => {
-                const row = grid.get(student);
+                const row = grid.get(student.name);
                 const scores = subjects.map((s) => row?.get(s)?.score).filter((v): v is number => v != null);
                 const avg = scores.length > 0 ? (scores.reduce((a, b) => a + b, 0) / scores.length).toFixed(1) : "—";
                 return (
-                  <tr key={student} style={{ background: i % 2 === 0 ? "white" : "#fafafa", borderBottom: "1px solid #f1f5f9" }}>
-                    <td style={{ padding: "1.2rem 2rem", fontWeight: 700 }}>{student}</td>
+                  <tr key={student.name} style={{ background: i % 2 === 0 ? "white" : "#fafafa", borderBottom: "1px solid #f1f5f9" }}>
+                    <td style={{ padding: "1.2rem 2rem", fontWeight: 700 }}>{student.name}</td>
                     <td style={{ padding: "1.2rem", textAlign: "center", color: "#94a3b8", fontFamily: "monospace", fontSize: "1.1rem" }}>
-                      {grid.get(student) ? "" : "—"}
+                      {student.admission_no || "—"}
                     </td>
                     {subjects.map((subj) => {
                       const cell = row?.get(subj);

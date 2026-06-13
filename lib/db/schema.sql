@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS users (
   password TEXT NOT NULL,
   role TEXT NOT NULL CHECK(role IN (
     'principal','vp_admin','vp_academics','admin_staff',
-    'class_teacher','subject_teacher','bursar',
+    'class_teacher','subject_teacher','bursar','librarian',
     'school_owner','parent','student','super_admin'
   )),
   school_id TEXT REFERENCES schools(id) ON DELETE SET NULL,
@@ -84,6 +84,7 @@ CREATE TABLE IF NOT EXISTS user_relationships (
   id TEXT PRIMARY KEY,
   parent_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   child_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  relationship TEXT,
   created_at TEXT NOT NULL DEFAULT (datetime('now')),
   UNIQUE(parent_id, child_id)
 );
@@ -219,10 +220,51 @@ CREATE TABLE IF NOT EXISTS exams (
   duration_minutes INTEGER,
   total_marks INTEGER,
   instructions TEXT,
+  status TEXT NOT NULL DEFAULT 'draft' CHECK(status IN ('draft', 'published', 'completed')),
   created_by TEXT REFERENCES users(id) ON DELETE SET NULL,
   created_at TEXT NOT NULL DEFAULT (datetime('now')),
   updated_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
+
+-- ============================================================
+-- ACADEMIC: Question Bank
+-- ============================================================
+CREATE TABLE IF NOT EXISTS questions (
+  id TEXT PRIMARY KEY,
+  school_id TEXT NOT NULL REFERENCES schools(id) ON DELETE CASCADE,
+  subject_id TEXT NOT NULL REFERENCES subjects(id) ON DELETE CASCADE,
+  class_id TEXT REFERENCES classes(id) ON DELETE SET NULL,
+  type TEXT NOT NULL CHECK(type IN ('multiple_choice', 'short_answer', 'essay', 'true_false')),
+  difficulty TEXT NOT NULL CHECK(difficulty IN ('easy', 'medium', 'hard')),
+  question_text TEXT NOT NULL,
+  instructions TEXT,
+  -- For multiple choice: JSON array of options
+  options TEXT,
+  -- Correct answer(s)
+  correct_answer TEXT,
+  explanation TEXT,
+  marks INTEGER DEFAULT 1,
+  bloom_level TEXT CHECK(bloom_level IN ('knowledge', 'comprehension', 'application', 'analysis', 'synthesis', 'evaluation')),
+  tags TEXT,
+  created_by TEXT REFERENCES users(id) ON DELETE SET NULL,
+  created_at TEXT NOT NULL DEFAULT (datetime('now')),
+  updated_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+-- Track which questions are used in which exams
+CREATE TABLE IF NOT EXISTS exam_questions (
+  id TEXT PRIMARY KEY,
+  exam_id TEXT NOT NULL REFERENCES exams(id) ON DELETE CASCADE,
+  question_id TEXT NOT NULL REFERENCES questions(id) ON DELETE CASCADE,
+  sequence INTEGER,
+  created_at TEXT NOT NULL DEFAULT (datetime('now')),
+  UNIQUE(exam_id, question_id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_questions_school_id ON questions(school_id);
+CREATE INDEX IF NOT EXISTS idx_questions_subject_id ON questions(subject_id);
+CREATE INDEX IF NOT EXISTS idx_questions_class_id ON questions(class_id);
+CREATE INDEX IF NOT EXISTS idx_exam_questions_exam_id ON exam_questions(exam_id);
 
 -- ============================================================
 -- ACADEMIC: Student-Subject Enrollment
@@ -417,6 +459,8 @@ CREATE TABLE IF NOT EXISTS blog_posts (
   status TEXT NOT NULL DEFAULT 'draft' CHECK(status IN ('draft', 'published', 'archived')),
   published_at TEXT,
   tags TEXT,
+  category TEXT,
+  read_time TEXT,
   created_at TEXT NOT NULL DEFAULT (datetime('now')),
   updated_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
@@ -481,7 +525,7 @@ CREATE TABLE IF NOT EXISTS behavior_logs (
   school_id TEXT NOT NULL REFERENCES schools(id) ON DELETE CASCADE,
   student_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   recorded_by TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-  type TEXT NOT NULL CHECK(type IN ('positive', 'negative', 'neutral')),
+  type TEXT NOT NULL CHECK(type IN ('positive', 'negative', 'neutral', 'warning', 'commendation')),
   category TEXT,
   description TEXT NOT NULL,
   action_taken TEXT,

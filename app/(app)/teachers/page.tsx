@@ -76,6 +76,9 @@ export default function TeachersPage() {
           <p>Manage staff profiles, subject assignments, and workload.</p>
         </div>
         <div className="header-actions">
+          <Link href="/teachers/bulk-import" className="btn-outline">
+            <span>📤</span> Bulk Import
+          </Link>
           <Link href="/teachers/add" className="btn-primary">
             <span>+</span> Add Teacher
           </Link>

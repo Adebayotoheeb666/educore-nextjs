@@ -12,14 +12,16 @@ export const GET = withAuth(requireService("results", async (req: NextRequest, {
     const { searchParams } = new URL(req.url);
     const classId = searchParams.get("classId");
     const term = searchParams.get("term");
+    const session = searchParams.get("session");
 
     const args: (string | number | boolean | null)[] = [school.id];
     let filters = "";
     if (classId) { filters += " AND r.class_id = ?"; args.push(classId); }
     if (term)    { filters += " AND r.term = ?"; args.push(term); }
+    if (session) { filters += " AND r.academic_session = ?"; args.push(session); }
 
     const results = await query(
-      `SELECT r.*,
+      `SELECT r.*, r.total_score AS overall_percentage,
               u.name as student_name, u.first_name, u.last_name, u.admission_no,
               c.name as class_name, c.section as class_section,
               s.name as subject_name

@@ -8,19 +8,26 @@ import "../shared.css";
 interface Result {
   id: string;
   student_name?: string;
+  class_id?: string;
   class_name?: string;
   class_section?: string;
   term?: string;
   session?: string;
   overall_percentage?: number;
-  position?: number;
+  total_score?: number;
   grade?: string;
+  remark?: string;
+  position?: number;
   status?: string;
 }
 
 interface ClassItem { id: string; name: string; section?: string; }
 
-const TERMS = ["First Term", "Second Term", "Third Term"];
+const TERM_OPTIONS = [
+  { label: "1st Term", value: "first" },
+  { label: "2nd Term", value: "second" },
+  { label: "3rd Term", value: "third" },
+];
 
 export default function ResultsPage() {
 
@@ -30,39 +37,51 @@ export default function ResultsPage() {
   const [computing, setComputing] = useState(false);
   const [releasing, setReleasing] = useState(false);
   const [selectedClass, setSelectedClass] = useState("");
-  const [term, setTerm] = useState("First Term");
-  const [session, setSession] = useState("2024/2025");
+  const [term, setTerm] = useState("");
+  const [session, setSession] = useState("");
   const [search, setSearch] = useState("");
 
-  useEffect(() => {
+  const loadData = async () => {
     setLoading(true);
-    Promise.all([
-      authenticatedFetch("/api/results").then((r) => r.json()),
-      authenticatedFetch("/api/classes").then((r) => r.json()),
-    ])
-      .then(([rd, cd]) => {
-        setResults(Array.isArray(rd.data) ? rd.data : rd.data?.results ?? []);
-        const list: ClassItem[] = Array.isArray(cd.data) ? cd.data : [];
-        setClasses(list);
-        if (list[0]) setSelectedClass(list[0].id);
-      })
-      .catch(() => toast.error("Failed to load results"))
-      .finally(() => setLoading(false));
+    try {
+      const [rd, cd, sd] = await Promise.all([
+        authenticatedFetch("/api/results").then((r) => r.json()),
+        authenticatedFetch("/api/classes").then((r) => r.json()),
+        authenticatedFetch("/api/school").then((r) => r.json()),
+      ]);
+
+      setResults(Array.isArray(rd.data) ? rd.data : rd.data?.results ?? []);
+      const list: ClassItem[] = Array.isArray(cd.data) ? cd.data : [];
+      setClasses(list);
+      if (list.length === 1) setSelectedClass(list[0].id);
+
+      const schoolData = sd.data ?? {};
+      setTerm(schoolData.current_term ?? "first");
+      setSession(schoolData.academic_session ?? "2024/2025");
+    } catch {
+      toast.error("Failed to load results");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadData();
   }, []);
 
   const filtered = useMemo(() => {
     const q = search.toLowerCase();
     return results.filter((r) => {
-      const matchClass = !selectedClass || r.class_name === classes.find((c) => c.id === selectedClass)?.name;
-      const matchTerm = !term || (r.term ?? "").toLowerCase().includes(term.toLowerCase());
+      const matchClass = !selectedClass || r.class_id === selectedClass;
+      const matchTerm = !term || (r.term ?? "").toLowerCase() === term.toLowerCase();
       const matchSearch = !q || (r.student_name ?? "").toLowerCase().includes(q);
       return matchClass && matchTerm && matchSearch;
     });
-  }, [results, selectedClass, term, search, classes]);
+  }, [results, selectedClass, term, search]);
 
   const summary = useMemo(() => {
     if (!filtered.length) return { avg: null, above50: 0, below40: 0 };
-    const scores = filtered.map((r) => Number(r.overall_percentage) || 0);
+    const scores = filtered.map((r) => Number(r.overall_percentage ?? r.total_score) || 0);
     const avg = scores.reduce((a, b) => a + b, 0) / scores.length;
     return {
       avg: avg.toFixed(1),
@@ -73,6 +92,7 @@ export default function ResultsPage() {
 
   const handleCompute = async () => {
     if (!selectedClass) return toast.error("Select a class first");
+    if (!term || !session) return toast.error("Unable to compute: missing term or session");
     setComputing(true);
     try {
       const res = await authenticatedFetch("/api/results/compute", {
@@ -81,7 +101,8 @@ export default function ResultsPage() {
         body: JSON.stringify({ classId: selectedClass, term, session }),
       });
       if (!res.ok) throw new Error();
-      toast.success("Results computed — refresh to see updates");
+      toast.success("Results computed — refreshing data");
+      await loadData();
     } catch {
       toast.error("Failed to compute results");
     } finally {
@@ -115,10 +136,10 @@ export default function ResultsPage() {
           <p>Compute, review, and release academic results by class and term.</p>
         </div>
         <div className="header-actions">
-          <button className="btn-outline" onClick={handleCompute} disabled={computing}>
+          <button className="btn-outline" onClick={handleCompute} disabled={computing || !selectedClass}>
             {computing ? "Computing…" : "⚙️ Compute Results"}
           </button>
-          <button className="btn-primary" onClick={handleRelease} disabled={releasing}>
+          <button className="btn-primary" onClick={handleRelease} disabled={releasing || !selectedClass}>
             {releasing ? "Releasing…" : "📤 Release Results"}
           </button>
         </div>
@@ -135,7 +156,7 @@ export default function ResultsPage() {
           ))}
         </select>
         <select className="filter-select" value={term} onChange={(e) => setTerm(e.target.value)}>
-          {TERMS.map((t) => <option key={t}>{t}</option>)}
+          {TERM_OPTIONS.map((t) => <option key={t.value} value={t.value}>{t.label}</option>)}
         </select>
         <input
           className="filter-select"
@@ -199,10 +220,10 @@ export default function ResultsPage() {
                   <td>
                     <span style={{
                       fontWeight: 800,
-                      color: (r.overall_percentage ?? 0) < 40 ? "#ef4444" :
-                             (r.overall_percentage ?? 0) >= 70 ? "#22c55e" : "#f59e0b",
+                      color: (r.overall_percentage ?? r.total_score ?? 0) < 40 ? "#ef4444" :
+                             (r.overall_percentage ?? r.total_score ?? 0) >= 70 ? "#22c55e" : "#f59e0b",
                     }}>
-                      {r.overall_percentage != null ? `${r.overall_percentage}%` : "—"}
+                      {(r.overall_percentage ?? r.total_score) != null ? `${r.overall_percentage ?? r.total_score}%` : "—"}
                     </span>
                   </td>
                   <td>
@@ -215,9 +236,15 @@ export default function ResultsPage() {
                   </td>
                   <td>{r.position ? `#${r.position}` : "—"}</td>
                   <td>
-                    <span className={`badge ${r.status === "released" ? "badge-green" : "badge-gray"}`}>
-                      {r.status ?? "draft"}
-                    </span>
+                    {(() => {
+                      const status = r.remark === "Released" ? "released" : r.grade ? "computed" : "draft";
+                      const statusClass = status === "released" ? "badge-green" : status === "computed" ? "badge-blue" : "badge-gray";
+                      return (
+                        <span className={`badge ${statusClass}`}>
+                          {status}
+                        </span>
+                      );
+                    })()}
                   </td>
                 </tr>
               ))}

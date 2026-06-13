@@ -6,7 +6,7 @@ import { authenticatedFetch } from "@/lib/utils/fetch";
 import "../../shared.css";
 
 interface Result {
-  subject_name: string; score?: number; grade?: string;
+  subject_name: string; score?: number; total_score?: number; grade?: string;
   term: string; class_name?: string; total_marks?: number;
 }
 
@@ -28,11 +28,11 @@ export default function StudentResultsPage() {
       .finally(() => setLoading(false));
   }, [user?.id, term]);
 
-  const withScores = results.filter((r) => r.score != null);
+  const withScores = results.filter((r) => r.score != null || (r as any).total_score != null);
   const avg = withScores.length > 0
-    ? (withScores.reduce((s, r) => s + (Number(r.score) || 0), 0) / withScores.length).toFixed(1)
+    ? (withScores.reduce((s, r) => s + (Number(r.score ?? (r as any).total_score) || 0), 0) / withScores.length).toFixed(1)
     : "—";
-  const highest = withScores.length > 0 ? Math.max(...withScores.map((r) => Number(r.score) || 0)) : 0;
+  const highest = withScores.length > 0 ? Math.max(...withScores.map((r) => Number(r.score ?? (r as any).total_score) || 0)) : 0;
 
   return (
     <div>
@@ -89,7 +89,7 @@ export default function StudentResultsPage() {
                 return (
                   <tr key={i}>
                     <td style={{ fontWeight: 700 }}>{r.subject_name}</td>
-                    <td style={{ fontWeight: 700, color: "#6A5ACD", fontSize: "1.6rem" }}>{r.score ?? "—"}</td>
+                    <td style={{ fontWeight: 700, color: "#6A5ACD", fontSize: "1.6rem" }}>{r.score ?? (r as any).total_score ?? "—"}</td>
                     <td style={{ color: "#94a3b8" }}>{r.total_marks ?? 100}{pct != null && <span style={{ marginLeft: 6, fontSize: "1.2rem" }}>({pct}%)</span>}</td>
                     <td>
                       <span className={`badge ${(r.grade ?? "").startsWith("A") ? "badge-green" : (r.grade ?? "").startsWith("B") ? "badge-blue" : (r.grade ?? "").startsWith("C") ? "badge-yellow" : "badge-red"}`}>

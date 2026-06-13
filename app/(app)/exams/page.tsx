@@ -30,6 +30,7 @@ export default function ExamsPage() {
   const [exams, setExams] = useState<Exam[]>([]);
   const [loading, setLoading] = useState(true);
   const [publishing, setPublishing] = useState<string | null>(null);
+  const [deleting, setDeleting] = useState<string | null>(null);
 
   const load = () => {
     setLoading(true);
@@ -46,7 +47,7 @@ export default function ExamsPage() {
     setPublishing(id);
     try {
       const res = await authenticatedFetch(`/api/exams/${id}/publish`, {
-        method: "POST",
+        method: "PATCH",
       });
       if (!res.ok) throw new Error();
       setExams((prev) =>
@@ -60,9 +61,26 @@ export default function ExamsPage() {
     }
   };
 
+  const handleDelete = async (id: string) => {
+    if (!confirm("Delete this exam? This cannot be undone.")) return;
+    setDeleting(id);
+    try {
+      const res = await authenticatedFetch(`/api/exams/${id}`, {
+        method: "DELETE",
+      });
+      if (!res.ok) throw new Error();
+      setExams((prev) => prev.filter((e) => e.id !== id));
+      toast.success("Exam deleted");
+    } catch {
+      toast.error("Failed to delete exam");
+    } finally {
+      setDeleting(null);
+    }
+  };
+
   const scheduled = exams.length;
   const published = exams.filter((e) => e.status === "published").length;
-  const draft = exams.filter((e) => e.status === "draft").length;
+  const draft = exams.filter((e) => !e.status || e.status === "draft").length;
 
   return (
     <ServiceGate slug="exams">
@@ -151,8 +169,9 @@ export default function ExamsPage() {
                   </td>
                   <td>
                     <div className="row-actions">
+                      <Link href={`/exams/${ex.id}/edit`} className="link-action">Edit</Link>
                       <Link href={`/exams/${ex.id}/scores`} className="link-action">Scores</Link>
-                      {ex.status === "draft" && (
+                      {ex.status !== "published" && (
                         <button
                           className="btn-outline"
                           style={{ padding: "0.5rem 1.2rem", fontSize: "1.2rem" }}
@@ -162,6 +181,14 @@ export default function ExamsPage() {
                           {publishing === ex.id ? "…" : "Publish"}
                         </button>
                       )}
+                      <button
+                        className="link-action"
+                        style={{ color: "#ef4444" }}
+                        disabled={deleting === ex.id}
+                        onClick={() => handleDelete(ex.id)}
+                      >
+                        {deleting === ex.id ? "…" : "Delete"}
+                      </button>
                     </div>
                   </td>
                 </tr>

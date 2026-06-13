@@ -14,14 +14,18 @@ export const GET = withAuth(async (req: NextRequest, { school }: AuthContext): P
 
     if (teacherId) {
       const subjects = await query(
-        `SELECT s.*, c.name as class_name, GROUP_CONCAT(u.name) as teacher_names, GROUP_CONCAT(u.id) as teacher_ids, COUNT(DISTINCT st.teacher_id) as teacher_count
+        `SELECT s.*, c.name as class_name,
+                GROUP_CONCAT(DISTINCT COALESCE(u.name, u2.name)) as teacher_names,
+                GROUP_CONCAT(DISTINCT COALESCE(u.id, u2.id)) as teacher_ids,
+                COUNT(DISTINCT COALESCE(st.teacher_id, s.teacher_id)) as teacher_count
          FROM subjects s
          LEFT JOIN classes c ON s.class_id = c.id
-         INNER JOIN subject_teachers st ON st.subject_id = s.id AND st.teacher_id = ?
+         LEFT JOIN subject_teachers st ON st.subject_id = s.id
          LEFT JOIN users u ON st.teacher_id = u.id
-         WHERE s.school_id = ?
+         LEFT JOIN users u2 ON s.teacher_id = u2.id
+         WHERE s.school_id = ? AND (st.teacher_id = ? OR s.teacher_id = ?)
          GROUP BY s.id ORDER BY s.name`,
-        [teacherId, school.id]
+        [school.id, teacherId, teacherId]
       );
       return ok(subjects);
     }

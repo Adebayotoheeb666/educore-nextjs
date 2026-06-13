@@ -9,20 +9,22 @@ export const dynamic = "force-dynamic";
 
 const STAFF_ROLES = [
   "class_teacher", "subject_teacher", "vp_admin", "vp_academics",
-  "principal", "bursar", "admin_staff",
+  "principal", "bursar", "admin_staff", "librarian",
 ];
 
 export const GET = withAuth(async (_req: NextRequest, { school }: AuthContext): Promise<NextResponse> => {
   try {
     if (!school) return badRequest("School context required");
     const teachers = await query(
-      `SELECT u.id, u.name, u.first_name, u.last_name, u.email, u.phone, u.avatar, u.role, u.is_active, u.created_at, COUNT(DISTINCT st.subject_id) as subject_count
+      `SELECT u.id, u.name, u.first_name, u.last_name, u.email, u.phone, u.avatar, u.role, u.is_active, u.created_at,
+              COUNT(DISTINCT COALESCE(st.subject_id, s.id)) as subject_count
        FROM users u
        LEFT JOIN subject_teachers st ON st.teacher_id = u.id
+       LEFT JOIN subjects s ON s.teacher_id = u.id AND s.school_id = ?
        WHERE u.school_id = ? AND u.role IN ('class_teacher','subject_teacher')
        GROUP BY u.id
        ORDER BY u.name`,
-      [school.id]
+      [school.id, school.id]
     );
     return ok(teachers);
   } catch (err) {

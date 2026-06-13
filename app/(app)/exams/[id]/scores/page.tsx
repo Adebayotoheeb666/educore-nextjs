@@ -43,7 +43,14 @@ export default function ExamScoresPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const entries = Object.values(scores).filter((s) => s.score !== "");
+    const entries = Object.values(scores)
+      .filter((s) => s.score !== "")
+      .map((s) => ({
+        studentId: s.studentId,
+        score: Number(s.score),
+        remark: s.remark,
+      }));
+
     if (entries.length === 0) return toast.error("Enter at least one score");
     setSaving(true);
     try {

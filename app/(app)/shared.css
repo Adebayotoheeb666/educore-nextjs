@@ -204,7 +204,42 @@
 .mono { font-family: monospace; font-size: 1.3rem; font-weight: 700; color: var(--text-muted); }
 
 /* ─── Table actions ─── */
-.row-actions { display: flex; gap: 1rem; align-items: center; }
+.row-actions { display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; }
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  padding: 0.65rem 1rem;
+  background: var(--bg-card);
+  color: var(--text-main);
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.action-btn:hover {
+  transform: translateY(-1px);
+  background: var(--bg-hover);
+  border-color: var(--border-color);
+}
+.action-btn:disabled,
+.action-btn[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+.action-btn.danger {
+  background: rgba(239, 68, 68, 0.12);
+  color: #b91c1c;
+  border-color: rgba(239, 68, 68, 0.25);
+}
+.action-btn.danger:hover {
+  background: rgba(239, 68, 68, 0.18);
+}
 .link-action { font-size: 1.3rem; font-weight: 700; color: #6A5ACD; text-decoration: none; }
 .btn-danger-sm {
   padding: 0.5rem 1.2rem;
@@ -293,10 +328,61 @@
   border-bottom: 1px solid var(--border-light);
 }
 
+.form-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
 .form-grid-2 {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 2rem;
+}
+
+.form-label,
+.form-group label {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-main);
+  display: inline-block;
+  margin-bottom: 0.65rem;
+}
+
+.form-input,
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  font-size: 1.35rem;
+  color: var(--text-main);
+  background: var(--input-bg);
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.form-input:focus,
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(106, 90, 205, 0.12);
+  background: var(--input-focus-bg);
+}
+
+.form-input::placeholder {
+  color: #94a3b8;
+}
+
+@media (max-width: 768px) {
+  .form-grid-2 {
+    grid-template-columns: 1fr;
+  }
 }
 
 .form-group {
@@ -333,6 +419,82 @@
 .form-group textarea:focus {
   border-color: var(--primary);
   background: var(--input-focus-bg);
+}
+.document-editor {
+  min-height: 220px;
+  padding: 1.4rem 1.6rem;
+  border: 1px solid var(--border-color);
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.05);
+  font-size: 1.42rem;
+  line-height: 1.85;
+  color: var(--text-main);
+  white-space: pre-wrap;
+  word-break: break-word;
+  outline: none;
+  transition: border 0.15s, box-shadow 0.15s;
+}
+.document-editor:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(106, 90, 205, 0.12);
+}
+
+.file-drop-zone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 180px;
+  padding: 1.5rem;
+  border: 2px dashed var(--border-color);
+  border-radius: 18px;
+  background: var(--input-bg);
+  color: var(--text-muted);
+  cursor: pointer;
+  text-align: center;
+}
+
+.file-drop-zone.active {
+  border-color: var(--primary);
+  background: rgba(59, 130, 246, 0.05);
+}
+
+.file-drop-zone p {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.file-drop-zone small {
+  color: var(--text-secondary);
+}
+
+.image-preview-card {
+  margin-top: 1rem;
+  display: grid;
+  gap: 1rem;
+  max-width: 320px;
+}
+
+.image-preview-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+}
+.document-editor:empty:before {
+  content: attr(data-placeholder);
+  color: #94a3b8;
+}
+.document-editor--small {
+  min-height: 140px;
+}
+.input-hint {
+  margin: 0.35rem 0 0;
+  font-size: 1rem;
+  color: #64748b;
 }
 
 /* ─── Assignment Checklists ─── */
@@ -915,6 +1077,214 @@
 
   .modal-header h2 {
     font-size: 1.6rem;
+  }
+}
+
+/* ─── Permissions Page ─── */
+.permissions-page {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.permissions-hero {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+.hero-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.05);
+}
+
+.hero-card-highlight {
+  background: linear-gradient(135deg, #6A5ACD 0%, #818cf8 100%);
+  color: white;
+  border-color: transparent;
+}
+
+.hero-card-highlight h3,
+.hero-card-highlight p {
+  color: white;
+}
+
+.permissions-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.section-heading h2 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.section-heading p {
+  color: var(--text-muted);
+  font-size: 1.3rem;
+  margin: 0;
+}
+
+.role-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+.role-card {
+  display: flex;
+  gap: 1.5rem;
+  padding: 1.8rem;
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  background: var(--bg-card);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.role-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.08);
+}
+
+.role-icon {
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  border-radius: 18px;
+  background: rgba(106, 90, 205, 0.1);
+  font-size: 1.8rem;
+}
+
+.role-card h3 {
+  font-size: 1.35rem;
+  margin-bottom: 0.6rem;
+}
+
+.role-card p {
+  margin: 0;
+  color: var(--text-muted);
+  line-height: 1.8;
+}
+
+.reference-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+.reference-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 1.8rem;
+}
+
+.reference-card h3 {
+  margin: 0 0 1rem;
+  font-size: 1.3rem;
+}
+
+.reference-card p {
+  margin: 0;
+  color: var(--text-muted);
+  line-height: 1.8;
+}
+
+.permissions-table-card {
+  padding: 1rem;
+}
+
+.table-scroll-wrap {
+  overflow-x: auto;
+}
+
+.permissions-table th,
+.permissions-table td {
+  white-space: nowrap;
+}
+
+.permission-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 68px;
+  padding: 0.55rem 0.9rem;
+  border-radius: 999px;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.badge-crud { background: #2563eb; }
+.badge-cru { background: #7c3aed; }
+.badge-ru { background: #0f766e; }
+.badge-r { background: #1d4ed8; }
+.badge-self { background: #f59e0b; }
+.badge-child { background: #10b981; }
+.badge-none { background: #94a3b8; }
+
+.permission-legend {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.4rem 1.2rem;
+  border-radius: 16px;
+  background: var(--bg-hover);
+  border: 1px solid var(--border-color);
+}
+
+.legend-title {
+  font-weight: 800;
+  color: var(--text-main);
+  min-width: 90px;
+}
+
+.legend-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.legend-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.65rem 1rem;
+  border-radius: 999px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  font-size: 1.1rem;
+  line-height: 1.4;
+}
+
+.legend-chip-crud { background: rgba(37, 99, 235, 0.1); }
+.legend-chip-cru { background: rgba(124, 58, 237, 0.1); }
+.legend-chip-ru { background: rgba(15, 118, 110, 0.1); }
+.legend-chip-r { background: rgba(29, 78, 216, 0.1); }
+.legend-chip-self { background: rgba(245, 158, 11, 0.1); }
+.legend-chip-child { background: rgba(16, 185, 129, 0.1); }
+.legend-chip-none { background: rgba(148, 163, 184, 0.1); }
+
+@media (max-width: 1024px) {
+  .permissions-hero,
+  .role-grid,
+  .reference-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .page-header-row {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
 

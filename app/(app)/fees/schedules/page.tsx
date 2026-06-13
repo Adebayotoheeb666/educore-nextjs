@@ -8,12 +8,14 @@ import "../../shared.css";
 interface FeeItem { name: string; amount: number | string; }
 interface FeeSchedule {
   id: string;
-  title: string;
+  title?: string;
+  name?: string;
   term?: string;
   session?: string;
   class_name?: string;
   due_date?: string;
   total_amount?: number;
+  amount?: number;
   items?: FeeItem[];
 }
 interface ClassItem { id: string; name: string; section?: string; }
@@ -60,7 +62,7 @@ export default function FeeSchedulesPage() {
   const startEdit = (s: FeeSchedule) => {
     setEditingId(s.id);
     setForm({
-      title: s.title,
+      title: s.title ?? s.name ?? "",
       term: s.term ?? "First Term",
       session: s.session ?? "2024/2025",
       classId: "",
@@ -221,10 +223,12 @@ export default function FeeSchedulesPage() {
             <tbody>
               {schedules.map((s) => (
                 <tr key={s.id}>
-                  <td style={{ fontWeight: 700 }}>{s.title}</td>
+                  <td style={{ fontWeight: 700 }}>{s.title ?? s.name ?? "Untitled"}</td>
                   <td>{s.class_name ?? "All"}</td>
                   <td>{s.term ?? "—"}</td>
-                  <td style={{ fontWeight: 700, color: "#6A5ACD" }}>₦{(s.total_amount ?? 0).toLocaleString()}</td>
+                  <td style={{ fontWeight: 700, color: "#6A5ACD" }}>
+                    ₦{((s.total_amount ?? s.amount) ?? 0).toLocaleString()}
+                  </td>
                   <td>
                     {s.due_date
                       ? new Date(s.due_date).toLocaleDateString("en-NG", { day: "numeric", month: "short", year: "numeric" })

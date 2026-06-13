@@ -14,9 +14,16 @@ interface LessonPlan {
 }
 
 const STATUS_ACTIONS: Record<string, string[]> = {
-  pending: ["approved", "rejected"],
+  draft: ["submitted"],
+  submitted: ["approved", "rejected"],
   approved: [],
-  rejected: ["pending"],
+  rejected: ["submitted"],
+};
+
+const ACTION_LABELS: Record<string, string> = {
+  submitted: "Submit for review",
+  approved: "Approve",
+  rejected: "Reject",
 };
 
 export default function LessonPlanDetailPage() {
@@ -70,7 +77,13 @@ export default function LessonPlanDetailPage() {
   if (loading) return <div className="table-empty">Loading…</div>;
   if (!plan) return <div className="table-empty">Lesson plan not found.</div>;
 
-  const statusBadge = plan.status === "approved" ? "badge-green" : plan.status === "rejected" ? "badge-red" : "badge-yellow";
+  const statusBadge = plan.status === "approved"
+    ? "badge-green"
+    : plan.status === "rejected"
+    ? "badge-red"
+    : plan.status === "submitted"
+      ? "badge-yellow"
+      : "badge-gray";
   const nextActions = STATUS_ACTIONS[plan.status] ?? [];
 
   const sections = [
@@ -102,7 +115,7 @@ export default function LessonPlanDetailPage() {
               disabled={updating}
               style={{ background: action === "approved" ? "#22c55e" : action === "rejected" ? "#ef4444" : undefined }}
             >
-              {updating ? "…" : action.charAt(0).toUpperCase() + action.slice(1)}
+              {updating ? "…" : ACTION_LABELS[action] ?? action.charAt(0).toUpperCase() + action.slice(1)}
             </button>
           ))}
           <button className="btn-primary" onClick={handleDelete} disabled={deleting} style={{ background: "#ef4444" }}>

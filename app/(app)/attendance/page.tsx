@@ -95,11 +95,20 @@ export default function AttendancePage() {
   };
 
   const handleNotify = async () => {
+    if (!selectedClass) {
+      toast.error("Please select a class first");
+      return;
+    }
+
     const absent = students.filter((s) => s.status === "absent");
-    if (!absent.length) { toast.info("No absent students"); return; }
+    if (!absent.length) {
+      toast.info("No absent students to notify");
+      return;
+    }
+
     setNotifying(true);
     try {
-      await authenticatedFetch("/api/attendance/notify-absent", {
+      const res = await authenticatedFetch("/api/attendance/notify-absent", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -108,9 +117,13 @@ export default function AttendancePage() {
           studentIds: absent.map((s) => s.student_id),
         }),
       });
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData?.message || "Failed to send notifications");
+      }
       toast.success(`Notified parents of ${absent.length} absent student(s)`);
-    } catch {
-      toast.error("Failed to send notifications");
+    } catch (err: unknown) {
+      toast.error(err instanceof Error ? err.message : "Failed to send notifications");
     } finally {
       setNotifying(false);
     }
@@ -136,13 +149,14 @@ export default function AttendancePage() {
             </Link>
           )}
           <button
+            type="button"
             className="btn-outline"
             onClick={handleNotify}
-            disabled={notifying || absentCount === 0}
+            disabled={notifying}
           >
             {notifying ? "Sending…" : "📩 Notify Parents"}
           </button>
-          <button className="btn-primary" onClick={handleSave} disabled={saving || !students.length}>
+          <button type="button" className="btn-primary" onClick={handleSave} disabled={saving || !students.length}>
             {saving ? "Saving…" : "✓ Save Attendance"}
           </button>
         </div>
@@ -293,6 +307,7 @@ export default function AttendancePage() {
                         borderRadius: 8,
                         fontSize: "1.3rem",
                         background: "#f8fafc",
+                        color: "#334155",
                         outline: "none",
                       }}
                     />
@@ -306,7 +321,7 @@ export default function AttendancePage() {
 
       {students.length > 0 && (
         <div style={{ marginTop: "2rem", display: "flex", justifyContent: "flex-end" }}>
-          <button className="btn-primary" onClick={handleSave} disabled={saving} style={{ fontSize: "1.6rem", padding: "1.4rem 3rem" }}>
+          <button type="button" className="btn-primary" onClick={handleSave} disabled={saving} style={{ fontSize: "1.6rem", padding: "1.4rem 3rem" }}>
             {saving ? "Saving…" : "✓ Save Attendance"}
           </button>
         </div>

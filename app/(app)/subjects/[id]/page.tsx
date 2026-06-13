@@ -108,7 +108,7 @@ export default function SubjectDetailPage() {
           </p>
         </div>
         <div className="header-actions">
-          <button className="btn-secondary" onClick={() => router.back()}>← Back</button>
+          <button className="btn-secondary" onClick={() => router.push("/subjects")}>← Back</button>
           <button className="btn-primary" onClick={handleDelete} style={{ background: "#ef4444" }}>Delete Subject</button>
         </div>
       </div>

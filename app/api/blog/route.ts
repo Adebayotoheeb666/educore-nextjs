@@ -10,20 +10,26 @@ export const GET = async (req: NextRequest): Promise<NextResponse> => {
   try {
     const { searchParams } = new URL(req.url);
     const category = searchParams.get("category");
-    const status = searchParams.get("status") || "published";
+    const statusParam = searchParams.get("status");
+    const status = statusParam ?? "published";
     const page = parseInt(searchParams.get("page") || "1", 10);
     const limit = parseInt(searchParams.get("limit") || "9", 10);
     const offset = (page - 1) * limit;
 
-    const args: (string | number | boolean | null)[] = [status];
+    const args: (string | number | boolean | null)[] = [];
     let queryStr = `SELECT b.*, u.name as author_name FROM blog_posts b
-                    LEFT JOIN users u ON b.author_id = u.id
-                    WHERE b.status = ?`;
+                    LEFT JOIN users u ON b.author_id = u.id`;
 
+    const whereClauses: string[] = [];
+    if (status !== "all") {
+      whereClauses.push("b.status = ?");
+      args.push(status);
+    }
     if (category) {
-      queryStr += " AND b.category = ?";
+      whereClauses.push("b.category = ?");
       args.push(category);
     }
+    if (whereClauses.length) queryStr += " WHERE " + whereClauses.join(" AND ");
 
     const countArgs = [...args];
     const totalPostsResult = await query(`SELECT COUNT(*) as count FROM (${queryStr})`, countArgs);
@@ -54,25 +60,28 @@ export const GET = async (req: NextRequest): Promise<NextResponse> => {
         slug: post.slug,
         content: post.content,
         excerpt: post.excerpt,
+        subtitle: post.excerpt,
         coverImage: post.cover_image,
         category: post.category,
         readTime: post.read_time,
         tags: tagsArr,
         createdAt: post.created_at,
         publishedAt: post.published_at,
+        status: post.status || "draft",
         author: {
           name: post.author_name || "EduCore Team",
           role: "EduCore AI Editor"
-        }
+        },
+        author_name: post.author_name || "EduCore Team"
       };
     });
 
-    return ok({
+    return NextResponse.json({
       blogPosts: mappedPosts,
       totalPages,
       totalPosts,
       page
-    });
+    }, { status: 200 });
   } catch (err) { return serverError(err); }
 };
 

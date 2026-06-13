@@ -11,6 +11,7 @@ import { getThemePreference, setThemePreference } from "@/lib/utils/themeStorage
 import { RiNotificationLine, RiMoonLine, RiSunLine, RiQuestionLine } from "react-icons/ri";
 import "./dashboard.css";
 import MobileBottomNav from "./MobileBottomNav";
+import AiInsightsModal from "@/components/AiInsightsModal";
 
 const ADMIN_ROLES = [
   "school_owner","principal","vp_academics","vp_admin","admin_staff","super_admin",
@@ -40,9 +41,11 @@ const navConfig = [
   { label: "Students",     path: "/students",            icon: "👨‍🎓", roles: ADMIN_ROLES },
   { label: "Parents",      path: "/parents",             icon: "👪", roles: ADMIN_ROLES },
   { label: "Teachers",     path: "/teachers",            icon: "👩‍🏫", roles: ADMIN_ROLES },
+  { label: "Admins",       path: "/admins",            icon: "🧑‍💼", roles: ["school_owner"] },
   { label: "Classes",      path: "/classes",             icon: "🏫", roles: ADMIN_ROLES },
   { label: "Subjects",     path: "/subjects",            icon: "📚", roles: ADMIN_ROLES, serviceSlug: "subjects" },
   { label: "Attendance",   path: "/attendance",          icon: "✅", roles: [...ADMIN_ROLES, ...TEACHER_ROLES], serviceSlug: "attendance" },
+  { label: "Behavior",     path: "/behavior",            icon: "⭐", roles: [...ADMIN_ROLES, ...TEACHER_ROLES], serviceSlug: "behavior" },
   { label: "Lesson Plans", path: "/lesson-plans",        icon: "📝", roles: [...ADMIN_ROLES, ...TEACHER_ROLES], serviceSlug: "lesson-plans" },
   { label: "Exams",        path: "/exams",               icon: "📋", roles: [...ADMIN_ROLES, ...TEACHER_ROLES], serviceSlug: "exams" },
   { label: "Results",      path: "/results",             icon: "📊", roles: [...ADMIN_ROLES, ...TEACHER_ROLES], serviceSlug: "results" },
@@ -54,10 +57,12 @@ const navConfig = [
   { label: "Timetable",    path: "/timetable",           icon: "🗓️",  roles: [...STAFF_ROLES, "bursar", "librarian"], serviceSlug: "timetable" },
   { label: "Library",      path: "/library",             icon: "📖", roles: [...ADMIN_ROLES, "librarian"], serviceSlug: "library" },
   { label: "Announcements",path: "/announcements",       icon: "📢", roles: [...STAFF_ROLES, "bursar", "librarian"], serviceSlug: "announcements" },
+  { label: "Blog",          path: "/admin/blog",        icon: "📰", roles: ADMIN_ROLES, serviceSlug: "blog" },
   { label: "Analytics",    path: "/analytics",           icon: "📈", roles: ADMIN_ROLES, serviceSlug: "analytics" },
   { label: "Feedback",     path: "/feedback",            icon: "💬", roles: [...STAFF_ROLES, "bursar", "librarian"], serviceSlug: "feedback" },
   { label: "School Settings", path: "/school/settings",  icon: "⚙️",  roles: ["school_owner", "principal"] },
   { label: "Services",     path: "/school/services",     icon: "🔧", roles: ["school_owner", "principal"] },
+  { label: "Permissions",  path: "/permissions",        icon: "🔐", roles: ["school_owner"] },
   { label: "Billing",      path: "/billing",             icon: "💳", roles: ["school_owner"] },
 ];
 
@@ -68,6 +73,7 @@ const teacherNav = [
   { label: "Lesson Plans",  path: "/teacher/lesson-plans", icon: "📝", roles: TEACHER_ROLES, serviceSlug: "lesson-plans" },
   { label: "Profile",       path: "/teacher/profile", icon: "👤", roles: TEACHER_ROLES },
   { label: "Attendance",    path: "/teacher/attendance", icon: "✅", roles: TEACHER_ROLES, serviceSlug: "attendance" },
+  { label: "Behavior",      path: "/behavior",           icon: "⭐", roles: TEACHER_ROLES, serviceSlug: "behavior" },
   { label: "Announcements", path: "/teacher/announcements", icon: "📢", roles: TEACHER_ROLES, serviceSlug: "announcements" },
 ];
 
@@ -115,6 +121,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
   const { user, isAuthenticated } = useAppSelector((s) => s.auth);
+  const [aiOpen, setAiOpen] = useState(false);
   const [ready, setReady] = useState(false);
   const [hydrated, setHydrated] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -427,7 +434,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
         <div className="sidebar-footer">
           {user?.role !== "super_admin" && (
-            <button type="button" className="btn-ai-insights">
+            <button type="button" className="btn-ai-insights" onClick={() => setAiOpen(true)}>
               <span>✨</span> AI Insights
             </button>
           )}
@@ -437,6 +444,8 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           </button>
         </div>
       </aside>
+
+      <AiInsightsModal open={aiOpen} onClose={() => setAiOpen(false)} />
 
       {/* Main container */}
       <div style={{ flex: 1, display: "flex", flexDirection: "column" }} className="dashboard-main-container">

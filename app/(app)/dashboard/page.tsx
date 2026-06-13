@@ -20,12 +20,30 @@ interface Stats {
   feeCollected?: number;
   feePending?: number;
   feeDefaulters?: number;
+  activeServices?: number;
+  inactiveServices?: number;
   staffCount?: number;
   pendingLessonPlans?: number;
+  lessonPlansApproved?: number;
+  lessonPlansTotal?: number;
+  lessonPlansApprovalRate?: number;
   overdueLibrary?: number;
   upcomingExams?: number;
   recentPayments?: { id: string; student_name: string; amount: number; time: string }[];
   recentAnnouncements?: { id: string; title: string; created_at: string }[];
+  upcomingStudentBirthdays?: {
+    id: string;
+    name: string;
+    birthday: string;
+    class_name?: string | null;
+    class_teacher_name?: string | null;
+  }[];
+  upcomingTeacherBirthdays?: {
+    id: string;
+    name: string;
+    birthday: string;
+    role: string;
+  }[];
   curriculumProgress?: number;
 }
 
@@ -310,6 +328,8 @@ export default function DashboardPage() {
             {hasService("subjects") && (
               <StatCard label="Subjects" value={stats?.totalSubjects} icon="📚" href="/subjects" />
             )}
+            <StatCard label="Active services" value={stats?.activeServices} icon="🟢" href="/school/services" isSuccess />
+            <StatCard label="Inactive services" value={stats?.inactiveServices} icon="🔴" href="/school/services" isDanger />
           </section>
 
           <div className="dashboard-grid">
@@ -370,20 +390,24 @@ export default function DashboardPage() {
                 <div className="academic-metrics">
                   <div className="academic-metric">
                     <span>Lesson plans approved</span>
-                    <strong>0%</strong>
+                    <strong>{stats?.lessonPlansApprovalRate ?? 0}%</strong>
                   </div>
                   <div className="academic-metric">
                     <span>Pending approvals</span>
-                    <strong>0</strong>
+                    <strong>{stats?.pendingLessonPlans ?? 0}</strong>
                   </div>
                   <div className="academic-metric">
                     <span>Upcoming exams</span>
-                    <strong>0</strong>
+                    <strong>{stats?.upcomingExams ?? 0}</strong>
                   </div>
                 </div>
                 <div className="curriculum-coverage">
                   <h4>Curriculum coverage</h4>
-                  <p style={{ color: "var(--text-muted)", fontSize: "1.2rem" }}>No class performance data yet</p>
+                  <p style={{ color: "var(--text-muted)", fontSize: "1.2rem" }}>
+                    {stats?.curriculumProgress != null
+                      ? `${stats.curriculumProgress}% of classes have approved lesson plans`
+                      : "Loading curriculum coverage..."}
+                  </p>
                 </div>
                 <Link href="/results" className="view-all-link">
                   View all results →
@@ -395,7 +419,13 @@ export default function DashboardPage() {
               <div className="quick-controls-card">
                 <h3>Quick controls</h3>
                 <div className="quick-controls-grid">
-                  {QUICK_ACTIONS
+                  {user?.role === "school_owner" && (
+                  <Link href="/admins/add" className="quick-control-btn">
+                    <span>🧑‍💼</span>
+                    <span>Add Admin</span>
+                  </Link>
+                )}
+                {QUICK_ACTIONS
                     .filter((a) => !a.serviceSlug || hasService(a.serviceSlug))
                     .map((a) => (
                       <Link key={a.href} href={a.href} className="quick-control-btn">
@@ -405,6 +435,63 @@ export default function DashboardPage() {
                     ))
                   }
                 </div>
+              </div>
+
+              <div className="panel-card">
+                <div className="panel-card-header">
+                  <h2>Upcoming student birthdays</h2>
+                </div>
+                {stats?.upcomingStudentBirthdays?.length ? (
+                  <ul className="announcements-list">
+                    {stats.upcomingStudentBirthdays.map((birthday) => (
+                      <li key={birthday.id}>
+                        <div>
+                          <strong>{birthday.name}</strong>
+                          <p style={{ color: "var(--text-muted)", margin: "0.35rem 0 0", fontSize: "1.2rem" }}>
+                            {birthday.class_name ? birthday.class_name : "Unassigned class"}
+                            {birthday.class_teacher_name ? ` · ${birthday.class_teacher_name}` : ""}
+                          </p>
+                        </div>
+                        <span>{birthday.birthday}</span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p style={{ color: "var(--text-muted)", fontSize: "1.3rem" }}>
+                    No upcoming student birthdays.
+                  </p>
+                )}
+                <Link href="/students" className="view-all-link">
+                  View all students →
+                </Link>
+              </div>
+
+              <div className="panel-card">
+                <div className="panel-card-header">
+                  <h2>Upcoming teacher birthdays</h2>
+                </div>
+                {stats?.upcomingTeacherBirthdays?.length ? (
+                  <ul className="announcements-list">
+                    {stats.upcomingTeacherBirthdays.map((birthday) => (
+                      <li key={birthday.id}>
+                        <div>
+                          <strong>{birthday.name}</strong>
+                          <p style={{ color: "var(--text-muted)", margin: "0.35rem 0 0", fontSize: "1.2rem" }}>
+                            {birthday.role === "class_teacher" ? "Class teacher" : "Subject teacher"}
+                          </p>
+                        </div>
+                        <span>{birthday.birthday}</span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p style={{ color: "var(--text-muted)", fontSize: "1.3rem" }}>
+                    No upcoming teacher birthdays.
+                  </p>
+                )}
+                <Link href="/teachers" className="view-all-link">
+                  View all teachers →
+                </Link>
               </div>
 
               <div className="panel-card">

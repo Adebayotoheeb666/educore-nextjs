@@ -34,6 +34,8 @@ export default function ServicesClient() {
   const [updating, setUpdating] = useState<string | null>(null);
   const [verifyingPayment, setVerifyingPayment] = useState(false);
 
+  const isServiceActive = (svc: any) => Boolean(svc?.is_compulsory) || svc?.subscription_status === "active";
+
   // Handle payment verification on page load
   useEffect(() => {
     const reference = searchParams.get("reference");
@@ -77,7 +79,7 @@ export default function ServicesClient() {
       const data = await response.json();
       if (data.data) {
         const activeSlugs = data.data
-          .filter((s: any) => s.subscription_status === "active" || s.is_compulsory)
+          .filter((s: any) => isServiceActive(s))
           .map((s: any) => s.slug);
         setActiveServices(new Set(activeSlugs));
       }
@@ -164,7 +166,9 @@ export default function ServicesClient() {
 
   if (loading) return <div style={{ padding: "2rem" }}>Loading services...</div>;
 
-  const servicesByCategory = OPTIONAL_SERVICES.reduce<Record<string, ServiceDefinition[]>>(
+  const visibleOptionalServices = OPTIONAL_SERVICES.filter((svc) => svc.slug !== "admin");
+
+  const servicesByCategory = visibleOptionalServices.reduce<Record<string, ServiceDefinition[]>>(
     (acc, svc) => {
       const cat = svc.category === "core" ? "academic" : svc.category;
       if (!acc[cat]) acc[cat] = [];
@@ -211,8 +215,9 @@ export default function ServicesClient() {
                         style={{ padding: "0.5rem 1rem", fontSize: "1rem" }}
                         onClick={() => handleToggle(svc)}
                         disabled={isUpdating}
+                        title={active ? `Deactivate ${svc.name}` : `Activate ${svc.name}`}
                       >
-                        {isUpdating ? "..." : (active ? "Manage" : "Add Module")}
+                        {isUpdating ? "..." : (active ? "Deactivate" : "Add Module")}
                       </button>
                     )}
                   </div>

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { query, queryOne } from "@/lib/db/turso";
+import { SERVICE_CATALOG } from "@/config/services/catalog";
 import { withAuth, type AuthContext } from "@/lib/middleware/auth";
 import { badRequest, ok, serverError } from "@/lib/utils/response";
 
@@ -14,8 +15,10 @@ export const GET = withAuth(async (_req: NextRequest, { school }: AuthContext): 
     const [
       students, teachers, parents, classes, subjects,
       attendanceRate, feeCollected, feePending, feeDefaulters,
-      pendingPlans, overdueLibrary, upcomingExams, staffCount,
+      pendingPlans, approvedPlans, totalPlans, approvedPlanClasses, totalClasses, overdueLibrary, upcomingExams, staffCount,
+      serviceCounts,
       recentPayments, recentAnnouncements,
+      upcomingStudentBirthdays, upcomingTeacherBirthdays,
     ] = await Promise.all([
       queryOne<{ c: number }>("SELECT COUNT(*) c FROM users WHERE school_id=? AND role='student' AND is_active=1", [sid]),
       queryOne<{ c: number }>("SELECT COUNT(*) c FROM users WHERE school_id=? AND role IN ('class_teacher','subject_teacher') AND is_active=1", [sid]),
@@ -29,10 +32,23 @@ export const GET = withAuth(async (_req: NextRequest, { school }: AuthContext): 
       queryOne<{ total: number }>("SELECT COALESCE(SUM(amount_paid),0) total FROM fee_payments WHERE school_id=? AND status='completed'", [sid]),
       queryOne<{ total: number }>("SELECT COALESCE(SUM(f.amount - COALESCE(p.paid,0)),0) total FROM fees f LEFT JOIN (SELECT fee_id, SUM(amount_paid) paid FROM fee_payments WHERE school_id=? GROUP BY fee_id) p ON p.fee_id=f.id WHERE f.school_id=?", [sid, sid]),
       queryOne<{ c: number }>("SELECT COUNT(DISTINCT fp.student_id) c FROM fees f LEFT JOIN (SELECT fee_id,student_id,SUM(amount_paid) paid FROM fee_payments WHERE school_id=? GROUP BY fee_id,student_id) fp ON fp.fee_id=f.id WHERE f.school_id=? AND (fp.paid IS NULL OR fp.paid < f.amount)", [sid, sid]),
-      queryOne<{ c: number }>("SELECT COUNT(*) c FROM lesson_plans WHERE school_id=? AND status='pending'", [sid]),
+      queryOne<{ c: number }>("SELECT COUNT(*) c FROM lesson_plans WHERE school_id=? AND status='submitted'", [sid]),
+      queryOne<{ c: number }>("SELECT COUNT(*) c FROM lesson_plans WHERE school_id=? AND status='approved'", [sid]),
+      queryOne<{ c: number }>("SELECT COUNT(*) c FROM lesson_plans WHERE school_id=?", [sid]),
+      queryOne<{ c: number }>("SELECT COUNT(DISTINCT class_id) c FROM lesson_plans WHERE school_id=? AND status='approved' AND class_id IS NOT NULL", [sid]),
+      queryOne<{ c: number }>("SELECT COUNT(*) c FROM classes WHERE school_id=?", [sid]),
       queryOne<{ c: number }>("SELECT COUNT(*) c FROM book_borrows WHERE school_id=? AND returned_at IS NULL AND due_date < date('now')", [sid]),
       queryOne<{ c: number }>("SELECT COUNT(*) c FROM exams WHERE school_id=? AND date BETWEEN date('now') AND date('now','+30 days')", [sid]),
       queryOne<{ c: number }>("SELECT COUNT(*) c FROM users WHERE school_id=? AND role NOT IN ('student','parent') AND is_active=1", [sid]),
+      queryOne<{ active: number; inactive: number }>(
+        `SELECT
+           COALESCE(SUM(CASE WHEN s.is_compulsory = 1 OR ss.status = 'active' THEN 1 ELSE 0 END), 0) active,
+           COALESCE(SUM(CASE WHEN s.is_compulsory = 0 AND (ss.status != 'active' OR ss.status IS NULL) THEN 1 ELSE 0 END), 0) inactive
+         FROM services s
+         LEFT JOIN school_services ss ON s.id = ss.service_id AND ss.school_id = ?
+         WHERE s.is_active = 1 AND s.slug != 'admin'`,
+        [sid]
+      ),
       query<{ id: string; student_name: string; amount: number; time: string }>(
         `SELECT fp.id, u.name as student_name, fp.amount_paid as amount,
          strftime('%d %b',fp.created_at) as time
@@ -42,12 +58,51 @@ export const GET = withAuth(async (_req: NextRequest, { school }: AuthContext): 
       query<{ id: string; title: string; created_at: string }>(
         "SELECT id,title,created_at FROM announcements WHERE school_id=? ORDER BY is_pinned DESC,created_at DESC LIMIT 5", [sid]
       ),
+      query<{
+        id: string;
+        name: string;
+        birthday: string;
+        class_name: string | null;
+        class_teacher_name: string | null;
+      }>(
+        `SELECT u.id, u.name, strftime('%d %b', u.dob) as birthday,
+                c.name as class_name, ct.name as class_teacher_name
+         FROM users u
+         JOIN classes c ON u.class_id = c.id AND c.class_teacher_id IS NOT NULL
+         LEFT JOIN users ct ON c.class_teacher_id = ct.id
+         WHERE u.school_id = ? AND u.role = 'student' AND u.is_active = 1 AND u.dob IS NOT NULL
+         ORDER BY CASE WHEN strftime('%m-%d', u.dob) >= strftime('%m-%d','now') THEN 0 ELSE 1 END,
+                  strftime('%m-%d', u.dob), u.name
+         LIMIT 8`,
+        [sid]
+      ),
+      query<{
+        id: string;
+        name: string;
+        birthday: string;
+        role: string;
+      }>(
+        `SELECT u.id, u.name, strftime('%d %b', u.dob) as birthday, u.role
+         FROM users u
+         WHERE u.school_id = ? AND u.role IN ('class_teacher','subject_teacher') AND u.is_active = 1 AND u.dob IS NOT NULL
+         ORDER BY CASE WHEN strftime('%m-%d', u.dob) >= strftime('%m-%d','now') THEN 0 ELSE 1 END,
+                  strftime('%m-%d', u.dob), u.name
+         LIMIT 8`,
+        [sid]
+      ),
     ]);
 
     const collected = feeCollected?.total ?? 0;
     const pending = feePending?.total ?? 0;
     const total = collected + pending;
     const collectionRate = total > 0 ? Math.round((collected / total) * 100) : 0;
+
+    const lessonPlansApproved = approvedPlans?.c ?? 0;
+    const lessonPlansTotal = totalPlans?.c ?? 0;
+    const curriculumProgress = totalClasses?.c ? Math.round((approvedPlanClasses?.c ?? 0) / totalClasses.c * 100) : 0;
+    const visibleServicesCount = SERVICE_CATALOG.filter((svc) => svc.slug !== "admin").length;
+    const activeServices = serviceCounts?.active ?? 0;
+    const inactiveServices = Math.max(0, visibleServicesCount - activeServices);
 
     const response = {
       totalStudents: students?.c ?? 0,
@@ -60,12 +115,20 @@ export const GET = withAuth(async (_req: NextRequest, { school }: AuthContext): 
       feePending: pending,
       collectionRate,
       feeDefaulters: feeDefaulters?.c ?? 0,
+      activeServices,
+      inactiveServices,
       pendingLessonPlans: pendingPlans?.c ?? 0,
+      lessonPlansApproved,
+      lessonPlansTotal,
+      lessonPlansApprovalRate: lessonPlansTotal > 0 ? Math.round((lessonPlansApproved / lessonPlansTotal) * 100) : 0,
+      curriculumProgress,
       overdueLibrary: overdueLibrary?.c ?? 0,
       upcomingExams: upcomingExams?.c ?? 0,
       staffCount: staffCount?.c ?? 0,
       recentPayments,
       recentAnnouncements,
+      upcomingStudentBirthdays,
+      upcomingTeacherBirthdays,
     };
     console.log("Dashboard stats response:", response);
     return ok(response);

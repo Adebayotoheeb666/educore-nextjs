@@ -12,9 +12,11 @@ export const GET = withAuth(
       const children = await query<{
         id: string; name: string; email: string; admission_no: string | null;
         class_name: string | null; class_section: string | null; avatar: string | null;
+        relationship: string | null;
       }>(
         `SELECT u.id, u.name, u.email, u.admission_no, u.avatar,
-                c.name as class_name, c.section as class_section
+                c.name as class_name, c.section as class_section,
+                ur.relationship as relationship
          FROM user_relationships ur
          JOIN users u ON ur.child_id = u.id
          LEFT JOIN classes c ON u.class_id = c.id

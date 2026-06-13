@@ -6,7 +6,7 @@ import "../../shared.css";
 
 interface Child { id: string; name: string; class_name?: string; }
 interface Result {
-  subject_name: string; score?: number; grade?: string;
+  subject_name: string; score?: number; total_score?: number; grade?: string;
   term: string; class_name?: string; created_at: string;
 }
 
@@ -40,7 +40,7 @@ export default function ParentResultsPage() {
   }, [selectedChild, term]);
 
   const avg = results.length > 0
-    ? (results.reduce((s, r) => s + (Number(r.score) || 0), 0) / results.filter((r) => r.score != null).length).toFixed(1)
+    ? (results.reduce((s, r) => s + (Number(r.score ?? (r as any).total_score) || 0), 0) / results.filter((r) => r.score != null || (r as any).total_score != null).length).toFixed(1)
     : "—";
 
   return (
@@ -99,7 +99,7 @@ export default function ParentResultsPage() {
               {results.map((r, i) => (
                 <tr key={i}>
                   <td style={{ fontWeight: 700 }}>{r.subject_name}</td>
-                  <td style={{ fontWeight: 700, color: "#6A5ACD", fontSize: "1.6rem" }}>{r.score ?? "—"}</td>
+                  <td style={{ fontWeight: 700, color: "#6A5ACD", fontSize: "1.6rem" }}>{r.score ?? (r as any).total_score ?? "—"}</td>
                   <td>
                     <span className={`badge ${(r.grade ?? "").startsWith("A") ? "badge-green" : (r.grade ?? "").startsWith("B") ? "badge-blue" : (r.grade ?? "").startsWith("C") ? "badge-yellow" : "badge-red"}`}>
                       {r.grade ?? "—"}

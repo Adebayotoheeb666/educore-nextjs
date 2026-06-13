@@ -15,7 +15,12 @@ export const GET = withAuth(async (req: NextRequest, { school }: AuthContext, pa
     if (!classDoc) return notFound("Class not found");
 
     const { searchParams } = new URL(req.url);
-    const session = searchParams.get("session") || (classDoc as any).academic_session || school.academic_session;
+    // Determine the session to use: explicit param > class session > school session
+    let session = searchParams.get("session") || (classDoc as any).academic_session || school.academic_session;
+    // Ensure session is not an empty string
+    if (!session || session.trim() === "") {
+      session = school.academic_session;
+    }
 
     const subjects = await query(
       `SELECT cs.id, cs.class_id, cs.subject_id, cs.is_compulsory, cs.sequence, cs.academic_session,
@@ -25,12 +30,12 @@ export const GET = withAuth(async (req: NextRequest, { school }: AuthContext, pa
               COUNT(DISTINCT st.teacher_id) as teacher_count
        FROM class_subjects cs
        LEFT JOIN subjects s ON cs.subject_id = s.id
-       LEFT JOIN subject_teachers st ON st.subject_id = s.id AND st.class_id = ? AND (st.academic_session = ? OR st.academic_session IS NULL)
+       LEFT JOIN subject_teachers st ON st.subject_id = s.id AND (st.class_id = ? OR st.class_id IS NULL)
        LEFT JOIN users u ON st.teacher_id = u.id
        WHERE cs.class_id = ? AND s.school_id = ? AND (cs.academic_session = ? OR cs.academic_session IS NULL)
        GROUP BY cs.id, cs.class_id, cs.subject_id, cs.is_compulsory, cs.sequence, cs.academic_session, s.id, s.name, s.code, s.description
        ORDER BY cs.sequence, s.name`,
-      [classId, session, classId, school.id, session]
+      [classId, classId, school.id, session]
     );
     return ok(subjects);
   } catch (err) {
@@ -54,13 +59,20 @@ export const POST = withAuth(
       const subject = await queryOne("SELECT id FROM subjects WHERE id = ? AND school_id = ?", [subjectId, school.id]);
       if (!subject) return notFound("Subject not found");
 
-      const session = academicSession || (classDoc as any).academic_session || school.academic_session;
+      // Determine session: explicit param > class session > school session
+      let session = academicSession || (classDoc as any).academic_session || school.academic_session;
+      // Ensure session is not empty
+      if (!session || session.trim() === "") {
+        session = school.academic_session;
+      }
 
+      // Check for existing subject in this class for this session
+      // Also check for subjects added with NULL session to avoid duplicates
       const existing = await queryOne(
-        "SELECT id FROM class_subjects WHERE class_id = ? AND subject_id = ? AND academic_session = ?",
+        "SELECT id FROM class_subjects WHERE class_id = ? AND subject_id = ? AND (academic_session = ? OR academic_session IS NULL)",
         [classId, subjectId, session]
       );
-      if (existing) return conflict("Subject already added to this class for this session");
+      if (existing) return conflict("Subject already added to this class");
 
       const id = generateId();
       await execute(

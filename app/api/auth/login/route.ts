@@ -25,7 +25,10 @@ export const POST = withRateLimit(
   { prefix: "login", limit: 10, windowSecs: 60 },
   async function POST(req: NextRequest): Promise<NextResponse> {
   try {
-    const { email, password } = await req.json();
+    console.log("auth/login entered", { method: req.method, headers: req.headers.get?.("content-type") });
+    const body = await req.json().catch(() => null);
+    console.log("auth/login parsed body", body);
+    const { email, password } = body ?? {};
 
     if (!email || !password) {
       return badRequest("Please add email and password");
@@ -70,6 +73,10 @@ export const POST = withRateLimit(
     const response = NextResponse.json(userData, { status: 200 });
     return setAuthCookie(response, token);
   } catch (err) {
+    console.error("auth/login error:", err);
+    if (err instanceof Error) {
+      console.error(err.stack);
+    }
     return serverError(err);
   }
 });

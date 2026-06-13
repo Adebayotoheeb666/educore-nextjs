@@ -13,6 +13,7 @@ const ROLES = [
   { value: "vp_admin",        label: "VP Admin" },
   { value: "principal",       label: "Principal" },
   { value: "bursar",          label: "Bursar" },
+  { value: "librarian",        label: "Librarian" },
   { value: "admin_staff",     label: "Admin Staff" },
 ];
 
@@ -46,7 +47,46 @@ export default function AddTeacherPage() {
   const [students, setStudents] = useState<Student[]>([]);
   const [selectedSubjects, setSelectedSubjects] = useState<string[]>([]);
   const [selectedStudents, setSelectedStudents] = useState<string[]>([]);
+  const [subjectQuery, setSubjectQuery] = useState("");
+  const [studentQuery, setStudentQuery] = useState("");
+  const [subjectPage, setSubjectPage] = useState(1);
+  const [studentPage, setStudentPage] = useState(1);
   const [loadingData, setLoadingData] = useState(true);
+
+  const PAGE_SIZE = 10;
+
+  const filteredSubjects = subjects.filter((subject) => {
+    const query = subjectQuery.trim().toLowerCase();
+    if (!query) return true;
+    return subject.name.toLowerCase().includes(query);
+  });
+
+  const filteredStudents = students.filter((student) => {
+    const query = studentQuery.trim().toLowerCase();
+    if (!query) return true;
+    return [student.name, student.admission_no].join(" ").toLowerCase().includes(query);
+  });
+
+  const subjectPageCount = Math.max(1, Math.ceil(filteredSubjects.length / PAGE_SIZE));
+  const studentPageCount = Math.max(1, Math.ceil(filteredStudents.length / PAGE_SIZE));
+  const pagedSubjects = filteredSubjects.slice((subjectPage - 1) * PAGE_SIZE, subjectPage * PAGE_SIZE);
+  const pagedStudents = filteredStudents.slice((studentPage - 1) * PAGE_SIZE, studentPage * PAGE_SIZE);
+
+  useEffect(() => {
+    setSubjectPage(1);
+  }, [subjectQuery]);
+
+  useEffect(() => {
+    setStudentPage(1);
+  }, [studentQuery]);
+
+  useEffect(() => {
+    if (subjectPage > subjectPageCount) setSubjectPage(subjectPageCount);
+  }, [subjectPageCount, subjectPage]);
+
+  useEffect(() => {
+    if (studentPage > studentPageCount) setStudentPage(studentPageCount);
+  }, [studentPageCount, studentPage]);
 
   useEffect(() => {
     const loadData = async () => {
@@ -221,18 +261,51 @@ export default function AddTeacherPage() {
           {loadingData ? (
             <div style={{ padding: "1rem", color: "#64748b" }}>Loading subjects...</div>
           ) : subjects.length > 0 ? (
-            <div className="assignment-checklist">
-              {subjects.map((subject) => (
-                <label key={subject.id} className="assignment-item">
-                  <input
-                    type="checkbox"
-                    checked={selectedSubjects.includes(subject.id)}
-                    onChange={() => toggleSubject(subject.id)}
-                  />
-                  <span>{subject.name}</span>
-                </label>
-              ))}
-            </div>
+            <>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", marginBottom: "1rem", alignItems: "center" }}>
+                <input
+                  type="search"
+                  value={subjectQuery}
+                  onChange={(e) => setSubjectQuery(e.target.value)}
+                  placeholder="Search subjects"
+                  style={{ flex: 1, minWidth: 220, padding: "0.9rem 1rem", borderRadius: 12, border: "1px solid #d1d5db", background: "#f8fafc", color: "var(--text-main)" }}
+                />
+                <div style={{ color: "#64748b", fontSize: "0.95rem" }}>
+                  {filteredSubjects.length} of {subjects.length}
+                </div>
+              </div>
+              {filteredSubjects.length > 0 ? (
+                <>
+                  <div className="assignment-checklist">
+                    {pagedSubjects.map((subject) => (
+                      <label key={subject.id} className="assignment-item">
+                        <input
+                          type="checkbox"
+                          checked={selectedSubjects.includes(subject.id)}
+                          onChange={() => toggleSubject(subject.id)}
+                        />
+                        <span>{subject.name}</span>
+                      </label>
+                    ))}
+                  </div>
+                  {subjectPageCount > 1 && (
+                    <div style={{ display: "flex", justifyContent: "flex-end", gap: "0.75rem", marginTop: "1rem", flexWrap: "wrap" }}>
+                      <button type="button" className="btn-secondary" disabled={subjectPage === 1} onClick={() => setSubjectPage((page) => page - 1)}>
+                        Previous
+                      </button>
+                      <span style={{ alignSelf: "center", color: "#475569" }}>
+                        Page {subjectPage} of {subjectPageCount}
+                      </span>
+                      <button type="button" className="btn-secondary" disabled={subjectPage === subjectPageCount} onClick={() => setSubjectPage((page) => page + 1)}>
+                        Next
+                      </button>
+                    </div>
+                  )}
+                </>
+              ) : (
+                <div style={{ padding: "1rem", color: "#94a3b8" }}>No subjects match your search.</div>
+              )}
+            </>
           ) : (
             <div style={{ padding: "1rem", color: "#94a3b8" }}>No subjects available</div>
           )}
@@ -241,18 +314,51 @@ export default function AddTeacherPage() {
           {loadingData ? (
             <div style={{ padding: "1rem", color: "#64748b" }}>Loading students...</div>
           ) : students.length > 0 ? (
-            <div className="assignment-checklist">
-              {students.map((student) => (
-                <label key={student.id} className="assignment-item">
-                  <input
-                    type="checkbox"
-                    checked={selectedStudents.includes(student.id)}
-                    onChange={() => toggleStudent(student.id)}
-                  />
-                  <span>{student.name} {student.admission_no ? `(${student.admission_no})` : ""}</span>
-                </label>
-              ))}
-            </div>
+            <>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", marginBottom: "1rem", alignItems: "center" }}>
+                <input
+                  type="search"
+                  value={studentQuery}
+                  onChange={(e) => setStudentQuery(e.target.value)}
+                  placeholder="Search students by name or admission number"
+                  style={{ flex: 1, minWidth: 220, padding: "0.9rem 1rem", borderRadius: 12, border: "1px solid #d1d5db", background: "#f8fafc", color: "var(--text-main)" }}
+                />
+                <div style={{ color: "#64748b", fontSize: "0.95rem" }}>
+                  {filteredStudents.length} of {students.length}
+                </div>
+              </div>
+              {filteredStudents.length > 0 ? (
+                <>
+                  <div className="assignment-checklist">
+                    {pagedStudents.map((student) => (
+                      <label key={student.id} className="assignment-item">
+                        <input
+                          type="checkbox"
+                          checked={selectedStudents.includes(student.id)}
+                          onChange={() => toggleStudent(student.id)}
+                        />
+                        <span>{student.name} {student.admission_no ? `(${student.admission_no})` : ""}</span>
+                      </label>
+                    ))}
+                  </div>
+                  {studentPageCount > 1 && (
+                    <div style={{ display: "flex", justifyContent: "flex-end", gap: "0.75rem", marginTop: "1rem", flexWrap: "wrap" }}>
+                      <button type="button" className="btn-secondary" disabled={studentPage === 1} onClick={() => setStudentPage((page) => page - 1)}>
+                        Previous
+                      </button>
+                      <span style={{ alignSelf: "center", color: "#475569" }}>
+                        Page {studentPage} of {studentPageCount}
+                      </span>
+                      <button type="button" className="btn-secondary" disabled={studentPage === studentPageCount} onClick={() => setStudentPage((page) => page + 1)}>
+                        Next
+                      </button>
+                    </div>
+                  )}
+                </>
+              ) : (
+                <div style={{ padding: "1rem", color: "#94a3b8" }}>No students match your search.</div>
+              )}
+            </>
           ) : (
             <div style={{ padding: "1rem", color: "#94a3b8" }}>No students available</div>
           )}

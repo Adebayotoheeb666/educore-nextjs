@@ -54,7 +54,7 @@ export const GET = async (
       }
     };
 
-    return ok(mappedPost);
+    return NextResponse.json(mappedPost, { status: 200 });
   } catch (err) {
     return serverError(err);
   }

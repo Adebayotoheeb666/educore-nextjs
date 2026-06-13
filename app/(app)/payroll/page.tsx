@@ -114,16 +114,18 @@ export default function PayrollPage() {
         </div>
 
         <div className="form-card" style={{ marginBottom: "2rem" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
+          <div className="form-card-header">
             <div>
               <h2 className="form-section-title">Salary Disbursement</h2>
               <p style={{ margin: 0, color: "#64748b" }}>Record teacher payouts and log payment details.</p>
             </div>
             <div>
+              <label className="form-label" style={{ marginBottom: "0.75rem", display: "block" }}>Teacher</label>
               <select
                 value={selectedTeacher}
                 onChange={(e) => setSelectedTeacher(e.target.value)}
-                style={{ padding: "0.9rem 1.3rem", borderRadius: 10, border: "1px solid #e2e8f0", fontSize: "1.4rem" }}
+                className="form-input"
+                style={{ minWidth: 260 }}
               >
                 {teachers.map((teacher) => (
                   <option key={teacher.id} value={teacher.id}>{teacher.name}</option>
@@ -132,8 +134,8 @@ export default function PayrollPage() {
             </div>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.2rem" }}>
-            <div>
+          <div className="form-grid-2" style={{ gap: "1.2rem" }}>
+            <div className="form-group">
               <label className="form-label">Amount</label>
               <input
                 type="number"
@@ -143,7 +145,7 @@ export default function PayrollPage() {
                 placeholder="₦ amount"
               />
             </div>
-            <div>
+            <div className="form-group">
               <label className="form-label">Payment Method</label>
               <select
                 value={form.paymentMethod}
@@ -158,8 +160,8 @@ export default function PayrollPage() {
             </div>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.2rem", marginTop: "1rem" }}>
-            <div>
+          <div className="form-grid-2" style={{ gap: "1.2rem", marginTop: "1rem" }}>
+            <div className="form-group">
               <label className="form-label">Reference</label>
               <input
                 value={form.reference}
@@ -168,7 +170,7 @@ export default function PayrollPage() {
                 placeholder="Optional reference"
               />
             </div>
-            <div>
+            <div className="form-group">
               <label className="form-label">Note</label>
               <input
                 value={form.note}

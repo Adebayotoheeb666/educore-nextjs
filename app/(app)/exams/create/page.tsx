@@ -5,7 +5,13 @@ import { toast } from "sonner";
 import { authenticatedFetch } from "@/lib/utils/fetch";
 import "../../shared.css";
 
-const EXAM_TYPES = ["CA", "Mid-Term", "Final", "Mock", "Quiz", "Assignment"];
+// Map database values to user-friendly labels
+const EXAM_TYPES = [
+  { value: "ca", label: "Continuous Assessment" },
+  { value: "exam", label: "Exam" },
+  { value: "quiz", label: "Quiz" },
+  { value: "assignment", label: "Assignment" },
+];
 
 export default function CreateExamPage() {
   const router = useRouter();
@@ -13,7 +19,7 @@ export default function CreateExamPage() {
   const [subjects, setSubjects] = useState<{ id: string; name: string }[]>([]);
   const [submitting, setSubmitting] = useState(false);
   const [form, setForm] = useState({
-    title: "", classId: "", subjectId: "", type: "CA",
+    title: "", classId: "", subjectId: "", type: "ca",
     date: "", durationMinutes: "60", totalMarks: "100",
     term: "", session: "", instructions: "",
   });
@@ -97,7 +103,7 @@ export default function CreateExamPage() {
             <div className="form-group">
               <label>Exam Type</label>
               <select value={form.type} onChange={(e) => set("type", e.target.value)}>
-                {EXAM_TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
+                {EXAM_TYPES.map((t) => <option key={t.value} value={t.value}>{t.label}</option>)}
               </select>
             </div>
             <div className="form-group">

@@ -35,5 +35,14 @@ export const POST = withAuth(
       return serverError(err);
     }
   }),
-  ["subject_teacher", "class_teacher", "vp_academics", "principal"]
+  [
+    "subject_teacher",
+    "class_teacher",
+    "vp_academics",
+    "principal",
+    "vp_admin",
+    "admin_staff",
+    "school_owner",
+    "super_admin",
+  ]
 );

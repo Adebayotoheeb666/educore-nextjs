@@ -52,6 +52,5 @@ export const POST = withAuth(
     } catch (err) {
       return serverError(err);
     }
-  }),
-  ["class_teacher", "subject_teacher"]
+  })
 );

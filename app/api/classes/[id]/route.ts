@@ -30,11 +30,12 @@ export const GET = withAuth(async (_req: NextRequest, { school }: AuthContext, p
     );
 
     // Get curriculum subjects for this class in the current session
+    // Include NULL academic_session for subjects added without explicit session
     const subjects = await query(
       `SELECT cs.id, cs.subject_id as id, s.name, s.code, cs.is_compulsory
        FROM class_subjects cs
        LEFT JOIN subjects s ON cs.subject_id = s.id
-       WHERE cs.class_id = ? AND s.school_id = ? AND cs.academic_session = ?
+       WHERE cs.class_id = ? AND s.school_id = ? AND (cs.academic_session = ? OR cs.academic_session IS NULL)
        ORDER BY s.name`,
       [classId, school.id, session]
     );

@@ -21,7 +21,8 @@ interface LessonPlan {
 }
 
 const STATUS_CLASS: Record<string, string> = {
-  pending: "badge-yellow",
+  draft: "badge-gray",
+  submitted: "badge-yellow",
   approved: "badge-green",
   rejected: "badge-red",
 };
@@ -57,7 +58,9 @@ export default function LessonPlansPage() {
   const stats = {
     total: plans.length,
     approved: plans.filter((p) => p.status === "approved").length,
-    pending: plans.filter((p) => p.status === "pending").length,
+    submitted: plans.filter((p) => p.status === "submitted").length,
+    draft: plans.filter((p) => p.status === "draft").length,
+    rejected: plans.filter((p) => p.status === "rejected").length,
     aiGenerated: plans.filter((p) => p.ai_generated).length,
   };
 
@@ -80,8 +83,8 @@ export default function LessonPlansPage() {
         {[
           { label: "Total Plans",   value: stats.total,       icon: "📚" },
           { label: "Approved",      value: stats.approved,    icon: "✅" },
-          { label: "Pending",       value: stats.pending,     icon: "⏳" },
-          { label: "AI Assisted",   value: stats.aiGenerated, icon: "✨" },
+          { label: "Pending",       value: stats.submitted,  icon: "⏳" },
+          { label: "Draft",         value: stats.draft,      icon: "📝" },
         ].map((s) => (
           <div key={s.label} style={{ background: "white", borderRadius: 16, border: "1px solid #f1f5f9", padding: "2rem", textAlign: "center" }}>
             <div style={{ fontSize: "2.8rem", marginBottom: "0.8rem" }}>{s.icon}</div>
@@ -103,7 +106,8 @@ export default function LessonPlansPage() {
         </div>
         <select className="filter-select" value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
           <option value="">All Statuses</option>
-          <option value="pending">Pending</option>
+          <option value="draft">Draft</option>
+          <option value="submitted">Pending</option>
           <option value="approved">Approved</option>
           <option value="rejected">Rejected</option>
         </select>
@@ -146,8 +150,8 @@ export default function LessonPlansPage() {
                   <td>{p.teacher_name ?? "—"}</td>
                   <td>{p.term ? `${p.term}${p.week ? `, Wk ${p.week}` : ""}` : "—"}</td>
                   <td>
-                    <span className={`badge ${STATUS_CLASS[p.status ?? "pending"] ?? "badge-gray"}`}>
-                      {p.status ?? "pending"}
+                    <span className={`badge ${STATUS_CLASS[p.status ?? "draft"] ?? "badge-gray"}`}>
+                      {p.status ?? "draft"}
                     </span>
                   </td>
                   <td>

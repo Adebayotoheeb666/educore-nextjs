@@ -7,7 +7,16 @@ import { generateId } from "@/lib/utils/id";
 
 export const dynamic = "force-dynamic";
 
-const TEACHER_ROLES = ["subject_teacher", "class_teacher", "vp_academics", "principal"];
+const LESSON_PLANNING_ROLES = [
+  "subject_teacher",
+  "class_teacher",
+  "vp_academics",
+  "principal",
+  "vp_admin",
+  "admin_staff",
+  "school_owner",
+  "super_admin",
+];
 
 export const GET = withAuth(requireService("lesson-plans", async (req: NextRequest, { school, user }: AuthContext): Promise<NextResponse> => {
   try {
@@ -26,7 +35,7 @@ export const GET = withAuth(requireService("lesson-plans", async (req: NextReque
     if (status)    { filters += " AND lp.status = ?"; args.push(status); }
 
     // Teachers only see their own plans; admin roles see all
-    if (!["principal", "vp_academics", "school_owner"].includes(user.role)) {
+    if (!["principal", "vp_academics", "school_owner", "vp_admin", "admin_staff", "super_admin"].includes(user.role)) {
       filters += " AND lp.teacher_id = ?";
       args.push(user.id);
     }
@@ -67,5 +76,5 @@ export const POST = withAuth(
       return serverError(err);
     }
   }),
-  TEACHER_ROLES
+  LESSON_PLANNING_ROLES
 );

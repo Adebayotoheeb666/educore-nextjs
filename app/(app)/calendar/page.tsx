@@ -9,10 +9,11 @@ interface CalendarEvent {
   start_date: string; end_date?: string; term?: string; is_public?: number;
 }
 
-const EVENT_TYPES = ["holiday", "exam", "meeting", "sports", "cultural", "academic", "other"];
+// Keep these in sync with the DB CHECK constraint in lib/db/schema.sql
+const EVENT_TYPES = ["holiday", "exam", "event", "term_start", "term_end", "other"];
 const TYPE_COLORS: Record<string, string> = {
-  holiday: "#f59e0b", exam: "#ef4444", meeting: "#6A5ACD",
-  sports: "#22c55e", cultural: "#3b82f6", academic: "#8b5cf6", other: "#94a3b8",
+  holiday: "#f59e0b", exam: "#ef4444", event: "#6A5ACD",
+  term_start: "#8b5cf6", term_end: "#6A5ACD", other: "#94a3b8",
 };
 
 export default function CalendarPage() {
@@ -22,7 +23,7 @@ export default function CalendarPage() {
   const [submitting, setSubmitting] = useState(false);
   const [typeFilter, setTypeFilter] = useState("");
   const [form, setForm] = useState({
-    title: "", description: "", type: "academic",
+    title: "", description: "", type: "event",
     startDate: "", endDate: "", term: "", isPublic: true,
   });
 
@@ -73,7 +74,7 @@ export default function CalendarPage() {
       });
       if (!res.ok) throw new Error((await res.json()).message);
       toast.success("Event added");
-      setForm({ title: "", description: "", type: "academic", startDate: "", endDate: "", term: "", isPublic: true });
+      setForm({ title: "", description: "", type: "event", startDate: "", endDate: "", term: "", isPublic: true });
       setShowForm(false);
       load();
     } catch (err: unknown) {

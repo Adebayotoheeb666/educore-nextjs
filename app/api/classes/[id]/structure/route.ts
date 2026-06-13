@@ -32,7 +32,7 @@ export const GET = withAuth(async (req: NextRequest, { school }: AuthContext, pa
               COUNT(DISTINCT st.teacher_id) as teacher_count
        FROM class_subjects cs
        LEFT JOIN subjects s ON cs.subject_id = s.id
-       LEFT JOIN subject_teachers st ON st.subject_id = s.id AND st.class_id = ? AND st.academic_session = ?
+       LEFT JOIN subject_teachers st ON st.subject_id = s.id AND (st.class_id = ? OR st.class_id IS NULL) AND (st.academic_session = ? OR st.academic_session IS NULL)
        LEFT JOIN users u ON st.teacher_id = u.id
        WHERE cs.class_id = ? AND s.school_id = ? AND cs.academic_session = ?
        GROUP BY cs.id, s.id

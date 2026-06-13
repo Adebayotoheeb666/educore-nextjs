@@ -13,7 +13,8 @@ export const GET = withAuth(async (_req: NextRequest, { school }: AuthContext, p
     if (!parent) return notFound("Parent not found");
 
     const children = await query(
-      `SELECT u.id, u.name, u.first_name, u.last_name, u.email, u.admission_no, u.avatar
+      `SELECT u.id, u.name, u.first_name, u.last_name, u.email, u.admission_no, u.avatar,
+              ur.relationship as relationship
        FROM user_relationships ur
        JOIN users u ON ur.child_id = u.id
        WHERE ur.parent_id = ?`,

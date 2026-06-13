@@ -68,9 +68,8 @@ export default function ClassCurriculumPage() {
         if (res.ok) {
           const data = await res.json();
           const classData = data.data || data;
-          if (classData.academic_session) {
-            setSession(classData.academic_session);
-          }
+          const academicSession = classData.academic_session || "";
+          setSession(academicSession);
         }
       } catch (err) {
         console.error("Failed to fetch class:", err);
@@ -86,6 +85,13 @@ export default function ClassCurriculumPage() {
   useEffect(() => {
     fetchAllSubjects();
   }, []);
+
+  // Auto-open the add-subject form when there are no subjects
+  useEffect(() => {
+    if (!loading && subjects.length === 0) {
+      setShowAddSubject(true);
+    }
+  }, [loading, subjects.length]);
 
   const fetchCurriculumData = async () => {
     try {
@@ -114,13 +120,9 @@ export default function ClassCurriculumPage() {
         const data = await res.json();
         const subjectsArray = Array.isArray(data) ? data : (data?.data || []);
         setAllSubjects(subjectsArray);
-      } else {
-        console.error("Failed to fetch subjects:", res.status);
-        setError(`Failed to load subjects (${res.status})`);
       }
     } catch (err) {
       console.error("Failed to fetch subjects:", err);
-      setError("Failed to load available subjects");
     }
   };
 
@@ -131,15 +133,20 @@ export default function ClassCurriculumPage() {
     }
 
     try {
+      const payload: any = {
+        subjectId: selectedSubjectId,
+        isCompulsory: false,
+        sequence: (subjects.length || 0) + 1,
+      };
+
+      if (session && session.trim()) {
+        payload.academicSession = session;
+      }
+
       const res = await authenticatedFetch(`/api/classes/${classId}/subjects`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          subjectId: selectedSubjectId,
-          isCompulsory: false,
-          sequence: (subjects.length || 0) + 1,
-          academicSession: session || undefined,
-        }),
+        body: JSON.stringify(payload),
       });
 
       if (!res.ok) {
@@ -152,6 +159,7 @@ export default function ClassCurriculumPage() {
       fetchCurriculumData();
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
+      console.error("Failed to add subject:", err);
     }
   };
 
@@ -294,261 +302,263 @@ export default function ClassCurriculumPage() {
     return classStudents.filter((s) => !enrolledIds.has(s.id));
   };
 
-  if (loading) {
-    return (
-      <div className="page-container">
-        <div style={{ textAlign: "center", padding: "3rem" }}>
-          <p style={{ fontSize: "1.4rem", color: "#64748b" }}>Loading curriculum...</p>
-        </div>
-      </div>
-    );
-  }
+  const requiredCount = subjects.filter(s => s.is_compulsory).length;
+  const electiveCount = subjects.filter(s => !s.is_compulsory).length;
 
   return (
-    <div className="page-container">
+    <div className="curriculum-page">
+      {/* Header */}
       <div className="page-header-row">
         <div className="page-header-text">
-          <h1>Class Curriculum & Subjects</h1>
-          <p>Manage subjects, teachers, and student enrollments</p>
+          <h1>📚 Curriculum & Subjects</h1>
+          <p>Design and manage your class curriculum with subjects, teachers, and students</p>
         </div>
         <Link href={`/classes/${classId}`} className="btn-outline">
-          ← Back to Class
+          ← Back
         </Link>
       </div>
 
+      {/* Error Alert */}
       {error && (
-        <div className="alert-banner alert-error">
+        <div className="alert-error">
           <span>⚠️ {error}</span>
-          <button onClick={() => setError(null)} style={{ background: "none", border: "none", cursor: "pointer", fontSize: "1.4rem" }}>
-            ✕
-          </button>
+          <button onClick={() => setError(null)} className="alert-close">✕</button>
         </div>
       )}
 
-      <div style={{ marginBottom: "2rem" }}>
-        <label style={{ fontWeight: 700, fontSize: "1.1rem", marginBottom: "0.5rem", display: "block" }}>Academic Session</label>
-        <input
-          type="text"
-          placeholder="e.g., 2024/2025"
-          value={session}
-          onChange={(e) => setSession(e.target.value)}
-          className="curriculum-input"
-        />
+      {/* Session Selector */}
+      <div className="session-row">
+        <div className="session-input-wrap">
+          <label>📅 Academic Session</label>
+          <input
+            type="text"
+            placeholder="e.g., 2024/2025"
+            value={session}
+            onChange={(e) => setSession(e.target.value)}
+            className="session-input"
+          />
+        </div>
       </div>
 
-      <div className="premium-table-card">
-        <div style={{ padding: "2rem", borderBottom: "1px solid #e2e8f0", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <h2 style={{ margin: 0, fontSize: "1.6rem", fontWeight: 700, color: "#0f172a" }}>
-            Curriculum Subjects ({subjects.length})
-          </h2>
-          <button
-            className="btn-primary"
-            onClick={() => {
-              setShowAddSubject(!showAddSubject);
-              setSelectedSubjectId("");
-            }}
-          >
-            {showAddSubject ? "Cancel" : "📚 Add Subject"}
-          </button>
+      {/* Stats Cards */}
+      {!loading && subjects.length > 0 && (
+        <div className="stats-grid">
+          <div className="stat-box">
+            <div className="stat-icon">📚</div>
+            <div className="stat-info">
+              <div className="stat-value">{subjects.length}</div>
+              <div className="stat-label">Total Subjects</div>
+            </div>
+          </div>
+          <div className="stat-box">
+            <div className="stat-icon">✅</div>
+            <div className="stat-info">
+              <div className="stat-value">{requiredCount}</div>
+              <div className="stat-label">Required</div>
+            </div>
+          </div>
+          <div className="stat-box">
+            <div className="stat-icon">⭕</div>
+            <div className="stat-info">
+              <div className="stat-value">{electiveCount}</div>
+              <div className="stat-label">Elective</div>
+            </div>
+          </div>
         </div>
+      )}
 
-        {showAddSubject && (
-          <div className="add-subject-form-section">
-            {error && error.includes("Failed to load") ? (
-              <div style={{ padding: "1.5rem", textAlign: "center", color: "#991b1b", background: "#fef2f2", border: "1px solid #fecaca", borderRadius: "8px" }}>
-                <p style={{ fontSize: "1.3rem", margin: 0 }}>⚠️ {error}</p>
-              </div>
-            ) : allSubjects.length === 0 ? (
-              <div style={{ padding: "2rem", textAlign: "center", color: "#64748b" }}>
-                <p style={{ fontSize: "1.3rem" }}>
-                  {subjects.length === 0 ? "Loading subjects..." : "No subjects available. Please create subjects first."}
-                </p>
-              </div>
-            ) : availableSubjects.length === 0 ? (
-              <div style={{ padding: "2rem", textAlign: "center", color: "#64748b" }}>
-                <p style={{ fontSize: "1.3rem" }}>All available subjects ({allSubjects.length}) have been added to this class.</p>
-              </div>
-            ) : (
-              <div style={{ display: "flex", gap: "1rem", alignItems: "flex-end" }}>
-                <div style={{ flex: 1 }}>
-                  <label style={{ fontWeight: 700, fontSize: "1.1rem", marginBottom: "0.5rem", display: "block" }}>
-                    Select Subject ({availableSubjects.length} available)
-                  </label>
-                  <select
-                    value={selectedSubjectId}
-                    onChange={(e) => setSelectedSubjectId(e.target.value)}
-                    className="curriculum-select"
-                  >
-                    <option value="">Choose a subject...</option>
-                    {availableSubjects.map((subject) => (
-                      <option key={subject.id} value={subject.id}>
-                        {subject.name} {subject.code ? `(${subject.code})` : ""}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <button className="btn-primary" onClick={handleAddSubject}>
-                  Add Subject
+      {/* Main Content */}
+      <div className="curriculum-content">
+        {loading ? (
+          <div className="loading-state">
+            <div className="spinner"></div>
+            <p>Loading curriculum...</p>
+          </div>
+        ) : (
+          <>
+            {/* Add Subject Section */}
+            <div className="add-subject-card">
+              <div className="add-subject-header">
+                <h3>Manage Curriculum</h3>
+                <button
+                  className={`btn-primary ${showAddSubject ? 'active' : ''}`}
+                  onClick={() => {
+                    setShowAddSubject(!showAddSubject);
+                    setSelectedSubjectId("");
+                  }}
+                >
+                  {showAddSubject ? '✕ Cancel' : '➕ Add Subject'}
                 </button>
               </div>
-            )}
-          </div>
-        )}
 
-        <div className="table-responsive" style={{ padding: "2rem" }}>
-          {subjects.length === 0 ? (
-            <div style={{ textAlign: "center", padding: "3rem", color: "#64748b" }}>
-              <p style={{ fontSize: "1.3rem" }}>No subjects in curriculum yet</p>
-              <p style={{ fontSize: "1.2rem", marginTop: "0.5rem" }}>Click "Add Subject" to start building your curriculum</p>
+              {showAddSubject && (
+                <div className="add-subject-form">
+                  {allSubjects.length === 0 ? (
+                    <div className="form-empty">
+                      <p>No subjects available. Please create subjects first.</p>
+                    </div>
+                  ) : availableSubjects.length === 0 ? (
+                    <div className="form-empty">
+                      <p>✅ All available subjects have been added to this class.</p>
+                    </div>
+                  ) : (
+                    <div className="form-group">
+                      <label>Select Subject to Add ({availableSubjects.length} available)</label>
+                      <div className="select-wrapper">
+                        <select
+                          value={selectedSubjectId}
+                          onChange={(e) => setSelectedSubjectId(e.target.value)}
+                          className="form-select"
+                        >
+                          <option value="">Choose a subject...</option>
+                          {availableSubjects.map((subject) => (
+                            <option key={subject.id} value={subject.id}>
+                              {subject.name} {subject.code ? `(${subject.code})` : ""}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      <button
+                        className="btn-primary btn-submit"
+                        onClick={handleAddSubject}
+                      >
+                        Add to Curriculum
+                      </button>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
-          ) : (
-            <table className="premium-table">
-              <thead>
-                <tr>
-                  <th style={{ width: "60px" }}>Seq</th>
-                  <th>Subject Name</th>
-                  <th style={{ width: "100px" }}>Code</th>
-                  <th style={{ width: "100px" }}>Type</th>
-                  <th>Teachers</th>
-                  <th style={{ width: "200px" }}>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
+
+            {/* Subjects Grid — only show if subjects exist */}
+            {subjects.length > 0 && (
+              <div className="subjects-grid">
                 {subjects.map((subject) => (
-                  <tr key={subject.id}>
-                    <td style={{ textAlign: "center", fontWeight: 700, color: "#667eea" }}>{subject.sequence}</td>
-                    <td style={{ fontWeight: 700, color: "#0f172a" }}>
+                <div key={subject.id} className="subject-card">
+                  <div className="card-header">
+                    <div className="subject-meta">
+                      <span className="sequence">#{subject.sequence}</span>
+                      <span className={`type-badge ${subject.is_compulsory ? 'required' : 'elective'}`}>
+                        {subject.is_compulsory ? '✓ Required' : '◯ Elective'}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="card-body">
+                    <h4 className="subject-title">
                       {subject.subject_id ? (
-                        <Link href={`/subjects/${subject.subject_id}`} className="subject-link">
+                        <Link href={`/subjects/${subject.subject_id}`}>
                           {subject.name}
                         </Link>
                       ) : (
-                        <span>{subject.name}</span>
+                        subject.name
                       )}
-                    </td>
-                    <td><span className="mono">{subject.code || "—"}</span></td>
-                    <td style={{ textAlign: "center" }}>
-                      <span className={`subject-badge ${subject.is_compulsory ? "badge-required" : "badge-elective"}`}>
-                        {subject.is_compulsory ? "Required" : "Elective"}
-                      </span>
-                    </td>
-                    <td>
-                      {subject.teacher_count > 0 ? (
-                        <div className="teacher-info">
-                          <span style={{ fontWeight: 600, color: "#0f172a" }}>{subject.teacher_names}</span>
-                          <span style={{ fontSize: "1.1rem", color: "#64748b", display: "block" }}>
-                            ({subject.teacher_count} {subject.teacher_count === 1 ? "teacher" : "teachers"})
-                          </span>
-                        </div>
-                      ) : (
-                        <span className="no-teachers-alert">⚠️ No teachers assigned</span>
-                      )}
-                    </td>
-                    <td>
-                      <div style={{ display: "flex", gap: "0.8rem", alignItems: "center", flexWrap: "wrap" }}>
-                        <Link
-                          href={`/subjects/${subject.subject_id}`}
-                          className="btn-action btn-manage"
-                          title="Manage teachers for this subject"
-                        >
-                          👨‍🏫 Teachers
-                        </Link>
-                        <button
-                          className="btn-action btn-view"
-                          onClick={() => toggleExpandSubject(subject.subject_id)}
-                          title={expandedSubject === subject.subject_id ? "Hide students" : "View students"}
-                        >
-                          {expandedSubject === subject.subject_id ? "▼ Hide" : "▶ View"} Students
-                        </button>
-                        {!subject.is_compulsory && (
-                          <button
-                            className="btn-action btn-assign"
-                            onClick={() => {
-                              setShowOptionalAssignment(subject.subject_id);
-                              if (classStudents.length === 0) {
-                                fetchClassStudents();
-                              }
-                            }}
-                            title="Assign students to optional subject"
-                          >
-                            + Assign Students
-                          </button>
-                        )}
-                        <button
-                          className="btn-action btn-remove"
-                          onClick={() => handleRemoveSubject(subject.subject_id)}
-                          title="Remove subject"
-                        >
-                          ✕ Remove
-                        </button>
+                    </h4>
+                    {subject.code && <span className="subject-code">{subject.code}</span>}
+
+                    <div className="subject-details">
+                      <div className="detail-item">
+                        <span className="detail-label">👨‍🏫 Teachers</span>
+                        <span className="detail-value">
+                          {subject.teacher_count > 0 ? (
+                            <>
+                              {subject.teacher_names}
+                              <span className="teacher-count">({subject.teacher_count})</span>
+                            </>
+                          ) : (
+                            <span className="no-value">Not assigned</span>
+                          )}
+                        </span>
                       </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
-        </div>
+                    </div>
+                  </div>
 
-        {expandedSubject && (
-          <div className="subject-enrollment-panel">
-            <h3 style={{ margin: "0 0 1.5rem 0", fontSize: "1.4rem", fontWeight: 700, color: "#0f172a" }}>
-              📋 Students Enrolled in {subjects.find((s) => s.subject_id === expandedSubject)?.name}
-            </h3>
+                  <div className="card-actions">
+                    <button
+                      className="action-btn teachers-btn"
+                      onClick={() => window.location.href = `/subjects/${subject.subject_id}`}
+                      title="Manage teachers"
+                    >
+                      👨‍🏫 Teachers
+                    </button>
+                    <button
+                      className={`action-btn students-btn ${expandedSubject === subject.subject_id ? 'active' : ''}`}
+                      onClick={() => toggleExpandSubject(subject.subject_id)}
+                      title="View students"
+                    >
+                      {expandedSubject === subject.subject_id ? '▼' : '▶'} Students
+                    </button>
+                    {!subject.is_compulsory && (
+                      <button
+                        className="action-btn assign-btn"
+                        onClick={() => {
+                          setShowOptionalAssignment(subject.subject_id);
+                          if (classStudents.length === 0) {
+                            fetchClassStudents();
+                          }
+                        }}
+                      >
+                        ➕ Assign
+                      </button>
+                    )}
+                    <button
+                      className="action-btn remove-btn"
+                      onClick={() => handleRemoveSubject(subject.subject_id)}
+                    >
+                      🗑️ Remove
+                    </button>
+                  </div>
 
-            {loadingStudents[expandedSubject] ? (
-              <div style={{ padding: "2rem", textAlign: "center", color: "#64748b" }}>
-                <p style={{ fontSize: "1.3rem" }}>Loading students...</p>
-              </div>
-            ) : !studentsInSubject[expandedSubject] || studentsInSubject[expandedSubject].length === 0 ? (
-              <div style={{ padding: "2rem", textAlign: "center", color: "#64748b" }}>
-                <p style={{ fontSize: "1.3rem" }}>No students enrolled in this subject</p>
-              </div>
-            ) : (
-              <div className="table-responsive">
-                <table className="premium-table">
-                  <thead>
-                    <tr>
-                      <th>Student Name</th>
-                      <th style={{ width: "120px" }}>Admission No.</th>
-                      <th>Email</th>
-                      <th style={{ width: "100px" }}>Status</th>
-                      <th style={{ width: "150px" }}>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {(studentsInSubject[expandedSubject] || []).map((student) => (
-                      <tr key={student.id}>
-                        <td style={{ fontWeight: 700, color: "#0f172a" }}>{student.name}</td>
-                        <td><span className="mono">{student.admission_no || "—"}</span></td>
-                        <td>{student.email}</td>
-                        <td style={{ textAlign: "center" }}>
-                          <span className="status-badge badge-active">{student.status}</span>
-                        </td>
-                        <td>
-                          <button
-                            className="btn-action btn-remove-student"
-                            onClick={() => handleRemoveStudentFromSubject(expandedSubject, student.student_id)}
-                          >
-                            Remove
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                  {/* Expanded Students List */}
+                  {expandedSubject === subject.subject_id && (
+                    <div className="card-expansion">
+                      <div className="expansion-header">
+                        <h5>Students in this Subject</h5>
+                      </div>
+                      {loadingStudents[subject.subject_id] ? (
+                        <div className="expansion-loading">Loading students...</div>
+                      ) : !studentsInSubject[subject.subject_id] || studentsInSubject[subject.subject_id].length === 0 ? (
+                        <div className="expansion-empty">No students enrolled yet</div>
+                      ) : (
+                        <div className="students-list">
+                          {(studentsInSubject[subject.subject_id] || []).map((student) => (
+                            <div key={student.id} className="student-row">
+                              <div className="student-info">
+                                <div className="student-name">{student.name}</div>
+                                <div className="student-meta">
+                                  <span>{student.admission_no}</span>
+                                  <span className="status-badge">{student.status}</span>
+                                </div>
+                              </div>
+                              <button
+                                className="remove-student-btn"
+                                onClick={() => handleRemoveStudentFromSubject(subject.subject_id, student.student_id)}
+                                title="Remove student"
+                              >
+                                ✕
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
             )}
-          </div>
+          </>
         )}
+      </div>
 
-        {showOptionalAssignment && (
-          <div className="optional-assignment-panel">
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
-              <h3 style={{ margin: 0, fontSize: "1.4rem", fontWeight: 700, color: "#0f172a" }}>
-                Assign Students to {subjects.find((s) => s.subject_id === showOptionalAssignment)?.name} (Optional)
-              </h3>
+      {/* Modal for Optional Assignment */}
+      {showOptionalAssignment && (
+        <div className="modal-overlay" onClick={() => setShowOptionalAssignment(null)}>
+          <div className="modal-dialog" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h3>Assign Students to {subjects.find((s) => s.subject_id === showOptionalAssignment)?.name}</h3>
               <button
+                className="modal-close"
                 onClick={() => {
                   setShowOptionalAssignment(null);
                   setSelectedStudentIds((prev) => {
@@ -557,344 +567,790 @@ export default function ClassCurriculumPage() {
                     return updated;
                   });
                 }}
-                style={{
-                  background: "none",
-                  border: "none",
-                  cursor: "pointer",
-                  fontSize: "1.6rem",
-                  color: "#64748b",
-                }}
               >
                 ✕
               </button>
             </div>
 
-            {loadingClassStudents ? (
-              <div style={{ padding: "2rem", textAlign: "center", color: "#64748b" }}>
-                <p style={{ fontSize: "1.3rem" }}>Loading students...</p>
-              </div>
-            ) : getAvailableStudentsForSubject(showOptionalAssignment).length === 0 ? (
-              <div style={{ padding: "2rem", textAlign: "center", color: "#64748b" }}>
-                <p style={{ fontSize: "1.3rem" }}>All students in the class are already assigned to this subject</p>
-              </div>
-            ) : (
-              <>
-                <div className="table-responsive">
-                  <table className="premium-table">
-                    <thead>
-                      <tr>
-                        <th style={{ width: "40px", textAlign: "center" }}>
-                          <input
-                            type="checkbox"
-                            checked={
-                              getAvailableStudentsForSubject(showOptionalAssignment).length > 0 &&
-                              getAvailableStudentsForSubject(showOptionalAssignment).every((s) =>
-                                (selectedStudentIds[showOptionalAssignment] || new Set()).has(s.id)
-                              )
-                            }
-                            onChange={(e) => {
-                              setSelectedStudentIds((prev) => {
-                                const newSet = new Set(
-                                  e.target.checked
-                                    ? getAvailableStudentsForSubject(showOptionalAssignment).map((s) => s.id)
-                                    : []
-                                );
-                                return { ...prev, [showOptionalAssignment]: newSet };
-                              });
-                            }}
-                            style={{ cursor: "pointer", width: "18px", height: "18px" }}
-                          />
-                        </th>
-                        <th>Student Name</th>
-                        <th style={{ width: "120px" }}>Admission No.</th>
-                        <th>Email</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {getAvailableStudentsForSubject(showOptionalAssignment).map((student) => (
-                        <tr key={student.id}>
-                          <td style={{ textAlign: "center" }}>
-                            <input
-                              type="checkbox"
-                              checked={(selectedStudentIds[showOptionalAssignment] || new Set()).has(student.id)}
-                              onChange={() => toggleStudentSelection(showOptionalAssignment, student.id)}
-                              style={{ cursor: "pointer", width: "18px", height: "18px" }}
-                            />
-                          </td>
-                          <td style={{ fontWeight: 700, color: "#0f172a" }}>{student.name}</td>
-                          <td><span className="mono">{student.admission_no || "—"}</span></td>
-                          <td>{student.email}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+            <div className="modal-body">
+              {loadingClassStudents ? (
+                <div style={{ textAlign: "center", padding: "2rem" }}>Loading...</div>
+              ) : getAvailableStudentsForSubject(showOptionalAssignment).length === 0 ? (
+                <div style={{ textAlign: "center", padding: "2rem", color: "#64748b" }}>
+                  All students are already assigned ✅
                 </div>
+              ) : (
+                <>
+                  <div className="select-all-box">
+                    <label>
+                      <input
+                        type="checkbox"
+                        checked={
+                          getAvailableStudentsForSubject(showOptionalAssignment).length > 0 &&
+                          getAvailableStudentsForSubject(showOptionalAssignment).every((s) =>
+                            (selectedStudentIds[showOptionalAssignment] || new Set()).has(s.id)
+                          )
+                        }
+                        onChange={(e) => {
+                          setSelectedStudentIds((prev) => {
+                            const newSet = new Set(
+                              e.target.checked
+                                ? getAvailableStudentsForSubject(showOptionalAssignment).map((s) => s.id)
+                                : []
+                            );
+                            return { ...prev, [showOptionalAssignment]: newSet };
+                          });
+                        }}
+                      />
+                      <span>Select All</span>
+                    </label>
+                  </div>
 
-                <div style={{ display: "flex", gap: "1rem", marginTop: "1.5rem", justifyContent: "flex-end" }}>
-                  <button
-                    className="btn-outline"
-                    onClick={() => {
-                      setShowOptionalAssignment(null);
-                      setSelectedStudentIds((prev) => {
-                        const updated = { ...prev };
-                        delete updated[showOptionalAssignment];
-                        return updated;
-                      });
-                    }}
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    className="btn-primary"
-                    onClick={() => handleOptionalSubjectAssignment(showOptionalAssignment)}
-                    disabled={assigningOptional[showOptionalAssignment] || (selectedStudentIds[showOptionalAssignment] || new Set()).size === 0}
-                  >
-                    {assigningOptional[showOptionalAssignment]
-                      ? "Assigning..."
-                      : `Assign ${(selectedStudentIds[showOptionalAssignment] || new Set()).size} Student${(selectedStudentIds[showOptionalAssignment] || new Set()).size !== 1 ? "s" : ""}`}
-                  </button>
-                </div>
-              </>
-            )}
+                  <div className="students-checklist">
+                    {getAvailableStudentsForSubject(showOptionalAssignment).map((student) => (
+                      <label key={student.id} className="checkbox-item">
+                        <input
+                          type="checkbox"
+                          checked={(selectedStudentIds[showOptionalAssignment] || new Set()).has(student.id)}
+                          onChange={() => toggleStudentSelection(showOptionalAssignment, student.id)}
+                        />
+                        <span className="checkbox-label">
+                          <div>{student.name}</div>
+                          <div className="checkbox-meta">{student.admission_no}</div>
+                        </span>
+                      </label>
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
+
+            <div className="modal-footer">
+              <button
+                className="btn-outline"
+                onClick={() => {
+                  setShowOptionalAssignment(null);
+                  setSelectedStudentIds((prev) => {
+                    const updated = { ...prev };
+                    delete updated[showOptionalAssignment];
+                    return updated;
+                  });
+                }}
+              >
+                Cancel
+              </button>
+              <button
+                className="btn-primary"
+                onClick={() => handleOptionalSubjectAssignment(showOptionalAssignment)}
+                disabled={assigningOptional[showOptionalAssignment] || (selectedStudentIds[showOptionalAssignment] || new Set()).size === 0}
+              >
+                {assigningOptional[showOptionalAssignment]
+                  ? 'Assigning...'
+                  : `Assign ${(selectedStudentIds[showOptionalAssignment] || new Set()).size} Student${(selectedStudentIds[showOptionalAssignment] || new Set()).size !== 1 ? 's' : ''}`}
+              </button>
+            </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
 
       <style jsx>{`
-        .page-container {
-          max-width: 1200px;
+        .curriculum-page {
+          max-width: 1400px;
           margin: 0 auto;
           padding: 2rem;
         }
 
-        .curriculum-input {
-          width: 100%;
-          padding: 1rem 1.5rem;
-          border: 1px solid #e2e8f0;
-          border-radius: 10px;
-          font-size: 1.3rem;
-          background: var(--bg-card);
-          color: var(--text-main);
-          outline: none;
-          transition: all 0.15s;
+        .page-header-row {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          margin-bottom: 2rem;
+          gap: 2rem;
         }
 
-        .curriculum-input:focus {
-          border-color: #6A5ACD;
-          box-shadow: 0 0 0 3px rgba(106, 90, 205, 0.1);
+        .page-header-text h1 {
+          margin: 0 0 0.5rem 0;
+          font-size: 2rem;
+          font-weight: 800;
+          color: #0f172a;
         }
 
-        .curriculum-select {
-          width: 100%;
-          padding: 1rem 1.5rem;
-          border: 1px solid #e2e8f0;
-          border-radius: 10px;
-          font-size: 1.3rem;
-          background: var(--bg-card);
-          color: var(--text-main);
-          outline: none;
-          cursor: pointer;
-          transition: all 0.15s;
-        }
-
-        .curriculum-select:focus {
-          border-color: #6A5ACD;
-          box-shadow: 0 0 0 3px rgba(106, 90, 205, 0.1);
-        }
-
-        .add-subject-form-section {
-          padding: 2rem;
-          background: #f8fafc;
-          border-bottom: 1px solid #e2e8f0;
-        }
-
-        .subject-link {
-          color: #6A5ACD;
-          text-decoration: none;
-          font-weight: 700;
-          transition: all 0.15s;
-        }
-
-        .subject-link:hover {
-          text-decoration: underline;
-        }
-
-        .subject-badge {
-          padding: 0.4rem 1rem;
-          border-radius: 6px;
+        .page-header-text p {
+          margin: 0;
+          color: #64748b;
           font-size: 1.1rem;
+        }
+
+        .alert-error {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 1rem 1.5rem;
+          background: #fef2f2;
+          border: 1px solid #fecaca;
+          border-radius: 10px;
+          color: #991b1b;
+          margin-bottom: 2rem;
+          font-weight: 600;
+        }
+
+        .alert-close {
+          background: none;
+          border: none;
+          cursor: pointer;
+          font-size: 1.5rem;
+          color: #991b1b;
+          padding: 0;
+          width: 30px;
+          height: 30px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .session-row {
+          display: flex;
+          gap: 1.5rem;
+          margin-bottom: 2rem;
+        }
+
+        .session-input-wrap {
+          flex: 1;
+          max-width: 300px;
+        }
+
+        .session-input-wrap label {
+          display: block;
+          font-weight: 700;
+          margin-bottom: 0.5rem;
+          font-size: 1rem;
+          color: #0f172a;
+        }
+
+        .session-input {
+          width: 100%;
+          padding: 0.75rem 1rem;
+          border: 1px solid #e2e8f0;
+          border-radius: 8px;
+          font-size: 1rem;
+          outline: none;
+          transition: all 0.2s;
+        }
+
+        .session-input:focus {
+          border-color: #6a5acd;
+          box-shadow: 0 0 0 3px rgba(106, 90, 205, 0.1);
+        }
+
+        .stats-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          gap: 1.5rem;
+          margin-bottom: 2rem;
+        }
+
+        .stat-box {
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          border-radius: 12px;
+          padding: 1.5rem;
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+          color: white;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-icon {
+          font-size: 2.5rem;
+          opacity: 0.8;
+        }
+
+        .stat-info {
+          flex: 1;
+        }
+
+        .stat-value {
+          font-size: 1.8rem;
+          font-weight: 800;
+          line-height: 1;
+        }
+
+        .stat-label {
+          font-size: 0.9rem;
+          opacity: 0.9;
+          margin-top: 0.3rem;
+        }
+
+        .curriculum-content {
+          display: flex;
+          flex-direction: column;
+          gap: 2rem;
+        }
+
+        .loading-state {
+          text-align: center;
+          padding: 4rem 2rem;
+        }
+
+        .spinner {
+          width: 40px;
+          height: 40px;
+          border: 4px solid #e2e8f0;
+          border-top-color: #667eea;
+          border-radius: 50%;
+          animation: spin 1s linear infinite;
+          margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+          to { transform: rotate(360deg); }
+        }
+
+        .empty-state {
+          text-align: center;
+          padding: 4rem 2rem;
+          background: #f8fafc;
+          border-radius: 16px;
+          border: 2px dashed #e2e8f0;
+        }
+
+        .empty-icon {
+          font-size: 4rem;
+          margin-bottom: 1rem;
+        }
+
+        .empty-state h2 {
+          margin: 0 0 0.5rem 0;
+          color: #0f172a;
+          font-size: 1.8rem;
+        }
+
+        .empty-state p {
+          margin: 0 0 1.5rem 0;
+          color: #64748b;
+        }
+
+        .btn-lg {
+          padding: 1rem 2rem !important;
+          font-size: 1.1rem !important;
+        }
+
+        .add-subject-card {
+          background: white;
+          border: 1px solid #e2e8f0;
+          border-radius: 12px;
+          overflow: hidden;
+        }
+
+        .add-subject-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 1.5rem;
+          border-bottom: 1px solid #e2e8f0;
+          background: #f8fafc;
+        }
+
+        .add-subject-header h3 {
+          margin: 0;
+          font-size: 1.3rem;
+          color: #0f172a;
+        }
+
+        .add-subject-form {
+          padding: 1.5rem;
+          background: white;
+        }
+
+        .form-empty {
+          text-align: center;
+          padding: 2rem;
+          color: #64748b;
+        }
+
+        .form-group {
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+        }
+
+        .form-group label {
+          font-weight: 700;
+          color: #0f172a;
+        }
+
+        .select-wrapper {
+          display: flex;
+          gap: 0.5rem;
+          align-items: flex-end;
+        }
+
+        .form-select {
+          flex: 1;
+          padding: 0.75rem 1rem;
+          border: 1px solid #e2e8f0;
+          border-radius: 8px;
+          font-size: 1rem;
+          background: white;
+          cursor: pointer;
+          outline: none;
+        }
+
+        .form-select:focus {
+          border-color: #6a5acd;
+          box-shadow: 0 0 0 3px rgba(106, 90, 205, 0.1);
+        }
+
+        .btn-submit {
+          align-self: flex-end;
+        }
+
+        .subjects-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+          gap: 1.5rem;
+        }
+
+        .subject-card {
+          background: white;
+          border: 1px solid #e2e8f0;
+          border-radius: 12px;
+          overflow: hidden;
+          transition: all 0.3s ease;
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .subject-card:hover {
+          border-color: #6a5acd;
+          box-shadow: 0 8px 16px rgba(106, 90, 205, 0.1);
+          transform: translateY(-2px);
+        }
+
+        .card-header {
+          padding: 1rem 1.5rem;
+          background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+          border-bottom: 1px solid #e2e8f0;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        .subject-meta {
+          display: flex;
+          gap: 0.75rem;
+          align-items: center;
+        }
+
+        .sequence {
+          font-weight: 700;
+          color: #667eea;
+          font-size: 0.95rem;
+        }
+
+        .type-badge {
+          padding: 0.3rem 0.75rem;
+          border-radius: 6px;
+          font-size: 0.85rem;
           font-weight: 700;
           display: inline-block;
         }
 
-        .badge-required {
+        .type-badge.required {
           background: #dbeafe;
           color: #1e40af;
         }
 
-        .badge-elective {
+        .type-badge.elective {
           background: #fef3c7;
           color: #92400e;
         }
 
-        .status-badge {
-          padding: 0.4rem 1rem;
-          border-radius: 6px;
-          font-size: 1.1rem;
+        .card-body {
+          padding: 1.5rem;
+        }
+
+        .subject-title {
+          margin: 0 0 0.5rem 0;
+          font-size: 1.3rem;
           font-weight: 700;
+          color: #0f172a;
+        }
+
+        .subject-title a {
+          color: #667eea;
+          text-decoration: none;
+          transition: color 0.2s;
+        }
+
+        .subject-title a:hover {
+          color: #5a67d8;
+          text-decoration: underline;
+        }
+
+        .subject-code {
           display: inline-block;
+          background: #f1f5f9;
+          padding: 0.2rem 0.6rem;
+          border-radius: 4px;
+          font-size: 0.85rem;
+          color: #64748b;
+          font-family: monospace;
+          margin-bottom: 1rem;
         }
 
-        .badge-active {
-          background: #d1fae5;
-          color: #065f46;
+        .subject-details {
+          display: flex;
+          flex-direction: column;
+          gap: 0.75rem;
         }
 
-        .teacher-info {
-          line-height: 1.5;
+        .detail-item {
+          display: flex;
+          gap: 0.5rem;
+          align-items: flex-start;
+          font-size: 0.95rem;
         }
 
-        .no-teachers-alert {
+        .detail-label {
+          font-weight: 600;
+          color: #64748b;
+          min-width: 80px;
+        }
+
+        .detail-value {
+          color: #0f172a;
+          flex: 1;
+        }
+
+        .teacher-count {
+          display: block;
+          font-size: 0.85rem;
+          color: #64748b;
+        }
+
+        .no-value {
           color: #ea580c;
           font-weight: 600;
         }
 
-        .btn-action {
-          padding: 0.6rem 1.2rem;
-          border: none;
+        .card-actions {
+          display: flex;
+          gap: 0.5rem;
+          padding: 1rem 1.5rem;
+          border-top: 1px solid #e2e8f0;
+          background: #f8fafc;
+          flex-wrap: wrap;
+        }
+
+        .action-btn {
+          flex: 1;
+          min-width: 80px;
+          padding: 0.6rem 0.8rem;
+          border: 1px solid #e2e8f0;
           border-radius: 8px;
-          font-size: 1.1rem;
-          font-weight: 700;
+          font-size: 0.9rem;
+          font-weight: 600;
           cursor: pointer;
-          transition: all 0.15s;
+          background: white;
+          transition: all 0.2s;
           white-space: nowrap;
         }
 
-        .btn-view {
-          background: #f0f4ff;
-          color: #4f46e5;
-          border: 1px solid #ddd6fe;
+        .teachers-btn {
+          border-color: #fde68a;
+          color: #92400e;
         }
 
-        .btn-view:hover {
+        .teachers-btn:hover {
+          background: #fef3c7;
+          border-color: #fbbf24;
+        }
+
+        .students-btn {
+          border-color: #ddd6fe;
+          color: #4f46e5;
+        }
+
+        .students-btn:hover,
+        .students-btn.active {
           background: #e0e7ff;
           border-color: #c7d2fe;
         }
 
-        .btn-manage {
-          background: #fef3c7;
-          color: #92400e;
-          border: 1px solid #fde68a;
-          text-decoration: none;
-          display: inline-block;
-        }
-
-        .btn-manage:hover {
-          background: #fcd34d;
-          border-color: #fbbf24;
-        }
-
-        .btn-assign {
-          background: #f0fdf4;
+        .assign-btn {
+          border-color: #bbf7d0;
           color: #16a34a;
-          border: 1px solid #bbf7d0;
         }
 
-        .btn-assign:hover {
-          background: #dcfce7;
+        .assign-btn:hover {
+          background: #f0fdf4;
           border-color: #86efac;
         }
 
-        .btn-remove {
-          background: #fef2f2;
+        .remove-btn {
+          border-color: #fecaca;
           color: #dc2626;
-          border: 1px solid #fecaca;
         }
 
-        .btn-remove:hover {
-          background: #fee2e2;
+        .remove-btn:hover {
+          background: #fef2f2;
           border-color: #fca5a5;
         }
 
-        .btn-remove-student {
-          background: #fef2f2;
-          color: #dc2626;
-          border: 1px solid #fecaca;
-        }
-
-        .btn-remove-student:hover {
-          background: #fee2e2;
-          border-color: #fca5a5;
-        }
-
-        .subject-enrollment-panel {
-          padding: 2rem;
+        .card-expansion {
+          border-top: 1px solid #e2e8f0;
+          padding: 1.5rem;
           background: #f8fafc;
-          border-top: 2px solid #e2e8f0;
-          margin-top: 0;
-          border-radius: 0 0 16px 16px;
         }
 
-        .optional-assignment-panel {
+        .expansion-header {
+          margin-bottom: 1rem;
+        }
+
+        .expansion-header h5 {
+          margin: 0;
+          font-size: 1rem;
+          color: #0f172a;
+          font-weight: 700;
+        }
+
+        .expansion-loading,
+        .expansion-empty {
+          text-align: center;
           padding: 2rem;
-          background: #f0fdf4;
-          border-top: 2px solid #86efac;
-          margin-top: 0;
-          border-radius: 0 0 16px 16px;
+          color: #64748b;
         }
 
-        .alert-banner {
-          padding: 1.2rem 1.5rem;
-          border-radius: 10px;
-          margin-bottom: 2rem;
+        .students-list {
+          display: flex;
+          flex-direction: column;
+          gap: 0.75rem;
+        }
+
+        .student-row {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          font-size: 1.3rem;
+          padding: 0.75rem;
+          background: white;
+          border: 1px solid #e2e8f0;
+          border-radius: 8px;
+          transition: all 0.2s;
+        }
+
+        .student-row:hover {
+          border-color: #d1d5db;
+          background: #f9fafb;
+        }
+
+        .student-info {
+          flex: 1;
+        }
+
+        .student-name {
+          font-weight: 600;
+          color: #0f172a;
+          margin-bottom: 0.2rem;
+        }
+
+        .student-meta {
+          display: flex;
+          gap: 0.75rem;
+          font-size: 0.85rem;
+          color: #64748b;
+        }
+
+        .status-badge {
+          background: #d1fae5;
+          color: #065f46;
+          padding: 0.2rem 0.6rem;
+          border-radius: 4px;
           font-weight: 600;
         }
 
-        .alert-error {
-          background: #fef2f2;
-          color: #991b1b;
-          border: 1px solid #fecaca;
+        .remove-student-btn {
+          background: none;
+          border: none;
+          color: #dc2626;
+          cursor: pointer;
+          font-size: 1.2rem;
+          padding: 0.5rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.2s;
         }
 
-        .table-responsive {
-          overflow-x: auto;
-          -webkit-overflow-scrolling: touch;
+        .remove-student-btn:hover {
+          background: #fef2f2;
+          border-radius: 6px;
+        }
+
+        .modal-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: rgba(0, 0, 0, 0.5);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 1000;
+          padding: 1rem;
+        }
+
+        .modal-dialog {
+          background: white;
+          border-radius: 16px;
+          max-width: 600px;
+          width: 100%;
+          max-height: 90vh;
+          overflow: auto;
+          box-shadow: 0 20px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .modal-header {
+          padding: 1.5rem;
+          border-bottom: 1px solid #e2e8f0;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          background: #f8fafc;
+        }
+
+        .modal-header h3 {
+          margin: 0;
+          font-size: 1.3rem;
+          color: #0f172a;
+        }
+
+        .modal-close {
+          background: none;
+          border: none;
+          cursor: pointer;
+          font-size: 1.5rem;
+          color: #64748b;
+          width: 40px;
+          height: 40px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 8px;
+          transition: all 0.2s;
+        }
+
+        .modal-close:hover {
+          background: #e2e8f0;
+          color: #0f172a;
+        }
+
+        .modal-body {
+          padding: 1.5rem;
+        }
+
+        .select-all-box {
+          margin-bottom: 1rem;
+          padding-bottom: 1rem;
+          border-bottom: 1px solid #e2e8f0;
+        }
+
+        .select-all-box label {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          cursor: pointer;
+          font-weight: 600;
+          color: #0f172a;
+        }
+
+        .select-all-box input {
+          width: 18px;
+          height: 18px;
+          cursor: pointer;
+        }
+
+        .students-checklist {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+        }
+
+        .checkbox-item {
+          display: flex;
+          align-items: flex-start;
+          gap: 0.75rem;
+          padding: 0.75rem;
+          cursor: pointer;
+          border-radius: 8px;
+          transition: all 0.2s;
+        }
+
+        .checkbox-item:hover {
+          background: #f8fafc;
+        }
+
+        .checkbox-item input {
+          width: 18px;
+          height: 18px;
+          cursor: pointer;
+          margin-top: 2px;
+          flex-shrink: 0;
+        }
+
+        .checkbox-label {
+          flex: 1;
+        }
+
+        .checkbox-label div:first-child {
+          font-weight: 600;
+          color: #0f172a;
+        }
+
+        .checkbox-meta {
+          font-size: 0.85rem;
+          color: #64748b;
+          margin-top: 0.2rem;
+        }
+
+        .modal-footer {
+          padding: 1.5rem;
+          border-top: 1px solid #e2e8f0;
+          background: #f8fafc;
+          display: flex;
+          gap: 1rem;
+          justify-content: flex-end;
         }
 
         @media (max-width: 768px) {
-          .page-container {
-            padding: 1.2rem;
-          }
-
-          .add-subject-form-section {
+          .curriculum-page {
             padding: 1.5rem;
           }
 
-          .btn-action {
-            padding: 0.5rem 0.8rem;
-            font-size: 1rem;
-          }
-
-          .subject-enrollment-panel {
-            padding: 1.5rem;
-          }
-        }
-
-        @media (max-width: 480px) {
-          .page-container {
-            padding: 1rem;
-          }
-
-          .btn-action {
-            display: flex;
+          .page-header-row {
             flex-direction: column;
+            gap: 1rem;
+          }
+
+          .subjects-grid {
+            grid-template-columns: 1fr;
+          }
+
+          .stats-grid {
+            grid-template-columns: 1fr;
+          }
+
+          .add-subject-header {
+            flex-direction: column;
+            align-items: flex-start;
+          }
+
+          .card-actions {
+            flex-direction: column;
+          }
+
+          .action-btn {
             width: 100%;
-            padding: 0.5rem;
-            font-size: 0.9rem;
           }
         }
       `}</style>

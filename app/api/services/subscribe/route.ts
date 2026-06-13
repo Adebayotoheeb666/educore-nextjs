@@ -3,6 +3,7 @@ import { queryOne, execute } from "@/lib/db/turso";
 import { withAuth, type AuthContext } from "@/lib/middleware/auth";
 import { badRequest, forbidden, ok, serverError } from "@/lib/utils/response";
 import { getServiceBySlug, validateDependencies } from "@/config/services/catalog";
+import { seedServices } from "@/lib/services/seedServices";
 import { generateId } from "@/lib/utils/id";
 
 // POST /api/services/subscribe - Subscribe school to a service
@@ -39,6 +40,9 @@ export const POST = withAuth(
           `Cannot activate '${slug}': missing required services: ${missingDeps.join(", ")}`
         );
       }
+
+      // Ensure the latest catalog entries are seeded before looking up the service row.
+      await seedServices();
 
       // Get service record from DB
       const service = await queryOne<{ id: string }>(

@@ -53,6 +53,9 @@ export default function ParentsPage() {
           <p>Manage parent profiles and their children&apos;s linkage.</p>
         </div>
         <div className="header-actions">
+          <Link href="/parents/bulk-import" className="btn-outline">
+            <span>📤</span> Bulk Import
+          </Link>
           <Link href="/parents/add" className="btn-primary">
             <span>+</span> Add Parent
           </Link>

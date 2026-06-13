@@ -21,6 +21,16 @@ export const GET = withAuth(requireService("fees", async (_req: NextRequest, { s
   }
 }));
 
+const FEE_MANAGEMENT_ROLES = [
+  "principal",
+  "bursar",
+  "school_owner",
+  "vp_admin",
+  "vp_academics",
+  "admin_staff",
+  "super_admin",
+];
+
 export const PATCH = withAuth(
   requireService("fees", async (req: NextRequest, { school }: AuthContext, params): Promise<NextResponse> => {
     try {
@@ -41,7 +51,7 @@ export const PATCH = withAuth(
       return serverError(err);
     }
   }),
-  ["principal", "bursar"]
+  FEE_MANAGEMENT_ROLES
 );
 
 export const DELETE = withAuth(
@@ -57,5 +67,5 @@ export const DELETE = withAuth(
       return serverError(err);
     }
   }),
-  ["principal", "bursar"]
+  FEE_MANAGEMENT_ROLES
 );

@@ -42,6 +42,7 @@ declare global {
 export default function FeeCollectionPage() {
 
   const [payments, setPayments] = useState<Payment[]>([]);
+  const [serverCollected, setServerCollected] = useState<number | null>(null);
   const [students, setStudents] = useState<Student[]>([]);
   const [fees, setFees] = useState<FeeSchedule[]>([]);
   const [loading, setLoading] = useState(true);
@@ -62,7 +63,17 @@ export default function FeeCollectionPage() {
       authenticatedFetch("/api/fees").then((r) => r.json()),
     ])
       .then(([pd, sd, fd]) => {
-        setPayments(Array.isArray(pd.data) ? pd.data : []);
+        // payments API may return either an array (legacy) or { payments, totalCollected }
+        if (Array.isArray(pd.data)) {
+          setPayments(pd.data);
+          setServerCollected(null);
+        } else if (pd.data && Array.isArray(pd.data.payments)) {
+          setPayments(pd.data.payments);
+          setServerCollected(typeof pd.data.totalCollected === "number" ? pd.data.totalCollected : null);
+        } else {
+          setPayments([]);
+          setServerCollected(null);
+        }
         setStudents(Array.isArray(sd.data) ? sd.data : sd.data?.students ?? []);
         setFees(Array.isArray(fd.data) ? fd.data : []);
       })
@@ -84,7 +95,7 @@ export default function FeeCollectionPage() {
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const paginated = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
-  const totalCollected = payments.reduce((s, p) => s + (Number(p.amount_paid) || 0), 0);
+  const totalCollected = serverCollected ?? payments.reduce((s, p) => s + (Number(p.amount_paid) || 0), 0);
 
   const selectedStudent = students.find((s) => s.id === form.studentId);
   const selectedFee = fees.find((f) => f.id === form.feeId);
@@ -161,29 +172,39 @@ export default function FeeCollectionPage() {
           amount: amount * 100, // kobo
           ref: reference,
           onClose: () => toast.info("Payment window closed"),
-          callback: async (response) => {
+          callback(response) {
             const tid = toast.loading("Verifying payment…");
-            try {
-              const verify = await authenticatedFetch(
-                `/api/payments/verify?reference=${response.reference}`
-              ).then((r) => r.json());
-              toast.dismiss(tid);
-              if (verify.data?.verified) {
-                toast.success(`Payment of ₦${amount.toLocaleString()} confirmed!`);
-                setMode(null);
-                setForm({ studentId: "", feeId: "", amountPaid: "", paymentMethod: "cash", reference: "" });
-                load();
-              } else {
-                toast.error("Payment could not be verified — contact admin if deducted.");
+            (async () => {
+              try {
+                const verify = await authenticatedFetch(
+                  `/api/payments/verify?reference=${response.reference}`
+                ).then((r) => r.json());
+                toast.dismiss(tid);
+                if (verify.data?.verified) {
+                  toast.success(`Payment of ₦${amount.toLocaleString()} confirmed!`);
+                  setMode(null);
+                  setForm({ studentId: "", feeId: "", amountPaid: "", paymentMethod: "cash", reference: "" });
+                  load();
+                } else {
+                  toast.error("Payment could not be verified — contact admin if deducted.");
+                }
+              } catch (err) {
+                toast.dismiss(tid);
+                toast.error("Verification request failed");
               }
-            } catch {
-              toast.dismiss(tid);
-              toast.error("Verification request failed");
-            }
-          },
+            })();
+          }
         });
         try {
-          handler.openIframe();
+          // ensure script finished loading and handler is valid before opening
+          if (paystackLoaded.current && handler && typeof handler.openIframe === "function") {
+            handler.openIframe();
+          } else {
+            // fallback: open external link if inline handler isn't available
+            await openExternal(authorizationUrl);
+            toast.info("Open the payment link in your browser to complete checkout.");
+            return;
+          }
         } catch (err: unknown) {
           toast.error("Unable to open Paystack payment iframe");
         }
@@ -313,12 +334,10 @@ export default function FeeCollectionPage() {
                   {fees.map((f) => {
                     const amt = f.total_amount ?? f.amount ?? 0;
                     return (
-    <ServiceGate slug="fees">
                       <option key={f.id} value={f.id}>
                         {f.title ?? f.name}{amt ? ` — ₦${amt.toLocaleString()}` : ""}
                       </option>
-                        </ServiceGate>
-  );
+                    );
                   })}
                 </select>
               </div>

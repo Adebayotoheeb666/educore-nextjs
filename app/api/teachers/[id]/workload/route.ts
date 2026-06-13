@@ -9,12 +9,13 @@ export const GET = withAuth(async (_req: NextRequest, { school }: AuthContext, p
     const teacherId = params?.id ?? "";
 
     const subjects = await query(
-      `SELECT st.subject_id, s.name as subject_name, c.name as class_name, c.id as class_id
-       FROM subject_teachers st
-       JOIN subjects s ON st.subject_id = s.id
-       LEFT JOIN classes c ON st.class_id = c.id
-       WHERE st.teacher_id = ? AND s.school_id = ?`,
-      [teacherId, school.id]
+      `SELECT DISTINCT s.id as subject_id, s.name as subject_name, c.name as class_name, c.id as class_id
+       FROM subjects s
+       LEFT JOIN classes c ON s.class_id = c.id
+       LEFT JOIN subject_teachers st ON st.subject_id = s.id AND st.teacher_id = ?
+       WHERE s.school_id = ? AND (st.teacher_id IS NOT NULL OR s.teacher_id = ?)
+       ORDER BY s.name`,
+      [teacherId, school.id, teacherId]
     );
 
     return ok({ teacherId, subjects, subjectCount: subjects.length });

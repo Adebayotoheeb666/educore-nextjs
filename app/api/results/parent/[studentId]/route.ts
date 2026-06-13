@@ -17,7 +17,7 @@ export const GET = withAuth(requireService("results", async (req: NextRequest, {
     if (session) { filters += " AND r.academic_session = ?"; args.push(session); }
 
     const results = await query(
-      `SELECT r.*, s.name as subject_name, c.name as class_name
+      `SELECT r.*, r.total_score AS score, s.name as subject_name, c.name as class_name
        FROM results r
        LEFT JOIN subjects s ON r.subject_id = s.id
        LEFT JOIN classes c ON r.class_id = c.id

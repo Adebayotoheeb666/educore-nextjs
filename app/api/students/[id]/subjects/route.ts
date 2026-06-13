@@ -46,7 +46,7 @@ export const GET = withAuth(async (_req: NextRequest, { school }: AuthContext, p
        ) AS enrolled
        JOIN subjects s ON enrolled.subject_id = s.id
        LEFT JOIN class_subjects cs ON cs.subject_id = s.id AND cs.class_id = enrolled.class_id AND cs.academic_session = enrolled.academic_session
-       LEFT JOIN subject_teachers st ON st.subject_id = s.id AND st.class_id = enrolled.class_id AND st.academic_session = enrolled.academic_session
+       LEFT JOIN subject_teachers st ON st.subject_id = s.id AND (st.class_id = enrolled.class_id OR st.class_id IS NULL) AND (st.academic_session = enrolled.academic_session OR st.academic_session IS NULL)
        LEFT JOIN users t ON st.teacher_id = t.id
        WHERE s.school_id = ?
        ORDER BY s.name`,

@@ -29,11 +29,16 @@ export const GET = withAuth(requireService("behavior", async (req: NextRequest, 
   } catch (err) { return serverError(err); }
 }));
 
+const ALLOWED_BEHAVIOR_TYPES = ["positive", "negative", "neutral", "warning", "commendation"];
+
 export const POST = withAuth(requireService("behavior", async (req: NextRequest, { school, user }: AuthContext): Promise<NextResponse> => {
   try {
     if (!school) return badRequest("School context required");
     const { studentId, type, category, description, actionTaken, date } = await req.json();
     if (!studentId || !type || !description) return badRequest("studentId, type, and description are required");
+    if (!ALLOWED_BEHAVIOR_TYPES.includes(type)) {
+      return badRequest(`type must be one of: ${ALLOWED_BEHAVIOR_TYPES.join(", ")}`);
+    }
 
     const id = generateId();
     await execute(

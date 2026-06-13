@@ -67,7 +67,24 @@ export default function AnalyticsPage() {
     try {
       const res = await authenticatedFetch("/api/analytics/emis-report?term=First+Term&session=2024/2025");
       if (!res.ok) throw new Error();
-      toast.success("EMIS report export initiated");
+
+      // Download the returned Excel file
+      const blob = await res.blob();
+      // Try to extract filename from Content-Disposition header
+      const cd = res.headers.get("Content-Disposition") || "";
+      let filename = "emis-report.xlsx";
+      const m = cd.match(/filename="?([^";]+)"?/i);
+      if (m && m[1]) filename = m[1];
+
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+      toast.success("EMIS report downloaded");
     } catch {
       toast.error("Export failed");
     } finally {
