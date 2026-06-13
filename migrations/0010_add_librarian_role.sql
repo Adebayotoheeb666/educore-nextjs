@@ -34,12 +34,7 @@ CREATE INDEX IF NOT EXISTS idx_questions_class_id ON questions(class_id);
 -- Keep foreign keys disabled while migrating the users table
 PRAGMA foreign_keys=OFF;
 
--- Remove any leftover `users_old` from previous failed runs
-DROP TABLE IF EXISTS users_old;
-
-ALTER TABLE users RENAME TO users_old;
-
-CREATE TABLE users (
+CREATE TABLE users_tmp (
   id TEXT PRIMARY KEY,
   name TEXT NOT NULL,
   email TEXT NOT NULL UNIQUE,
@@ -66,8 +61,9 @@ CREATE TABLE users (
   updated_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
 
-INSERT INTO users (id, name, email, password, role, school_id, is_active, phone, first_name, last_name, avatar, admission_no, class_id, dob, gender, parent_phone, address, state_of_origin, created_at, updated_at)
-SELECT id, name, email, password, role, school_id, is_active, phone, first_name, last_name, avatar, admission_no, class_id, dob, gender, parent_phone, address, state_of_origin, created_at, updated_at FROM users_old;
+INSERT INTO users_tmp (id, name, email, password, role, school_id, is_active, phone, first_name, last_name, avatar, admission_no, class_id, dob, gender, parent_phone, address, state_of_origin, created_at, updated_at)
+SELECT id, name, email, password, role, school_id, is_active, phone, first_name, last_name, avatar, admission_no, class_id, dob, gender, parent_phone, address, state_of_origin, created_at, updated_at FROM users;
 
-DROP TABLE IF EXISTS users_old;
+DROP TABLE IF EXISTS users;
+ALTER TABLE users_tmp RENAME TO users;
 PRAGMA foreign_keys=ON;

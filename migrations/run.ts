@@ -44,32 +44,6 @@ async function markMigrationApplied(db: ReturnType<typeof getDb>, migrationId: s
   });
 }
 
-async function recoverUsersOldState(db: ReturnType<typeof getDb>, schemaSql: string): Promise<boolean> {
-  const usersOldExists = await tableExists(db, "users_old");
-  if (!usersOldExists) return false;
-
-  const usersExists = await tableExists(db, "users");
-  if (usersExists) {
-    await db.execute({ sql: "DROP TABLE IF EXISTS users_old", args: [] });
-    return false;
-  }
-
-  const usersCreateMatch = schemaSql.match(/CREATE TABLE IF NOT EXISTS users\s*\([\s\S]*?\);/i);
-  if (!usersCreateMatch) {
-    throw new Error("Unable to extract users table creation SQL from schema.sql");
-  }
-
-  await db.execute({ sql: usersCreateMatch[0], args: [] });
-  await db.execute({
-    sql: `INSERT INTO users (id, name, email, password, role, school_id, is_active, phone, first_name, last_name, avatar, admission_no, class_id, dob, gender, parent_phone, address, state_of_origin, created_at, updated_at)
-          SELECT id, name, email, password, role, school_id, is_active, phone, first_name, last_name, avatar, admission_no, class_id, dob, gender, parent_phone, address, state_of_origin, created_at, updated_at
-          FROM users_old`,
-    args: [],
-  });
-  await db.execute({ sql: "DROP TABLE IF EXISTS users_old", args: [] });
-  return true;
-}
-
 async function runMigrations() {
   const db = getDb();
 
@@ -102,7 +76,6 @@ async function runMigrations() {
   console.log(`Applied ${statements.length} schema migration statements.`);
 
   await ensureMigrationTable(db);
-  const recoveredUsersMigration = await recoverUsersOldState(db, schemaSql);
 
   // Run individual migration files
   const migrationFiles = readdirSync(migrationsDir)
@@ -110,11 +83,6 @@ async function runMigrations() {
     .sort();
 
   for (const file of migrationFiles) {
-    if (recoveredUsersMigration && file === "0010_add_librarian_role.sql") {
-      await markMigrationApplied(db, file);
-      continue;
-    }
-
     if (await isMigrationApplied(db, file)) {
       console.log(`Skipping already applied migration: ${file}`);
       continue;

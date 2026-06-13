@@ -87,32 +87,6 @@ async function markMigrationApplied(db: Client, migrationId: string): Promise<vo
   });
 }
 
-async function recoverUsersOldState(db: Client, schemaSql: string): Promise<boolean> {
-  const usersOldExists = await tableExists(db, "users_old");
-  if (!usersOldExists) return false;
-
-  const usersExists = await tableExists(db, "users");
-  if (usersExists) {
-    await db.execute({ sql: "DROP TABLE IF EXISTS users_old", args: [] });
-    return false;
-  }
-
-  const usersCreateMatch = schemaSql.match(/CREATE TABLE IF NOT EXISTS users\s*\([\s\S]*?\);/i);
-  if (!usersCreateMatch) {
-    throw new Error("Unable to extract users table creation SQL from schema.sql");
-  }
-
-  await db.execute({ sql: usersCreateMatch[0], args: [] });
-  await db.execute({
-    sql: `INSERT INTO users (id, name, email, password, role, school_id, is_active, phone, first_name, last_name, avatar, admission_no, class_id, dob, gender, parent_phone, address, state_of_origin, created_at, updated_at)
-          SELECT id, name, email, password, role, school_id, is_active, phone, first_name, last_name, avatar, admission_no, class_id, dob, gender, parent_phone, address, state_of_origin, created_at, updated_at
-          FROM users_old`,
-    args: [],
-  });
-  await db.execute({ sql: "DROP TABLE IF EXISTS users_old", args: [] });
-  return true;
-}
-
 async function ensureSchema(): Promise<void> {
   if (globalForDb._initialized) return globalForDb._initialized;
 
@@ -145,18 +119,12 @@ async function ensureSchema(): Promise<void> {
       }
 
       await ensureMigrationTable(db);
-      const recoveredUsersMigration = await recoverUsersOldState(db, schemaSql);
       const migrationsDir = join(process.cwd(), "migrations");
       const migrationFiles = readdirSync(migrationsDir)
         .filter((file) => file.endsWith(".sql") && file.match(/^\d+_/))
         .sort();
 
       for (const file of migrationFiles) {
-        if (recoveredUsersMigration && file === "0010_add_librarian_role.sql") {
-          await markMigrationApplied(db, file);
-          continue;
-        }
-
         if (await isMigrationApplied(db, file)) {
           continue;
         }

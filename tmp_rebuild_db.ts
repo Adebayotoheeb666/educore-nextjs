@@ -43,7 +43,6 @@ function isTransactionControlStatement(sql: string): boolean {
   // Create dummy tables so that SQLite doesn't complain about missing references during drops/creates
   await db.execute({ sql: 'CREATE TABLE IF NOT EXISTS "classes_old_temp" (id TEXT PRIMARY KEY);', args: [] });
   await db.execute({ sql: 'CREATE TABLE IF NOT EXISTS "subjects_old_temp" (id TEXT PRIMARY KEY);', args: [] });
-  await db.execute({ sql: 'CREATE TABLE IF NOT EXISTS "users_old" (id TEXT PRIMARY KEY);', args: [] });
 
   console.log("Setting PRAGMAs...");
   // Disable foreign keys temporarily
@@ -51,7 +50,7 @@ function isTransactionControlStatement(sql: string): boolean {
 
   for (const { name: table, sql: createSql } of tableStatements) {
     // Skip dummy tables themselves if they are in the schema
-    if (["classes_old_temp", "subjects_old_temp", "users_old"].includes(table)) continue;
+    if (["classes_old_temp", "subjects_old_temp"].includes(table)) continue;
 
     console.log(`Processing table: ${table}`);
 
@@ -94,7 +93,6 @@ function isTransactionControlStatement(sql: string): boolean {
   console.log("Dropping dummy tables...");
   await db.execute({ sql: 'DROP TABLE IF EXISTS "classes_old_temp";', args: [] });
   await db.execute({ sql: 'DROP TABLE IF EXISTS "subjects_old_temp";', args: [] });
-  await db.execute({ sql: 'DROP TABLE IF EXISTS "users_old";', args: [] });
 
   // Restore PRAGMAs
   await db.execute({ sql: "PRAGMA foreign_keys = ON;", args: [] });

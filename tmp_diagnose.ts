@@ -11,11 +11,4 @@ import { getDb } from './lib/db/turso';
   });
   console.log('Broken temp tables:', JSON.stringify(brokenTemp.rows, null, 2));
 
-  // Find tables referencing users_old
-  const brokenUsersOld = await db.execute({
-    sql: `SELECT name, sql FROM sqlite_master WHERE type='table' AND sql LIKE '%users_old%'`,
-    args: [],
-  });
-  console.log('Broken users_old tables:', JSON.stringify(brokenUsersOld.rows, null, 2));
-
 })().catch((e) => { console.error(e); process.exit(1); });
