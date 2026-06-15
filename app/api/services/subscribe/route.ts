@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { queryOne, execute } from "@/lib/db/turso";
 import { withAuth, type AuthContext } from "@/lib/middleware/auth";
 import { badRequest, forbidden, ok, serverError } from "@/lib/utils/response";
-import { getServiceBySlug, validateDependencies } from "@/config/services/catalog";
+import { getServiceBySlug, validateDependencies, COMPULSORY_SERVICES } from "@/config/services/catalog";
 import { seedServices } from "@/lib/services/seedServices";
 import { generateId } from "@/lib/utils/id";
 
@@ -31,8 +31,11 @@ export const POST = withAuth(
         [school.id]
       );
       const currentSlugs = activeSlugs?.slugs?.split(",") ?? [];
-      const missingDeps = validateDependencies([...currentSlugs, slug]).filter(
-        (dep) => !currentSlugs.includes(dep)
+      const effectiveSlugs = Array.from(
+        new Set([...currentSlugs, ...COMPULSORY_SERVICES.map((svc) => svc.slug)])
+      );
+      const missingDeps = validateDependencies([...effectiveSlugs, slug]).filter(
+        (dep) => !effectiveSlugs.includes(dep)
       );
 
       if (missingDeps.length > 0) {

@@ -28,6 +28,7 @@ export default function StudentEnrollmentsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showNewEnrollment, setShowNewEnrollment] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [formData, setFormData] = useState({
     classId: "",
@@ -56,6 +57,7 @@ export default function StudentEnrollmentsPage() {
 
   const handleEnrollmentSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
     try {
       const res = await authenticatedFetch(`/api/students/${studentId}/enrollments`, {
         method: "POST",
@@ -69,6 +71,8 @@ export default function StudentEnrollmentsPage() {
       fetchEnrollments();
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -166,8 +170,20 @@ export default function StudentEnrollmentsPage() {
                 </select>
               </div>
             </div>
-            <button type="submit" className="btn-primary">
-              Create Enrollment
+            <button 
+              type="submit" 
+              className="btn-primary"
+              disabled={isSubmitting}
+              style={{ opacity: isSubmitting ? 0.7 : 1, cursor: isSubmitting ? "not-allowed" : "pointer" }}
+            >
+              {isSubmitting ? (
+                <>
+                  <span style={{ display: "inline-block", marginRight: "0.5rem", animation: "spin 1s linear infinite" }}>⏳</span>
+                  Adding Student to Class...
+                </>
+              ) : (
+                <>Create Enrollment</>
+              )}
             </button>
           </form>
         )}
@@ -242,6 +258,15 @@ export default function StudentEnrollmentsPage() {
       </div>
 
       <style jsx>{`
+        @keyframes spin {
+          from {
+            transform: rotate(0deg);
+          }
+          to {
+            transform: rotate(360deg);
+          }
+        }
+
         .status-badge {
           display: inline-block;
           padding: 4px 8px;

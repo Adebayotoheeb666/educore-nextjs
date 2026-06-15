@@ -62,6 +62,7 @@ const navConfig = [
   { label: "Feedback",     path: "/feedback",            icon: "💬", roles: [...STAFF_ROLES, "bursar", "librarian"], serviceSlug: "feedback" },
   { label: "School Settings", path: "/school/settings",  icon: "⚙️",  roles: ["school_owner", "principal"] },
   { label: "Services",     path: "/school/services",     icon: "🔧", roles: ["school_owner", "principal"] },
+  { label: "Branches",     path: "/school/branches",     icon: "🏢", roles: ["school_owner"] },
   { label: "Permissions",  path: "/permissions",        icon: "🔐", roles: ["school_owner"] },
   { label: "Billing",      path: "/billing",             icon: "💳", roles: ["school_owner"] },
 ];

@@ -1,7 +1,4 @@
--- Migration: Add 'librarian' to users.role CHECK constraint
--- SQLite cannot alter CHECK constraints directly, so recreate the users table
 
--- Recreate `questions` with nullable `created_by` to avoid FK/NOT NULL conflicts
 PRAGMA foreign_keys=OFF;
 DROP TABLE IF EXISTS questions_tmp;
 CREATE TABLE questions_tmp (
@@ -31,7 +28,6 @@ CREATE INDEX IF NOT EXISTS idx_questions_school_id ON questions(school_id);
 CREATE INDEX IF NOT EXISTS idx_questions_subject_id ON questions(subject_id);
 CREATE INDEX IF NOT EXISTS idx_questions_class_id ON questions(class_id);
 
--- Keep foreign keys disabled while migrating the users table
 PRAGMA foreign_keys=OFF;
 
 CREATE TABLE users_tmp (

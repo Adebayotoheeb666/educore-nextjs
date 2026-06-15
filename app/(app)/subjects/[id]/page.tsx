@@ -26,10 +26,10 @@ export default function SubjectDetailPage() {
       authenticatedFetch("/api/teachers").then((r) => r.json()),
     ]).then(([sd, td]) => {
       setSubject(sd.data ?? null);
-      const classTeachersOnly = (Array.isArray(td.data) ? td.data : []).filter(
-        (t: Teacher) => t.role === "class_teacher"
+      const subjectTeachersOnly = (Array.isArray(td.data) ? td.data : []).filter(
+        (t: Teacher) => t.role === "subject_teacher" || t.role === "class_teacher"
       );
-      setAllTeachers(classTeachersOnly);
+      setAllTeachers(subjectTeachersOnly);
     }).catch(() => toast.error("Failed to load subject"))
       .finally(() => setLoading(false));
   }, [id]);
@@ -159,7 +159,7 @@ export default function SubjectDetailPage() {
                 onChange={(e) => setSelectedTeacher(e.target.value)}
                 style={{ flex: 1, padding: "0.8rem 1.2rem", borderRadius: 8, border: "1px solid #e2e8f0", fontSize: "1.4rem" }}
               >
-                <option value="">Select teacher to assign</option>
+                <option value="">Select subject teacher to assign</option>
                 {available.map((t) => (
                   <option key={t.id} value={t.id}>{t.name} ({t.role.replace(/_/g, " ")})</option>
                 ))}

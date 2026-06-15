@@ -133,7 +133,9 @@ export default function ClassesPage() {
                   <td>
                     <span className="badge badge-green">{c.student_count ?? 0}</span>
                   </td>
-                  <td>{c.subject_count ?? "—"}</td>
+                  <td>
+                    <span className="badge badge-blue">{c.subject_count ?? 0}</span>
+                  </td>
                   <td>
                     <div className="row-actions">
                       <Link href={`/classes/${c.id}`} className="link-action">View</Link>

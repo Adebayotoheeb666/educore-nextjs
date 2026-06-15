@@ -20,6 +20,7 @@ interface Teacher {
   id: string;
   name: string;
   email: string;
+  role?: string;
 }
 
 interface Class {
@@ -40,6 +41,7 @@ export default function SubjectAssignmentsPage() {
   const [error, setError] = useState<string | null>(null);
   const [session, setSession] = useState("");
   const [showAssignForm, setShowAssignForm] = useState(false);
+  const subjectTeachers = teachers.filter((teacher) => teacher.role === "subject_teacher" || teacher.role === "class_teacher");
 
   const [formData, setFormData] = useState({
     teacherId: "",
@@ -147,6 +149,7 @@ export default function SubjectAssignmentsPage() {
           <h1>Teacher Assignments</h1>
           <p className="text-muted">
             {subject?.name} {subject?.code ? `(${subject.code})` : ""}
+            {subject?.class_name && ` • Class: ${subject.class_name}`}
           </p>
         </div>
         <Link href={`/subjects/${subjectId}`} className="btn-outline">
@@ -168,7 +171,15 @@ export default function SubjectAssignmentsPage() {
 
       <div className="card">
         <div className="card-header flex-between">
-          <h2>Assignments ({assignments.length})</h2>
+          <div>
+            <h2>Assignments ({assignments.length})</h2>
+            {subject && (
+              <p style={{ margin: "0.5rem 0 0", color: "#64748b", fontSize: "0.95rem" }}>
+                <strong>Subject:</strong> {subject.name} {subject.code ? `(${subject.code})` : ""}
+                {subject.class_name && ` • ${subject.class_name}`}
+              </p>
+            )}
+          </div>
           <button className="btn-primary" onClick={() => setShowAssignForm(!showAssignForm)}>
             {showAssignForm ? "Cancel" : "➕ Assign Teacher"}
           </button>
@@ -184,12 +195,16 @@ export default function SubjectAssignmentsPage() {
                   onChange={(e) => setFormData({ ...formData, teacherId: e.target.value })}
                   required
                 >
-                  <option value="">Select a teacher</option>
-                  {teachers.map((teacher) => (
-                    <option key={teacher.id} value={teacher.id}>
-                      {teacher.name}
-                    </option>
-                  ))}
+                  <option value="">Select a subject teacher</option>
+                  {subjectTeachers.length === 0 ? (
+                    <option value="" disabled>No subject teachers available</option>
+                  ) : (
+                    subjectTeachers.map((teacher) => (
+                      <option key={teacher.id} value={teacher.id}>
+                        {teacher.name}
+                      </option>
+                    ))
+                  )}
                 </select>
               </div>
 

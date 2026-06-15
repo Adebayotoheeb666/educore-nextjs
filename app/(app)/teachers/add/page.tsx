@@ -26,6 +26,8 @@ interface Class {
 interface Subject {
   id: string;
   name: string;
+  code?: string;
+  class_name?: string;
 }
 
 interface Student {
@@ -284,7 +286,11 @@ export default function AddTeacherPage() {
                           checked={selectedSubjects.includes(subject.id)}
                           onChange={() => toggleSubject(subject.id)}
                         />
-                        <span>{subject.name}</span>
+                        <span>
+                          {subject.name}
+                          {subject.code && <span style={{ color: "#94a3b8", marginLeft: "0.5rem" }}>({subject.code})</span>}
+                          {subject.class_name && <span style={{ color: "#94a3b8", marginLeft: "0.5rem" }}>• {subject.class_name}</span>}
+                        </span>
                       </label>
                     ))}
                   </div>

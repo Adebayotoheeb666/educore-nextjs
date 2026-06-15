@@ -302,8 +302,8 @@ export default function AiInsightsModal({ open, onClose }: Props) {
           align-items: center;
           gap: 0.5rem;
           margin-bottom: 0.75rem;
-          color: #4338ca;
-          background: rgba(106, 90, 205, 0.1);
+          color: var(--link-color);
+          background: rgba(106, 90, 205, 0.15);
           padding: 0.45rem 0.85rem;
           border-radius: 999px;
           font-weight: 700;
@@ -314,17 +314,19 @@ export default function AiInsightsModal({ open, onClose }: Props) {
           font-size: clamp(1.7rem, 2.2vw, 2.25rem);
           line-height: 1.08;
           margin-bottom: 0.5rem;
+          color: var(--text-main);
         }
 
         .ai-modal-header p {
-          color: #475569;
+          color: var(--text-muted);
           max-width: 620px;
           line-height: 1.75;
         }
 
         .ai-close-button {
           border: none;
-          background: #f8fafc;
+          background: var(--bg-hover);
+          color: var(--text-main);
           width: 44px;
           height: 44px;
           border-radius: 100px;
@@ -335,7 +337,7 @@ export default function AiInsightsModal({ open, onClose }: Props) {
 
         .ai-close-button:hover {
           transform: scale(1.05);
-          background: #eef2ff;
+          background: var(--border-color);
         }
 
         .ai-modal-grid {
@@ -356,17 +358,25 @@ export default function AiInsightsModal({ open, onClose }: Props) {
         }
 
         .ai-card {
-          background: white;
-          border: 1px solid rgba(148, 163, 184, 0.18);
+          background: var(--bg-card);
+          border: 1px solid var(--border-color);
           border-radius: 22px;
           padding: 1.4rem;
           box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
         }
 
+        [data-theme="dark"] .ai-card {
+          box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+        }
+
         .highlight-card {
           padding: 1.2rem;
-          background: linear-gradient(180deg, #eef2ff 0%, #f8faff 100%);
-          border-color: rgba(99, 102, 241, 0.24);
+          background: linear-gradient(180deg, rgba(106, 90, 205, 0.1), rgba(106, 90, 205, 0.05));
+          border-color: var(--link-color);
+        }
+
+        [data-theme="dark"] .highlight-card {
+          background: linear-gradient(180deg, rgba(138, 126, 253, 0.12), rgba(138, 126, 253, 0.06));
         }
 
         .explore-card {
@@ -383,8 +393,8 @@ export default function AiInsightsModal({ open, onClose }: Props) {
         }
 
         .about-card {
-          background: #f8fafc;
-          color: #0f172a;
+          background: var(--bg-hover);
+          color: var(--text-main);
         }
 
         .card-toprow {
@@ -402,19 +412,20 @@ export default function AiInsightsModal({ open, onClose }: Props) {
           font-weight: 700;
           letter-spacing: 0.08em;
           text-transform: uppercase;
-          color: #4338ca;
+          color: var(--link-color);
         }
 
         h3 {
           font-size: 1.35rem;
           margin: 0;
           line-height: 1.3;
+          color: var(--text-main);
         }
 
         .resource-preview {
           border-radius: 18px;
           overflow: hidden;
-          border: 1px solid rgba(148, 163, 184, 0.18);
+          border: 1px solid var(--border-color);
           height: 220px;
           margin-bottom: 1rem;
         }
@@ -432,14 +443,14 @@ export default function AiInsightsModal({ open, onClose }: Props) {
 
         .resource-links a {
           display: block;
-          color: #1d4ed8;
+          color: var(--link-color);
           font-weight: 600;
           text-decoration: none;
           transition: color 0.2s ease;
         }
 
         .resource-links a:hover {
-          color: #4338ca;
+          opacity: 0.8;
         }
 
         .action-group {
@@ -461,14 +472,14 @@ export default function AiInsightsModal({ open, onClose }: Props) {
           display: inline-flex;
           gap: 0.75rem;
           align-items: center;
-          color: #64748b;
+          color: var(--text-muted);
           font-size: 0.95rem;
         }
 
         .cache-toggle input {
           width: 16px;
           height: 16px;
-          accent-color: #6366f1;
+          accent-color: var(--link-color);
         }
 
         .status-pill {
@@ -479,18 +490,18 @@ export default function AiInsightsModal({ open, onClose }: Props) {
           border-radius: 999px;
           font-size: 0.95rem;
           font-weight: 700;
-          color: #1e293b;
-          background: #e2e8f0;
+          color: var(--text-main);
+          background: var(--bg-hover);
         }
 
         .status-pill.cached {
-          background: rgba(34, 197, 94, 0.16);
-          color: #166534;
+          background: var(--badge-green-bg);
+          color: var(--badge-green-text);
         }
 
         .status-pill.live {
-          background: rgba(59, 130, 246, 0.12);
-          color: #1d4ed8;
+          background: var(--badge-blue-bg);
+          color: var(--badge-blue-text);
         }
 
         .ai-insight-list {
@@ -505,16 +516,16 @@ export default function AiInsightsModal({ open, onClose }: Props) {
           align-items: flex-start;
           padding: 1rem 1rem 1rem 0.95rem;
           border-radius: 18px;
-          background: #f8fafc;
-          border: 1px solid rgba(148, 163, 184, 0.16);
+          background: var(--bg-hover);
+          border: 1px solid var(--border-color);
           opacity: 0;
           transform: translateY(10px);
           animation: slideUp 280ms ease forwards;
         }
 
         .fallback-item {
-          background: #ffffff;
-          border-color: rgba(148, 163, 184, 0.12);
+          background: var(--bg-card);
+          border-color: var(--border-light);
         }
 
         .item-badge {
@@ -524,32 +535,33 @@ export default function AiInsightsModal({ open, onClose }: Props) {
           align-items: center;
           justify-content: center;
           border-radius: 100px;
-          background: #eef2ff;
-          color: #4338ca;
+          background: rgba(106, 90, 205, 0.15);
+          color: var(--link-color);
           font-size: 1rem;
           margin-top: 0.15rem;
         }
 
         .ai-insight-item p {
           margin: 0;
-          color: #0f172a;
+          color: var(--text-main);
           line-height: 1.7;
           font-size: 1rem;
         }
 
         .ai-modal-panel p {
-          color: #475569;
+          color: var(--text-muted);
         }
 
         .ai-modal-card h4 {
           margin: 0.5rem 0 0.75rem;
           font-size: 1.05rem;
           line-height: 1.4;
+          color: var(--text-main);
         }
 
         .ai-modal-card p {
           margin: 0;
-          color: #475569;
+          color: var(--text-muted);
           line-height: 1.7;
         }
 
@@ -557,17 +569,18 @@ export default function AiInsightsModal({ open, onClose }: Props) {
           width: 100%;
           padding: 0.95rem 1rem;
           border-radius: 14px;
-          border: 1px solid rgba(148, 163, 184, 0.22);
-          background: #f8fafc;
-          color: #0f172a;
+          border: 1px solid var(--input-border);
+          background: var(--input-bg);
+          color: var(--input-text);
           font-size: 1rem;
           outline: none;
           margin-bottom: 1rem;
+          font-family: inherit;
         }
 
         .subscribe-input:focus {
-          border-color: rgba(99, 102, 241, 0.6);
-          box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.08);
+          border-color: var(--link-color);
+          box-shadow: 0 0 0 4px rgba(106, 90, 205, 0.15);
         }
 
         .subscribe-submit {
@@ -577,7 +590,7 @@ export default function AiInsightsModal({ open, onClose }: Props) {
 
         .subscribe-message {
           margin-top: 0.85rem;
-          color: #334155;
+          color: var(--text-muted-light);
           font-size: 0.95rem;
         }
 

@@ -14,6 +14,12 @@ export const POST = withAuth(async (req: NextRequest, { school }: AuthContext, p
     const subject = await queryOne("SELECT id FROM subjects WHERE id = ? AND school_id = ?", [subjectId, school.id]);
     if (!subject) return notFound("Subject not found");
 
+    const teacher = await queryOne(
+      "SELECT id FROM users WHERE id = ? AND school_id = ? AND role IN ('class_teacher', 'subject_teacher')",
+      [teacherId, school.id]
+    );
+    if (!teacher) return notFound("Teacher not found");
+
     const { generateId } = await import("@/lib/utils/id");
     const id = generateId();
     await execute(

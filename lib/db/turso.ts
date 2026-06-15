@@ -27,6 +27,14 @@ function makeTimeoutFetch(timeoutMs = 30_000) {
   };
 }
 
+function normalizeSql(sql: string): string {
+  if (!sql) return sql;
+  // Replace legacy temp/old users table references with the canonical `users` table
+  return sql
+    .replace(/\b(main\.)?users_old\b/gi, "users")
+    .replace(/\busers_tmp\b/gi, "users");
+}
+
 export function getDb(): Client {
   if (globalForDb._client) return globalForDb._client;
 
@@ -108,7 +116,8 @@ async function ensureSchema(): Promise<void> {
 
       for (const sql of statements) {
         try {
-          await db.execute({ sql: sql + ";", args: [] });
+          const norm = normalizeSql(sql + ";");
+          await db.execute({ sql: norm, args: [] });
         } catch (err) {
           const message = (err as Error).message;
           if (message.includes("already exists") || message.includes("duplicate")) {
@@ -143,7 +152,8 @@ async function ensureSchema(): Promise<void> {
 
         for (const sql of migrationStatements) {
           try {
-            await db.execute({ sql: sql + ";", args: [] });
+            const norm = normalizeSql(sql + ";");
+            await db.execute({ sql: norm, args: [] });
           } catch (err) {
             const message = (err as Error).message;
             if (message.includes("already exists") || message.includes("duplicate") || message.includes("no such table")) {
@@ -157,22 +167,22 @@ async function ensureSchema(): Promise<void> {
       }
 
       const blogPostColumns = await db.execute({
-        sql: "SELECT name FROM pragma_table_info('blog_posts')",
+        sql: normalizeSql("SELECT name FROM pragma_table_info('blog_posts')"),
         args: []
       });
 
       const existingColumns = (blogPostColumns.rows as any[] | []).map((row) => row.name);
 
       if (!existingColumns.includes("category")) {
-        await db.execute({ sql: "ALTER TABLE blog_posts ADD COLUMN category TEXT", args: [] });
+        await db.execute({ sql: normalizeSql("ALTER TABLE blog_posts ADD COLUMN category TEXT"), args: [] });
       }
       if (!existingColumns.includes("read_time")) {
-        await db.execute({ sql: "ALTER TABLE blog_posts ADD COLUMN read_time TEXT", args: [] });
+        await db.execute({ sql: normalizeSql("ALTER TABLE blog_posts ADD COLUMN read_time TEXT"), args: [] });
       }
-      const relationshipColumns = await db.execute({ sql: "PRAGMA table_info('user_relationships')", args: [] });
+      const relationshipColumns = await db.execute({ sql: normalizeSql("PRAGMA table_info('user_relationships')"), args: [] });
       const userRelationshipCols = (relationshipColumns.rows as any[] | []).map((row) => row.name);
       if (!userRelationshipCols.includes("relationship")) {
-        await db.execute({ sql: "ALTER TABLE user_relationships ADD COLUMN relationship TEXT", args: [] });
+        await db.execute({ sql: normalizeSql("ALTER TABLE user_relationships ADD COLUMN relationship TEXT"), args: [] });
       }
     } catch (err) {
       globalForDb._initialized = undefined;
@@ -190,8 +200,14 @@ export async function query<T = Record<string, unknown>>(
 ): Promise<T[]> {
   await ensureSchema();
   const db = getDb();
-  const result = await db.execute({ sql, args });
-  return result.rows as unknown as T[];
+  try {
+    const norm = normalizeSql(sql);
+    const result = await db.execute({ sql: norm, args });
+    return result.rows as unknown as T[];
+  } catch (err) {
+    console.error("DB query error:", { sql, args, err });
+    throw err;
+  }
 }
 
 export async function queryOne<T = Record<string, unknown>>(
@@ -208,11 +224,17 @@ export async function execute(
 ): Promise<{ rowsAffected: number; lastInsertRowid?: bigint }> {
   await ensureSchema();
   const db = getDb();
-  const result = await db.execute({ sql, args });
-  return {
-    rowsAffected: result.rowsAffected,
-    lastInsertRowid: result.lastInsertRowid,
-  };
+  try {
+    const norm = normalizeSql(sql);
+    const result = await db.execute({ sql: norm, args });
+    return {
+      rowsAffected: result.rowsAffected,
+      lastInsertRowid: result.lastInsertRowid,
+    };
+  } catch (err) {
+    console.error("DB execute error:", { sql, args, err });
+    throw err;
+  }
 }
 
 // Run multiple statements in a transaction
@@ -222,7 +244,7 @@ export async function transaction(
   await ensureSchema();
   const db = getDb();
   await db.batch(
-    statements.map((s) => ({ sql: s.sql, args: s.args ?? [] })),
+    statements.map((s) => ({ sql: normalizeSql(s.sql), args: s.args ?? [] })),
     "write"
   );
 }

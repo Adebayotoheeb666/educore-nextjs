@@ -38,6 +38,7 @@ export default function ClassEnrollmentPage() {
   const [showBulkEnroll, setShowBulkEnroll] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectAll, setSelectAll] = useState(false);
+  const [isEnrolling, setIsEnrolling] = useState(false);
 
   useEffect(() => {
     fetchSchoolSession();
@@ -122,6 +123,7 @@ export default function ClassEnrollmentPage() {
       return;
     }
 
+    setIsEnrolling(true);
     try {
       const res = await authenticatedFetch(`/api/classes/${classId}/enroll-students`, {
         method: "POST",
@@ -148,6 +150,8 @@ export default function ClassEnrollmentPage() {
       fetchEnrollmentData();
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
+    } finally {
+      setIsEnrolling(false);
     }
   };
 
@@ -374,9 +378,17 @@ export default function ClassEnrollmentPage() {
               <button
                 className="btn-primary"
                 onClick={handleBulkEnroll}
-                disabled={selectedStudents.length === 0}
+                disabled={selectedStudents.length === 0 || isEnrolling}
+                style={{ opacity: isEnrolling ? 0.7 : 1, cursor: isEnrolling ? "not-allowed" : "pointer" }}
               >
-                Enroll {selectedStudents.length} Student{selectedStudents.length !== 1 ? "s" : ""}
+                {isEnrolling ? (
+                  <>
+                    <span style={{ display: "inline-block", marginRight: "0.5rem", animation: "spin 1s linear infinite" }}>⏳</span>
+                    Adding {selectedStudents.length} Student{selectedStudents.length !== 1 ? "s" : ""}...
+                  </>
+                ) : (
+                  <>Enroll {selectedStudents.length} Student{selectedStudents.length !== 1 ? "s" : ""}</>
+                )}
               </button>
               <button
                 className="btn-secondary"
@@ -395,6 +407,15 @@ export default function ClassEnrollmentPage() {
       </div>
 
       <style jsx>{`
+        @keyframes spin {
+          from {
+            transform: rotate(0deg);
+          }
+          to {
+            transform: rotate(360deg);
+          }
+        }
+
         .page-container {
           max-width: 1200px;
           margin: 0 auto;

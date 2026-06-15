@@ -103,7 +103,10 @@ export default function TeacherDetailPage() {
           <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
             {subjects.map((s) => (
               <div key={s.id} style={{ background: "#f8f7ff", border: "1px solid #ede9fa", borderRadius: 10, padding: "1rem 1.8rem" }}>
-                <div style={{ fontWeight: 700, fontSize: "1.4rem" }}>{s.name}</div>
+                <div style={{ fontWeight: 700, fontSize: "1.4rem" }}>
+                  {s.name}
+                  {s.code && <span style={{ color: "#94a3b8", fontSize: "1.2rem", marginLeft: "0.5rem" }}>({s.code})</span>}
+                </div>
                 {s.class_name && <div style={{ fontSize: "1.2rem", color: "#94a3b8" }}>{s.class_name}</div>}
               </div>
             ))}

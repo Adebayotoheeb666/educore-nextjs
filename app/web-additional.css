@@ -46,7 +46,7 @@
 }
 .mission-badge {
   display: inline-block;
-  background-color: #6A5ACD;
+  background-color: var(--link-color);
   color: white;
   padding: 0.6rem 1.4rem;
   border-radius: 4px;
@@ -66,7 +66,7 @@
 }
 .about-hero p {
   font-size: 1.5rem;
-  color: #9ca3af;
+  color: rgba(255, 255, 255, 0.8);
   max-width: 550px;
   margin-bottom: 3rem;
   line-height: 1.6;
@@ -79,7 +79,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background-color: #6A5ACD;
+  background-color: var(--link-color);
   color: white;
   padding: 1.4rem 3.5rem;
   border-radius: 8px;
@@ -92,9 +92,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background-color: #1e293b;
-  color: white;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: var(--bg-card);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
   padding: 1.4rem 3.5rem;
   border-radius: 8px;
   font-weight: 700;
@@ -102,8 +102,8 @@
   text-decoration: none;
   transition: all 0.3s;
 }
-.btn-about-primary:hover { background-color: #5849b8; }
-.btn-about-outline:hover { background-color: #334155; border-color: rgba(255, 255, 255, 0.3); }
+.btn-about-primary:hover { opacity: 0.9; }
+.btn-about-outline:hover { background-color: var(--bg-hover); border-color: var(--link-color); }
 .excellence-section {
   padding: 12rem 0;
 }
@@ -147,21 +147,22 @@
   bottom: -2rem;
   right: -3rem;
   left: auto;
-  background-color: #f1f5f9;
+  background-color: var(--bg-hover);
   padding: 1.8rem 2.2rem;
   border-radius: 12px;
   max-width: 220px;
   box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+  border: 1px solid var(--border-color);
 }
 .journey-box h4 {
   font-size: 1.8rem;
   font-weight: 700;
-  color: #6A5ACD;
+  color: var(--link-color);
   margin-bottom: 0.4rem;
 }
 .journey-box p {
   font-size: 1.1rem;
-  color: #374151;
+  color: var(--text-main);
   line-height: 1.4;
 }
 .excellence-content h2 {
@@ -172,7 +173,7 @@
 }
 .excellence-content > p {
   font-size: 1.5rem;
-  color: #4b5563;
+  color: var(--text-muted);
   line-height: 1.7;
   margin-bottom: 2.5rem;
 }
@@ -189,8 +190,8 @@
 .feat-icon {
   width: 36px;
   height: 36px;
-  background-color: #fef2f2;
-  color: #dc2626;
+  background-color: var(--badge-red-bg);
+  color: var(--badge-red-text);
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -199,12 +200,12 @@
   font-size: 1.6rem;
 }
 .excellence-feat:nth-child(1) .feat-icon {
-  background-color: #fef2f2;
-  color: #dc2626;
+  background-color: var(--badge-red-bg);
+  color: var(--badge-red-text);
 }
 .excellence-feat:nth-child(2) .feat-icon {
-  background-color: #f3f0ff;
-  color: #6A5ACD;
+  background-color: var(--badge-blue-bg);
+  color: var(--badge-blue-text);
 }
 .feat-text h4 {
   font-size: 1.6rem;
@@ -214,11 +215,11 @@
 }
 .feat-text p {
   font-size: 1.4rem;
-  color: #6b7280;
+  color: var(--text-muted);
   line-height: 1.5;
 }
 .about-stats {
-  background-color: #f8fafc;
+  background-color: var(--bg-hover);
   padding: 10rem 0;
   text-align: center;
 }
@@ -230,7 +231,7 @@
 }
 .stats-header p {
   font-size: 1.6rem;
-  color: #6b7280;
+  color: var(--text-muted);
   margin-bottom: 6rem;
 }
 .about-stats-grid {
@@ -253,7 +254,7 @@
   padding: 3.5rem 2rem;
   border-radius: 16px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
-  border: 1px solid #f3f4f6;
+  border: 1px solid var(--border-color);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -261,7 +262,7 @@
 }
 .stat-card-icon {
   font-size: 2.4rem;
-  color: #6A5ACD;
+  color: var(--link-color);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -271,16 +272,16 @@
   height: 28px;
 }
 .stat-card:nth-child(1) .stat-card-icon {
-  color: #dc2626;
+  color: var(--status-error);
 }
 .stat-card:nth-child(2) .stat-card-icon {
-  color: #374151;
+  color: var(--text-muted);
 }
 .stat-card:nth-child(3) .stat-card-icon {
-  color: #0d9488;
+  color: var(--status-success);
 }
 .stat-card:nth-child(4) .stat-card-icon {
-  color: #374151;
+  color: var(--text-muted);
 }
 .stat-card h3 {
   font-size: 2.4rem;
@@ -290,7 +291,7 @@
 .stat-card p {
   font-size: 1.3rem;
   font-weight: 700;
-  color: #6b7280;
+  color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -303,23 +304,29 @@
   gap: 2.5rem;
 }
 .empower-main-card {
-  background-color: #1e1b4b;
+  background-color: var(--surface-strong);
   border-radius: 24px;
   padding: 6rem;
-  color: white;
+  color: var(--text-main);
   position: relative;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   min-height: 480px;
+  border: 1px solid var(--border-color);
 }
+
+[data-theme="dark"] .empower-main-card {
+  background: linear-gradient(135deg, rgba(138, 126, 253, 0.1), rgba(106, 90, 205, 0.05));
+}
+
 .brain-icon {
   position: absolute;
   top: 2rem;
   right: 2rem;
   opacity: 0.15;
-  color: white;
+  color: var(--link-color);
   pointer-events: none;
 }
 .brain-icon svg {
@@ -330,7 +337,7 @@
   display: flex;
   align-items: center;
   gap: 0.8rem;
-  color: #6A5ACD;
+  color: var(--link-color);
   font-size: 1.2rem;
   font-weight: 800;
   letter-spacing: 0.1em;
@@ -343,10 +350,11 @@
   margin-bottom: 2.5rem;
   max-width: 500px;
   line-height: 1.2;
+  color: var(--text-main);
 }
 .empower-main-card p {
   font-size: 1.6rem;
-  color: #9ca3af;
+  color: var(--text-muted);
   line-height: 1.6;
   max-width: 550px;
 }
