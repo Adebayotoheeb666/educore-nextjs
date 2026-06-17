@@ -9,7 +9,7 @@ import "../../shared.css";
 interface Teacher {
   id: string; name: string; email: string; role: string;
   phone?: string; is_active?: number; created_at: string;
-  avatar?: string; admission_no?: string;
+  avatar?: string; admission_no?: string; gender?: string;
 }
 
 interface Subject { id: string; name: string; code?: string; class_name?: string; }
@@ -82,6 +82,7 @@ export default function TeacherDetailPage() {
           {[
             ["Email", teacher.email],
             ["Phone", teacher.phone ?? "—"],
+            ["Gender", teacher.gender ?? "—"],
             ["Role", teacher.role.replace(/_/g, " ")],
             ["Status", teacher.is_active ? "Active" : "Inactive"],
             ["Joined", new Date(teacher.created_at).toLocaleDateString("en-NG")],

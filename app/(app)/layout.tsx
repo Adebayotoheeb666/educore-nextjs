@@ -37,7 +37,9 @@ function getTokenExpiryMs(token: string): number | null {
 }
 
 const navConfig = [
-  { label: "Dashboard",    path: "/dashboard",           icon: "🏠", roles: [...STAFF_ROLES, "bursar", "librarian"] },
+  { label: "Dashboard",    path: "/dashboard",           icon: "🏠", roles: STAFF_ROLES },
+  { label: "Bursar Dashboard", path: "/bursar/dashboard", icon: "🏦", roles: ["bursar"] },
+  { label: "Library Dashboard", path: "/librarian/dashboard", icon: "📚", roles: ["librarian"] },
   { label: "Students",     path: "/students",            icon: "👨‍🎓", roles: ADMIN_ROLES },
   { label: "Parents",      path: "/parents",             icon: "👪", roles: ADMIN_ROLES },
   { label: "Teachers",     path: "/teachers",            icon: "👩‍🏫", roles: ADMIN_ROLES },

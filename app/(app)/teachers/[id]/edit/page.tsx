@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { authenticatedFetch } from "@/lib/utils/fetch";
+import { formatPhoneDisplay } from "@/lib/utils/phoneClient";
 import "../../../shared.css";
 
 const ROLES = [
@@ -23,6 +24,7 @@ interface Teacher {
   phone?: string;
   role: string;
   avatar?: string;
+  gender?: string;
 }
 
 interface Subject {
@@ -50,6 +52,7 @@ export default function EditTeacherPage() {
     phone: "",
     role: "subject_teacher",
     avatar: "",
+    gender: "",
   });
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [subjects, setSubjects] = useState<Subject[]>([]);
@@ -112,6 +115,7 @@ export default function EditTeacherPage() {
             phone: t.phone ?? "",
             role: t.role ?? "subject_teacher",
             avatar: t.avatar ?? "",
+            gender: t.gender ?? "",
           });
         }
       } catch (err) {
@@ -161,8 +165,8 @@ export default function EditTeacherPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.firstName || !form.lastName || !form.email) {
-      return toast.error("First name, last name, and email are required");
+    if (!form.firstName || !form.lastName || (!form.email && !form.phone)) {
+      return toast.error("First name, last name, and either email or phone are required");
     }
     setSaving(true);
     try {
@@ -186,6 +190,7 @@ export default function EditTeacherPage() {
           phone: form.phone || null,
           role: form.role,
           avatar: avatar || null,
+          gender: form.gender || null,
         }),
       });
       if (!res.ok) throw new Error((await res.json()).message);
@@ -262,14 +267,20 @@ export default function EditTeacherPage() {
               <input value={form.lastName} onChange={(e) => set("lastName", e.target.value)} required />
             </div>
             <div className="form-group">
-              <label>Email *</label>
-              <input type="email" value={form.email} onChange={(e) => set("email", e.target.value)} required />
+              <label>Email</label>
+              <input type="email" value={form.email} onChange={(e) => set("email", e.target.value)} />
             </div>
             <div className="form-group">
               <label>Phone Number</label>
-              <input type="tel" value={form.phone} onChange={(e) => set("phone", e.target.value)} />
-            </div>
-            <div className="form-group">
+              <input type="tel" value={form.phone} onChange={(e) => set("phone", e.target.value)} onBlur={(e) => set("phone", formatPhoneDisplay(e.target.value))} />
+            </div>            <div className="form-group">
+              <label>Gender</label>
+              <select value={form.gender} onChange={(e) => set("gender", e.target.value)}>
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+            </div>            <div className="form-group">
               <label>Role</label>
               <select value={form.role} onChange={(e) => set("role", e.target.value)}>
                 {ROLES.map((r) => (

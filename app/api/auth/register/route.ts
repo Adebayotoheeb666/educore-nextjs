@@ -5,6 +5,7 @@ import { generateToken } from "@/lib/utils/jwt";
 import { setAuthCookie } from "@/lib/utils/cookies";
 import { generateId } from "@/lib/utils/id";
 import { badRequest, conflict, serverError } from "@/lib/utils/response";
+import { normalizePhone } from "@/lib/utils/string";
 import { seedServices, activateCompulsoryServices } from "@/lib/services/seedServices";
 import { getServiceBySlug, validateDependencies } from "@/config/services/catalog";
 import { withRateLimit } from "@/lib/middleware/rateLimit";
@@ -37,18 +38,26 @@ export const POST = withRateLimit(
       schoolName?.toLowerCase().replace(/\s+/g, "-") ||
       null;
 
-    if (!schoolName || !finalName || !email || !password) {
+    if (!schoolName || !finalName || !password) {
       return badRequest("Please fill in all required fields");
     }
 
-    const normalizedEmail = String(email).toLowerCase().trim();
+    const normalizedEmail = email ? String(email).toLowerCase().trim() : null;
+    const normalizedPhone = finalPhone ? normalizePhone(finalPhone) : null;
 
-    // Check email uniqueness
-    const [existing] = await query(
-      "SELECT id FROM users WHERE email = ?",
-      [normalizedEmail]
-    );
-    if (existing) return conflict("Email has already been registered");
+    if (!normalizedEmail && !normalizedPhone) {
+      return badRequest("Please provide either an email or phone number to register");
+    }
+
+    // Check uniqueness for provided contact
+    if (normalizedEmail) {
+      const [existing] = await query("SELECT id FROM users WHERE email = ?", [normalizedEmail]);
+      if (existing) return conflict("Email has already been registered");
+    }
+    if (normalizedPhone) {
+      const [existingPhone] = await query("SELECT id FROM users WHERE phone = ?", [normalizedPhone]);
+      if (existingPhone) return conflict("Phone number has already been registered");
+    }
 
     // Create school
     const schoolId = generateId();
@@ -64,7 +73,7 @@ export const POST = withRateLimit(
     await execute(
       `INSERT INTO users (id, name, first_name, last_name, email, password, role, school_id, phone, is_active, created_at, updated_at)
        VALUES (?, ?, ?, ?, ?, ?, 'school_owner', ?, ?, 1, datetime('now'), datetime('now'))`,
-      [userId, finalName, firstName || null, lastName || null, normalizedEmail, hashedPassword, schoolId, finalPhone || null]
+      [userId, finalName, firstName || null, lastName || null, normalizedEmail, hashedPassword, schoolId, normalizedPhone || null]
     );
 
     // Link school owner

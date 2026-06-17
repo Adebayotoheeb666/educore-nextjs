@@ -51,6 +51,9 @@ export default function EditParentPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!form.firstName || !form.lastName || (!form.email && !form.phone)) {
+      return toast.error("First name, last name, and either email or phone are required");
+    }
     setSaving(true);
     try {
       let avatar = form.avatar;
@@ -131,12 +134,12 @@ export default function EditParentPage() {
               <input value={form.lastName} onChange={(e) => set("lastName", e.target.value)} required />
             </div>
             <div className="form-group">
-              <label>Email *</label>
-              <input type="email" value={form.email} onChange={(e) => set("email", e.target.value)} required />
+              <label>Email Address</label>
+              <input type="email" value={form.email} onChange={(e) => set("email", e.target.value)} placeholder="parent@email.com" />
             </div>
             <div className="form-group">
               <label>Phone Number</label>
-              <input type="tel" value={form.phone} onChange={(e) => set("phone", e.target.value)} />
+              <input type="tel" value={form.phone} onChange={(e) => set("phone", e.target.value)} placeholder="e.g. +234 800 000 0000" />
             </div>
           </div>
 

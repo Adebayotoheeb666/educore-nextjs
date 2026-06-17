@@ -214,7 +214,7 @@ export default function ProfileSetupPage() {
         </Link>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2.5rem", alignItems: "start" }}>
+      <div className="profile-setup-grid">
         {/* Left column: personal info */}
         <div>
           {/* Avatar */}

@@ -5,6 +5,7 @@ import { generateToken } from "@/lib/utils/jwt";
 import { setAuthCookie } from "@/lib/utils/cookies";
 import { badRequest, serverError, unauthorized } from "@/lib/utils/response";
 import { withRateLimit } from "@/lib/middleware/rateLimit";
+import { normalizePhone, looksLikeAdmissionNo } from "@/lib/utils/string";
 
 export const dynamic = "force-dynamic";
 
@@ -35,17 +36,48 @@ export const POST = withRateLimit(
       return null;
     });
     console.log("auth/login parsed body", body);
-    const { email, password } = body ?? {};
+    const { email, identifier, password } = body ?? {};
 
-    if (!email || !password) {
-      return badRequest("Please add email and password");
+    const idValue = (email || identifier || "").toString().trim();
+    if (!idValue || !password) {
+      return badRequest("Please provide identifier (email/phone/admission number) and password");
     }
 
-    const normalizedEmail = String(email).toLowerCase().trim();
-    const user = await queryOne<UserRow>(
-      "SELECT id, name, first_name, last_name, email, password, role, avatar, is_active FROM users WHERE email = ?",
-      [normalizedEmail]
-    );
+    // Try admission number first (students must login with admission number)
+    let user: UserRow | null = null;
+    if (looksLikeAdmissionNo(idValue)) {
+      const admissionVal = String(idValue).trim().toUpperCase();
+      user = await queryOne<UserRow>(
+        "SELECT id, name, first_name, last_name, email, password, role, avatar, is_active, admission_no FROM users WHERE UPPER(admission_no) = ?",
+        [admissionVal]
+      );
+      if (!user) return badRequest("Invalid admission number or password");
+    }
+
+    // If not found by admission, try email or phone
+    if (!user) {
+      const normalizedEmail = idValue.includes("@") ? idValue.toLowerCase() : null;
+      const normalizedPhone = normalizePhone(idValue) || null;
+      const searchClauses: string[] = [];
+      const params: string[] = [];
+      if (normalizedEmail) {
+        searchClauses.push("email = ?");
+        params.push(normalizedEmail);
+      }
+      if (normalizedPhone) {
+        searchClauses.push("phone = ?");
+        params.push(normalizedPhone);
+      }
+      if (!searchClauses.length) {
+        return badRequest("Please provide a valid email, phone number, or admission number");
+      }
+      user = await queryOne<UserRow>(
+        `SELECT id, name, first_name, last_name, email, password, role, avatar, is_active, admission_no, phone FROM users WHERE ${searchClauses.join(" OR ")}`,
+        params
+      );
+      if (!user) return badRequest("Invalid credentials");
+      if (user.role === "student") return badRequest("Students must login using their admission number");
+    }
 
     if (!user) return badRequest("Invalid email or password");
 

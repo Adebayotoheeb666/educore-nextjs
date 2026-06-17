@@ -104,7 +104,7 @@ export default function TeacherBulkImportPage() {
         </h1>
         <p style={{ fontSize: "1.5rem", color: "#64748b" }}>
           Upload a CSV file to import multiple teachers at once. Required columns:{" "}
-          <strong>FULL_NAME, EMAIL</strong>. Optional: PHONE, ROLE, QUALIFICATIONS, SUBJECT_AREA
+          <strong>FULL_NAME, EMAIL</strong>. Optional: PHONE, ROLE, GENDER, QUALIFICATIONS, SUBJECT_AREA
         </p>
       </div>
 
@@ -165,9 +165,9 @@ export default function TeacherBulkImportPage() {
                 margin: 0,
               }}
             >
-{`FULL_NAME,EMAIL,PHONE,ROLE,QUALIFICATIONS,SUBJECT_AREA
-Chukwu Adeyemi,chukwu@school.com,09012345678,subject_teacher,B.Sc Mathematics,Mathematics
-Abiola Oluwaseun,abiola@school.com,09087654321,class_teacher,B.A Education,General Studies`}
+{`FULL_NAME,EMAIL,PHONE,ROLE,GENDER,QUALIFICATIONS,SUBJECT_AREA
+Chukwu Adeyemi,chukwu@school.com,09012345678,subject_teacher,Male,B.Sc Mathematics,Mathematics
+Abiola Oluwaseun,abiola@school.com,09087654321,class_teacher,Female,B.A Education,General Studies`}
             </pre>
           </div>
 

@@ -122,21 +122,21 @@ export default function ClassesPage() {
             <tbody>
               {filtered.map((c) => (
                 <tr key={c.id}>
-                  <td>
+                  <td data-label="Class">
                     <div className="name-stack">
                       <h4>{c.name}</h4>
                       {c.level && <p>{c.level}</p>}
                     </div>
                   </td>
-                  <td>{c.section ?? "—"}</td>
-                  <td>{c.teacher_name ?? "—"}</td>
-                  <td>
+                  <td data-label="Section / Arm">{c.section ?? "—"}</td>
+                  <td data-label="Form Teacher">{c.teacher_name ?? "—"}</td>
+                  <td data-label="Students">
                     <span className="badge badge-green">{c.student_count ?? 0}</span>
                   </td>
-                  <td>
+                  <td data-label="Subjects">
                     <span className="badge badge-blue">{c.subject_count ?? 0}</span>
                   </td>
-                  <td>
+                  <td data-label="Actions">
                     <div className="row-actions">
                       <Link href={`/classes/${c.id}`} className="link-action">View</Link>
                       <Link href={`/classes/${c.id}/edit`} className="link-action">Edit</Link>

@@ -20,6 +20,8 @@ export default function StudentDashboardPage() {
   const [attendance, setAttendance] = useState<Attendance[]>([]);
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
   const [classInfo, setClassInfo] = useState<ClassInfo | null>(null);
+  const [schoolSession, setSchoolSession] = useState<string>("—");
+  const [schoolTerm, setSchoolTerm] = useState<string>("—");
   const [subjects, setSubjects] = useState<Subject[]>([]);
   const [fees, setFees] = useState<FeeData | null>(null);
   const [timetable, setTimetable] = useState<Timetable[]>([]);
@@ -33,11 +35,12 @@ export default function StudentDashboardPage() {
       authenticatedFetch(`/api/attendance/student/${user.id}`).then((r) => r.json()).catch(() => ({ data: [] })),
       authenticatedFetch("/api/announcements").then((r) => r.json()).catch(() => ({ data: [] })),
       authenticatedFetch(`/api/students/${user.id}/enrollments`).then((r) => r.json()).catch(() => ({ data: [] })),
+      authenticatedFetch("/api/school").then((r) => r.json()).catch(() => ({ data: {} })),
       authenticatedFetch(`/api/students/${user.id}/subjects`).then((r) => r.json()).catch(() => ({ data: [] })),
       authenticatedFetch("/api/fees/student").then((r) => r.json()).catch(() => ({ data: null })),
       authenticatedFetch("/api/timetable/my").then((r) => r.json()).catch(() => ({ data: [] })),
       authenticatedFetch("/api/library/borrows").then((r) => r.json()).catch(() => ({ data: [] })),
-    ]).then(([rd, ad, nd, ed, sd, fd, td, ld]) => {
+    ]).then(([rd, ad, nd, ed, sch, sd, fd, td, ld]) => {
       setResults(Array.isArray(rd.data) ? rd.data.slice(0, 6) : []);
       setAttendance(Array.isArray(ad.data) ? ad.data.slice(0, 10) : []);
       setAnnouncements(Array.isArray(nd.data) ? nd.data.slice(0, 4) : []);
@@ -50,6 +53,10 @@ export default function StudentDashboardPage() {
           class_section: ed.data[0].class_section || "—",
         });
       }
+
+      const schoolData = sch.data ?? {};
+      setSchoolSession(schoolData.academic_session ?? schoolData.settings?.academicSession ?? "—");
+      setSchoolTerm(schoolData.current_term ?? schoolData.settings?.currentTerm ?? "—");
       
       setSubjects(Array.isArray(sd.data) ? sd.data.slice(0, 10) : []);
       
@@ -94,17 +101,19 @@ export default function StudentDashboardPage() {
           {classInfo && (
             <div style={{ background: "linear-gradient(135deg, #6A5ACD 0%, #8b7dd9 100%)", borderRadius: 16, padding: "2.5rem", marginBottom: "3rem", color: "white" }}>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "3rem" }}>
-                <div>
+                      <div>
                   <div style={{ fontSize: "1.2rem", opacity: 0.9, marginBottom: "0.5rem" }}>Your Class</div>
-                  <div style={{ fontSize: "2rem", fontWeight: 800 }}>{classInfo.class_level} {classInfo.class_section}</div>
+                  <div style={{ fontSize: "2rem", fontWeight: 800 }}>
+                    {classInfo.class_name ? classInfo.class_name : `${classInfo.class_level} ${classInfo.class_section}`}
+                  </div>
                 </div>
                 <div>
                   <div style={{ fontSize: "1.2rem", opacity: 0.9, marginBottom: "0.5rem" }}>Academic Session</div>
-                  <div style={{ fontSize: "2rem", fontWeight: 800 }}>2024/2025</div>
+                  <div style={{ fontSize: "2rem", fontWeight: 800 }}>{schoolSession}</div>
                 </div>
                 <div>
                   <div style={{ fontSize: "1.2rem", opacity: 0.9, marginBottom: "0.5rem" }}>Current Term</div>
-                  <div style={{ fontSize: "2rem", fontWeight: 800 }}>First Term</div>
+                  <div style={{ fontSize: "2rem", fontWeight: 800 }}>{schoolTerm.replace(/_/g, " ")}</div>
                 </div>
               </div>
             </div>

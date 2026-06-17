@@ -59,7 +59,7 @@ interface School {
   academic_session?: string;
 }
 
-const ADMIN_ROLES = ["school_owner", "principal", "vp_academics", "vp_admin", "admin_staff"];
+const ADMIN_ROLES = ["school_owner", "principal", "vp_academics", "vp_admin", "admin_staff", "bursar", "librarian"];
 const TEACHER_ROLES = ["class_teacher", "subject_teacher"];
 const STUDENT_ROLES = ["student"];
 const PARENT_ROLES = ["parent"];

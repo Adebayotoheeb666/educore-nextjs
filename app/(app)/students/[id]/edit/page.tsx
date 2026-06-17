@@ -26,6 +26,7 @@ interface StudentData {
   state_of_origin?: string;
   avatar?: string;
   parent_id?: string;
+  admission_no?: string;
 }
 
 export default function EditStudentPage() {
@@ -38,6 +39,7 @@ export default function EditStudentPage() {
   const [form, setForm] = useState({
     firstName: "", lastName: "", email: "", phone: "", dob: "", gender: "",
     classId: "", parentId: "", address: "", stateOfOrigin: "", avatar: "", parentPhone: "",
+    admissionNo: "",
   });
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
 
@@ -54,6 +56,7 @@ export default function EditStudentPage() {
           firstName: s.first_name ?? first ?? "",
           lastName: s.last_name ?? rest.join(" ") ?? "",
           email: s.email ?? "",
+          admissionNo: s.admission_no ?? "",
           phone: s.phone ?? "",
           parentPhone: s.parent_phone ?? "",
           dob: s.dob ? s.dob.slice(0, 10) : "",
@@ -94,6 +97,7 @@ export default function EditStudentPage() {
           firstName: form.firstName,
           lastName: form.lastName,
           email: form.email,
+          admissionNo: form.admissionNo || null,
           phone: form.phone || null,
           parentPhone: form.parentPhone || null,
           dob: form.dob || null,

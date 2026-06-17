@@ -23,23 +23,23 @@ describe("POST /api/auth/login", () => {
     jest.clearAllMocks();
   });
 
-  test("returns 400 when email or password missing", async () => {
-    const req = makeRequest("POST", "/api/auth/login", { body: { email: "a@b.com" } });
+  test("returns 400 when identifier or password missing", async () => {
+    const req = makeRequest("POST", "/api/auth/login", { body: { identifier: "a@b.com" } });
     const res = await POST(req);
     expect(res.status).toBe(400);
     const body = await res.json();
-    expect(body.message).toMatch(/email and password/i);
+    expect(body.message).toMatch(/identifier/i);
   });
 
   test("returns 400 for non-existent user", async () => {
     mockQueryOne.mockResolvedValueOnce(null);
     const req = makeRequest("POST", "/api/auth/login", {
-      body: { email: "nobody@test.com", password: "pass" },
+      body: { identifier: "nobody@test.com", password: "pass" },
     });
     const res = await POST(req);
     expect(res.status).toBe(400);
     const body = await res.json();
-    expect(body.message).toBe("Invalid email or password");
+    expect(body.message).toBe("Invalid credentials");
   });
 
   test("returns 400 for wrong password", async () => {
@@ -50,7 +50,7 @@ describe("POST /api/auth/login", () => {
       avatar: null, is_active: 1,
     });
     const req = makeRequest("POST", "/api/auth/login", {
-      body: { email: "user@test.com", password: "wrong-password" },
+      body: { identifier: "user@test.com", password: "wrong-password" },
     });
     const res = await POST(req);
     expect(res.status).toBe(400);
@@ -66,7 +66,7 @@ describe("POST /api/auth/login", () => {
       avatar: null, is_active: 1,
     });
     const req = makeRequest("POST", "/api/auth/login", {
-      body: { email: "user@test.com", password: "correct-password" },
+      body: { identifier: "user@test.com", password: "correct-password" },
     });
     const res = await POST(req);
     expect(res.status).toBe(200);
@@ -84,7 +84,7 @@ describe("POST /api/auth/login", () => {
       avatar: null, is_active: 0,
     });
     const req = makeRequest("POST", "/api/auth/login", {
-      body: { email: "disabled@test.com", password: "pass" },
+      body: { identifier: "disabled@test.com", password: "pass" },
     });
     const res = await POST(req);
     expect(res.status).toBe(401);
@@ -93,7 +93,7 @@ describe("POST /api/auth/login", () => {
   test("normalizes email to lowercase", async () => {
     mockQueryOne.mockResolvedValueOnce(null);
     const req = makeRequest("POST", "/api/auth/login", {
-      body: { email: "USER@TEST.COM", password: "pass" },
+      body: { identifier: "USER@TEST.COM", password: "pass" },
     });
     await POST(req);
     expect(mockQueryOne).toHaveBeenCalledWith(

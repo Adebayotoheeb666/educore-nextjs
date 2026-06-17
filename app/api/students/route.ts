@@ -4,6 +4,7 @@ import { withAuth, type AuthContext } from "@/lib/middleware/auth";
 import { badRequest, created, ok, conflict, serverError } from "@/lib/utils/response";
 import { hashPassword } from "@/lib/utils/password";
 import { generateId } from "@/lib/utils/id";
+import { normalizePhone } from "@/lib/utils/string";
 
 export const dynamic = "force-dynamic";
 
@@ -48,23 +49,40 @@ export const POST = withAuth(
   async (req: NextRequest, { school }: AuthContext): Promise<NextResponse> => {
     try {
       if (!school) return badRequest("School context required");
-      const { firstName, lastName, email, dob, gender, classId, parentPhone, phone, parentId, avatar, address, stateOfOrigin } = await req.json();
+      const { firstName, lastName, email, dob, gender, classId, parentPhone, phone, parentId, avatar, address, stateOfOrigin, admissionNo: providedAdmissionNo } = await req.json();
 
-      if (!firstName || !lastName || !email) {
-        return badRequest("First name, last name, and email are required");
+      if (!firstName || !lastName) {
+        return badRequest("First name and last name are required");
       }
 
-      const normalizedEmail = String(email).toLowerCase().trim();
-      const [existing] = await query("SELECT id FROM users WHERE email = ?", [normalizedEmail]);
-      if (existing) return conflict("Email already registered");
+      const normalizedEmail = email ? String(email).toLowerCase().trim() : null;
+      const normalizedPhone = phone ? normalizePhone(phone) : null;
+      if (!normalizedEmail && !normalizedPhone) {
+        return badRequest("Students must have either an email or phone number");
+      }
+
+      if (normalizedEmail) {
+        const [existing] = await query("SELECT id FROM users WHERE email = ?", [normalizedEmail]);
+        if (existing) return conflict("Email already registered");
+      }
+      if (normalizedPhone) {
+        const [existingPhone] = await query("SELECT id FROM users WHERE phone = ?", [normalizedPhone]);
+        if (existingPhone) return conflict("Phone number already registered");
+      }
 
       const year = new Date().getFullYear();
-      const [countRow] = await query<{ count: number }>(
-        "SELECT COUNT(*) as count FROM users WHERE school_id = ? AND role = 'student'",
-        [school.id]
-      );
-      const count = countRow?.count ?? 0;
-      const admissionNo = `SC-${year}-${String(count + 1).padStart(4, "0")}`;
+      // Use provided admission number if present, else auto-generate
+      let admissionNo = providedAdmissionNo ? String(providedAdmissionNo).trim() : null;
+      if (!admissionNo) {
+        const [countRow] = await query<{ count: number }>(
+          "SELECT COUNT(*) as count FROM users WHERE school_id = ? AND role = 'student'",
+          [school.id]
+        );
+        const count = countRow?.count ?? 0;
+        admissionNo = `SC-${year}-${String(count + 1).padStart(4, "0")}`;
+      }
+      // Normalize admission number to uppercase for DB consistency
+      admissionNo = admissionNo ? String(admissionNo).toUpperCase() : null;
       const defaultPassword = `EduCore@${year}`;
 
       const studentId = generateId();
@@ -72,7 +90,7 @@ export const POST = withAuth(
       await execute(
         `INSERT INTO users (id, name, first_name, last_name, email, phone, password, role, school_id, admission_no, dob, gender, parent_phone, address, state_of_origin, avatar, class_id, is_active, created_at, updated_at)
          VALUES (?, ?, ?, ?, ?, ?, ?, 'student', ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, datetime('now'), datetime('now'))`,
-        [studentId, `${firstName} ${lastName}`, firstName, lastName, normalizedEmail, phone || null, hashed, school.id,
+        [studentId, `${firstName} ${lastName}`, firstName, lastName, normalizedEmail, normalizedPhone || null, hashed, school.id,
          admissionNo, dob || null, gender || null, parentPhone || null, address || null, stateOfOrigin || null, avatar || null, classId || null]
       );
 

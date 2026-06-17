@@ -361,8 +361,23 @@ a {
 [data-theme="dark"] input,
 [data-theme="dark"] textarea,
 [data-theme="dark"] select,
-[data-theme="dark"] button {
+[data-theme="dark"] button,
+[data-theme="dark"] .btn-secondary,
+[data-theme="dark"] .btn-outline,
+[data-theme="dark"] .btn-auth,
+[data-theme="dark"] .btn-danger-sm,
+[data-theme="dark"] .btn-confirm-sm {
   color: var(--text-main);
+}
+
+[data-theme="dark"] button,
+[data-theme="dark"] .btn-secondary,
+[data-theme="dark"] .btn-outline,
+[data-theme="dark"] .btn-auth,
+[data-theme="dark"] .btn-danger-sm,
+[data-theme="dark"] .btn-confirm-sm {
+  background-color: var(--bg-card);
+  border-color: var(--border-color);
 }
 
 [data-theme="dark"] input,

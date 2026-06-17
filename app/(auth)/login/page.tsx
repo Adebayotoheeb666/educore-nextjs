@@ -9,7 +9,7 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import "../auth.css";
 
 export default function LoginPage() {
-  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [formData, setFormData] = useState({ identifier: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useAppDispatch();
@@ -21,7 +21,7 @@ export default function LoginPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.email || !formData.password) {
+    if (!formData.identifier || !formData.password) {
       return toast.error("Please fill in all fields");
     }
     setIsLoading(true);
@@ -29,7 +29,7 @@ export default function LoginPage() {
       const res = await fetch("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...formData, email: formData.email.trim().toLowerCase() }),
+        body: JSON.stringify({ identifier: formData.identifier.trim(), password: formData.password }),
         credentials: "include",
       });
       const data = await res.json();
@@ -67,16 +67,16 @@ export default function LoginPage() {
 
           <form className="auth-form" onSubmit={handleSubmit}>
             <div className="auth-group">
-              <label htmlFor="email">Email Address</label>
+              <label htmlFor="identifier">Email, Phone, or Admission No.</label>
               <input
-                id="email"
-                type="email"
-                name="email"
-                placeholder="e.g. admin@school.ng"
-                value={formData.email}
+                id="identifier"
+                type="text"
+                name="identifier"
+                placeholder="e.g. admin@school.ng, +234 801 234 5678, or SC-2026-0001"
+                value={formData.identifier}
                 onChange={handleChange}
                 required
-                autoComplete="email"
+                autoComplete="username"
               />
             </div>
 

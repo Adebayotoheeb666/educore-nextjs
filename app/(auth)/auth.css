@@ -39,7 +39,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 4rem 2rem;
+  padding: clamp(1rem, 3.5vw, 4rem) 2rem;
 }
 
 .auth-card {
@@ -47,7 +47,7 @@
   width: 100%;
   max-width: 480px;
   border-radius: 16px;
-  padding: 4.5rem;
+  padding: clamp(1rem, 4vw, 4.5rem);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   border: 1px solid var(--border-color);
   text-align: center;
@@ -73,6 +73,11 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1.5rem;
+}
+
+/* Allow grid children to shrink below their content width to avoid overflow */
+.form-row > * {
+  min-width: 0;
 }
 
 .auth-group {
@@ -105,6 +110,7 @@
   color: var(--text-main);
   outline: none;
   transition: all 0.2s;
+  min-width: 0; /* allow inputs to shrink on small screens */
 }
 
 .auth-group input:focus {

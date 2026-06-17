@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setUser } from "@/redux/features/auth/authSlice";
 import { authenticatedFetch } from "@/lib/utils/fetch";
+import { formatPhoneDisplay } from "@/lib/utils/phoneClient";
 import "../shared.css";
 
 export default function ProfilePage() {
@@ -65,6 +66,10 @@ export default function ProfilePage() {
     e.preventDefault();
     setSaving(true);
     try {
+      if (!form.email && !form.phone) {
+        setSaving(false);
+        return toast.error("Please provide either an email or phone number in your profile");
+      }
       const res = await authenticatedFetch("/api/auth/profile", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
@@ -161,7 +166,7 @@ export default function ProfilePage() {
             </div>
             <div className="form-group">
               <label>Phone Number</label>
-              <input type="tel" value={form.phone} onChange={(e) => set("phone", e.target.value)} placeholder="+234 800 000 0000" />
+              <input type="tel" value={form.phone} onChange={(e) => set("phone", e.target.value)} onBlur={(e) => set("phone", formatPhoneDisplay(e.target.value))} placeholder="+234 800 000 0000" />
             </div>
             <button type="submit" className="btn-primary" disabled={saving}>
               {saving ? "Saving…" : "Save Changes"}

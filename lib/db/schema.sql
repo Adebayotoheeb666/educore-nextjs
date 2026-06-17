@@ -9,7 +9,7 @@
 CREATE TABLE IF NOT EXISTS schools (
   id TEXT PRIMARY KEY,
   name TEXT NOT NULL,
-  email TEXT UNIQUE,
+  email TEXT,
   phone TEXT,
   state TEXT,
   type TEXT,
@@ -31,6 +31,11 @@ CREATE TABLE IF NOT EXISTS schools (
   created_at TEXT NOT NULL DEFAULT (datetime('now')),
   updated_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
+
+-- Allow branches (multiple schools owned by the same owner) to share the same
+-- email address by scoping uniqueness to the owner. This replaces the previous
+-- global UNIQUE constraint on `email`.
+CREATE UNIQUE INDEX IF NOT EXISTS idx_schools_owner_email ON schools(owner_id, email);
 
 CREATE TABLE IF NOT EXISTS school_backup_settings (
   id TEXT PRIMARY KEY,

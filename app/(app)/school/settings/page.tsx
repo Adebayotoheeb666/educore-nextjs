@@ -32,7 +32,7 @@ const NIGERIAN_STATES = [
 ];
 
 const SCHOOL_TYPES = [
-  { value: "primary", label: "Primary School" },
+  { value: "primary", label: "Nursery & Primary School" },
   { value: "secondary", label: "Secondary School" },
   { value: "primary_secondary", label: "Primary & Secondary" },
   { value: "tertiary", label: "Tertiary Institution" },

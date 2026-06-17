@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { authenticatedFetch } from "@/lib/utils/fetch";
+import { formatPhoneDisplay } from "@/lib/utils/phoneClient";
 import "../../shared.css";
 
 export default function AddParentPage() {
@@ -22,8 +23,8 @@ export default function AddParentPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.firstName || !form.lastName || !form.email) {
-      return toast.error("First name, last name, and email are required");
+    if (!form.firstName || !form.lastName || (!form.email && !form.phone)) {
+      return toast.error("First name, last name, and either email or phone are required");
     }
     setSubmitting(true);
     try {
@@ -112,12 +113,12 @@ export default function AddParentPage() {
               <input value={form.lastName} onChange={(e) => set("lastName", e.target.value)} placeholder="e.g. Okonkwo" required />
             </div>
             <div className="form-group">
-              <label>Email Address *</label>
-              <input type="email" value={form.email} onChange={(e) => set("email", e.target.value)} placeholder="parent@email.com" required />
+              <label>Email Address</label>
+              <input type="email" value={form.email} onChange={(e) => set("email", e.target.value)} placeholder="parent@email.com" />
             </div>
             <div className="form-group">
               <label>Phone Number</label>
-              <input type="tel" value={form.phone} onChange={(e) => set("phone", e.target.value)} placeholder="+234 800 000 0000" />
+              <input type="tel" value={form.phone} onChange={(e) => set("phone", e.target.value)} onBlur={(e) => set("phone", formatPhoneDisplay(e.target.value))} placeholder="+234 800 000 0000" />
             </div>
           </div>
 

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { authenticatedFetch } from "@/lib/utils/fetch";
+import { formatPhoneDisplay } from "@/lib/utils/phoneClient";
 import "../../shared.css";
 
 const ROLES = [
@@ -41,7 +42,7 @@ export default function AddTeacherPage() {
   const [submitting, setSubmitting] = useState(false);
   const [form, setForm] = useState({
     firstName: "", lastName: "", email: "", phone: "",
-    role: "subject_teacher", qualification: "", specialization: "",
+    role: "subject_teacher", qualification: "", specialization: "", gender: "",
   });
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [classes, setClasses] = useState<Class[]>([]);
@@ -130,8 +131,8 @@ export default function AddTeacherPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.firstName || !form.lastName || !form.email) {
-      return toast.error("First name, last name, and email are required");
+    if (!form.firstName || !form.lastName || (!form.email && !form.phone)) {
+      return toast.error("First name, last name, and either email or phone are required");
     }
     setSubmitting(true);
     try {
@@ -232,12 +233,20 @@ export default function AddTeacherPage() {
               <input value={form.lastName} onChange={(e) => set("lastName", e.target.value)} placeholder="e.g. Eze" required />
             </div>
             <div className="form-group">
-              <label>Email Address *</label>
-              <input type="email" value={form.email} onChange={(e) => set("email", e.target.value)} placeholder="teacher@school.ng" required />
+              <label>Email Address</label>
+              <input type="email" value={form.email} onChange={(e) => set("email", e.target.value)} placeholder="teacher@school.ng" />
             </div>
             <div className="form-group">
               <label>Phone Number</label>
-              <input type="tel" value={form.phone} onChange={(e) => set("phone", e.target.value)} placeholder="+234 800 000 0000" />
+              <input type="tel" value={form.phone} onChange={(e) => set("phone", e.target.value)} onBlur={(e) => set("phone", formatPhoneDisplay(e.target.value))} placeholder="+234 800 000 0000" />
+            </div>
+            <div className="form-group">
+              <label>Gender</label>
+              <select value={form.gender} onChange={(e) => set("gender", e.target.value)}>
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
             </div>
           </div>
 

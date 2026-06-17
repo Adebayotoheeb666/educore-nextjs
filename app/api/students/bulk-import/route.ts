@@ -3,6 +3,7 @@ import { query, execute, queryOne } from "@/lib/db/turso";
 import { withAuth, type AuthContext } from "@/lib/middleware/auth";
 import { badRequest, notFound, ok, serverError } from "@/lib/utils/response";
 import { hashPassword } from "@/lib/utils/password";
+import { capitalizeName } from "@/lib/utils/string";
 import { generateId } from "@/lib/utils/id";
 
 // POST /api/students/bulk-import — accepts JSON array of student rows
@@ -29,7 +30,8 @@ export const POST = withAuth(
       for (let i = 0; i < rows.length; i++) {
         const row = rows[i];
         const rowNum = i + 2;
-        const fullName = String(row.FULL_NAME || row.full_name || row.Name || "").trim();
+        const fullNameRaw = String(row.FULL_NAME || row.full_name || row.Name || "").trim();
+        const fullName = capitalizeName(fullNameRaw);
         const parts = fullName.split(/\s+/).filter(Boolean);
         const firstName = parts[0];
         const lastName = parts.slice(1).join(" ") || parts[0];
@@ -38,8 +40,17 @@ export const POST = withAuth(
         ).toLowerCase().trim();
         const parentPhone = String(row.PARENT_PHONE || row.parent_phone || "").trim();
         const phone = String(row.PHONE || row.phone || "").trim();
-        const gender = String(row.GENDER || row.gender || "").trim();
+        const rawGender = String(row.GENDER || row.gender || "").trim();
+        const gender = rawGender
+          ? rawGender.match(/^[fm]/i)
+            ? rawGender[0].toLowerCase() === "f"
+              ? "Female"
+              : "Male"
+            : rawGender
+          : "";
         const classLabel = String(row.CLASS_GRADE || row.class_grade || row.Class || row.CLASS || "").trim();
+        const classArm = String(row.CLASS_ARM || row.class_arm || row.ARM || row.arm || row.SECTION || row.section || "").trim();
+        const dob = String(row.DOB || row.dob || row.DATE_OF_BIRTH || row.date_of_birth || "").trim();
         const address = String(row.ADDRESS || row.address || "").trim();
         const stateOfOrigin = String(row.STATE_OF_ORIGIN || row.state_of_origin || row.State || row.STATE || "").trim();
 
@@ -55,13 +66,28 @@ export const POST = withAuth(
         }
 
         let classId: string | null = null;
-        if (classLabel) {
-          const classDoc = await queryOne<{ id: string }>(
-            "SELECT id FROM classes WHERE school_id = ? AND (name = ? OR LOWER(name) = LOWER(?))",
-            [school.id, classLabel, classLabel]
-          );
+        if (classLabel || classArm) {
+          let classDoc;
+          if (classLabel && classArm) {
+            classDoc = await queryOne<{ id: string }>(
+              `SELECT id FROM classes WHERE school_id = ? AND (name = ? OR LOWER(name) = LOWER(?)) AND (section = ? OR LOWER(section) = LOWER(?))`,
+              [school.id, classLabel, classLabel, classArm, classArm]
+            );
+          } else if (classLabel) {
+            classDoc = await queryOne<{ id: string }>(
+              "SELECT id FROM classes WHERE school_id = ? AND (name = ? OR LOWER(name) = LOWER(?))",
+              [school.id, classLabel, classLabel]
+            );
+          } else {
+            classDoc = await queryOne<{ id: string }>(
+              "SELECT id FROM classes WHERE school_id = ? AND (section = ? OR LOWER(section) = LOWER(?))",
+              [school.id, classArm, classArm]
+            );
+          }
+
           if (!classDoc) {
-            warnings.push({ row: rowNum, message: `Class "${classLabel}" not found — created without class` });
+            const classDesc = classLabel ? classLabel : classArm;
+            warnings.push({ row: rowNum, message: `Class "${classDesc}" not found — created without class` });
           } else {
             classId = classDoc.id;
           }
@@ -72,15 +98,31 @@ export const POST = withAuth(
           [school.id]
         );
         const count = countRow?.count ?? 0;
-        const admissionNo = String(row.STUDENT_ID || row.student_id || `SC-${year}-${String(count + 1).padStart(4, "0")}`).trim();
+        // Use provided student_id/admission if present; otherwise generate sequential admission no
+        let admissionNo = row.STUDENT_ID || row.student_id || row.admission_no ? String(row.STUDENT_ID || row.student_id || row.admission_no).trim() : null;
+        if (!admissionNo) {
+          admissionNo = `SC-${year}-${String(count + 1).padStart(4, "0")}`;
+        }
+        // Normalize admission number to uppercase for DB consistency
+        admissionNo = admissionNo ? String(admissionNo).toUpperCase() : null;
 
         const studentId = generateId();
         await execute(
-          `INSERT INTO users (id, name, first_name, last_name, email, phone, password, role, school_id, admission_no, gender, parent_phone, address, state_of_origin, is_active, created_at, updated_at)
-           VALUES (?, ?, ?, ?, ?, ?, ?, 'student', ?, ?, ?, ?, ?, ?, 1, datetime('now'), datetime('now'))`,
+          `INSERT INTO users (id, name, first_name, last_name, email, phone, password, role, school_id, admission_no, dob, gender, parent_phone, address, state_of_origin, avatar, class_id, is_active, created_at, updated_at)
+           VALUES (?, ?, ?, ?, ?, ?, ?, 'student', ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, datetime('now'), datetime('now'))`,
           [studentId, fullName || `${firstName} ${lastName}`, firstName, lastName, email, phone || null, hashed,
-           school.id, admissionNo, gender || null, parentPhone || null, address || null, stateOfOrigin || null]
+           school.id, admissionNo, dob || null, gender || null, parentPhone || null, address || null, stateOfOrigin || null, null, classId || null]
         );
+
+        if (classId) {
+          const session = school.academic_session || new Date().getFullYear().toString();
+          const enrollmentId = generateId();
+          await execute(
+            `INSERT INTO students_classes (id, student_id, class_id, academic_session, status, enrolled_date, created_at, updated_at)
+             VALUES (?, ?, ?, ?, 'active', datetime('now'), datetime('now'), datetime('now'))`,
+            [enrollmentId, studentId, classId, session]
+          );
+        }
 
         successful++;
       }

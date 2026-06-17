@@ -18,6 +18,7 @@ export default function AddStudentPage() {
     firstName: "", lastName: "", email: "", phone: "",
     dob: "", gender: "", classId: "", parentId: "",
     address: "", stateOfOrigin: "", parentPhone: "",
+    admissionNo: "",
   });
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
 
@@ -36,8 +37,8 @@ export default function AddStudentPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.firstName || !form.lastName || !form.email) {
-      return toast.error("First name, last name, and email are required");
+    if (!form.firstName || !form.lastName || (!form.email && !form.phone)) {
+      return toast.error("First name, last name, and either email or phone are required");
     }
     setSubmitting(true);
     try {
@@ -58,6 +59,7 @@ export default function AddStudentPage() {
           firstName: form.firstName,
           lastName: form.lastName,
           email: form.email,
+          admissionNo: form.admissionNo || null,
           phone: form.phone || null,
           dob: form.dob || null,
           gender: form.gender || null,
@@ -133,8 +135,12 @@ export default function AddStudentPage() {
               <input value={form.lastName} onChange={(e) => set("lastName", e.target.value)} placeholder="e.g. Okafor" required />
             </div>
             <div className="form-group">
-              <label>Email Address *</label>
-              <input type="email" value={form.email} onChange={(e) => set("email", e.target.value)} placeholder="student@example.com" required />
+              <label>Email Address</label>
+              <input type="email" value={form.email} onChange={(e) => set("email", e.target.value)} placeholder="student@example.com" />
+            </div>
+            <div className="form-group">
+              <label>Admission No. (optional)</label>
+              <input value={form.admissionNo} onChange={(e) => set("admissionNo", e.target.value)} placeholder="e.g. SC-2026-0001" />
             </div>
             <div className="form-group">
               <label>Phone Number</label>

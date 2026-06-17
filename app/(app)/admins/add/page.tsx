@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useAppSelector } from "@/redux/hooks";
 import { authenticatedFetch } from "@/lib/utils/fetch";
+import { formatPhoneDisplay, normalizePhoneClient } from "@/lib/utils/phoneClient";
 import "../../shared.css";
 
 const ADMIN_ROLES = [
@@ -49,8 +50,8 @@ export default function AddAdminPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.firstName || !form.lastName || !form.email) {
-      return toast.error("First name, last name, and email are required");
+    if (!form.firstName || !form.lastName || (!form.email && !form.phone)) {
+      return toast.error("First name, last name, and either email or phone are required");
     }
 
     setSubmitting(true);
@@ -134,13 +135,12 @@ export default function AddAdminPage() {
               />
             </div>
             <div className="form-group">
-              <label>Email Address *</label>
+              <label>Email Address</label>
               <input
                 type="email"
                 value={form.email}
                 onChange={(e) => handleChange("email", e.target.value)}
                 placeholder="admin@school.ng"
-                required
               />
             </div>
             <div className="form-group">
@@ -149,6 +149,7 @@ export default function AddAdminPage() {
                 type="tel"
                 value={form.phone}
                 onChange={(e) => handleChange("phone", e.target.value)}
+                onBlur={(e) => handleChange("phone", formatPhoneDisplay(e.target.value))}
                 placeholder="+234 800 000 0000"
               />
             </div>

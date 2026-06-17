@@ -175,7 +175,7 @@ Mr. Adeyemi Hassan,adeyemi@email.com,09087654321,zainab@school.com,Father`}
 
           <div style={{ marginBottom: "1.5rem", padding: "1rem", background: "#fef3c7", border: "1px solid #fcd34d", borderRadius: 8 }}>
             <p style={{ margin: 0, fontSize: "1.2rem", color: "#92400e" }}>
-              <strong>💡 Tip:</strong> STUDENT_EMAIL links the parent to an existing student. Leave blank to create parent-only accounts. RELATIONSHIP should be: Mother, Father, Guardian, etc.
+              <strong>💡 Tip:</strong> STUDENT_ID links the parent to an existing student. Leave blank to create parent-only accounts. RELATIONSHIP should be: Mother, Father, Guardian, etc.
             </p>
           </div>
 

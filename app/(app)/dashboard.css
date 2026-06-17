@@ -1299,6 +1299,8 @@
   .mobile-bottom-nav { display: flex; }
   /* ensure main content doesn't get hidden behind bottom nav */
   .dashboard-main { padding-bottom: 80px; }
+  /* Add safe bottom padding site-wide so pages without a .dashboard-main wrapper aren't covered */
+  body { padding-bottom: 80px; }
 }
 
 /* ─── Responsive Tablet (768px) ─── */

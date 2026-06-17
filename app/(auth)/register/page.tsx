@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { OPTIONAL_SERVICES, type ServiceDefinition } from "@/config/services/catalog";
 import { authenticatedFetch } from "@/lib/utils/fetch";
+import { formatPhoneDisplay } from "@/lib/utils/phoneClient";
 import "../auth.css";
 
 type Step = "details" | "services";
@@ -56,8 +57,14 @@ export default function RegisterPage() {
     if (formData.password.length < 8) {
       return toast.error("Password must be at least 8 characters");
     }
+    if (!formData.email && !formData.phoneNumber) {
+      return toast.error("Please provide either an email address or a phone number");
+    }
     setStep("services");
   };
+
+  // Filter out admin-only services for signup
+  const publicServices = OPTIONAL_SERVICES.filter((s) => !s.super_admin_only);
 
   function toggleService(slug: string, service: ServiceDefinition) {
     setSelectedServices((prev) => {
@@ -68,7 +75,7 @@ export default function RegisterPage() {
         let changed = true;
         while (changed) {
           changed = false;
-          for (const svc of OPTIONAL_SERVICES) {
+          for (const svc of publicServices) {
             if (!next.has(svc.slug)) continue;
             if (svc.dependencies.some((d) => toRemove.has(d))) {
               toRemove.add(svc.slug);
@@ -81,7 +88,7 @@ export default function RegisterPage() {
         // Adding: also add missing dependencies
         next.add(slug);
         for (const dep of service.dependencies) {
-          const depSvc = OPTIONAL_SERVICES.find((s) => s.slug === dep);
+          const depSvc = publicServices.find((s) => s.slug === dep);
           if (depSvc) next.add(dep);
         }
       }
@@ -90,7 +97,7 @@ export default function RegisterPage() {
   }
 
   const monthlyTotal = Array.from(selectedServices).reduce((sum, slug) => {
-    const svc = OPTIONAL_SERVICES.find((s) => s.slug === slug);
+    const svc = publicServices.find((s) => s.slug === slug);
     return sum + (svc?.base_price ?? 0);
   }, 0);
 
@@ -118,7 +125,7 @@ export default function RegisterPage() {
   };
 
   // Group optional services by category
-  const servicesByCategory = OPTIONAL_SERVICES.reduce<Record<string, ServiceDefinition[]>>(
+  const servicesByCategory = publicServices.reduce<Record<string, ServiceDefinition[]>>(
     (acc, svc) => {
       const cat = svc.category === "core" ? "academic" : svc.category;
       if (!acc[cat]) acc[cat] = [];
@@ -180,13 +187,13 @@ export default function RegisterPage() {
               </div>
 
               <div className="auth-group">
-                <label htmlFor="email">Email Address *</label>
-                <input id="email" type="email" name="email" placeholder="admin@school.ng" value={formData.email} onChange={handleChange} required autoComplete="email" />
+                <label htmlFor="email">Email Address</label>
+                <input id="email" type="email" name="email" placeholder="admin@school.ng" value={formData.email} onChange={handleChange} autoComplete="email" />
               </div>
 
               <div className="auth-group">
-                <label htmlFor="phoneNumber">Phone Number *</label>
-                <input id="phoneNumber" type="tel" name="phoneNumber" placeholder="+234 801 234 5678" value={formData.phoneNumber} onChange={handleChange} required autoComplete="tel" />
+                <label htmlFor="phoneNumber">Phone Number</label>
+                <input id="phoneNumber" type="tel" name="phoneNumber" placeholder="+234 801 234 5678" value={formData.phoneNumber} onChange={handleChange} onBlur={(e) => setFormData(prev => ({ ...prev, phoneNumber: formatPhoneDisplay(e.target.value) }))} autoComplete="tel" />
               </div>
 
               <div className="auth-group">
@@ -237,8 +244,7 @@ export default function RegisterPage() {
               </div>
             </div>
 
-            {/* Optional services by category */}
-            {Object.entries(servicesByCategory).map(([cat, services]) => (
+                {Object.entries(servicesByCategory).map(([cat, services]) => (
               <div key={cat} style={{ marginBottom: "2.5rem" }}>
                 <h3 style={{ fontSize: "1.5rem", fontWeight: 700, marginBottom: "1.2rem", display: "flex", alignItems: "center", gap: "0.6rem" }}>
                   {CATEGORY_ICONS[cat] ?? "🔧"} {CATEGORY_LABELS[cat] ?? cat}
@@ -247,7 +253,7 @@ export default function RegisterPage() {
                   {services.map((svc) => {
                     const active = selectedServices.has(svc.slug);
                     const isDependency = Array.from(selectedServices).some((slug) => {
-                      const s = OPTIONAL_SERVICES.find((x) => x.slug === slug);
+                      const s = publicServices.find((x) => x.slug === slug);
                       return s?.dependencies.includes(svc.slug);
                     });
                     return (

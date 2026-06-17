@@ -21,13 +21,19 @@ export default function BulkImportPage() {
   const parseCSV = (text: string): Record<string, string>[] => {
     const lines = text.trim().split("\n");
     if (lines.length < 2) return [];
-
     const headers = lines[0].split(",").map((h) => h.trim());
     return lines.slice(1).map((line) => {
       const values = line.split(",").map((v) => v.trim());
       const row: Record<string, string> = {};
       headers.forEach((h, i) => {
-        row[h] = values[i] || "";
+        // Normalize common header variants into snake_case lower-case keys
+        // Examples: FULL_NAME or Full Name -> full_name, STUDENT_ID -> student_id
+        const normalized = h
+          .trim()
+          .replace(/\s+/g, "_")
+          .replace(/[^a-zA-Z0-9_]/g, "")
+          .toLowerCase();
+        row[normalized] = values[i] || "";
       });
       return row;
     });
@@ -103,7 +109,7 @@ export default function BulkImportPage() {
         </h1>
         <p style={{ fontSize: "1.5rem", color: "#64748b" }}>
           Upload a CSV file to import multiple students at once. Required columns:{" "}
-          <strong>FULL_NAME, EMAIL</strong>. Optional: GENDER, CLASS_GRADE, PHONE, PARENT_PHONE, ADDRESS, STATE_OF_ORIGIN, STUDENT_ID
+          <strong>FULL_NAME, EMAIL</strong>. Optional: GENDER (F/M/Female/Male/other), CLASS_GRADE, CLASS_ARM, PHONE, PARENT_PHONE, ADDRESS, STATE_OF_ORIGIN, STUDENT_ID
         </p>
       </div>
 
@@ -164,9 +170,9 @@ export default function BulkImportPage() {
                 margin: 0,
               }}
             >
-{`FULL_NAME,EMAIL,GENDER,CLASS_GRADE,PHONE,PARENT_PHONE,ADDRESS,STATE_OF_ORIGIN
-Chinelo Okafor,chinelo@school.com,Female,JSS 1,09012345601,09012345678,123 Main St,Lagos
-Obinna Adeyemi,obinna@school.com,Male,JSS 2,09087654321,09087654320,456 Oak Ave,Ogun`}
+{`FULL_NAME,EMAIL,GENDER,CLASS_GRADE,CLASS_ARM,PHONE,PARENT_PHONE,ADDRESS,STATE_OF_ORIGIN,STUDENT_ID
+Chinelo Okafor,chinelo@school.com,Female,JSS 1,A,09012345601,09012345678,123 Main St,Lagos,SC-2026-0001
+Obinna Adeyemi,obinna@school.com,Male,JSS 2,B,09087654321,09087654320,456 Oak Ave,Ogun,SC-2026-0002`}
             </pre>
           </div>
 

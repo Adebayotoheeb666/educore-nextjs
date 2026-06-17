@@ -3,6 +3,7 @@ import { query, execute } from "@/lib/db/turso";
 import { withAuth, type AuthContext } from "@/lib/middleware/auth";
 import { badRequest, notFound, ok, serverError } from "@/lib/utils/response";
 import { hashPassword } from "@/lib/utils/password";
+import { capitalizeName } from "@/lib/utils/string";
 import { generateId } from "@/lib/utils/id";
 
 export const dynamic = "force-dynamic";
@@ -31,15 +32,19 @@ export const POST = withAuth(
       for (let i = 0; i < rows.length; i++) {
         const row = rows[i];
         const rowNum = i + 2;
-        const fullName = String(row.FULL_NAME || row.full_name || row.Name || "").trim();
+        const fullNameRaw = String(row.FULL_NAME || row.full_name || row.Name || "").trim();
+        const fullName = capitalizeName(fullNameRaw);
         const parts = fullName.split(/\s+/).filter(Boolean);
         const firstName = parts[0];
         const lastName = parts.slice(1).join(" ") || parts[0];
-        const email = String(row.EMAIL || row.email || `teacher${rowNum}-${Date.now()}@import.local`).toLowerCase().trim();
-        const phone = String(row.PHONE || row.phone || "").trim();
+        const emailRaw = row.EMAIL || row.email || row.Email || null;
+        const phoneRaw = String(row.PHONE || row.phone || row.Phone || "").trim();
+        const email = emailRaw ? String(emailRaw).toLowerCase().trim() : null;
+        const phone = phoneRaw || null;
         const role = String(row.ROLE || row.role || "subject_teacher").toLowerCase().trim();
         const qualifications = String(row.QUALIFICATIONS || row.qualifications || "").trim();
         const subjectArea = String(row.SUBJECT_AREA || row.subject_area || row.SUBJECT || row.subject || "").trim();
+        const gender = String(row.GENDER || row.gender || "").trim() || null;
 
         if (!firstName) {
           errors.push({ row: rowNum, message: "FULL_NAME is required" });
@@ -54,17 +59,31 @@ export const POST = withAuth(
           continue;
         }
 
-        const [emailExists] = await query("SELECT id FROM users WHERE email = ?", [email]);
-        if (emailExists) {
-          errors.push({ row: rowNum, message: `Email already exists: ${email}` });
+        if (!email && !phone) {
+          errors.push({ row: rowNum, message: `Either EMAIL or PHONE is required` });
           continue;
+        }
+
+        if (email) {
+          const [emailExists] = await query("SELECT id FROM users WHERE email = ?", [email]);
+          if (emailExists) {
+            errors.push({ row: rowNum, message: `Email already exists: ${email}` });
+            continue;
+          }
+        }
+        if (phone) {
+          const [phoneExists] = await query("SELECT id FROM users WHERE phone = ?", [phone]);
+          if (phoneExists) {
+            errors.push({ row: rowNum, message: `Phone already exists: ${phone}` });
+            continue;
+          }
         }
 
         const teacherId = generateId();
         await execute(
-          `INSERT INTO users (id, name, first_name, last_name, email, phone, password, role, school_id, is_active, created_at, updated_at)
-           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 1, datetime('now'), datetime('now'))`,
-          [teacherId, fullName || `${firstName} ${lastName}`, firstName, lastName, email, phone || null, hashed, role, school.id]
+          `INSERT INTO users (id, name, first_name, last_name, email, phone, password, role, school_id, gender, is_active, created_at, updated_at)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, datetime('now'), datetime('now'))`,
+          [teacherId, fullName || `${firstName} ${lastName}`, firstName, lastName, email, phone || null, hashed, role, school.id, gender]
         );
 
         if (qualifications || subjectArea) {

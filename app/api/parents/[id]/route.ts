@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { queryOne, execute } from "@/lib/db/turso";
 import { withAuth, type AuthContext } from "@/lib/middleware/auth";
-import { notFound, ok, serverError } from "@/lib/utils/response";
+import { badRequest, notFound, ok, serverError, conflict } from "@/lib/utils/response";
 import { hashPassword } from "@/lib/utils/password";
+import { normalizePhone } from "@/lib/utils/string";
 
 export const GET = withAuth(async (_req: NextRequest, { school }: AuthContext, params): Promise<NextResponse> => {
   try {
@@ -28,22 +29,42 @@ export const PATCH = withAuth(
     try {
       if (!school) return notFound("School not found");
       const id = params?.id ?? "";
-      const existing = await queryOne("SELECT id FROM users WHERE id = ? AND school_id = ? AND role = 'parent'", [id, school.id]);
+      const existing = await queryOne<{ email: string | null; phone: string | null }>(
+        "SELECT id, email, phone FROM users WHERE id = ? AND school_id = ? AND role = 'parent'",
+        [id, school.id]
+      );
       if (!existing) return notFound("Parent not found");
 
-      const { name, phone, avatar, password } = await req.json();
+      const { name, email, phone, avatar, password } = await req.json();
       let hashedPw: string | null = null;
       if (password?.trim()) hashedPw = await hashPassword(password.trim());
+
+      const normalizedEmail = email !== undefined ? (email ? String(email).toLowerCase().trim() : null) : existing.email;
+      const normalizedPhone = phone !== undefined ? normalizePhone(phone) : existing.phone;
+
+      if (!normalizedEmail && !normalizedPhone) {
+        return badRequest("Parents must have either an email or phone number");
+      }
+
+      if (email !== undefined && normalizedEmail) {
+        const existingEmail = await queryOne("SELECT id FROM users WHERE email = ? AND id != ?", [normalizedEmail, id]);
+        if (existingEmail) return conflict("Email is already registered");
+      }
+      if (phone !== undefined && normalizedPhone) {
+        const existingPhone = await queryOne("SELECT id FROM users WHERE phone = ? AND id != ?", [normalizedPhone, id]);
+        if (existingPhone) return conflict("Phone number is already registered");
+      }
 
       await execute(
         `UPDATE users SET
            name = COALESCE(?, name),
+           email = COALESCE(?, email),
            phone = COALESCE(?, phone),
            avatar = COALESCE(?, avatar),
            password = COALESCE(?, password),
            updated_at = datetime('now')
          WHERE id = ?`,
-        [name || null, phone || null, avatar || null, hashedPw, id]
+        [name || null, email !== undefined ? normalizedEmail : null, phone !== undefined ? normalizedPhone : null, avatar || null, hashedPw, id]
       );
 
       const updated = await queryOne(

@@ -3,6 +3,7 @@ import { query, execute } from "@/lib/db/turso";
 import { withAuth, type AuthContext } from "@/lib/middleware/auth";
 import { badRequest, conflict, created, ok, serverError } from "@/lib/utils/response";
 import { hashPassword } from "@/lib/utils/password";
+import { capitalizeName, normalizePhone } from "@/lib/utils/string";
 import { generateId } from "@/lib/utils/id";
 
 export const dynamic = "force-dynamic";
@@ -36,28 +37,36 @@ export const POST = withAuth(
   async (req: NextRequest, { school }: AuthContext): Promise<NextResponse> => {
     try {
       if (!school) return badRequest("School context required");
-      const { name, firstName, lastName, email, password, phone, role, avatar } = await req.json();
-      const fullName = name || `${firstName ?? ""} ${lastName ?? ""}`.trim();
+      const { name, firstName, lastName, email, password, phone, role, avatar, gender } = await req.json();
+      const rawName = name || `${firstName ?? ""} ${lastName ?? ""}`.trim();
+      const fullName = capitalizeName(rawName);
+      const normalizedEmail = email ? String(email).toLowerCase().trim() : null;
+      const normalizedPhone = phone ? normalizePhone(phone) : null;
 
-      if (!fullName || !email) {
-        return badRequest("Name and email are required");
+      if (!fullName || (!normalizedEmail && !normalizedPhone)) {
+        return badRequest("Name and either email or phone are required");
       }
 
       const defaultPassword = password || `EduCore@${new Date().getFullYear()}`;
 
-      const normalizedEmail = String(email).toLowerCase().trim();
-      const [existing] = await query("SELECT id FROM users WHERE email = ?", [normalizedEmail]);
-      if (existing) return conflict("Email already registered");
+      if (normalizedEmail) {
+        const [existing] = await query("SELECT id FROM users WHERE email = ?", [normalizedEmail]);
+        if (existing) return conflict("Email already registered");
+      }
+      if (normalizedPhone) {
+        const [existsPhone] = await query("SELECT id FROM users WHERE phone = ?", [normalizedPhone]);
+        if (existsPhone) return conflict("Phone already registered");
+      }
 
       const staffRole = STAFF_ROLES.includes(role) ? role : "subject_teacher";
       const hashed = await hashPassword(defaultPassword);
       const id = generateId();
 
       await execute(
-        `INSERT INTO users (id, name, first_name, last_name, email, password, phone, role, school_id, avatar, is_active, created_at, updated_at)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, datetime('now'), datetime('now'))`,
+        `INSERT INTO users (id, name, first_name, last_name, email, password, phone, role, school_id, avatar, gender, is_active, created_at, updated_at)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, datetime('now'), datetime('now'))`,
          [id, fullName, firstName || fullName.split(" ")[0], lastName || fullName.split(" ").slice(1).join(" "),
-          normalizedEmail, hashed, phone || null, staffRole, school.id, avatar || null]
+          normalizedEmail, hashed, normalizedPhone || null, staffRole, school.id, avatar || null, gender || null]
       );
 
       return created({ id, name: fullName, email: normalizedEmail, role: staffRole, defaultPassword });

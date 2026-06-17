@@ -43,7 +43,7 @@ export const PATCH = withAuth(
       if (!existing) return notFound("Student not found");
 
       const body = await req.json();
-      const { firstName, lastName, email, dob, gender, classId, parentId, isActive, avatar, address, stateOfOrigin, parentPhone } = body;
+      const { firstName, lastName, email, dob, gender, classId, parentId, isActive, avatar, address, stateOfOrigin, parentPhone, admissionNo: providedAdmissionNo } = body;
       const ex = existing as { first_name: string | null; last_name: string | null; class_id: string | null };
       const newFirst = firstName ?? ex.first_name ?? "";
       const newLast = lastName ?? ex.last_name ?? "";
@@ -72,6 +72,13 @@ export const PATCH = withAuth(
       if (email !== undefined) {
         setClauses = `email = COALESCE(?, email), ${setClauses}`;
         args.unshift(email || null);
+      }
+
+      // Allow updating admission number if provided explicitly
+      if (providedAdmissionNo !== undefined) {
+        setClauses = `admission_no = COALESCE(?, admission_no), ${setClauses}`;
+        // Normalize to uppercase before storing
+        args.unshift(providedAdmissionNo ? String(providedAdmissionNo).trim().toUpperCase() : null);
       }
 
       args.push(id);

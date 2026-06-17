@@ -116,6 +116,8 @@ export default function EditClassPage() {
               <label>Level</label>
               <select value={form.level} onChange={(e) => set("level", e.target.value)}>
                 <option value="">Select Level</option>
+                <option value="Pre-Nursery">Pre-Nursery</option>
+                <option value="Nursery">Nursery</option>
                 <option value="Primary">Primary</option>
                 <option value="JSS">Junior Secondary (JSS)</option>
                 <option value="SSS">Senior Secondary (SSS)</option>

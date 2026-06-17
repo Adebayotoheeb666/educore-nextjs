@@ -102,6 +102,24 @@
   border-color: var(--primary);
 }
 
+[data-theme="dark"] .btn-secondary,
+[data-theme="dark"] .btn-outline,
+[data-theme="dark"] .btn-danger-sm,
+[data-theme="dark"] .btn-confirm-sm,
+[data-theme="dark"] .btn-auth {
+  background: var(--bg-card);
+  color: var(--text-main);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .btn-outline {
+  background: var(--bg-card);
+}
+
+[data-theme="dark"] .link-action {
+  color: var(--primary);
+}
+
 /* ─── Filter Bar ─── */
 .filter-bar {
   background-color: var(--bg-hover);
@@ -704,6 +722,21 @@
 
 .teacher-main-content {
   width: 100%;
+}
+
+/* Profile setup responsive grid: two columns on desktop, single column on mid/mobile */
+.profile-setup-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+@media (max-width: 1024px) {
+  .profile-setup-grid {
+    grid-template-columns: 1fr;
+    gap: 1.6rem;
+  }
 }
 
 @media (max-width: 768px) {
@@ -1373,10 +1406,24 @@
   }
 
   .premium-table td {
-    display: flex;
-    justify-content: space-between;
-    padding: 0.375rem 0;
+    display: block;
+    width: 100%;
+    padding: 0.75rem 0;
     border: none;
+    position: relative;
+  }
+
+  .premium-table td::before {
+    content: attr(data-label);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+
+  .premium-table td > * {
+    max-width: 100%;
   }
 
   .premium-table td:nth-child(1) {
