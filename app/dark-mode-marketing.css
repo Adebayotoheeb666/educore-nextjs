@@ -1,0 +1,397 @@
+/* ========================================================
+   dark-mode-marketing.css — Public pages dark mode overrides
+   ======================================================== */
+
+/* ─── Navbar ─── */
+[data-theme="dark"] .web-navbar {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom-color: var(--border-color);
+}
+
+[data-theme="dark"] .web-navbar.scrolled {
+  background: var(--glass-bg);
+  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .web-logo span {
+  color: var(--primary);
+}
+
+[data-theme="dark"] .nav-links a {
+  color: var(--text-main);
+}
+
+[data-theme="dark"] .nav-links.nav-links--open a {
+  color: var(--text-main);
+}
+
+[data-theme="dark"] .nav-links.nav-links--open a:hover,
+[data-theme="dark"] .nav-links.nav-links--open a.active {
+  color: var(--link-color);
+  background: transparent !important;
+}
+
+[data-theme="dark"] .nav-links a:hover,
+[data-theme="dark"] .nav-links a.active {
+  color: #fff;
+  background: var(--primary) !important;
+}
+
+/* ─── Hero ─── */
+[data-theme="dark"] .hp-hero {
+  background: var(--bg-main);
+}
+
+[data-theme="dark"] .hp-hero__text p {
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .hp-hero__img {
+  background: linear-gradient(135deg, var(--hp-section-dark) 0%, var(--primary) 100%);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5), var(--glow-primary);
+}
+
+[data-theme="dark"] .hp-glow--1 {
+  background: rgba(77, 195, 247, 0.12);
+}
+
+[data-theme="dark"] .hp-glow--2 {
+  background: rgba(145, 131, 255, 0.14);
+}
+
+[data-theme="dark"] .hp-badge {
+  background: rgba(145, 131, 255, 0.14);
+  color: var(--link-color);
+  border-color: rgba(145, 131, 255, 0.3);
+}
+
+/* ─── Stats ─── */
+[data-theme="dark"] .hp-stats {
+  background: linear-gradient(135deg, var(--hp-section-dark) 0%, #120e2a 100%);
+  border-top: 1px solid rgba(145, 131, 255, 0.1);
+  border-bottom: 1px solid rgba(145, 131, 255, 0.1);
+}
+
+/* ─── Features & sections ─── */
+[data-theme="dark"] .hp-features {
+  background: var(--bg-main);
+}
+
+[data-theme="dark"] .hp-section-head p {
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .hp-feat-card {
+  background: var(--bg-card);
+  border-color: var(--border-color);
+  box-shadow: var(--shadow-card);
+}
+
+[data-theme="dark"] .hp-feat-card:hover {
+  box-shadow: var(--shadow-card-hover);
+  border-color: rgba(145, 131, 255, 0.2);
+}
+
+[data-theme="dark"] .hp-feat-card p {
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .hp-feat-card__icon {
+  background: var(--hp-card-tint);
+  color: var(--primary);
+}
+
+[data-theme="dark"] .hp-ai-section {
+  background: var(--hp-surface-alt);
+}
+
+[data-theme="dark"] .hp-ai-card {
+  background: var(--bg-card);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .hp-ai-card p {
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .hp-parents {
+  background: var(--bg-main);
+}
+
+[data-theme="dark"] .hp-parents__feat {
+  background: var(--bg-card);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .hp-parents__feat p {
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .hp-nigeria {
+  background: var(--hp-surface-alt);
+}
+
+[data-theme="dark"] .hp-nigeria__item {
+  background: var(--bg-card);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .hp-nigeria__item p {
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .hp-testimonials {
+  background: var(--bg-main);
+}
+
+[data-theme="dark"] .hp-testimonial-card {
+  background: var(--bg-card);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .hp-testimonial-card p {
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .hp-pricing {
+  background: var(--hp-surface-alt);
+}
+
+[data-theme="dark"] .hp-pricing-card {
+  background: var(--bg-card);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .hp-pricing-card--featured {
+  border-color: var(--primary);
+  box-shadow: var(--shadow-card-hover), var(--glow-primary);
+}
+
+/* ─── CTA ─── */
+[data-theme="dark"] .hp-cta {
+  background: linear-gradient(135deg, var(--hp-section-dark) 0%, #1a1040 100%);
+}
+
+[data-theme="dark"] .hp-cta::before {
+  background: radial-gradient(circle, rgba(145, 131, 255, 0.18) 0%, transparent 60%);
+}
+
+/* ─── Footer ─── */
+[data-theme="dark"] .hp-footer {
+  background: var(--hp-footer-bg);
+  border-top: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .hp-footer__logo span {
+  color: var(--primary);
+}
+
+[data-theme="dark"] .hp-footer__col ul li a:hover {
+  color: var(--link-color);
+}
+
+[data-theme="dark"] .hp-footer__social a:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: rgba(145, 131, 255, 0.1);
+}
+
+/* ─── Comms preview cards ─── */
+[data-theme="dark"] .hp-comms-msg {
+  background: var(--bg-hover);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .hp-comms-msg--sent {
+  background: var(--hp-card-tint);
+  color: var(--link-color);
+}
+
+/* ─── Web additional pages ─── */
+[data-theme="dark"] .about-wrapper,
+[data-theme="dark"] .contact-wrapper,
+[data-theme="dark"] .legal-wrapper,
+[data-theme="dark"] .blog-wrapper,
+[data-theme="dark"] .resources-wrapper,
+[data-theme="dark"] .careers-wrapper,
+[data-theme="dark"] .help-wrapper,
+[data-theme="dark"] .security-wrapper {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+}
+
+[data-theme="dark"] .about-hero-overlay {
+  background: linear-gradient(90deg, rgba(4, 6, 13, 0.95) 0%, rgba(4, 6, 13, 0.75) 100%);
+}
+
+[data-theme="dark"] .about-mission,
+[data-theme="dark"] .about-values,
+[data-theme="dark"] .contact-form-card,
+[data-theme="dark"] .legal-content,
+[data-theme="dark"] .blog-card,
+[data-theme="dark"] .bp-container,
+[data-theme="dark"] .empower-main-card,
+[data-theme="dark"] .resource-card,
+[data-theme="dark"] .career-card,
+[data-theme="dark"] .help-card,
+[data-theme="dark"] .security-card {
+  background: var(--bg-card);
+  border-color: var(--border-color);
+  box-shadow: var(--shadow-card);
+}
+
+[data-theme="dark"] .about-value-card,
+[data-theme="dark"] .team-card {
+  background: var(--bg-card);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .about-value-card p,
+[data-theme="dark"] .team-card p,
+[data-theme="dark"] .blog-card p,
+[data-theme="dark"] .resource-card p,
+[data-theme="dark"] .career-card p,
+[data-theme="dark"] .help-card p {
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .contact-info-item,
+[data-theme="dark"] .faq-item {
+  background: var(--bg-card);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .section-alt-bg {
+  background: var(--hp-surface-alt);
+}
+
+[data-theme="dark"] .btn-about-primary,
+[data-theme="dark"] .btn-contact-primary,
+[data-theme="dark"] .hp-btn--primary {
+  box-shadow: 0 4px 16px rgba(145, 131, 255, 0.35);
+}
+
+[data-theme="dark"] .empower-main-card {
+  background: linear-gradient(135deg, var(--bg-card) 0%, rgba(145, 131, 255, 0.06) 100%);
+  border-color: rgba(145, 131, 255, 0.2);
+}
+
+[data-theme="dark"] .bp-article {
+  color: var(--text-main);
+}
+
+[data-theme="dark"] .bp-quote {
+  background: var(--hp-card-tint);
+  border-left-color: var(--primary);
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .bp-newsletter {
+  background: var(--hp-section-dark);
+}
+
+/* ─── Public button text — must stay readable in all themes ─── */
+a.hp-btn,
+a[class*="hp-btn--"],
+a.btn-register,
+a.btn-login,
+a.btn-about-primary,
+a.btn-about-outline,
+a.btn-contact-primary,
+a.btn-contact-legal,
+a.btn-primary-web,
+a.btn-secondary-web,
+a.btn-send,
+a.btn-qa-primary,
+a.btn-qa-secondary,
+a.btn-create-post,
+button.btn-send {
+  text-decoration: none;
+}
+
+a.hp-btn--primary,
+a.btn-register,
+a.btn-about-primary,
+a.btn-contact-primary,
+a.btn-primary-web,
+a.btn-send,
+a.btn-qa-primary,
+a.btn-create-post,
+button.btn-send {
+  color: #ffffff;
+}
+
+a.hp-btn--primary:hover,
+a.btn-register:hover,
+a.btn-about-primary:hover,
+a.btn-contact-primary:hover,
+a.btn-primary-web:hover,
+a.btn-send:hover,
+a.btn-qa-primary:hover,
+a.btn-create-post:hover,
+button.btn-send:hover {
+  color: #ffffff;
+  opacity: 1;
+}
+
+a.hp-btn--ghost,
+a.btn-login,
+a.btn-secondary-web {
+  color: var(--text-main);
+}
+
+a.hp-btn--ghost:hover,
+a.btn-login:hover,
+a.btn-secondary-web:hover {
+  color: var(--primary);
+  opacity: 1;
+}
+
+a.hp-btn--outline-light,
+a.btn-about-outline,
+a.btn-qa-secondary {
+  color: #ffffff;
+}
+
+a.hp-btn--outline-light:hover,
+a.btn-about-outline:hover,
+a.btn-qa-secondary:hover {
+  color: #ffffff;
+  opacity: 1;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: #ffffff;
+}
+
+[data-theme="dark"] a.hp-btn--primary,
+[data-theme="dark"] a.btn-register,
+[data-theme="dark"] a.btn-about-primary,
+[data-theme="dark"] a.btn-contact-primary,
+[data-theme="dark"] a.btn-primary-web,
+[data-theme="dark"] a.btn-send,
+[data-theme="dark"] a.btn-qa-primary,
+[data-theme="dark"] a.btn-create-post,
+[data-theme="dark"] button.btn-send,
+[data-theme="dark"] a.hp-btn--outline-light,
+[data-theme="dark"] a.btn-about-outline,
+[data-theme="dark"] a.btn-qa-secondary,
+[data-theme="dark"] .nav-links a:hover,
+[data-theme="dark"] .nav-links a.active {
+  color: #ffffff;
+}
+
+[data-theme="dark"] a.hp-btn--ghost,
+[data-theme="dark"] a.btn-login,
+[data-theme="dark"] a.btn-secondary-web {
+  color: var(--text-main);
+}
+
+[data-theme="dark"] a.hp-btn--ghost:hover,
+[data-theme="dark"] a.btn-login:hover,
+[data-theme="dark"] a.btn-secondary-web:hover {
+  color: var(--link-color);
+}

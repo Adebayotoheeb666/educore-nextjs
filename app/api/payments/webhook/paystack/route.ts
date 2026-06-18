@@ -49,22 +49,33 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       if (metaType === "registration" && registrationId) {
         // Fetch pending registration
         const pending = await query(`SELECT * FROM pending_registrations WHERE id = ?`, [registrationId]);
-        const row = pending[0];
+        const row = pending[0] as {
+          id: string;
+          school_name?: string | null;
+          name?: string | null;
+          first_name?: string | null;
+          last_name?: string | null;
+          email?: string | null;
+          phone?: string | null;
+          password_hash?: string | null;
+          selected_services?: string | null;
+        };
         if (row) {
-          const alreadyUser = await queryOne("SELECT id FROM users WHERE email = ?", [row.email]);
+          const registrationEmail = typeof row.email === "string" && row.email.trim() ? row.email : `${generateId()}@no-reply.educore`;
+          const alreadyUser = await queryOne("SELECT id FROM users WHERE email = ?", [registrationEmail]);
           if (!alreadyUser) {
             const schoolIdNew = generateId();
             await execute(
               `INSERT INTO schools (id, name, sub_domain, subscription_status, subscription_plan, ai_token_budget, used_ai_tokens, academic_session, current_term, created_at, updated_at)
                VALUES (?, ?, ?, 'trial', 'basic', 100000, 0, '2024/2025', 'first', datetime('now'), datetime('now'))`,
-              [schoolIdNew, row.school_name, null]
+              [schoolIdNew, row.school_name ?? null, null]
             );
 
             const userId = generateId();
             await execute(
               `INSERT INTO users (id, name, first_name, last_name, email, password, role, school_id, phone, is_active, created_at, updated_at)
                VALUES (?, ?, ?, ?, ?, ?, 'school_owner', ?, ?, 1, datetime('now'), datetime('now'))`,
-              [userId, row.name, row.first_name, row.last_name, row.email, row.password_hash, schoolIdNew, row.phone]
+              [userId, row.name ?? null, row.first_name ?? null, row.last_name ?? null, registrationEmail, row.password_hash ?? null, schoolIdNew, row.phone ?? null]
             );
 
             await execute("UPDATE schools SET owner_id = ? WHERE id = ?", [userId, schoolIdNew]);

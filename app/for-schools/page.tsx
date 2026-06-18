@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useAppSelector } from "@/redux/hooks";
+import MarketingNavAuth from "@/components/MarketingNavAuth";
 
 export default function ForSchools() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -52,11 +53,7 @@ export default function ForSchools() {
           </div>
 
           {/* Auth Buttons */}
-          <div className="nav-auth">
-            <Link href="/dashboard" className="btn-register">
-              Dashboard
-            </Link>
-          </div>
+          <MarketingNavAuth />
         </div>
       </nav>
 

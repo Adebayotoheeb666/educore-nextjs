@@ -3,10 +3,22 @@ import { Provider } from "react-redux";
 import { store } from "@/redux/store";
 import { Toaster } from "sonner";
 import GlobalLoadingSpinner from "@/components/GlobalLoadingSpinner";
+import { ThemeProvider, useTheme } from "@/components/ThemeProvider";
 import { useEffect } from "react";
 import { installMobileFetchInterceptor } from "@/lib/utils/fetch";
 import { IS_MOBILE_WEBVIEW } from "@/lib/utils/runtimeConfig";
-import { getThemePreference } from "@/lib/utils/themeStorage";
+
+function ThemedToaster() {
+  const { theme, mounted } = useTheme();
+  return (
+    <Toaster
+      position="top-right"
+      richColors
+      closeButton
+      theme={mounted && theme === "dark" ? "dark" : "light"}
+    />
+  );
+}
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   useEffect(() => {
@@ -21,7 +33,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
           console.warn("[client-guard] invalid resource URL found", el);
           if (el.hasAttribute("href")) el.removeAttribute("href");
           if (el.hasAttribute("src")) el.removeAttribute("src");
-          (el as any).dataset.invalidUrl = "true";
+          (el as HTMLElement & { dataset: DOMStringMap }).dataset.invalidUrl = "true";
           if (el instanceof HTMLElement) el.classList.add("bad-href");
         } catch {
           // ignore
@@ -35,44 +47,29 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
-    const loadTheme = async () => {
-      try {
-        if (typeof document !== "undefined") {
-          const theme = await getThemePreference();
-          document.documentElement.setAttribute("data-theme", theme || "light");
-        }
-      } catch {
-        // Ignore storage access errors (e.g., private mode or WebView restrictions)
-      }
-    };
-
-    loadTheme();
-  }, []);
-
-  useEffect(() => {
     try {
-      if (!IS_MOBILE_WEBVIEW && typeof navigator !== "undefined" && 'serviceWorker' in navigator) {
+      if (!IS_MOBILE_WEBVIEW && typeof navigator !== "undefined" && "serviceWorker" in navigator) {
         navigator.serviceWorker
-          .register('/sw.js')
+          .register("/sw.js")
           .then((reg) => {
-            // eslint-disable-next-line no-console
-            console.log('Service worker registered:', reg.scope);
+            console.log("Service worker registered:", reg.scope);
           })
           .catch((err) => {
-            // eslint-disable-next-line no-console
-            console.warn('Service worker registration failed:', err);
+            console.warn("Service worker registration failed:", err);
           });
       }
-    } catch (err) {
+    } catch {
       // Service worker registration may fail in some WebViews
     }
   }, []);
 
   return (
     <Provider store={store}>
-      <GlobalLoadingSpinner />
-      {children}
-      <Toaster position="top-right" richColors closeButton />
+      <ThemeProvider>
+        <GlobalLoadingSpinner />
+        {children}
+        <ThemedToaster />
+      </ThemeProvider>
     </Provider>
   );
 }

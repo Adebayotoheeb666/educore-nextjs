@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useAppSelector } from "@/redux/hooks";
 import { toast } from "sonner";
 import { authenticatedFetch } from "@/lib/utils/fetch";
+import MarketingNavAuth from "@/components/MarketingNavAuth";
 
 export default function ContactPage() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -88,11 +89,7 @@ export default function ContactPage() {
           </div>
 
           {/* Auth Buttons */}
-          <div className="nav-auth">
-            <Link href="/dashboard" className="btn-register">
-              Dashboard
-            </Link>
-          </div>
+          <MarketingNavAuth />
         </div>
       </nav>
 

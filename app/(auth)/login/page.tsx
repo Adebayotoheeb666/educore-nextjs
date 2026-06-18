@@ -6,6 +6,7 @@ import { useAppDispatch } from "@/redux/hooks";
 import { setUser } from "@/redux/features/auth/authSlice";
 import { toast } from "sonner";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import ThemeToggle from "@/components/ThemeToggle";
 import "../auth.css";
 
 export default function LoginPage() {
@@ -57,7 +58,10 @@ export default function LoginPage() {
     <div className="auth-page-wrapper">
       <header className="auth-header">
         <Link href="/" className="auth-logo">EduCore AI</Link>
-        <Link href="/contact-us" className="auth-header-link">Support</Link>
+        <div className="auth-header-actions">
+          <ThemeToggle />
+          <Link href="/contact-us" className="auth-header-link">Support</Link>
+        </div>
       </header>
 
       <main className="auth-main">

@@ -3,6 +3,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { toast } from "sonner";
 import { authenticatedFetch } from "@/lib/utils/fetch";
+import ThemeToggle from "@/components/ThemeToggle";
 import "../auth.css";
 
 export default function ForgotPasswordPage() {
@@ -38,7 +39,10 @@ export default function ForgotPasswordPage() {
     <div className="auth-page-wrapper">
       <header className="auth-header">
         <Link href="/" className="auth-logo">EduCore AI</Link>
-        <Link href="/contact-us" className="auth-header-link">Support</Link>
+        <div className="auth-header-actions">
+          <ThemeToggle />
+          <Link href="/contact-us" className="auth-header-link">Support</Link>
+        </div>
       </header>
 
       <main className="auth-main">

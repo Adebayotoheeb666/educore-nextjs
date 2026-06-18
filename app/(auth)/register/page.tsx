@@ -7,6 +7,7 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { OPTIONAL_SERVICES, type ServiceDefinition } from "@/config/services/catalog";
 import { authenticatedFetch } from "@/lib/utils/fetch";
 import { formatPhoneDisplay } from "@/lib/utils/phoneClient";
+import ThemeToggle from "@/components/ThemeToggle";
 import "../auth.css";
 
 type Step = "details" | "services";
@@ -146,7 +147,8 @@ export default function RegisterPage() {
     <div className="auth-page-wrapper">
       <header className="auth-header">
         <Link href="/" className="auth-logo">EduCore AI</Link>
-        <div style={{ display: "flex", gap: "2rem" }}>
+        <div className="auth-header-actions">
+          <ThemeToggle />
           <Link href="/about-us" className="auth-header-link">About</Link>
           <Link href="#pricing" className="auth-header-link">Pricing</Link>
           <Link href="/contact-us" className="auth-header-link">Support</Link>

@@ -134,26 +134,31 @@
 }
 
 .hp-btn--primary {
-  background: #6A5ACD;
-  color: #fff;
+  background: var(--primary);
+  color: #ffffff;
   box-shadow: 0 4px 14px rgba(106, 90, 205, 0.35);
 }
 
+.hp-btn--primary:hover,
+.hp-btn--primary:visited {
+  color: #ffffff;
+}
+
 .hp-btn--primary:hover {
-  background: #5849b8;
+  background: var(--primary-dark);
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(106, 90, 205, 0.4);
 }
 
 .hp-btn--ghost {
   background: transparent;
-  color: #374151;
-  border: 1.5px solid #d1d5db;
+  color: var(--text-main);
+  border: 1.5px solid var(--border-light);
 }
 
 .hp-btn--ghost:hover {
-  border-color: #6A5ACD;
-  color: #6A5ACD;
+  border-color: var(--primary);
+  color: var(--primary);
 }
 
 .hp-btn--outline-light {
@@ -213,7 +218,7 @@
 .hp-hero__text p {
   font-size: 1.0rem;
   line-height: 1.3;
-  color: #4b5563;
+  color: var(--text-muted);
   margin-bottom: 2.0rem;
 }
 
@@ -275,7 +280,7 @@
    2. STATS BAR
    ======================================================== */
 .hp-stats {
-  background: #2d2460;
+  background: var(--hp-section-dark);
   padding: 4.5rem 0;
 }
 
@@ -737,7 +742,7 @@
    6. CTA SECTION
    ======================================================== */
 .hp-cta {
-  background: #2d2460;
+  background: var(--hp-section-dark);
   padding: 9rem 0;
   position: relative;
   overflow: hidden;
@@ -784,7 +789,7 @@
    7. FOOTER
    ======================================================== */
 .hp-footer {
-  background: #0d1a14;
+  background: var(--hp-footer-bg);
   padding: 7rem 0 3rem;
   color: rgba(255, 255, 255, 0.65);
 }
@@ -1062,14 +1067,14 @@
   .nav-links a {
     padding: 0.8rem 0;
     font-size: 1.4rem;
-    color: #374151;
+    color: var(--text-main);
     border-radius: 0;
   }
 
   .nav-links a:hover,
   .nav-links a.active {
     background: transparent;
-    color: #6A5ACD;
+    color: var(--primary);
     border-radius: 0;
     padding: 0.8rem 0;
   }
@@ -1608,15 +1613,17 @@
   padding-right: max(1.6rem, env(safe-area-inset-right));
   z-index: 1000;
   transition: all 0.3s ease;
-  background: rgba(255, 255, 255, 0.96);
-  border-bottom: 1px solid #f0f0f0;
+  background: var(--glass-bg, rgba(255, 255, 255, 0.96));
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-light);
 }
 
 .web-navbar.scrolled {
-  background: rgba(255, 255, 255, 0.96);
+  background: var(--glass-bg, rgba(255, 255, 255, 0.96));
   backdrop-filter: blur(12px);
   padding: 1.2rem 0;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+  box-shadow: var(--shadow-card);
 }
 
 .web-navbar__inner {
@@ -1636,7 +1643,7 @@
 }
 
 .web-logo span {
-  color: #6A5ACD;
+  color: var(--primary);
 }
 
 .nav-links {
@@ -1648,10 +1655,10 @@
 
 .nav-links a {
   text-decoration: none;
-  color: #374151;
+  color: var(--text-muted);
   font-weight: 500;
   font-size: 1.5rem;
-  transition: color 0.2s;
+  transition: color 0.2s, background 0.2s;
   position: relative;
   white-space: nowrap;
 }
@@ -1663,14 +1670,14 @@
   left: 0;
   width: 0;
   height: 2px;
-  background: #6A5ACD;
+  background: var(--primary);
   transition: width 0.25s;
 }
 
 .nav-links a:hover,
 .nav-links a.active {
   color: #fff;
-  background: #6A5ACD !important;
+  background: var(--primary) !important;
   border-radius: 8px;
   padding: 0.4rem 1.2rem;
 }
@@ -1688,17 +1695,17 @@
 
 .btn-login {
   text-decoration: none;
-  color: #374151;
+  color: var(--text-main);
   font-weight: 600;
   font-size: 1.5rem;
   transition: color 0.2s;
 }
-.btn-login:hover { color: #6A5ACD; }
+.btn-login:hover { color: var(--primary); }
 
 .btn-register {
   text-decoration: none;
-  background: #6A5ACD;
-  color: white;
+  background: var(--link-color);
+  color: #ffffff;
   padding: 0.9rem 2.2rem;
   border-radius: 8px;
   font-weight: 600;
@@ -1708,8 +1715,13 @@
   white-space: nowrap;
 }
 
+.btn-register:hover,
+.btn-register:visited {
+  color: #ffffff;
+}
+
 .btn-register:hover {
-  background: #5849b8;
+  background: var(--primary-dark);
   transform: translateY(-2px);
   box-shadow: 0 6px 18px rgba(106, 90, 205, 0.4);
 }
@@ -2141,7 +2153,6 @@
     z-index: 999;
   }
   .nav-hamburger { display: flex; }
-  .nav-auth .btn-register { display: none; }
   .hero-text h1 { font-size: 3.6rem; }
 }
 

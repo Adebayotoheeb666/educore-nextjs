@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useAppSelector } from "@/redux/hooks";
+import MarketingNavAuth from "@/components/MarketingNavAuth";
 
 export default function AboutPage() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -53,17 +54,7 @@ export default function AboutPage() {
           </div>
 
           {/* Auth Buttons */}
-          <div className="nav-auth">
-            {isAuthenticated ? (
-              <Link href="/dashboard" className="btn-register">
-                Dashboard
-              </Link>
-            ) : (
-              <Link href="/dashboard" className="btn-register">
-                Dashboard
-              </Link>
-            )}
-          </div>
+          <MarketingNavAuth />
 
           {/* Hamburger Menu */}
           <button

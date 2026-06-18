@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useAppSelector } from "@/redux/hooks";
 import { toast } from "sonner";
 import { authenticatedFetch } from "@/lib/utils/fetch";
+import MarketingNavAuth from "@/components/MarketingNavAuth";
 
 const CATEGORIES = [
   "All Posts",
@@ -113,11 +114,7 @@ export default function Blog() {
           </div>
 
           {/* Auth Buttons */}
-          <div className="nav-auth">
-            <Link href="/dashboard" className="btn-register">
-              Dashboard
-            </Link>
-          </div>
+          <MarketingNavAuth />
         </div>
       </nav>
 

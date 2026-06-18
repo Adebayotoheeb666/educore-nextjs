@@ -117,8 +117,28 @@ export const POST = withRateLimit(
       }, { status: 200 });
     }
 
-    // Seed global service catalog (idempotent) then activate compulsory services
+    // Seed global service catalog (idempotent)
     await seedServices();
+
+    const schoolId = generateId();
+    const userId = generateId();
+    const userEmail = normalizedEmail || `${generateId()}@no-reply.educore`;
+
+    const hashedPassword = await hashPassword(password);
+
+    await execute(
+      `INSERT INTO schools (id, name, email, phone, owner_id, sub_domain, subscription_status, subscription_plan, ai_token_budget, used_ai_tokens, academic_session, current_term, created_at, updated_at)
+       VALUES (?, ?, ?, ?, ?, ?, 'trial', 'basic', 100000, 0, '2024/2025', 'first', datetime('now'), datetime('now'))`,
+      [schoolId, schoolName, normalizedEmail || null, normalizedPhone || null, userId, finalSubDomain]
+    );
+
+    await execute(
+      `INSERT INTO users (id, name, first_name, last_name, email, password, role, school_id, phone, is_active, created_at, updated_at)
+       VALUES (?, ?, ?, ?, ?, ?, 'school_owner', ?, ?, 1, datetime('now'), datetime('now'))`,
+      [userId, finalName, firstName || null, lastName || null, userEmail, hashedPassword, schoolId, normalizedPhone || null]
+    );
+
+    // Activate compulsory services for the new school
     await activateCompulsoryServices(schoolId, userId);
 
     // Activate any optional services the school selected at signup

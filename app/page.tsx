@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useAppSelector } from "@/redux/hooks";
 import { authenticatedFetch } from "@/lib/utils/fetch";
+import MarketingNavAuth from "@/components/MarketingNavAuth";
 import "./homepage.css";
 
 interface Stats {
@@ -81,11 +82,7 @@ export default function Homepage() {
           </div>
 
           {/* Auth Buttons */}
-          <div className="nav-auth">
-            <Link href="/dashboard" className="btn-register">
-              Dashboard
-            </Link>
-          </div>
+          <MarketingNavAuth />
 
           {/* Hamburger */}
           <button

@@ -20,6 +20,12 @@
   border-bottom: 1px solid var(--border-color);
 }
 
+.auth-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
 .auth-logo {
   font-size: 2.2rem;
   font-weight: 800;
@@ -129,7 +135,7 @@
 /* ─── Buttons ─── */
 .btn-auth {
   width: 100%;
-  background-color: #6A5ACD;
+  background-color: var(--primary);
   color: white;
   padding: 1.4rem;
   border-radius: 8px;
@@ -145,7 +151,7 @@
   margin-top: 1.5rem;
 }
 
-.btn-auth:hover { background-color: #5849b8; }
+.btn-auth:hover { background-color: var(--primary-dark); }
 .btn-auth:disabled { opacity: 0.7; cursor: not-allowed; }
 
 .back-to-login {
@@ -164,7 +170,7 @@
 .auth-insight {
   margin-top: 3rem;
   background-color: var(--bg-hover);
-  border-left: 4px solid #FFD700;
+  border-left: 4px solid var(--accent);
   padding: 1.5rem 2rem;
   border-radius: 0 8px 8px 0;
   display: flex;

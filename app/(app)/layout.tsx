@@ -7,9 +7,10 @@ import { setUser, clearUser } from "@/redux/features/auth/authSlice";
 import { authenticatedFetch } from "@/lib/utils/fetch";
 import { getStoredUser } from "@/lib/utils/authStorage";
 import { IS_MOBILE_WEBVIEW, resolveApiUrl } from "@/lib/utils/runtimeConfig";
-import { getThemePreference, setThemePreference } from "@/lib/utils/themeStorage";
-import { RiNotificationLine, RiMoonLine, RiSunLine, RiQuestionLine } from "react-icons/ri";
+import { RiNotificationLine, RiQuestionLine } from "react-icons/ri";
+import ThemeToggle from "@/components/ThemeToggle";
 import "./dashboard.css";
+import "./shared.css";
 import MobileBottomNav from "./MobileBottomNav";
 import AiInsightsModal from "@/components/AiInsightsModal";
 
@@ -128,7 +129,6 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   const [ready, setReady] = useState(false);
   const [hydrated, setHydrated] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
   const [activeServices, setActiveServices] = useState<string[]>([
     "auth", "school", "students", "teachers", "parents", "classes"
@@ -213,35 +213,6 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       })
       .catch(() => {});
   }, [ready, user]);
-
-  // Sync dark mode preference
-  useEffect(() => {
-    const loadTheme = async () => {
-      try {
-        const saved = await getThemePreference();
-        if (saved === "dark") setDarkMode(true);
-      } catch {
-        // Ignore storage access errors in restrictive WebViews
-      }
-    };
-
-    loadTheme();
-  }, []);
-
-  useEffect(() => {
-    const updateTheme = async () => {
-      try {
-        if (typeof document !== "undefined") {
-          document.documentElement.setAttribute("data-theme", darkMode ? "dark" : "light");
-          await setThemePreference(darkMode ? "dark" : "light");
-        }
-      } catch {
-        // Ignore storage/setAttribute errors
-      }
-    };
-
-    updateTheme();
-  }, [darkMode]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -496,13 +467,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                 </span>
               )}
             </Link>
-            <button
-              className="topbar-icon-btn"
-              onClick={() => setDarkMode((d) => !d)}
-              title={darkMode ? "Light mode" : "Dark mode"}
-            >
-              {darkMode ? <RiSunLine size={22} /> : <RiMoonLine size={22} />}
-            </button>
+            <ThemeToggle className="topbar-icon-btn" size={22} />
             <div className="topbar-icon-btn" title="Help">
               <RiQuestionLine size={22} />
             </div>
