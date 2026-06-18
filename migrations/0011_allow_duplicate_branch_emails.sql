@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS schools_new (
 );
 
 -- Copy existing data into the new table
-INSERT INTO schools_new (
+INSERT OR IGNORE INTO schools_new (
   id, name, email, phone, state, type, owner_id, sub_domain, address, logo,
   subscription_status, subscription_plan, ai_token_budget, used_ai_tokens,
   subscription_expires_at, subscription_last_paid_at, billing_cycle,

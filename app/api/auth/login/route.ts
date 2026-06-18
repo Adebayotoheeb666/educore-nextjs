@@ -19,6 +19,8 @@ interface UserRow {
   role: string;
   avatar: string | null;
   is_active: number;
+  phone?: string | null;
+  admission_no?: string | null;
 }
 
 export async function OPTIONS(req: NextRequest): Promise<NextResponse> {
@@ -59,7 +61,7 @@ export const POST = withRateLimit(
       const normalizedEmail = idValue.includes("@") ? idValue.toLowerCase() : null;
       const normalizedPhone = normalizePhone(idValue) || null;
       const searchClauses: string[] = [];
-      const params: string[] = [];
+      const params: (string | null)[] = [];
       if (normalizedEmail) {
         searchClauses.push("email = ?");
         params.push(normalizedEmail);
@@ -67,6 +69,11 @@ export const POST = withRateLimit(
       if (normalizedPhone) {
         searchClauses.push("phone = ?");
         params.push(normalizedPhone);
+        // Also try with Nigerian country code for local format (07xxx → +23407xxx)
+        if (!normalizedPhone.startsWith("+") && normalizedPhone.startsWith("0")) {
+          searchClauses.push("phone = ?");
+          params.push("+" + "234" + normalizedPhone.substring(1));
+        }
       }
       if (!searchClauses.length) {
         return badRequest("Please provide a valid email, phone number, or admission number");

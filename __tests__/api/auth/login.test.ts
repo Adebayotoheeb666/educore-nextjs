@@ -101,4 +101,22 @@ describe("POST /api/auth/login", () => {
       ["user@test.com"]
     );
   });
+
+  test("uses phone lookup for phone identifier instead of admission number", async () => {
+    const hashed = await hashPassword("correct-password");
+    mockQueryOne.mockResolvedValueOnce({
+      id: "u3", name: "Phone User", first_name: "Phone", last_name: "User",
+      email: "phone.user@test.com", password: hashed, role: "teacher",
+      avatar: null, is_active: 1,
+    });
+    const req = makeRequest("POST", "/api/auth/login", {
+      body: { identifier: "080-1234-5678", password: "correct-password" },
+    });
+    const res = await POST(req);
+    expect(res.status).toBe(200);
+    expect(mockQueryOne).toHaveBeenCalledWith(
+      expect.stringContaining("WHERE phone = ?"),
+      ["08012345678"]
+    );
+  });
 });

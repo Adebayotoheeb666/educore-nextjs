@@ -13,7 +13,7 @@ interface ImportResult {
   errors: { row: number; message: string }[];
   warnings: { row: number; message: string }[];
   defaultPassword?: string;
-  createdParents?: Array<{ email: string; linked: boolean }>;
+  createdParents?: Array<{ email: string | null; linked: boolean }>;
 }
 
 export default function ParentBulkImportPage() {
@@ -105,8 +105,9 @@ export default function ParentBulkImportPage() {
           Bulk Import Parents
         </h1>
         <p style={{ fontSize: "1.5rem", color: "#64748b" }}>
-          Upload a CSV file to import multiple parents at once and optionally link them to students. Required columns:{" "}
-          <strong>FULL_NAME, EMAIL</strong>. Optional: PHONE, STUDENT_EMAIL
+          Upload a CSV file to import multiple parents at once and link them to students. Required columns:{" "}
+          <strong>FULL_NAME</strong> and either <strong>EMAIL or PHONE</strong>. Recommended:{" "}
+          <strong>STUDENT_ADMISSION_NO</strong> for linking to students.
         </p>
       </div>
 
@@ -167,15 +168,26 @@ export default function ParentBulkImportPage() {
                 margin: 0,
               }}
             >
-{`FULL_NAME,EMAIL,PHONE,STUDENT_EMAIL,RELATIONSHIP
-Mrs. Ngozi Okafor,ngozi@email.com,09012345678,obinna@school.com,Mother
-Mr. Adeyemi Hassan,adeyemi@email.com,09087654321,zainab@school.com,Father`}
+{`FULL_NAME,EMAIL,PHONE,STUDENT_ADMISSION_NO,STUDENT_EMAIL,RELATIONSHIP
+Mrs. Ngozi Okafor,ngozi@email.com,09012345678,ADM001,,Mother
+Mr. Adeyemi Hassan,adeyemi@email.com,09087654321,ADM002,,Father
+Mrs. Amara Oluwaseun,amara@email.com,08123456789,ADM003,,Mother
+Dr. Folake Ajayi,,09156789012,ADM004,,Father
+Ms. Tunde Obi,tunde@email.com,,ADM005,,Mother`}
             </pre>
           </div>
 
           <div style={{ marginBottom: "1.5rem", padding: "1rem", background: "#fef3c7", border: "1px solid #fcd34d", borderRadius: 8 }}>
             <p style={{ margin: 0, fontSize: "1.2rem", color: "#92400e" }}>
-              <strong>💡 Tip:</strong> STUDENT_ID links the parent to an existing student. Leave blank to create parent-only accounts. RELATIONSHIP should be: Mother, Father, Guardian, etc.
+              <strong>💡 Tips:</strong> 
+              <br />
+              • STUDENT_ADMISSION_NO (recommended): Directly links parent to student using admission number
+              <br />
+              • STUDENT_EMAIL (fallback): Links parent to student if admission number not found
+              <br />
+              • Either EMAIL or PHONE is required (you can provide both, or just one)
+              <br />
+              • RELATIONSHIP options: Mother, Father, Guardian, Uncle, Aunt, Grandparent, etc.
             </p>
           </div>
 

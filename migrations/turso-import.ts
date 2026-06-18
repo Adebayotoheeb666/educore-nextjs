@@ -664,6 +664,9 @@ async function run() {
   const schemaSql = rfs(schemaPath, "utf-8");
   const db = getDb();
 
+  console.log("Disabling foreign key constraints...");
+  await db.execute("PRAGMA foreign_keys = OFF;");
+
   console.log("Cleaning up existing database tables in correct dependency order...");
   const tablesRes = await db.execute("SELECT name FROM sqlite_master WHERE type='table';");
   const existingTables = new Set(tablesRes.rows.map(row => row.name as string));

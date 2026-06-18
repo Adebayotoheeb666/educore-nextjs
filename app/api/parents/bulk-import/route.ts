@@ -28,7 +28,7 @@ export const POST = withAuth(
       let linked = 0;
       const errors: { row: number; message: string }[] = [];
       const warnings: { row: number; message: string }[] = [];
-      const createdParents: Array<{ email: string; linked: boolean }> = [];
+      const createdParents: Array<{ email: string | null; linked: boolean }> = [];
 
       for (let i = 0; i < rows.length; i++) {
         const row = rows[i];

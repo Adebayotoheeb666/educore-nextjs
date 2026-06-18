@@ -19,7 +19,10 @@ export const normalizePhone = (value: string | null | undefined): string => {
 
 export const looksLikeAdmissionNo = (value: string | null | undefined): boolean => {
   if (!value) return false;
-  // Admission numbers follow SC-<year>-<seq> pattern but accept other alphanumeric with dashes
-  // Accept slashes, dashes, underscores and spaces as used in some admission formats
-    return /^[A-Z0-9\/\-_\s]{3,}$/.test(String(value).trim().toUpperCase());
+  const s = String(value).trim().toUpperCase();
+  // Admission numbers should contain at least one letter and may contain digits,
+  // dashes, underscores, slashes, and spaces. This avoids treating plain phone
+  // numbers as admission numbers.
+  if (!/^[A-Z0-9\/\-_\s]{3,}$/.test(s)) return false;
+  return /[A-Z]/.test(s);
 };

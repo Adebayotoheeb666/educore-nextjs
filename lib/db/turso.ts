@@ -30,9 +30,7 @@ function makeTimeoutFetch(timeoutMs = 30_000) {
 function normalizeSql(sql: string): string {
   if (!sql) return sql;
   // Replace legacy temp/old users table references with the canonical `users` table
-  return sql
-    .replace(/\b(main\.)?users_old\b/gi, "users")
-    .replace(/\busers_tmp\b/gi, "users");
+  return sql.replace(/\b(main\.)?users_old\b/gi, "users");
 }
 
 export function getDb(): Client {
@@ -119,8 +117,9 @@ async function ensureSchema(): Promise<void> {
           const norm = normalizeSql(sql + ";");
           await db.execute({ sql: norm, args: [] });
         } catch (err) {
-          const message = (err as Error).message;
-          if (message.includes("already exists") || message.includes("duplicate")) {
+          const message = (err as Error).message || "";
+          const m = message.toLowerCase();
+          if (m.includes("already exists") || m.includes("duplicate") || m.includes("unique")) {
             continue;
           }
           throw err;
@@ -155,8 +154,9 @@ async function ensureSchema(): Promise<void> {
             const norm = normalizeSql(sql + ";");
             await db.execute({ sql: norm, args: [] });
           } catch (err) {
-            const message = (err as Error).message;
-            if (message.includes("already exists") || message.includes("duplicate") || message.includes("no such table")) {
+            const message = (err as Error).message || "";
+            const m = message.toLowerCase();
+            if (m.includes("already exists") || m.includes("duplicate") || m.includes("no such table") || m.includes("unique")) {
               continue;
             }
             throw err;

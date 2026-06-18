@@ -20,7 +20,7 @@ CREATE TABLE questions_tmp (
   created_at TEXT NOT NULL DEFAULT (datetime('now')),
   updated_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
-INSERT INTO questions_tmp (id, school_id, subject_id, class_id, type, difficulty, question_text, instructions, options, correct_answer, explanation, marks, bloom_level, tags, created_by, created_at, updated_at)
+INSERT OR IGNORE INTO questions_tmp (id, school_id, subject_id, class_id, type, difficulty, question_text, instructions, options, correct_answer, explanation, marks, bloom_level, tags, created_by, created_at, updated_at)
 SELECT id, school_id, subject_id, class_id, type, difficulty, question_text, instructions, options, correct_answer, explanation, marks, bloom_level, tags, created_by, created_at, updated_at FROM questions;
 DROP TABLE IF EXISTS questions;
 ALTER TABLE questions_tmp RENAME TO questions;
@@ -57,7 +57,7 @@ CREATE TABLE users_tmp (
   updated_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
 
-INSERT INTO users_tmp (id, name, email, password, role, school_id, is_active, phone, first_name, last_name, avatar, admission_no, class_id, dob, gender, parent_phone, address, state_of_origin, created_at, updated_at)
+INSERT OR IGNORE INTO users_tmp (id, name, email, password, role, school_id, is_active, phone, first_name, last_name, avatar, admission_no, class_id, dob, gender, parent_phone, address, state_of_origin, created_at, updated_at)
 SELECT id, name, email, password, role, school_id, is_active, phone, first_name, last_name, avatar, admission_no, class_id, dob, gender, parent_phone, address, state_of_origin, created_at, updated_at FROM users;
 
 DROP TABLE IF EXISTS users;

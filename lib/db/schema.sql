@@ -59,7 +59,7 @@ CREATE UNIQUE INDEX IF NOT EXISTS idx_school_backup_settings_school_id ON school
 CREATE TABLE IF NOT EXISTS users (
   id TEXT PRIMARY KEY,
   name TEXT NOT NULL,
-  email TEXT NOT NULL UNIQUE,
+  email TEXT UNIQUE,
   password TEXT NOT NULL,
   role TEXT NOT NULL CHECK(role IN (
     'principal','vp_admin','vp_academics','admin_staff',
