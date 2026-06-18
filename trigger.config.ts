@@ -19,4 +19,10 @@ export default defineConfig({
     },
   },
   dirs: ["./trigger", "./src/trigger"],
+  ignorePatterns: [
+    "**/checkSchedules.ts",
+    "**/registerWrapper.ts",
+    "**/index.ts",
+    "**/example.ts",
+  ],
 });

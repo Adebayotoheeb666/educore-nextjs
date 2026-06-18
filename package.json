@@ -25,7 +25,9 @@
     "test": "jest --testEnvironment=node",
     "test:watch": "jest --watch --testEnvironment=node",
     "test:coverage": "jest --coverage --testEnvironment=node",
-    "trigger:start": "npx trigger-cli dev"
+    "trigger:dev": "npx trigger.dev@latest dev",
+    "trigger:deploy": "npx trigger.dev@latest deploy",
+    "trigger:schedules": "tsx trigger/checkSchedules.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.92.0",
