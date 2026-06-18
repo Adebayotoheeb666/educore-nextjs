@@ -106,25 +106,42 @@ export const POST = withAuth(
         // Normalize admission number to uppercase for DB consistency
         admissionNo = admissionNo ? String(admissionNo).toUpperCase() : null;
 
-        const studentId = generateId();
-        await execute(
-          `INSERT INTO users (id, name, first_name, last_name, email, phone, password, role, school_id, admission_no, dob, gender, parent_phone, address, state_of_origin, avatar, class_id, is_active, created_at, updated_at)
-           VALUES (?, ?, ?, ?, ?, ?, ?, 'student', ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, datetime('now'), datetime('now'))`,
-          [studentId, fullName || `${firstName} ${lastName}`, firstName, lastName, email, phone || null, hashed,
-           school.id, admissionNo, dob || null, gender || null, parentPhone || null, address || null, stateOfOrigin || null, null, classId || null]
-        );
-
-        if (classId) {
-          const session = school.academic_session || new Date().getFullYear().toString();
-          const enrollmentId = generateId();
-          await execute(
-            `INSERT INTO students_classes (id, student_id, class_id, academic_session, status, enrolled_date, created_at, updated_at)
-             VALUES (?, ?, ?, ?, 'active', datetime('now'), datetime('now'), datetime('now'))`,
-            [enrollmentId, studentId, classId, session]
+        if (admissionNo) {
+          const [existingAdmission] = await query(
+            "SELECT id FROM users WHERE school_id = ? AND admission_no = ?",
+            [school.id, admissionNo]
           );
+          if (existingAdmission) {
+            errors.push({ row: rowNum, message: `Admission number already exists: ${admissionNo}` });
+            continue;
+          }
         }
 
-        successful++;
+        const studentId = generateId();
+        try {
+          await execute(
+            `INSERT INTO users (id, name, first_name, last_name, email, phone, password, role, school_id, admission_no, dob, gender, parent_phone, address, state_of_origin, avatar, class_id, is_active, created_at, updated_at)
+             VALUES (?, ?, ?, ?, ?, ?, ?, 'student', ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, datetime('now'), datetime('now'))`,
+            [studentId, fullName || `${firstName} ${lastName}`, firstName, lastName, email, phone || null, hashed,
+             school.id, admissionNo, dob || null, gender || null, parentPhone || null, address || null, stateOfOrigin || null, null, classId || null]
+          );
+
+          if (classId) {
+            const session = school.academic_session || new Date().getFullYear().toString();
+            const enrollmentId = generateId();
+            await execute(
+              `INSERT INTO students_classes (id, student_id, class_id, academic_session, status, enrolled_date, created_at, updated_at)
+               VALUES (?, ?, ?, ?, 'active', datetime('now'), datetime('now'), datetime('now'))`,
+              [enrollmentId, studentId, classId, session]
+            );
+          }
+
+          successful++;
+        } catch (err) {
+          const message = err instanceof Error ? err.message : "Database error while importing row";
+          errors.push({ row: rowNum, message });
+          continue;
+        }
       }
 
       return ok({ successful, created: successful, failed: errors.length, errors, warnings });

@@ -7,6 +7,7 @@ import { generateId } from "@/lib/utils/id";
 import { badRequest, conflict, serverError } from "@/lib/utils/response";
 import { normalizePhone } from "@/lib/utils/string";
 import { seedServices, activateCompulsoryServices } from "@/lib/services/seedServices";
+import { initializeTransaction } from "@/lib/services/payments/paystack";
 import { getServiceBySlug, validateDependencies } from "@/config/services/catalog";
 import { withRateLimit } from "@/lib/middleware/rateLimit";
 
@@ -59,25 +60,62 @@ export const POST = withRateLimit(
       if (existingPhone) return conflict("Phone number has already been registered");
     }
 
-    // Create school
-    const schoolId = generateId();
-    await execute(
-      `INSERT INTO schools (id, name, sub_domain, subscription_status, subscription_plan, ai_token_budget, used_ai_tokens, academic_session, current_term, created_at, updated_at)
-       VALUES (?, ?, ?, 'trial', 'basic', 100000, 0, '2024/2025', 'first', datetime('now'), datetime('now'))`,
-      [schoolId, schoolName, finalSubDomain]
-    );
+    // Determine optional services to activate (and their cost)
+    const missingDeps = Array.isArray(selectedServices) ? validateDependencies(selectedServices) : [];
+    const toActivate = Array.isArray(selectedServices) ? [...new Set([...selectedServices, ...missingDeps])] : [];
 
-    // Create school_owner user
-    const userId = generateId();
-    const hashedPassword = await hashPassword(password);
-    await execute(
-      `INSERT INTO users (id, name, first_name, last_name, email, password, role, school_id, phone, is_active, created_at, updated_at)
-       VALUES (?, ?, ?, ?, ?, ?, 'school_owner', ?, ?, 1, datetime('now'), datetime('now'))`,
-      [userId, finalName, firstName || null, lastName || null, normalizedEmail, hashedPassword, schoolId, normalizedPhone || null]
-    );
+    // Calculate total cost (monthly) for selected optional services
+    let totalCost = 0;
+    for (const slug of toActivate) {
+      const catalogEntry = getServiceBySlug(slug);
+      if (catalogEntry && !catalogEntry.is_compulsory) totalCost += catalogEntry.base_price;
+    }
 
-    // Link school owner
-    await execute("UPDATE schools SET owner_id = ? WHERE id = ?", [userId, schoolId]);
+    // If there are paid services, create a pending registration and initialize a transaction
+    if (totalCost > 0) {
+      // ensure pending_registrations table exists
+      await execute(`CREATE TABLE IF NOT EXISTS pending_registrations (
+        id TEXT PRIMARY KEY,
+        first_name TEXT,
+        last_name TEXT,
+        name TEXT,
+        school_name TEXT,
+        email TEXT,
+        phone TEXT,
+        password_hash TEXT,
+        selected_services TEXT,
+        created_at TEXT NOT NULL DEFAULT (datetime('now'))
+      )`, []);
+
+      const registrationId = generateId();
+      const hashed = await hashPassword(password);
+      await execute(
+        `INSERT INTO pending_registrations (id, first_name, last_name, name, school_name, email, phone, password_hash, selected_services)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        [registrationId, firstName || null, lastName || null, finalName, schoolName, normalizedEmail, normalizedPhone || null, hashed, JSON.stringify(toActivate)]
+      );
+
+      // Initialize Paystack transaction with metadata pointing to registrationId
+      const reference = `REG-${generateId()}`;
+      const init = await initializeTransaction({
+        email: normalizedEmail || "no-reply@educore.ng",
+        amount: totalCost,
+        reference,
+        metadata: { registration_id: registrationId, type: "registration" },
+        // callback_url can point to a frontend page which checks registration status
+      });
+
+      if (!init || !init.data?.authorization_url) {
+        return serverError(new Error("Failed to initialize payment"));
+      }
+
+      return NextResponse.json({
+        requiresPayment: true,
+        authorizationUrl: init.data.authorization_url,
+        reference: init.data.reference,
+        registrationId,
+      }, { status: 200 });
+    }
 
     // Seed global service catalog (idempotent) then activate compulsory services
     await seedServices();

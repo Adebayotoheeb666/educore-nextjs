@@ -18,22 +18,57 @@ export default function BulkImportPage() {
   const [uploading, setUploading] = useState(false);
   const [result, setResult] = useState<ImportResult | null>(null);
 
+  const parseCsvLine = (line: string): string[] => {
+    const values: string[] = [];
+    let current = "";
+    let inQuotes = false;
+
+    for (let i = 0; i < line.length; i++) {
+      const char = line[i];
+      const nextChar = line[i + 1];
+
+      if (char === '"') {
+        if (inQuotes && nextChar === '"') {
+          current += '"';
+          i++;
+        } else {
+          inQuotes = !inQuotes;
+        }
+        continue;
+      }
+
+      if (char === "," && !inQuotes) {
+        values.push(current.trim());
+        current = "";
+        continue;
+      }
+
+      current += char;
+    }
+
+    values.push(current.trim());
+    return values;
+  };
+
   const parseCSV = (text: string): Record<string, string>[] => {
-    const lines = text.trim().split("\n");
+    const lines = text.trim().split(/\r?\n/).filter((line) => line.trim() !== "");
     if (lines.length < 2) return [];
-    const headers = lines[0].split(",").map((h) => h.trim());
+
+    const rawHeaders = parseCsvLine(lines[0]);
+    const headers = rawHeaders.map((h) =>
+      h
+        .trim()
+        .replace(/\ufeff/g, "")
+        .replace(/\s+/g, "_")
+        .replace(/[^a-zA-Z0-9_]/g, "")
+        .toLowerCase()
+    );
+
     return lines.slice(1).map((line) => {
-      const values = line.split(",").map((v) => v.trim());
+      const values = parseCsvLine(line);
       const row: Record<string, string> = {};
       headers.forEach((h, i) => {
-        // Normalize common header variants into snake_case lower-case keys
-        // Examples: FULL_NAME or Full Name -> full_name, STUDENT_ID -> student_id
-        const normalized = h
-          .trim()
-          .replace(/\s+/g, "_")
-          .replace(/[^a-zA-Z0-9_]/g, "")
-          .toLowerCase();
-        row[normalized] = values[i] || "";
+        row[h] = values[i] || "";
       });
       return row;
     });
@@ -68,8 +103,24 @@ export default function BulkImportPage() {
         body: JSON.stringify({ rows }),
       });
 
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message);
+      const responseText = await res.text();
+      let data: any;
+
+      if (responseText) {
+        try {
+          data = JSON.parse(responseText);
+        } catch {
+          if (!res.ok) {
+            throw new Error(responseText);
+          }
+          throw new Error("Invalid server response: expected JSON");
+        }
+      }
+
+      if (!res.ok) {
+        const errorMessage = data?.message || data?.error || responseText || `Request failed with status ${res.status}`;
+        throw new Error(errorMessage);
+      }
 
       setResult(data.data ?? data);
       toast.success(

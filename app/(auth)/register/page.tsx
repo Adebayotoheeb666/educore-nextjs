@@ -115,6 +115,13 @@ export default function RegisterPage() {
         setStep("details");
         return;
       }
+
+      // If server indicates payment is required, redirect to payment provider
+      if (data?.requiresPayment && data?.authorizationUrl) {
+        window.location.href = data.authorizationUrl;
+        return;
+      }
+
       toast.success("School registered successfully! Continue your setup.");
       router.push("/onboarding");
     } catch {
