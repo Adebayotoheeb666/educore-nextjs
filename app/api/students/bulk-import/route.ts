@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { query, execute, queryOne } from "@/lib/db/turso";
+import { query, execute, queryOne, transaction } from "@/lib/db/turso";
 import { withAuth, type AuthContext } from "@/lib/middleware/auth";
 import { badRequest, notFound, ok, serverError } from "@/lib/utils/response";
 import { hashPassword } from "@/lib/utils/password";
@@ -26,6 +26,63 @@ export const POST = withAuth(
       let successful = 0;
       const errors: { row: number; message: string }[] = [];
       const warnings: { row: number; message: string }[] = [];
+
+      // Prefetch existing data to minimize per-row DB roundtrips in production
+      const incomingEmails = Array.from(new Set(rows.map((r) => String(r.EMAIL || r.email || '').toLowerCase().trim()).filter(Boolean)));
+      const incomingAdmissions = Array.from(new Set(rows.map((r) => String(r.STUDENT_ID || r.student_id || r.admission_no || '').trim()).filter(Boolean)));
+
+      // Load existing users for the school (emails + admission nos)
+      const existingEmailsSet = new Set<string>();
+      const existingAdmissionsSet = new Set<string>();
+      if (incomingEmails.length) {
+        const placeholders = incomingEmails.map(() => '?').join(',');
+        const rowsEmails = await query<{ email: string }>(
+          `SELECT email FROM users WHERE school_id = ? AND email IN (${placeholders})`,
+          [school.id, ...incomingEmails]
+        );
+        for (const r of rowsEmails) existingEmailsSet.add(String(r.email).toLowerCase());
+      }
+      if (incomingAdmissions.length) {
+        const placeholders = incomingAdmissions.map(() => '?').join(',');
+        const rowsAdm = await query<{ admission_no: string }>(
+          `SELECT admission_no FROM users WHERE school_id = ? AND admission_no IN (${placeholders})`,
+          [school.id, ...incomingAdmissions]
+        );
+        for (const r of rowsAdm) if (r.admission_no) existingAdmissionsSet.add(String(r.admission_no).toUpperCase());
+      }
+
+      // Load classes for the school and map by name/section (case-insensitive)
+      const classesForSchool = await query<{ id: string; name: string; section: string }>(
+        `SELECT id, name, section FROM classes WHERE school_id = ?`,
+        [school.id]
+      );
+
+      function findClassId(label: string, arm: string) {
+        const l = (label || '').toLowerCase().trim();
+        const a = (arm || '').toLowerCase().trim();
+        for (const c of classesForSchool) {
+          const name = String(c.name || '').toLowerCase().trim();
+          const section = String(c.section || '').toLowerCase().trim();
+          if (l && a) {
+            if ((name === l || name === l) && (section === a || section === a)) return c.id;
+          } else if (l) {
+            if (name === l) return c.id;
+          } else if (a) {
+            if (section === a) return c.id;
+          }
+        }
+        return null;
+      }
+
+      // Prepare batched statements
+      const statements: { sql: string; args?: (string | number | boolean | null)[] }[] = [];
+
+      // Get current student count to generate admission nos when not supplied
+      const [countRow] = await query<{ count: number }>(
+        "SELECT COUNT(*) as count FROM users WHERE school_id = ? AND role = 'student'",
+        [school.id]
+      );
+      let count = countRow?.count ?? 0;
 
       for (let i = 0; i < rows.length; i++) {
         const row = rows[i];
@@ -59,88 +116,68 @@ export const POST = withAuth(
           continue;
         }
 
-        const [emailExists] = await query("SELECT id FROM users WHERE email = ?", [email]);
-        if (emailExists) {
+        if (email && existingEmailsSet.has(email)) {
           errors.push({ row: rowNum, message: `Email already exists: ${email}` });
           continue;
         }
 
         let classId: string | null = null;
         if (classLabel || classArm) {
-          let classDoc;
-          if (classLabel && classArm) {
-            classDoc = await queryOne<{ id: string }>(
-              `SELECT id FROM classes WHERE school_id = ? AND (name = ? OR LOWER(name) = LOWER(?)) AND (section = ? OR LOWER(section) = LOWER(?))`,
-              [school.id, classLabel, classLabel, classArm, classArm]
-            );
-          } else if (classLabel) {
-            classDoc = await queryOne<{ id: string }>(
-              "SELECT id FROM classes WHERE school_id = ? AND (name = ? OR LOWER(name) = LOWER(?))",
-              [school.id, classLabel, classLabel]
-            );
-          } else {
-            classDoc = await queryOne<{ id: string }>(
-              "SELECT id FROM classes WHERE school_id = ? AND (section = ? OR LOWER(section) = LOWER(?))",
-              [school.id, classArm, classArm]
-            );
-          }
-
-          if (!classDoc) {
+          classId = findClassId(classLabel, classArm);
+          if (!classId) {
             const classDesc = classLabel ? classLabel : classArm;
             warnings.push({ row: rowNum, message: `Class "${classDesc}" not found — created without class` });
-          } else {
-            classId = classDoc.id;
           }
         }
 
-        const [countRow] = await query<{ count: number }>(
-          "SELECT COUNT(*) as count FROM users WHERE school_id = ? AND role = 'student'",
-          [school.id]
-        );
-        const count = countRow?.count ?? 0;
         // Use provided student_id/admission if present; otherwise generate sequential admission no
         let admissionNo = row.STUDENT_ID || row.student_id || row.admission_no ? String(row.STUDENT_ID || row.student_id || row.admission_no).trim() : null;
         if (!admissionNo) {
-          admissionNo = `SC-${year}-${String(count + 1).padStart(4, "0")}`;
+          count++;
+          admissionNo = `SC-${year}-${String(count).padStart(4, "0")}`;
         }
         // Normalize admission number to uppercase for DB consistency
         admissionNo = admissionNo ? String(admissionNo).toUpperCase() : null;
 
-        if (admissionNo) {
-          const [existingAdmission] = await query(
-            "SELECT id FROM users WHERE school_id = ? AND admission_no = ?",
-            [school.id, admissionNo]
-          );
-          if (existingAdmission) {
-            errors.push({ row: rowNum, message: `Admission number already exists: ${admissionNo}` });
-            continue;
-          }
+        if (admissionNo && existingAdmissionsSet.has(admissionNo)) {
+          errors.push({ row: rowNum, message: `Admission number already exists: ${admissionNo}` });
+          continue;
         }
 
         const studentId = generateId();
-        try {
-          await execute(
-            `INSERT INTO users (id, name, first_name, last_name, email, phone, password, role, school_id, admission_no, dob, gender, parent_phone, address, state_of_origin, avatar, class_id, is_active, created_at, updated_at)
+
+        // Add insert for user
+        statements.push({
+          sql: `INSERT INTO users (id, name, first_name, last_name, email, phone, password, role, school_id, admission_no, dob, gender, parent_phone, address, state_of_origin, avatar, class_id, is_active, created_at, updated_at)
              VALUES (?, ?, ?, ?, ?, ?, ?, 'student', ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, datetime('now'), datetime('now'))`,
-            [studentId, fullName || `${firstName} ${lastName}`, firstName, lastName, email, phone || null, hashed,
+          args: [studentId, fullName || `${firstName} ${lastName}`, firstName, lastName, email, phone || null, hashed,
              school.id, admissionNo, dob || null, gender || null, parentPhone || null, address || null, stateOfOrigin || null, null, classId || null]
-          );
+        });
 
-          if (classId) {
-            const session = school.academic_session || new Date().getFullYear().toString();
-            const enrollmentId = generateId();
-            await execute(
-              `INSERT INTO students_classes (id, student_id, class_id, academic_session, status, enrolled_date, created_at, updated_at)
+        if (classId) {
+          const session = school.academic_session || new Date().getFullYear().toString();
+          const enrollmentId = generateId();
+          statements.push({
+            sql: `INSERT INTO students_classes (id, student_id, class_id, academic_session, status, enrolled_date, created_at, updated_at)
                VALUES (?, ?, ?, ?, 'active', datetime('now'), datetime('now'), datetime('now'))`,
-              [enrollmentId, studentId, classId, session]
-            );
-          }
+            args: [enrollmentId, studentId, classId, session]
+          });
+        }
 
-          successful++;
+        successful++;
+      }
+
+      // Execute batched statements in manageable chunks to avoid large single batch
+      if (statements.length) {
+        try {
+          const chunkSize = 200;
+          for (let i = 0; i < statements.length; i += chunkSize) {
+            const chunk = statements.slice(i, i + chunkSize);
+            await transaction(chunk);
+          }
         } catch (err) {
-          const message = err instanceof Error ? err.message : "Database error while importing row";
-          errors.push({ row: rowNum, message });
-          continue;
+          console.error("Bulk transaction failed:", err);
+          return serverError(err);
         }
       }
 

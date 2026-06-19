@@ -450,9 +450,13 @@
 }
 .contact-grid {
   display: grid;
-  grid-template-columns: 420px 1fr;
+  grid-template-columns: 420px minmax(0, 1fr);
   gap: 5rem;
   margin-bottom: 8rem;
+}
+
+.contact-grid > * {
+  min-width: 0;
 }
 .office-card {
   background-color: #f9fafb;
