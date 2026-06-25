@@ -1727,6 +1727,63 @@
   box-shadow: 0 6px 18px rgba(106, 90, 205, 0.4);
 }
 
+/* Mobile responsive navbar */
+@media (max-width: 768px) {
+  .web-navbar__inner {
+    gap: 1rem;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .web-logo {
+    font-size: 1.4rem;
+  }
+
+  .nav-auth {
+    gap: 0.8rem;
+  }
+
+  .btn-register {
+    padding: 0.7rem 1.4rem;
+    font-size: 1.2rem;
+  }
+
+  .btn-login {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .web-navbar {
+    padding: 1rem 0;
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+
+  .web-navbar__inner {
+    gap: 0.5rem;
+  }
+
+  .web-logo {
+    font-size: 1.1rem;
+  }
+
+  .nav-auth {
+    gap: 0.5rem;
+  }
+
+  .btn-register {
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
+  }
+
+  .btn-login {
+    font-size: 1rem;
+  }
+}
+
 /* Hamburger */
 .nav-hamburger {
   display: none;
