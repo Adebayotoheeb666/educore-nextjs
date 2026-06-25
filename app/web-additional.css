@@ -459,10 +459,16 @@
   min-width: 0;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1024px) {
   .contact-grid {
     grid-template-columns: 1fr;
     gap: 3rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .contact-grid {
+    gap: 2rem;
   }
 }
 .office-card {
@@ -524,8 +530,12 @@
   padding: 5rem;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05);
   border: 1px solid #f3f4f6;
-  width: 100%;
-  overflow: hidden;
+}
+
+@media (max-width: 1024px) {
+  .form-card {
+    padding: 3.5rem;
+  }
 }
 
 @media (max-width: 768px) {
@@ -550,9 +560,10 @@
   gap: 2.5rem;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .contact-form {
     grid-template-columns: 1fr;
+    gap: 2rem;
   }
 }
 
@@ -565,7 +576,7 @@
   grid-column: span 2;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .form-group.full {
     grid-column: span 1;
   }
@@ -612,7 +623,7 @@
   margin-top: 1rem;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .btn-send {
     grid-column: span 1;
   }
@@ -1580,7 +1591,7 @@
   }
 }
 
-/* ─── ENHANCED NAVBAR RESPONSIVE ─── */
+/* ─���─ ENHANCED NAVBAR RESPONSIVE ─── */
 @media (max-width: 1024px) {
   .web-navbar__inner {
     gap: 1.2rem;
