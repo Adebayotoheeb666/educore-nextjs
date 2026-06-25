@@ -167,46 +167,61 @@ export default function Homepage() {
         </div>
       </section>
 
-      {/* ── 2.3 SOCIAL PROOF - SCHOOL LOGOS ── */}
+      {/* ── 2.3 SOCIAL PROOF - SCHOOL LOGOS CAROUSEL ── */}
       <section className="hp-social-proof">
         <div className="hp-container">
           <p className="hp-social-proof__text">Trusted by Nigeria's leading schools</p>
-          <div className="hp-social-proof__grid">
-            <div className="hp-school-logo hp-school-logo--1">
-              <svg viewBox="0 0 120 60" fill="none">
-                <rect width="120" height="60" rx="8" fill="rgba(106, 90, 205, 0.1)" />
-                <text x="60" y="35" textAnchor="middle" fill="#6A5ACD" fontSize="14" fontWeight="600">St. Anne's Intl.</text>
-              </svg>
-            </div>
-            <div className="hp-school-logo hp-school-logo--2">
-              <svg viewBox="0 0 120 60" fill="none">
-                <rect width="120" height="60" rx="8" fill="rgba(106, 90, 205, 0.1)" />
-                <text x="60" y="35" textAnchor="middle" fill="#6A5ACD" fontSize="14" fontWeight="600">Covenant Heights</text>
-              </svg>
-            </div>
-            <div className="hp-school-logo hp-school-logo--3">
-              <svg viewBox="0 0 120 60" fill="none">
-                <rect width="120" height="60" rx="8" fill="rgba(106, 90, 205, 0.1)" />
-                <text x="60" y="35" textAnchor="middle" fill="#6A5ACD" fontSize="14" fontWeight="600">Federal Govt. College</text>
-              </svg>
-            </div>
-            <div className="hp-school-logo hp-school-logo--4">
-              <svg viewBox="0 0 120 60" fill="none">
-                <rect width="120" height="60" rx="8" fill="rgba(106, 90, 205, 0.1)" />
-                <text x="60" y="35" textAnchor="middle" fill="#6A5ACD" fontSize="14" fontWeight="600">Bishop Oluwole Sch.</text>
-              </svg>
-            </div>
-            <div className="hp-school-logo hp-school-logo--5">
-              <svg viewBox="0 0 120 60" fill="none">
-                <rect width="120" height="60" rx="8" fill="rgba(106, 90, 205, 0.1)" />
-                <text x="60" y="35" textAnchor="middle" fill="#6A5ACD" fontSize="14" fontWeight="600">LASACO Schools</text>
-              </svg>
-            </div>
-            <div className="hp-school-logo hp-school-logo--6">
-              <svg viewBox="0 0 120 60" fill="none">
-                <rect width="120" height="60" rx="8" fill="rgba(106, 90, 205, 0.1)" />
-                <text x="60" y="35" textAnchor="middle" fill="#6A5ACD" fontSize="14" fontWeight="600">Bright Minds Academy</text>
-              </svg>
+          <div className="hp-social-proof__carousel-wrapper">
+            <div className="hp-social-proof__carousel">
+              <div className="hp-school-logo">
+                <svg viewBox="0 0 120 60" fill="none">
+                  <rect width="120" height="60" rx="8" fill="rgba(106, 90, 205, 0.1)" />
+                  <text x="60" y="35" textAnchor="middle" fill="#6A5ACD" fontSize="14" fontWeight="600">St. Anne's Intl.</text>
+                </svg>
+              </div>
+              <div className="hp-school-logo">
+                <svg viewBox="0 0 120 60" fill="none">
+                  <rect width="120" height="60" rx="8" fill="rgba(106, 90, 205, 0.1)" />
+                  <text x="60" y="35" textAnchor="middle" fill="#6A5ACD" fontSize="14" fontWeight="600">Covenant Heights</text>
+                </svg>
+              </div>
+              <div className="hp-school-logo">
+                <svg viewBox="0 0 120 60" fill="none">
+                  <rect width="120" height="60" rx="8" fill="rgba(106, 90, 205, 0.1)" />
+                  <text x="60" y="35" textAnchor="middle" fill="#6A5ACD" fontSize="14" fontWeight="600">Federal Govt. College</text>
+                </svg>
+              </div>
+              <div className="hp-school-logo">
+                <svg viewBox="0 0 120 60" fill="none">
+                  <rect width="120" height="60" rx="8" fill="rgba(106, 90, 205, 0.1)" />
+                  <text x="60" y="35" textAnchor="middle" fill="#6A5ACD" fontSize="14" fontWeight="600">Bishop Oluwole Sch.</text>
+                </svg>
+              </div>
+              <div className="hp-school-logo">
+                <svg viewBox="0 0 120 60" fill="none">
+                  <rect width="120" height="60" rx="8" fill="rgba(106, 90, 205, 0.1)" />
+                  <text x="60" y="35" textAnchor="middle" fill="#6A5ACD" fontSize="14" fontWeight="600">LASACO Schools</text>
+                </svg>
+              </div>
+              <div className="hp-school-logo">
+                <svg viewBox="0 0 120 60" fill="none">
+                  <rect width="120" height="60" rx="8" fill="rgba(106, 90, 205, 0.1)" />
+                  <text x="60" y="35" textAnchor="middle" fill="#6A5ACD" fontSize="14" fontWeight="600">Bright Minds Academy</text>
+                </svg>
+              </div>
+              {/* Duplicated for seamless looping */}
+              <div className="hp-school-logo">
+                <svg viewBox="0 0 120 60" fill="none">
+                  <rect width="120" height="60" rx="8" fill="rgba(106, 90, 205, 0.1)" />
+                  <text x="60" y="35" textAnchor="middle" fill="#6A5ACD" fontSize="14" fontWeight="600">St. Anne's Intl.</text>
+                </svg>
+              </div>
+              <div className="hp-school-logo">
+                <svg viewBox="0 0 120 60" fill="none">
+                  <rect width="120" height="60" rx="8" fill="rgba(106, 90, 205, 0.1)" />
+                  <text x="60" y="35" textAnchor="middle" fill="#6A5ACD" fontSize="14" fontWeight="600">Covenant Heights</text>
+                </svg>
+              </div>
             </div>
           </div>
         </div>

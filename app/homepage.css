@@ -2215,6 +2215,7 @@
   padding: 4rem 0;
   background: white;
   border-bottom: 1px solid #f3f4f6;
+  overflow: hidden;
 }
 
 .hp-social-proof__text {
@@ -2225,11 +2226,31 @@
   font-weight: 600;
 }
 
-.hp-social-proof__grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+/* Carousel Wrapper */
+.hp-social-proof__carousel-wrapper {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.hp-social-proof__carousel {
+  display: flex;
   gap: 2rem;
-  align-items: center;
+  animation: carousel-scroll 30s linear infinite;
+  will-change: transform;
+}
+
+@keyframes carousel-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.hp-social-proof__carousel:hover {
+  animation-play-state: paused;
 }
 
 .hp-school-logo {
@@ -2242,6 +2263,8 @@
   border-radius: 12px;
   transition: all 0.3s ease;
   cursor: default;
+  min-width: 180px;
+  flex-shrink: 0;
 }
 
 .hp-school-logo:hover {
@@ -2259,13 +2282,14 @@
     padding: 3rem 0;
   }
 
-  .hp-social-proof__grid {
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  .hp-social-proof__carousel {
     gap: 1.5rem;
+    animation: carousel-scroll 20s linear infinite;
   }
 
   .hp-school-logo {
     padding: 1rem;
+    min-width: 140px;
   }
 
   .hp-social-proof__text {
