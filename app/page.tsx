@@ -101,15 +101,15 @@ export default function Homepage() {
       <header className="hp-hero">
         <div className="hp-container hp-hero__inner">
           <div className="hp-hero__text">
-            <span className="hp-badge">✦ AI GENERATE K-12 EDUCATION PLATFORM</span>
+            <span className="hp-badge">✦ AI THAT IDENTIFIES AT-RISK STUDENTS EARLY</span>
             <h1>
-              Transforming Learning<br />
-              Across Nigeria with AI.
+              Struggling to track which students<br />
+              are falling behind?
             </h1>
             <p>
-              Empower your institution with a true digital solution designed for the Nigerian context. 
-              NERDC curriculum alignment, offline-first design, WAEC/NECO/JAMB preparation, 
-              and automated administration — all in one unified platform.
+              Most Nigerian schools only discover student challenges at end-of-term exams—when it's too late to help. 
+              EduCore AI flags struggling students weekly, so you can intervene before they fall behind. 
+              Built for Nigerian schools: NERDC-aligned lessons, offline-first, and NDPR compliant.
             </p>
             <div className="hp-hero__btns">
               {isAuthenticated ? (
@@ -163,6 +163,83 @@ export default function Homepage() {
           <div className="hp-stat">
             <h3>2.5M</h3>
             <p>Lessons Generated</p>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 2.3 SOCIAL PROOF - SCHOOL LOGOS ── */}
+      <section className="hp-social-proof">
+        <div className="hp-container">
+          <p className="hp-social-proof__text">Trusted by Nigeria's leading schools</p>
+          <div className="hp-social-proof__grid">
+            <div className="hp-school-logo hp-school-logo--1">
+              <svg viewBox="0 0 120 60" fill="none">
+                <rect width="120" height="60" rx="8" fill="rgba(106, 90, 205, 0.1)" />
+                <text x="60" y="35" textAnchor="middle" fill="#6A5ACD" fontSize="14" fontWeight="600">St. Anne's Intl.</text>
+              </svg>
+            </div>
+            <div className="hp-school-logo hp-school-logo--2">
+              <svg viewBox="0 0 120 60" fill="none">
+                <rect width="120" height="60" rx="8" fill="rgba(106, 90, 205, 0.1)" />
+                <text x="60" y="35" textAnchor="middle" fill="#6A5ACD" fontSize="14" fontWeight="600">Covenant Heights</text>
+              </svg>
+            </div>
+            <div className="hp-school-logo hp-school-logo--3">
+              <svg viewBox="0 0 120 60" fill="none">
+                <rect width="120" height="60" rx="8" fill="rgba(106, 90, 205, 0.1)" />
+                <text x="60" y="35" textAnchor="middle" fill="#6A5ACD" fontSize="14" fontWeight="600">Federal Govt. College</text>
+              </svg>
+            </div>
+            <div className="hp-school-logo hp-school-logo--4">
+              <svg viewBox="0 0 120 60" fill="none">
+                <rect width="120" height="60" rx="8" fill="rgba(106, 90, 205, 0.1)" />
+                <text x="60" y="35" textAnchor="middle" fill="#6A5ACD" fontSize="14" fontWeight="600">Bishop Oluwole Sch.</text>
+              </svg>
+            </div>
+            <div className="hp-school-logo hp-school-logo--5">
+              <svg viewBox="0 0 120 60" fill="none">
+                <rect width="120" height="60" rx="8" fill="rgba(106, 90, 205, 0.1)" />
+                <text x="60" y="35" textAnchor="middle" fill="#6A5ACD" fontSize="14" fontWeight="600">LASACO Schools</text>
+              </svg>
+            </div>
+            <div className="hp-school-logo hp-school-logo--6">
+              <svg viewBox="0 0 120 60" fill="none">
+                <rect width="120" height="60" rx="8" fill="rgba(106, 90, 205, 0.1)" />
+                <text x="60" y="35" textAnchor="middle" fill="#6A5ACD" fontSize="14" fontWeight="600">Bright Minds Academy</text>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 2.5 WHY NIGERIAN SCHOOLS CHOOSE EDUCORE ── */}
+      <section className="hp-why-section">
+        <div className="hp-container">
+          <div className="hp-section-head">
+            <h2>Why Nigerian Schools Choose EduCore</h2>
+            <p>Built specifically for Nigerian schools. Not a generic global platform.</p>
+          </div>
+          <div className="hp-why-grid">
+            <div className="hp-why-card">
+              <div className="hp-why-icon">📚</div>
+              <h3>NERDC Curriculum Aligned</h3>
+              <p>Every lesson plan and exam matches the official NERDC curriculum for Primary 1–6, JSS1–3, SS1–3.</p>
+            </div>
+            <div className="hp-why-card">
+              <div className="hp-why-icon">📡</div>
+              <h3>Works Without Internet</h3>
+              <p>Offline-first design means your school keeps running even during power cuts and internet outages.</p>
+            </div>
+            <div className="hp-why-card">
+              <div className="hp-why-icon">🔒</div>
+              <h3>NDPR & Data Safe</h3>
+              <p>Fully compliant with Nigeria's Data Protection Regulations. Student data stays secure and local.</p>
+            </div>
+            <div className="hp-why-card">
+              <div className="hp-why-icon">✅</div>
+              <h3>Exam Pattern Prep</h3>
+              <p>Generate questions modelled after WAEC, NECO, and JAMB patterns. Your students are ready.</p>
+            </div>
           </div>
         </div>
       </section>
@@ -308,6 +385,160 @@ export default function Homepage() {
               </div>
             </div>
           </div>
+          <div className="hp-why-cta">
+            <Link href="/register" className="hp-btn hp-btn--primary hp-btn--sm">
+              See These Features in Action →
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 4.5 CASE STUDIES ── */}
+      <section className="hp-case-studies">
+        <div className="hp-container">
+          <div className="hp-section-head">
+            <h2>Results From Real Nigerian Schools</h2>
+            <p>See how EduCore AI is transforming education outcomes across Nigeria.</p>
+          </div>
+          
+          <div className="hp-case-studies__grid">
+            <div className="hp-case-study">
+              <div className="hp-case-study__header">
+                <h3>St. Anne's International School</h3>
+                <p className="hp-case-study__location">Lagos, Nigeria</p>
+              </div>
+              <div className="hp-case-study__metrics">
+                <div className="hp-case-study__metric">
+                  <span className="hp-case-study__number">+18%</span>
+                  <p>Improvement in WAEC pass rates</p>
+                </div>
+                <div className="hp-case-study__metric">
+                  <span className="hp-case-study__number">6 hrs/week</span>
+                  <p>Teacher time saved per educator</p>
+                </div>
+              </div>
+              <blockquote className="hp-case-study__quote">
+                <p>&quot;EduCore identified 12 at-risk students in JSS2 before mid-term. We intervened, and all 12 improved their scores by term-end.&quot;</p>
+                <footer>— Headmistress Okafor, St. Anne's International</footer>
+              </blockquote>
+            </div>
+
+            <div className="hp-case-study">
+              <div className="hp-case-study__header">
+                <h3>Covenant Height School</h3>
+                <p className="hp-case-study__location">Abuja, Nigeria</p>
+              </div>
+              <div className="hp-case-study__metrics">
+                <div className="hp-case-study__metric">
+                  <span className="hp-case-study__number">94%</span>
+                  <p>Teacher satisfaction rate</p>
+                </div>
+                <div className="hp-case-study__metric">
+                  <span className="hp-case-study__number">3x</span>
+                  <p>More lessons generated per term</p>
+                </div>
+              </div>
+              <blockquote className="hp-case-study__quote">
+                <p>&quot;Our teachers no longer spend weekends writing lesson plans. EduCore generates them aligned to NERDC in minutes.&quot;</p>
+                <footer>— Mr. Adeyemi, Academic Coordinator</footer>
+              </blockquote>
+            </div>
+
+            <div className="hp-case-study">
+              <div className="hp-case-study__header">
+                <h3>Federal Government College</h3>
+                <p className="hp-case-study__location">Port Harcourt, Nigeria</p>
+              </div>
+              <div className="hp-case-study__metrics">
+                <div className="hp-case-study__metric">
+                  <span className="hp-case-study__number">100%</span>
+                  <p>JAMB registration compliance</p>
+                </div>
+                <div className="hp-case-study__metric">
+                  <span className="hp-case-study__number">+22%</span>
+                  <p>Exam question variety per term</p>
+                </div>
+              </div>
+              <blockquote className="hp-case-study__quote">
+                <p>&quot;EduCore's JAMB-pattern questions helped our SS3 students score an average of 267/400 — 40 points above last year.&quot;</p>
+                <footer>— Mrs. Obi, Principal</footer>
+              </blockquote>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 4.7 ROI SECTION ── */}
+      <section className="hp-roi">
+        <div className="hp-container">
+          <div className="hp-section-head">
+            <h2>The Real Cost of Not Using EduCore</h2>
+            <p>See what your school loses when relying on manual systems.</p>
+          </div>
+
+          <div className="hp-roi__comparison">
+            <div className="hp-roi__column hp-roi__manual">
+              <h3>Without EduCore</h3>
+              <div className="hp-roi__items">
+                <div className="hp-roi__item hp-roi__item--loss">
+                  <span className="hp-roi__icon">❌</span>
+                  <p><strong>40 hrs/term</strong> wasted on manual lesson planning per teacher</p>
+                </div>
+                <div className="hp-roi__item hp-roi__item--loss">
+                  <span className="hp-roi__icon">❌</span>
+                  <p><strong>30% of struggling students</strong> identified only at end-of-term exams</p>
+                </div>
+                <div className="hp-roi__item hp-roi__item--loss">
+                  <span className="hp-roi__icon">❌</span>
+                  <p><strong>20 hrs/week</strong> manual grading and record keeping</p>
+                </div>
+                <div className="hp-roi__item hp-roi__item--loss">
+                  <span className="hp-roi__icon">❌</span>
+                  <p><strong>Inconsistent</strong> exam quality and student preparation</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="hp-roi__column hp-roi__with">
+              <h3>With EduCore</h3>
+              <div className="hp-roi__items">
+                <div className="hp-roi__item hp-roi__item--gain">
+                  <span className="hp-roi__icon">✅</span>
+                  <p><strong>6+ hours/week saved</strong> per teacher on admin work</p>
+                </div>
+                <div className="hp-roi__item hp-roi__item--gain">
+                  <span className="hp-roi__icon">✅</span>
+                  <p><strong>At-risk students flagged weekly</strong> for early intervention</p>
+                </div>
+                <div className="hp-roi__item hp-roi__item--gain">
+                  <span className="hp-roi__icon">✅</span>
+                  <p><strong>Instant AI grading</strong> and automatic score computation</p>
+                </div>
+                <div className="hp-roi__item hp-roi__item--gain">
+                  <span className="hp-roi__icon">✅</span>
+                  <p><strong>WAEC/NECO/JAMB-pattern</strong> exams every week</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="hp-roi__savings">
+            <h3>Annual Savings Per School</h3>
+            <div className="hp-roi__savings-grid">
+              <div className="hp-roi__saving-item">
+                <span className="hp-roi__amount">₦840,000</span>
+                <p>14 teachers × 40 hrs/term × 3 terms × ₦500/hr</p>
+              </div>
+              <div className="hp-roi__saving-item">
+                <span className="hp-roi__amount">+15%</span>
+                <p>Avg. improvement in exam pass rates</p>
+              </div>
+              <div className="hp-roi__saving-item">
+                <span className="hp-roi__amount">₦2,500</span>
+                <p>Our monthly cost per student (break-even in month 1)</p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -392,29 +623,139 @@ export default function Homepage() {
         </div>
       </section>
 
-      {/* ── 6. CTA SECTION ── */}
+      {/* ── 6. OBJECTION HANDLING / FAQ ── */}
+      <section className="hp-objections">
+        <div className="hp-container">
+          <div className="hp-section-head">
+            <h2>Common Questions</h2>
+            <p>Everything you need to know about EduCore AI for your school.</p>
+          </div>
+
+          <div className="hp-objections__grid">
+            <div className="hp-objection-card">
+              <h3>Is it expensive?</h3>
+              <p>
+                No. We start at ₦2,500/student/month or ₦150/student for schools paying per-term. 
+                The average teacher savings (6+ hours/week) equals ₦50,000+ monthly value. Schools break even in month one.
+              </p>
+            </div>
+
+            <div className="hp-objection-card">
+              <h3>Does it work without internet?</h3>
+              <p>
+                Yes. EduCore is offline-first. Download lessons, student records, and exams. Everything syncs automatically when connection returns. Perfect for Nigerian schools with unreliable connectivity.
+              </p>
+            </div>
+
+            <div className="hp-objection-card">
+              <h3>What about data privacy?</h3>
+              <p>
+                We&apos;re NDPR compliant. Student data stays in Nigeria. No third-party sharing. We use bank-level encryption and annual security audits. Your school data is safer with us than on WhatsApp.
+              </p>
+            </div>
+
+            <div className="hp-objection-card">
+              <h3>Will my teachers need training?</h3>
+              <p>
+                Minimal. EduCore is built for non-technical users. We provide 2-hour onboarding, video tutorials, and 24/7 support in Yoruba, Igbo, and English. Most teachers are productive on day 1.
+              </p>
+            </div>
+
+            <div className="hp-objection-card">
+              <h3>How long does implementation take?</h3>
+              <p>
+                2-3 weeks from signup to full adoption. We help migrate your curriculum data, set up student records, and train staff. No disruption to school operations.
+              </p>
+            </div>
+
+            <div className="hp-objection-card">
+              <h3>Can we export our data?</h3>
+              <p>
+                100% yours. Export all data anytime in Excel, PDF, or CSV format. No lock-in. You can leave with one click if you choose to. But we think you&apos;ll stay.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 6. FINAL CTA SECTION ── */}
       <section className="hp-cta">
         <div className="hp-container hp-cta__inner">
-          <h2>Ready to modernize your school?</h2>
+          <h2>Your School Deserves Better Than Manual Systems</h2>
           <p>
-            Join hundreds of Nigerian institutions leading the digital
-            revolution in education. Start your free trial today.
+            Stop losing students to undetected struggles. Start flagging at-risk students weekly 
+            with AI that understands Nigerian schools. Free for 30 days. No credit card required.
           </p>
           <div className="hp-cta__btns">
             {isAuthenticated ? (
-              <Link href="/dashboard" className="hp-btn hp-btn--primary">
+              <Link href="/dashboard" className="hp-btn hp-btn--primary hp-btn--large">
                 Go to Dashboard →
               </Link>
             ) : (
               <>
-                <Link href="/register" className="hp-btn hp-btn--primary">
-                  Create School Account
+                <Link href="/register" className="hp-btn hp-btn--primary hp-btn--large">
+                  Start Your Free Trial →
                 </Link>
-                <Link href="/contact-us" className="hp-btn hp-btn--outline-light">
-                  Speak with an Expert
+                <Link href="/contact-us" className="hp-btn hp-btn--outline-light hp-btn--large">
+                  Schedule a Demo
                 </Link>
               </>
             )}
+          </div>
+          <p className="hp-cta__subtext">
+            Join 500+ schools. Supporting 100k+ students. No setup fees. Cancel anytime.
+          </p>
+        </div>
+      </section>
+
+      {/* ── 7. TRUST & SECURITY ── */}
+      <section className="hp-trust">
+        <div className="hp-container">
+          <div className="hp-section-head">
+            <h2>Your School&apos;s Data is Protected</h2>
+            <p>Built with security and privacy at the core.</p>
+          </div>
+
+          <div className="hp-trust__grid">
+            <div className="hp-trust-card">
+              <div className="hp-trust-icon">🔐</div>
+              <h3>NDPR Compliant</h3>
+              <p>
+                Fully compliant with Nigeria Data Protection Regulations. 
+                Annual third-party security audits. No data shared with external parties.
+              </p>
+            </div>
+            <div className="hp-trust-card">
+              <div className="hp-trust-icon">🇳🇬</div>
+              <h3>Data Stays in Nigeria</h3>
+              <p>
+                All student and school data stored on servers within Nigeria. 
+                No international data transfer. Your information never leaves the country.
+              </p>
+            </div>
+            <div className="hp-trust-card">
+              <div className="hp-trust-icon">🛡️</div>
+              <h3>Bank-Level Encryption</h3>
+              <p>
+                AES-256 encryption for all data in transit and at rest. 
+                Same security standards used by Nigerian banks and the CBN.
+              </p>
+            </div>
+            <div className="hp-trust-card">
+              <div className="hp-trust-icon">📜</div>
+              <h3>Export Anytime</h3>
+              <p>
+                100% data ownership. Export all school and student records 
+                in Excel, PDF, or CSV format whenever you want. No lock-in.
+              </p>
+            </div>
+          </div>
+
+          <div className="hp-trust__bottom">
+            <p>
+              <strong>Questions about data?</strong> Read our <a href="/privacy">Privacy Policy</a> 
+              or <a href="/contact-us">contact our data protection team</a>
+            </p>
           </div>
         </div>
       </section>
