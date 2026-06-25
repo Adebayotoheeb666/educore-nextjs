@@ -89,7 +89,6 @@ export default function Homepage() {
             className={`nav-hamburger ${menuOpen ? "open" : ""}`}
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label="Toggle menu"
-            style={{ display: "none" } /* will be responsive styled in css */}
           >
             <span />
             <span />
