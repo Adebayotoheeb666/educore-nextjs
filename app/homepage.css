@@ -477,13 +477,20 @@
 }
 
 .hp-teachers__inner {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
   align-items: center;
-  gap: 7rem;
+}
+
+@media (max-width: 1200px) {
+  .hp-teachers__inner {
+    gap: 3rem;
+  }
 }
 
 .hp-teachers__left {
-  flex: 1;
+  min-width: 0;
 }
 
 .hp-teachers__left h2 {
@@ -549,8 +556,8 @@
 
 /* Right side */
 .hp-teachers__right {
-  flex: 1;
   position: relative;
+  min-width: 0;
 }
 
 .hp-teachers__img-stack {
@@ -622,14 +629,21 @@
 }
 
 .hp-parents__inner {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
   align-items: center;
-  gap: 7rem;
+}
+
+@media (max-width: 1200px) {
+  .hp-parents__inner {
+    gap: 3rem;
+  }
 }
 
 .hp-parents__left {
-  flex: 1;
   position: relative;
+  min-width: 0;
 }
 
 .hp-parents__phone-wrap {
@@ -681,7 +695,8 @@
 }
 
 .hp-parents__right {
-  flex: 1;
+  position: relative;
+  min-width: 0;
 }
 
 .hp-parents__right h2 {
