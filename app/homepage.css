@@ -1608,6 +1608,7 @@
   top: 0;
   left: 0;
   width: 100%;
+  box-sizing: border-box;
   padding: 1.6rem 0;
   padding-left: max(1.6rem, env(safe-area-inset-left));
   padding-right: max(1.6rem, env(safe-area-inset-right));
