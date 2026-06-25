@@ -1211,6 +1211,17 @@
 
   .hp-teachers__right {
     padding-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hp-teachers__img-stack {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.6rem;
   }
 
   .hp-parents {
@@ -1245,6 +1256,15 @@
   .hp-parents__feat {
     padding: 1.5rem 1.5rem;
     gap: 1.2rem;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .hp-parents__feat-icon {
+    width: 100%;
+    display: flex;
+    justify-content: center;
   }
 
   .hp-parents__feat h4 {
@@ -1364,6 +1384,11 @@
   .hp-teachers__left h2,
   .hp-parents__right h2 {
     font-size: 2rem;
+  }
+
+  .hp-teachers__badge {
+    position: static;
+    margin-top: 1rem;
   }
 
   .hp-cta__inner h2 {
