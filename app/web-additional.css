@@ -375,7 +375,7 @@
   color: var(--text-main);
 }
 .side-card-blue p {
-  color: #6b7280;
+  color: var(--text-muted);
 }
 .side-card-green {
   background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
@@ -443,7 +443,7 @@
 }
 .contact-hero p {
   font-size: 1.6rem;
-  color: #6b7280;
+  color: var(--text-muted);
   max-width: 600px;
   margin: 0 auto;
   line-height: 1.6;
@@ -509,7 +509,7 @@
 }
 .contact-details p {
   font-size: 1.4rem;
-  color: #4b5563;
+  color: var(--text-muted);
   line-height: 1.5;
 }
 .map-placeholder {
@@ -551,7 +551,7 @@
 }
 .form-card > p {
   font-size: 1.5rem;
-  color: #6b7280;
+  color: var(--text-muted);
   margin-bottom: 4rem;
 }
 .contact-form {
@@ -584,7 +584,7 @@
 .form-group label {
   font-size: 1.4rem;
   font-weight: 600;
-  color: #374151;
+  color: var(--text-muted);
 }
 .form-group input,
 .form-group select,
@@ -661,7 +661,7 @@
 }
 .quick-answers p {
   font-size: 1.8rem;
-  color: #9ca3af;
+  color: var(--text-muted);
   max-width: 700px;
   margin: 0 auto 4rem;
   line-height: 1.6;
@@ -721,7 +721,7 @@
 }
 .blog-header-content p {
   font-size: 1.6rem;
-  color: #6b7280;
+  color: var(--text-muted);
 }
 .btn-create-post {
   background-color: #6A5ACD;
@@ -747,7 +747,7 @@
   padding: 1rem 0;
   font-size: 1.5rem;
   font-weight: 500;
-  color: #6b7280;
+  color: var(--text-muted);
   cursor: pointer;
   border: none;
   background: transparent;
@@ -821,7 +821,7 @@
 }
 .featured-post-content p {
   font-size: 1.6rem;
-  color: #4b5563;
+  color: var(--text-muted);
   line-height: 1.6;
   margin-bottom: 3rem;
 }
@@ -843,7 +843,7 @@
 }
 .read-time {
   font-size: 1.3rem;
-  color: #6b7280;
+  color: var(--text-muted);
 }
 .read-more {
   display: flex;
@@ -890,7 +890,7 @@
   font-size: 1.1rem;
   font-weight: 700;
   text-transform: uppercase;
-  color: #374151;
+  color: var(--text-muted);
 }
 .post-card-content {
   padding: 2.5rem;
@@ -907,7 +907,7 @@
 }
 .post-card-content p {
   font-size: 1.4rem;
-  color: #6b7280;
+  color: var(--text-muted);
   line-height: 1.5;
   margin-bottom: 2rem;
 }
@@ -921,7 +921,7 @@
 }
 .post-date {
   font-size: 1.2rem;
-  color: #9ca3af;
+  color: var(--text-muted);
 }
 .pagination {
   display: flex;
@@ -932,7 +932,7 @@
 }
 .pagination-info {
   font-size: 1.4rem;
-  color: #6b7280;
+  color: var(--text-muted);
 }
 .pagination-controls {
   display: flex;
@@ -949,7 +949,7 @@
   border-radius: 8px;
   background: var(--bg-card);
   font-size: 1.4rem;
-  color: #374151;
+  color: var(--text-muted);
   cursor: pointer;
   transition: all 0.3s;
 }
@@ -1115,7 +1115,7 @@
 .bp-article p {
   font-size: 1.58rem;
   line-height: 1.75;
-  color: #374151;
+  color: var(--text-muted);
   margin-bottom: 2.4rem;
 }
 .bp-quote {
@@ -1126,7 +1126,7 @@
   border-radius: 0 10px 10px 0;
   font-size: 1.6rem;
   font-style: italic;
-  color: #374151;
+  color: var(--text-muted);
   line-height: 1.75;
 }
 .bp-tags {
@@ -1139,7 +1139,7 @@
 }
 .bp-tag {
   background: #f3f4f6;
-  color: #374151;
+  color: var(--text-muted);
   padding: 0.6rem 1.4rem;
   border-radius: 50px;
   font-size: 1.4rem;
@@ -1247,7 +1247,7 @@
 .bp-related__title {
   font-size: 1.2rem;
   font-weight: 800;
-  color: #9ca3af;
+  color: var(--text-muted);
   letter-spacing: 0.1em;
   text-transform: uppercase;
   margin-bottom: 2rem;
@@ -1303,7 +1303,7 @@
   padding: 1rem;
   font-size: 1.4rem;
   font-weight: 600;
-  color: #374151;
+  color: var(--text-muted);
   text-decoration: none;
   transition: all 0.2s;
 }
@@ -1341,7 +1341,7 @@
 }
 .bp-modal p {
   font-size: 1.5rem;
-  color: #6b7280;
+  color: var(--text-muted);
   line-height: 1.65;
   margin-bottom: 3rem;
 }
@@ -1362,7 +1362,7 @@
 }
 .bp-modal__cancel {
   background: #f3f4f6;
-  color: #374151;
+  color: var(--text-muted);
 }
 .bp-modal__cancel:hover { background: #e5e7eb; }
 .bp-modal__confirm {
@@ -1862,6 +1862,7 @@
   .hp-teachers__img-main,
   .hp-teachers__img-secondary {
     max-width: 100%;
+    width: 100% !important;
   }
 }
 
@@ -1914,9 +1915,11 @@
   }
   .hp-parents__feat {
     gap: 1rem;
+    flex-wrap: wrap;
   }
   .hp-parents__feat-icon {
     font-size: 2rem;
+    flex-shrink: 0;
   }
 }
 

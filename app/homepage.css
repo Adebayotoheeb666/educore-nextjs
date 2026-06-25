@@ -340,7 +340,7 @@
 
 .hp-section-head p {
   font-size: 1.65rem;
-  color: #6b7280;
+  color: var(--text-muted);
   max-width: 520px;
   margin: 0 auto;
   line-height: 1.65;
@@ -370,7 +370,7 @@
 /* Light variant */
 .hp-feat-card--light {
   background: var(--bg-card);
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border-color);
 }
 
 /* Dark variant */
@@ -428,7 +428,7 @@
 
 .hp-feat-card p {
   font-size: 1.5rem;
-  color: #6b7280;
+  color: var(--text-muted);
   line-height: 1.65;
   margin: 0;
 }
@@ -503,7 +503,7 @@
 
 .hp-teachers__left>p {
   font-size: 1.6rem;
-  color: #4b5563;
+  color: var(--text-muted);
   line-height: 1.7;
   margin-bottom: 3.5rem;
 }
@@ -550,7 +550,7 @@
 
 .hp-check-list li span {
   font-size: 1.45rem;
-  color: #6b7280;
+  color: var(--text-muted);
   line-height: 1.55;
 }
 
@@ -686,7 +686,7 @@
 .hp-parents__phone-badge p {
   font-size: 1.25rem;
   line-height: 1.5;
-  color: #374151;
+  color: var(--text-main);
 }
 
 .hp-parents__phone-badge strong {
@@ -709,7 +709,7 @@
 
 .hp-parents__right>p {
   font-size: 1.6rem;
-  color: #4b5563;
+  color: var(--text-muted);
   line-height: 1.7;
   margin-bottom: 3.5rem;
 }
@@ -725,7 +725,7 @@
   align-items: flex-start;
   gap: 1.6rem;
   background: var(--bg-card);
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border-color);
   border-radius: 14px;
   padding: 2rem 2.4rem;
   transition: box-shadow 0.25s;
@@ -749,7 +749,7 @@
 
 .hp-parents__feat p {
   font-size: 1.45rem;
-  color: #6b7280;
+  color: var(--text-muted);
   line-height: 1.55;
 }
 
@@ -930,8 +930,8 @@
 
 .hp-comms-msg--out {
   background: var(--bg-card);
-  color: #374151;
-  border: 1px solid #e5e7eb;
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
 }
 
 .hp-comms-msg span {
@@ -1211,6 +1211,17 @@
 
   .hp-teachers__right {
     padding-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hp-teachers__img-stack {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.6rem;
   }
 
   .hp-parents {
@@ -1245,6 +1256,15 @@
   .hp-parents__feat {
     padding: 1.5rem 1.5rem;
     gap: 1.2rem;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .hp-parents__feat-icon {
+    width: 100%;
+    display: flex;
+    justify-content: center;
   }
 
   .hp-parents__feat h4 {
@@ -1364,6 +1384,11 @@
   .hp-teachers__left h2,
   .hp-parents__right h2 {
     font-size: 2rem;
+  }
+
+  .hp-teachers__badge {
+    position: static;
+    margin-top: 1rem;
   }
 
   .hp-cta__inner h2 {
@@ -1862,7 +1887,7 @@
 .hero-text p {
   font-size: 1.8rem;
   line-height: 1.6;
-  color: #4b5563;
+  color: var(--text-muted);
   margin-bottom: 3.5rem;
 }
 
@@ -1933,7 +1958,7 @@
 
 .section-header p {
   font-size: 1.8rem;
-  color: #6b7280;
+  color: var(--text-muted);
   max-width: 600px;
   margin: 0 auto;
 }
@@ -1974,7 +1999,7 @@
 
 .feature-card p {
   font-size: 1.6rem;
-  color: #6b7280;
+  color: var(--text-muted);
   line-height: 1.5;
 }
 
@@ -2020,7 +2045,7 @@
 
 .detail-text p {
   font-size: 1.8rem;
-  color: #4b5563;
+  color: var(--text-muted);
   line-height: 1.6;
   margin-bottom: 3rem;
 }
@@ -2032,7 +2057,7 @@
 
 .detail-list li {
   font-size: 1.7rem;
-  color: #374151;
+  color: var(--text-muted);
   margin-bottom: 1.5rem;
   display: flex;
   align-items: center;
@@ -2087,7 +2112,7 @@
 
 .floating-card .label {
   font-size: 1.2rem;
-  color: #6b7280;
+  color: var(--text-muted);
   font-weight: 500;
 }
 
@@ -2131,7 +2156,7 @@
 
 .stat-item p {
   font-size: 1.8rem;
-  color: #9ca3af;
+  color: var(--text-muted);
 }
 
 /* Footer */
@@ -2157,7 +2182,7 @@
 
 .footer-about p {
   font-size: 1.6rem;
-  color: #6b7280;
+  color: var(--text-muted);
   line-height: 1.6;
 }
 
@@ -2179,7 +2204,7 @@
 
 .footer-links ul li a {
   text-decoration: none;
-  color: #6b7280;
+  color: var(--text-muted);
   font-size: 1.6rem;
   transition: color 0.3s;
 }
@@ -2196,7 +2221,7 @@
 
 .footer-bottom p {
   font-size: 1.4rem;
-  color: #9ca3af;
+  color: var(--text-muted);
 }
 
 /* Responsive */
@@ -2221,7 +2246,7 @@
 .hp-social-proof__text {
   text-align: center;
   font-size: 1.4rem;
-  color: #6b7280;
+  color: var(--text-muted);
   margin-bottom: 3rem;
   font-weight: 600;
 }
@@ -2353,7 +2378,7 @@
 .hp-roi__item p {
   font-size: 1.4rem;
   line-height: 1.6;
-  color: #374151;
+  color: var(--text-muted);
 }
 
 .hp-roi__item strong {
@@ -2394,7 +2419,7 @@
 
 .hp-roi__saving-item p {
   font-size: 1.3rem;
-  color: #6b7280;
+  color: var(--text-muted);
 }
 
 @media (max-width: 768px) {
@@ -2452,7 +2477,7 @@
 
 .hp-case-study {
   background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border-color);
   border-left: 4px solid #6A5ACD;
   border-radius: 12px;
   padding: 2.5rem;
@@ -2483,7 +2508,7 @@
 
 .hp-case-study__location {
   font-size: 1.2rem;
-  color: #9ca3af;
+  color: var(--text-muted);
 }
 
 .hp-case-study__metrics {
@@ -2510,7 +2535,7 @@
 
 .hp-case-study__metric p {
   font-size: 1.1rem;
-  color: #6b7280;
+  color: var(--text-muted);
   line-height: 1.4;
 }
 
@@ -2525,7 +2550,7 @@
 
 .hp-case-study__quote p {
   font-size: 1.3rem;
-  color: #374151;
+  color: var(--text-muted);
   line-height: 1.6;
   margin-bottom: 1rem;
   flex-grow: 1;
@@ -2533,7 +2558,7 @@
 
 .hp-case-study__quote footer {
   font-size: 1.1rem;
-  color: #9ca3af;
+  color: var(--text-muted);
   font-style: normal;
   font-weight: 600;
   margin-top: auto;
@@ -2623,7 +2648,7 @@
 
 .hp-why-card p {
   font-size: 1.4rem;
-  color: #6b7280;
+  color: var(--text-muted);
   line-height: 1.6;
 }
 
@@ -2667,7 +2692,7 @@
   background: white;
   padding: 2.5rem;
   border-radius: 12px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border-color);
   transition: all 0.3s ease;
 }
 
@@ -2685,7 +2710,7 @@
 
 .hp-objection-card p {
   font-size: 1.4rem;
-  color: #6b7280;
+  color: var(--text-muted);
   line-height: 1.7;
 }
 
@@ -2730,7 +2755,7 @@
   background: white;
   padding: 2.5rem;
   border-radius: 16px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border-color);
   text-align: center;
   transition: all 0.3s ease;
 }
@@ -2755,7 +2780,7 @@
 
 .hp-trust-card p {
   font-size: 1.4rem;
-  color: #6b7280;
+  color: var(--text-muted);
   line-height: 1.7;
 }
 
@@ -2768,7 +2793,7 @@
 
 .hp-trust__bottom p {
   font-size: 1.5rem;
-  color: #6b7280;
+  color: var(--text-muted);
 }
 
 .hp-trust__bottom a {
@@ -2830,7 +2855,7 @@
 .hp-cta__subtext {
   margin-top: 1.5rem;
   font-size: 1.3rem;
-  color: #9ca3af;
+  color: var(--text-muted);
   font-weight: 500;
 }
 
@@ -2901,7 +2926,7 @@
 
 .hp-nigeria__item p {
   font-size: 1.45rem;
-  color: #6b7280;
+  color: var(--text-muted);
   line-height: 1.6;
   margin: 0;
 }
