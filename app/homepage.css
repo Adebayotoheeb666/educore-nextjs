@@ -2413,39 +2413,45 @@
 .hp-case-study {
   background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
   border: 1px solid #e5e7eb;
-  border-radius: 16px;
-  padding: 3rem;
+  border-left: 4px solid #6A5ACD;
+  border-radius: 12px;
+  padding: 2.5rem;
+  padding-left: 2.2rem;
   transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
 }
 
 .hp-case-study:hover {
   transform: translateY(-4px);
   border-color: rgba(106, 90, 205, 0.3);
+  border-left-color: #6A5ACD;
   box-shadow: 0 16px 32px rgba(106, 90, 205, 0.12);
 }
 
 .hp-case-study__header {
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 .hp-case-study__header h3 {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   font-weight: 700;
   color: var(--text-main);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
+  line-height: 1.3;
 }
 
 .hp-case-study__location {
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   color: #9ca3af;
 }
 
 .hp-case-study__metrics {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-  margin-bottom: 2rem;
-  padding-bottom: 2rem;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
   border-bottom: 1px solid #f3f4f6;
 }
 
@@ -2455,35 +2461,42 @@
 
 .hp-case-study__number {
   display: block;
-  font-size: 2.4rem;
+  font-size: 2rem;
   font-weight: 800;
   color: #6A5ACD;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.3rem;
+  line-height: 1.1;
 }
 
 .hp-case-study__metric p {
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   color: #6b7280;
+  line-height: 1.4;
 }
 
 .hp-case-study__quote {
   margin: 0;
   padding: 0;
   font-style: italic;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .hp-case-study__quote p {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   color: #374151;
-  line-height: 1.8;
+  line-height: 1.6;
   margin-bottom: 1rem;
+  flex-grow: 1;
 }
 
 .hp-case-study__quote footer {
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   color: #9ca3af;
   font-style: normal;
   font-weight: 600;
+  margin-top: auto;
 }
 
 @media (max-width: 768px) {
@@ -2498,19 +2511,32 @@
 
   .hp-case-study {
     padding: 2rem;
+    padding-left: 1.8rem;
   }
 
   .hp-case-study__header h3 {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
   }
 
   .hp-case-study__metrics {
     grid-template-columns: 1fr;
-    gap: 1.5rem;
+    gap: 1.2rem;
+  }
+
+  .hp-case-study__number {
+    font-size: 1.8rem;
+  }
+
+  .hp-case-study__metric p {
+    font-size: 1rem;
   }
 
   .hp-case-study__quote p {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
+  }
+
+  .hp-case-study__quote footer {
+    font-size: 1rem;
   }
 }
 
