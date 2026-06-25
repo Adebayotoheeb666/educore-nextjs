@@ -2257,13 +2257,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1.5rem;
+  padding: 1.2rem 1.8rem;
   background: white;
   border: 1px solid #f3f4f6;
   border-radius: 12px;
   transition: all 0.3s ease;
   cursor: default;
-  min-width: 180px;
+  min-width: 220px;
   flex-shrink: 0;
 }
 
@@ -2275,6 +2275,7 @@
 .hp-school-logo svg {
   width: 100%;
   height: auto;
+  max-width: 200px;
 }
 
 @media (max-width: 768px) {
@@ -2288,8 +2289,8 @@
   }
 
   .hp-school-logo {
-    padding: 1rem;
-    min-width: 140px;
+    padding: 1rem 1.4rem;
+    min-width: 160px;
   }
 
   .hp-social-proof__text {

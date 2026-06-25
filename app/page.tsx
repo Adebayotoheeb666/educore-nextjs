@@ -186,9 +186,9 @@ export default function Homepage() {
                 </svg>
               </div>
               <div className="hp-school-logo">
-                <svg viewBox="0 0 120 60" fill="none">
-                  <rect width="120" height="60" rx="8" fill="rgba(106, 90, 205, 0.1)" />
-                  <text x="60" y="35" textAnchor="middle" fill="#6A5ACD" fontSize="14" fontWeight="600">Federal Govt. College</text>
+                <svg viewBox="0 0 160 60" fill="none">
+                  <rect width="160" height="60" rx="8" fill="rgba(106, 90, 205, 0.1)" />
+                  <text x="80" y="35" textAnchor="middle" fill="#6A5ACD" fontSize="13" fontWeight="600">Federal Govt. College</text>
                 </svg>
               </div>
               <div className="hp-school-logo">
@@ -204,9 +204,9 @@ export default function Homepage() {
                 </svg>
               </div>
               <div className="hp-school-logo">
-                <svg viewBox="0 0 120 60" fill="none">
-                  <rect width="120" height="60" rx="8" fill="rgba(106, 90, 205, 0.1)" />
-                  <text x="60" y="35" textAnchor="middle" fill="#6A5ACD" fontSize="14" fontWeight="600">Bright Minds Academy</text>
+                <svg viewBox="0 0 160 60" fill="none">
+                  <rect width="160" height="60" rx="8" fill="rgba(106, 90, 205, 0.1)" />
+                  <text x="80" y="35" textAnchor="middle" fill="#6A5ACD" fontSize="13" fontWeight="600">Bright Minds Academy</text>
                 </svg>
               </div>
               {/* Duplicated for seamless looping */}
