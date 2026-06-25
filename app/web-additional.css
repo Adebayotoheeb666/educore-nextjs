@@ -589,6 +589,8 @@
 .form-group input,
 .form-group select,
 .form-group textarea {
+  width: 100%;
+  box-sizing: border-box;
   padding: 1.4rem 1.6rem;
   border-radius: 10px;
   border: 1px solid #e5e7eb;
