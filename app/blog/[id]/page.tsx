@@ -36,7 +36,7 @@ const renderContent = (content: string) => {
         </ol>
       );
     }
-    return <p key={i} style={{ fontSize: "1.58rem", lineHeight: 1.75, color: "#374151", marginBottom: "2.4rem" }}>{trimmed}</p>;
+    return <p key={i} style={{ fontSize: "1.58rem", lineHeight: 1.75, color: "var(--text-main)", marginBottom: "2.4rem" }}>{trimmed}</p>;
   });
 };
 
@@ -252,7 +252,7 @@ export default function BlogPost() {
             {formatDate(post.createdAt)} · {post.readTime || "5 min read"}
           </span>
           <h1 className="bp-hero__title">{post.title}</h1>
-          {post.subtitle && <p style={{ fontSize: "1.6rem", opacity: 0.9, marginTop: "0.5rem", color: "#fff" }}>{post.subtitle}</p>}
+          {post.subtitle && <p style={{ fontSize: "1.6rem", opacity: 0.9, marginTop: "0.5rem", color: "var(--text-main)" }}>{post.subtitle}</p>}
           <div className="bp-author" style={{ marginTop: "1.5rem" }}>
             <div className="bp-author__avatar">
               <span className="bp-author__initials">{authorInitials}</span>
@@ -281,12 +281,12 @@ export default function BlogPost() {
           <aside className="bp-sidebar">
             <div className="bp-newsletter">
               <div className="bp-newsletter__icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: "22px", height: "22px", color: "#4ade80" }}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: "22px", height: "22px", color: "var(--status-success)" }}>
                   <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
               </div>
-              <h3 style={{ fontSize: "2rem", fontWeight: 800, color: "#fff", marginBottom: "0.8rem" }}>Weekly Insights</h3>
-              <p style={{ fontSize: "1.4rem", color: "rgba(255,255,255,0.65)", lineHeight: 1.65, marginBottom: "2rem" }}>Get the latest school management tips and product updates in your inbox.</p>
+              <h3 style={{ fontSize: "2rem", fontWeight: 800, color: "var(--text-main)", marginBottom: "0.8rem" }}>Weekly Insights</h3>
+              <p style={{ fontSize: "1.4rem", color: "var(--text-muted)", lineHeight: 1.65, marginBottom: "2rem" }}>Get the latest school management tips and product updates in your inbox.</p>
               {subscribed ? (
                 <div className="bp-newsletter__success">
                   <span>✅</span> You&apos;re subscribed! Check your inbox.
@@ -312,7 +312,7 @@ export default function BlogPost() {
               <h4 className="bp-related__title">RELATED POSTS</h4>
               <div className="bp-related__list">
                 {related.length === 0 ? (
-                  <p style={{ color: "#64748b", fontSize: "1.3rem" }}>No related posts yet.</p>
+                  <p style={{ color: "var(--text-muted)", fontSize: "1.3rem" }}>No related posts yet.</p>
                 ) : (
                   related.map((p) => (
                     <Link key={p.id} href={`/blog/${p.id}`} className="bp-related__item">
@@ -327,7 +327,7 @@ export default function BlogPost() {
                       </div>
                       <div className="bp-related__info">
                         <span className="bp-related__cat">{p.category}</span>
-                        <p className="bp-related__post-title" style={{ fontSize: "1.35rem", fontWeight: 600, color: "#111827" }}>{p.title}</p>
+                        <p className="bp-related__post-title" style={{ fontSize: "1.35rem", fontWeight: 600, color: "var(--text-main)" }}>{p.title}</p>
                       </div>
                     </Link>
                   ))
@@ -409,8 +409,8 @@ export default function BlogPost() {
                 <path d="M24 16v10M24 32h.02M40 24c0 8.837-7.163 16-16 16S8 32.837 8 24 15.163 8 24 8s16 7.163 16 16z" stroke="#DC2626" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </div>
-            <h3 style={{ fontSize: "2rem", fontWeight: 700, color: "#0f172a", marginBottom: "1rem" }}>Delete Blog Post?</h3>
-            <p style={{ fontSize: "1.5rem", color: "#6b7280", lineHeight: 1.65, marginBottom: "3rem" }}>Are you sure you want to delete <strong>&quot;{post.title}&quot;</strong>? This cannot be undone.</p>
+            <h3 style={{ fontSize: "2rem", fontWeight: 700, color: "var(--text-main)", marginBottom: "1rem" }}>Delete Blog Post?</h3>
+            <p style={{ fontSize: "1.5rem", color: "var(--text-muted)", lineHeight: 1.65, marginBottom: "3rem" }}>Are you sure you want to delete <strong>&quot;{post.title}&quot;</strong>? This cannot be undone.</p>
             <div className="bp-modal__actions" style={{ display: "flex", gap: "1.2rem", justifyContent: "center" }}>
               <button type="button" className="bp-modal__cancel" onClick={() => setShowDeleteModal(false)}>Cancel</button>
               <button type="button" className="bp-modal__confirm" onClick={handleDelete} disabled={deleting}>

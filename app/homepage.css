@@ -2984,3 +2984,218 @@
     line-height: 1.5;
   }
 }
+
+/* ========================================================
+   DARK MODE COMPREHENSIVE OVERRIDES — Card Visibility Fix
+   ======================================================== */
+
+/* White section backgrounds with dark fallback */
+[data-theme="dark"] .hp-why {
+  background: var(--bg-main);
+}
+
+[data-theme="dark"] .hp-pricing {
+  background: var(--hp-surface-alt);
+}
+
+[data-theme="dark"] .hp-case-studies {
+  background: var(--bg-main);
+}
+
+/* Card styling overrides for visibility */
+[data-theme="dark"] .hp-why-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+}
+
+[data-theme="dark"] .hp-why-card h3 {
+  color: var(--text-main);
+}
+
+[data-theme="dark"] .hp-why-card p {
+  color: var(--text-muted);
+}
+
+/* Objection/FAQ card styling */
+[data-theme="dark"] .hp-objection-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+}
+
+[data-theme="dark"] .hp-objection-card h4 {
+  color: var(--text-main);
+}
+
+[data-theme="dark"] .hp-objection-card p {
+  color: var(--text-muted);
+}
+
+/* Trust card styling */
+[data-theme="dark"] .hp-trust-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+}
+
+[data-theme="dark"] .hp-trust-card h3 {
+  color: var(--text-main);
+}
+
+[data-theme="dark"] .hp-trust-card p {
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .hp-trust-card a {
+  color: var(--link-color);
+}
+
+[data-theme="dark"] .hp-trust-card a:hover {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+/* Feature card tags */
+[data-theme="dark"] .hp-feat-card__tags span {
+  background: rgba(145, 131, 255, 0.12);
+  color: var(--link-color);
+  border-color: rgba(145, 131, 255, 0.3);
+}
+
+/* Feature card medium variant */
+[data-theme="dark"] .hp-feat-card--medium {
+  background: rgba(145, 131, 255, 0.08);
+  border-color: rgba(145, 131, 255, 0.2);
+  color: var(--text-main);
+}
+
+[data-theme="dark"] .hp-feat-card--medium h3 {
+  color: var(--text-main);
+}
+
+[data-theme="dark"] .hp-feat-card--medium p {
+  color: var(--text-muted);
+}
+
+/* Feature card dark variant override */
+[data-theme="dark"] .hp-feat-card--dark {
+  background: var(--surface-elevated);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+}
+
+[data-theme="dark"] .hp-feat-card--dark h3 {
+  color: var(--text-main);
+}
+
+[data-theme="dark"] .hp-feat-card--dark p {
+  color: var(--text-muted);
+}
+
+/* Feature card light variant dark mode */
+[data-theme="dark"] .hp-feat-card--light {
+  background: var(--bg-card);
+  border-color: var(--border-color);
+  color: var(--text-main);
+}
+
+/* Features section background */
+[data-theme="dark"] .hp-features {
+  background: var(--bg-main);
+}
+
+/* Teachers section background */
+[data-theme="dark"] .hp-teachers {
+  background: var(--bg-main);
+}
+
+/* Why section heading/content */
+[data-theme="dark"] .hp-why__text h2 {
+  color: var(--text-main);
+}
+
+[data-theme="dark"] .hp-why__text p {
+  color: var(--text-muted);
+}
+
+/* Pricing card feature lists */
+[data-theme="dark"] .hp-pricing-card ul li {
+  color: var(--text-muted);
+}
+
+/* Testimonials section improvements */
+[data-theme="dark"] .hp-testimonials {
+  background: var(--bg-main);
+}
+
+[data-theme="dark"] .hp-testimonial-card {
+  background: var(--bg-card);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .hp-testimonial-card p:first-child {
+  color: var(--text-main);
+}
+
+[data-theme="dark"] .hp-testimonial-card .testimonial-author {
+  color: var(--text-muted);
+}
+
+/* Parents section styling */
+[data-theme="dark"] .hp-parents {
+  background: var(--bg-main);
+}
+
+[data-theme="dark"] .hp-parents__feat {
+  background: var(--bg-card);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .hp-parents__feat h3 {
+  color: var(--text-main);
+}
+
+[data-theme="dark"] .hp-parents__feat p {
+  color: var(--text-muted);
+}
+
+/* AI section */
+[data-theme="dark"] .hp-ai-section {
+  background: var(--bg-main);
+}
+
+[data-theme="dark"] .hp-ai-card {
+  background: var(--bg-card);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .hp-ai-card h3 {
+  color: var(--text-main);
+}
+
+[data-theme="dark"] .hp-ai-card p {
+  color: var(--text-muted);
+}
+
+/* Ensure good contrast for all links in dark mode */
+[data-theme="dark"] a {
+  color: var(--link-color);
+}
+
+[data-theme="dark"] a:visited {
+  color: var(--primary);
+}
+
+/* Text on dark backgrounds remains white */
+[data-theme="dark"] .hp-stats h3,
+[data-theme="dark"] .hp-stats p {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Ensure dark feature cards have adequate text contrast */
+[data-theme="dark"] .hp-feat-card--dark .hp-feat-card__icon--green,
+[data-theme="dark"] .hp-feat-card--dark .hp-feat-card__icon--teal {
+  background: rgba(145, 131, 255, 0.15);
+  color: var(--link-color);
+}

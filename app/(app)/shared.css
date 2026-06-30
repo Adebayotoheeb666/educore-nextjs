@@ -300,7 +300,16 @@ a.btn-outline:hover {
 .action-btn.danger:hover {
   background: rgba(239, 68, 68, 0.18);
 }
-.link-action { font-size: 1.3rem; font-weight: 700; color: #6A5ACD; text-decoration: none; }
+
+[data-theme="dark"] .action-btn.danger {
+  color: #ff8a8a;
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.3);
+}
+[data-theme="dark"] .action-btn.danger:hover {
+  background: rgba(239, 68, 68, 0.18);
+}
+.link-action { font-size: 1.3rem; font-weight: 700; color: var(--primary); text-decoration: none; }
 .btn-danger-sm {
   padding: 0.5rem 1.2rem;
   border-radius: 6px;
@@ -310,6 +319,11 @@ a.btn-outline:hover {
   font-size: 1.2rem;
   font-weight: 700;
   cursor: pointer;
+}
+
+[data-theme="dark"] .btn-danger-sm {
+  color: #ff8a8a;
+  border-color: rgba(239, 68, 68, 0.3);
 }
 .btn-confirm-sm {
   padding: 0.5rem 1.2rem;
@@ -704,6 +718,10 @@ a.btn-outline:hover {
   font-size: 0.92rem;
 }
 
+[data-theme="dark"] .teacher-overview-card p {
+  color: var(--text-muted);
+}
+
 .teacher-overview-card h2 {
   margin: 0;
   font-size: 2.5rem;
@@ -749,7 +767,7 @@ a.btn-outline:hover {
 }
 
 .teacher-action-primary {
-  background: linear-gradient(90deg, #6A5ACD 0%, #7159E6 100%);
+  background: linear-gradient(90deg, var(--primary) 0%, #7159E6 100%);
   color: white;
   border: none;
 }

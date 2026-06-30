@@ -2302,3 +2302,84 @@
     font-size: 1.2rem;
   }
 }
+
+/* ========================================================
+   DARK MODE FIXES FOR RESOURCES & PUBLIC PAGES
+   ======================================================== */
+
+/* Resources page background and text */
+[data-theme="dark"] .resources-wrapper,
+[data-theme="dark"] .resources-page {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+}
+
+/* Resources header styling */
+[data-theme="dark"] .resources-header {
+  background: linear-gradient(135deg, var(--hp-section-dark) 0%, #1a1040 100%);
+  color: var(--text-main);
+}
+
+/* White background sections in resources */
+[data-theme="dark"] .resource-section-white {
+  background: var(--bg-main);
+}
+
+[data-theme="dark"] .resource-card,
+[data-theme="dark"] .resource-item {
+  background: var(--bg-card);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .resource-card h3,
+[data-theme="dark"] .resource-item h3 {
+  color: var(--text-main);
+}
+
+[data-theme="dark"] .resource-card p,
+[data-theme="dark"] .resource-item p {
+  color: var(--text-muted);
+}
+
+/* Resources link colors */
+[data-theme="dark"] .resource-link {
+  color: var(--link-color);
+}
+
+[data-theme="dark"] .resource-link:hover {
+  color: var(--primary);
+}
+
+/* Resources section backgrounds */
+[data-theme="dark"] .resource-why,
+[data-theme="dark"] .resource-features,
+[data-theme="dark"] .resource-faq {
+  background: var(--bg-main);
+}
+
+/* FAQ cards in resources */
+[data-theme="dark"] .resource-faq-item {
+  background: var(--bg-card);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .resource-faq-item h4 {
+  color: var(--text-main);
+}
+
+[data-theme="dark"] .resource-faq-item p {
+  color: var(--text-muted);
+}
+
+/* Generic inline text fixes */
+[data-theme="dark"] .light-text {
+  color: var(--text-main);
+}
+
+[data-theme="dark"] .muted-text {
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .primary-text {
+  color: var(--primary);
+}
