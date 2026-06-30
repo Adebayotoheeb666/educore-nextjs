@@ -395,3 +395,138 @@ a.btn-qa-secondary:hover {
 [data-theme="dark"] a.btn-secondary-web:hover {
   color: var(--link-color);
 }
+
+/* ─── Case Studies Section ─── */
+[data-theme="dark"] .hp-case-studies {
+  background: var(--bg-main);
+}
+
+[data-theme="dark"] .hp-case-study {
+  background: linear-gradient(135deg, rgba(11, 16, 25, 0.8) 0%, rgba(14, 21, 34, 0.6) 100%);
+  border-color: var(--border-color);
+  border-left-color: var(--primary);
+}
+
+[data-theme="dark"] .hp-case-study:hover {
+  border-color: rgba(145, 131, 255, 0.3);
+  box-shadow: 0 16px 32px rgba(145, 131, 255, 0.12);
+}
+
+[data-theme="dark"] .hp-case-study__header h3 {
+  color: var(--text-main);
+}
+
+[data-theme="dark"] .hp-case-study__location {
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .hp-case-study__number {
+  color: var(--link-color);
+}
+
+[data-theme="dark"] .hp-case-study__metric p {
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .hp-case-study__metrics {
+  border-bottom-color: var(--border-color);
+}
+
+[data-theme="dark"] .hp-case-study__quote p {
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .hp-case-study__quote footer {
+  color: var(--text-muted);
+}
+
+/* ─── ROI Section ─── */
+[data-theme="dark"] .hp-roi {
+  background: var(--bg-main);
+}
+
+[data-theme="dark"] .hp-roi__manual {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.08) 0%, rgba(239, 68, 68, 0.03) 100%);
+  border-color: rgba(239, 68, 68, 0.25);
+}
+
+[data-theme="dark"] .hp-roi__with {
+  background: linear-gradient(135deg, rgba(52, 211, 153, 0.08) 0%, rgba(52, 211, 153, 0.03) 100%);
+  border-color: rgba(52, 211, 153, 0.25);
+}
+
+[data-theme="dark"] .hp-roi__column h3 {
+  color: var(--text-main);
+}
+
+[data-theme="dark"] .hp-roi__item p {
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .hp-roi__item strong {
+  color: var(--text-main);
+}
+
+[data-theme="dark"] .hp-roi__savings {
+  background: linear-gradient(135deg, rgba(145, 131, 255, 0.1) 0%, rgba(145, 131, 255, 0.04) 100%);
+  border-color: rgba(145, 131, 255, 0.25);
+}
+
+[data-theme="dark"] .hp-roi__savings h3 {
+  color: var(--text-main);
+}
+
+[data-theme="dark"] .hp-roi__amount {
+  color: var(--link-color);
+}
+
+[data-theme="dark"] .hp-roi__saving-item p {
+  color: var(--text-muted);
+}
+
+/* ─── Why Section ─── */
+[data-theme="dark"] .hp-why-section {
+  background: linear-gradient(135deg, rgba(145, 131, 255, 0.06) 0%, rgba(145, 131, 255, 0.02) 100%);
+  border-top-color: rgba(145, 131, 255, 0.15);
+}
+
+[data-theme="dark"] .hp-why-card {
+  background: var(--bg-card);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .hp-why-card:hover {
+  border-color: rgba(145, 131, 255, 0.3);
+  box-shadow: 0 12px 24px rgba(145, 131, 255, 0.12);
+}
+
+[data-theme="dark"] .hp-why-card h3 {
+  color: var(--text-main);
+}
+
+[data-theme="dark"] .hp-why-card p {
+  color: var(--text-muted);
+}
+
+/* ─── Objections / FAQ Section ─── */
+[data-theme="dark"] .hp-objections {
+  background: linear-gradient(135deg, rgba(145, 131, 255, 0.08) 0%, rgba(145, 131, 255, 0.03) 100%);
+}
+
+[data-theme="dark"] .hp-objection-card {
+  background: var(--bg-card);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .hp-objection-card:hover {
+  border-color: rgba(145, 131, 255, 0.4);
+  box-shadow: 0 8px 16px rgba(145, 131, 255, 0.12);
+}
+
+[data-theme="dark"] .hp-objection-card h3 {
+  color: var(--text-main);
+}
+
+[data-theme="dark"] .hp-objection-card p {
+  color: var(--text-muted);
+}
