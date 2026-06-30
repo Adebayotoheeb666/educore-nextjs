@@ -28,7 +28,7 @@ const styles = `
     font-size: 1.05rem;
   }
   .form-card {
-    background: white;
+    background: var(--bg-card);
     padding: 2rem;
     border-radius: 16px;
     margin-top: 2rem;
@@ -36,16 +36,18 @@ const styles = `
   .branch-input {
     width: 100%;
     padding: 0.85rem;
-    border: 1.5px solid #e2e8f0;
+    border: 1.5px solid var(--border-color);
     border-radius: 10px;
     font-size: 1rem;
     transition: all 0.2s ease;
     font-family: inherit;
+    background: var(--input-bg);
+    color: var(--text-main);
   }
   .branch-input:focus {
     outline: none;
-    border-color: #667eea;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    border-color: var(--input-border-focus);
+    box-shadow: 0 0 0 3px rgba(145, 131, 255, 0.1);
   }
   .form-row {
     display: grid;
@@ -60,7 +62,7 @@ const styles = `
   }
   .form-group label {
     font-weight: 600;
-    color: #1e293b;
+    color: var(--text-main);
     font-size: 0.95rem;
   }
   .create-btn {
@@ -96,25 +98,25 @@ const styles = `
     margin: 0 0 0.5rem;
     font-size: 1.6rem;
     font-weight: 800;
-    color: #0f172a;
+    color: var(--text-main);
   }
   .branches-header-left p {
     margin: 0;
-    color: #64748b;
+    color: var(--text-muted);
     font-size: 1.05rem;
   }
   .branch-count {
-    background: #f0f9ff;
-    border: 1.5px solid #bae6fd;
-    color: #0369a1;
+    background: var(--bg-hover);
+    border: 1.5px solid var(--border-color);
+    color: var(--primary);
     padding: 0.75rem 1.5rem;
     border-radius: 10px;
     font-weight: 700;
     font-size: 0.95rem;
   }
   .branch-card {
-    background: white;
-    border: 1.5px solid #e2e8f0;
+    background: var(--bg-card);
+    border: 1.5px solid var(--border-color);
     border-radius: 16px;
     padding: 2rem;
     transition: all 0.3s ease;
@@ -128,14 +130,14 @@ const styles = `
     left: 0;
     right: 0;
     height: 3px;
-    background: linear-gradient(90deg, #667eea, #764ba2);
+    background: linear-gradient(90deg, var(--primary), var(--primary-dark));
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 0.3s ease;
   }
   .branch-card.active {
-    border-color: #667eea;
-    background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+    border-color: var(--primary);
+    background: linear-gradient(135deg, rgba(145, 131, 255, 0.08) 0%, rgba(124, 110, 245, 0.08) 100%);
   }
   .branch-card.active::before {
     transform: scaleX(1);
@@ -154,13 +156,13 @@ const styles = `
     margin: 0 0 0.4rem;
     font-size: 1.3rem;
     font-weight: 800;
-    color: #0f172a;
+    color: var(--text-main);
   }
   .branch-card-meta {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    color: #64748b;
+    color: var(--text-muted);
     font-size: 0.95rem;
   }
   .branch-card-meta svg {
@@ -207,7 +209,7 @@ const styles = `
   }
   .branch-detail-label {
     font-size: 0.85rem;
-    color: #94a3b8;
+    color: var(--text-muted);
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -215,7 +217,7 @@ const styles = `
   }
   .branch-detail-value {
     font-size: 0.95rem;
-    color: #334155;
+    color: var(--text-main);
     font-weight: 500;
   }
   .branch-actions {
@@ -223,7 +225,7 @@ const styles = `
     gap: 1rem;
     margin-top: 1.5rem;
     padding-top: 1.5rem;
-    border-top: 1px solid #e2e8f0;
+    border-top: 1px solid var(--border-color);
   }
   .switch-btn {
     flex: 1;
@@ -256,8 +258,8 @@ const styles = `
   .empty-state {
     text-align: center;
     padding: 3rem 2rem;
-    background: linear-gradient(135deg, #f0f9ff 0%, #fce7f3 100%);
-    border: 2px dashed #bae6fd;
+    background: var(--bg-hover);
+    border: 2px dashed var(--border-color);
     border-radius: 16px;
   }
   .empty-state-icon {
@@ -268,10 +270,10 @@ const styles = `
     font-size: 1.3rem;
     font-weight: 700;
     margin: 0 0 0.5rem;
-    color: #0f172a;
+    color: var(--text-main);
   }
   .empty-state p {
-    color: #64748b;
+    color: var(--text-muted);
     margin: 0;
     font-size: 1rem;
   }
@@ -281,7 +283,7 @@ const styles = `
     justify-content: center;
     gap: 1rem;
     padding: 2rem;
-    color: #64748b;
+    color: var(--text-muted);
     font-size: 1.05rem;
   }
   .loading-dot {

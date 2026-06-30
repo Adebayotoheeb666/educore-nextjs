@@ -275,28 +275,28 @@ export default function StudentEnrollmentsPage() {
           font-weight: 600;
         }
         .status-active {
-          background: #d4edda;
-          color: #155724;
+          background: var(--badge-green-bg);
+          color: var(--badge-green-text);
         }
         .status-transferred {
-          background: #cfe2ff;
-          color: #084298;
+          background: var(--badge-blue-bg);
+          color: var(--badge-blue-text);
         }
         .status-promoted {
-          background: #d1ecf1;
-          color: #0c5460;
+          background: var(--badge-purple-bg);
+          color: var(--badge-purple-text);
         }
         .status-retained {
-          background: #fff3cd;
-          color: #664d03;
+          background: var(--badge-yellow-bg);
+          color: var(--badge-yellow-text);
         }
         .status-graduated {
-          background: #d1e7dd;
-          color: #0f5132;
+          background: var(--badge-green-bg);
+          color: var(--badge-green-text);
         }
         .status-withdrawn {
-          background: #f8d7da;
-          color: #842029;
+          background: var(--badge-red-bg);
+          color: var(--badge-red-text);
         }
         .input-small {
           padding: 4px 8px;
