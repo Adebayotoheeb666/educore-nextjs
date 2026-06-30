@@ -553,6 +553,9 @@ a.btn-outline:hover {
   content: attr(data-placeholder);
   color: #94a3b8;
 }
+[data-theme="dark"] .document-editor:empty:before {
+  color: var(--input-placeholder);
+}
 .document-editor--small {
   min-height: 140px;
 }
@@ -560,6 +563,10 @@ a.btn-outline:hover {
   margin: 0.35rem 0 0;
   font-size: 1rem;
   color: #64748b;
+}
+
+[data-theme="dark"] .input-hint {
+  color: var(--text-muted);
 }
 
 /* ─── Assignment Checklists ─── */
@@ -734,6 +741,11 @@ a.btn-outline:hover {
   background: #eef2ff;
   color: #4338ca;
   font-size: 1.4rem;
+}
+
+[data-theme="dark"] .teacher-action-icon {
+  background: var(--primary-light);
+  color: var(--primary);
 }
 
 .teacher-action-primary {

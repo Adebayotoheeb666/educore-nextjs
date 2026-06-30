@@ -940,6 +940,10 @@
   border-bottom: 1px solid #f1f5f9;
   font-size: 1.3rem;
 }
+
+[data-theme="dark"] .recent-payments-list li {
+  border-bottom-color: var(--border-light);
+}
 .recent-pay-meta { display: flex; align-items: center; gap: 1rem; font-weight: 600; }
 .recent-pay-meta em { font-style: normal; color: var(--text-muted); font-size: 1.1rem; }
 
@@ -974,6 +978,10 @@
 .curriculum-coverage {
   padding: 1.5rem 0;
   border-top: 1px solid #f1f5f9;
+}
+
+[data-theme="dark"] .curriculum-coverage {
+  border-top-color: var(--border-light);
 }
 
 .curriculum-coverage h4 {
