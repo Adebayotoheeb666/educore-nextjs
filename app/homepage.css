@@ -2238,8 +2238,8 @@
 /* ── Social Proof Section ── */
 .hp-social-proof {
   padding: 4rem 0;
-  background: white;
-  border-bottom: 1px solid #f3f4f6;
+  background: var(--bg-main);
+  border-bottom: 1px solid var(--border-color);
   overflow: hidden;
 }
 
@@ -2283,8 +2283,8 @@
   align-items: center;
   justify-content: center;
   padding: 1.2rem 1.8rem;
-  background: white;
-  border: 1px solid #f3f4f6;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
   border-radius: 12px;
   transition: all 0.3s ease;
   cursor: default;
@@ -2293,7 +2293,7 @@
 }
 
 .hp-school-logo:hover {
-  border-color: #6A5ACD;
+  border-color: var(--primary);
   box-shadow: 0 4px 12px rgba(106, 90, 205, 0.1);
 }
 
@@ -2752,7 +2752,7 @@
 }
 
 .hp-trust-card {
-  background: white;
+  background: var(--bg-card);
   padding: 2.5rem;
   border-radius: 16px;
   border: 1px solid var(--border-color);
@@ -2761,7 +2761,7 @@
 }
 
 .hp-trust-card:hover {
-  border-color: #6A5ACD;
+  border-color: var(--primary);
   box-shadow: 0 12px 24px rgba(106, 90, 205, 0.1);
   transform: translateY(-4px);
 }
@@ -2797,14 +2797,14 @@
 }
 
 .hp-trust__bottom a {
-  color: #6A5ACD;
+  color: var(--primary);
   text-decoration: none;
   font-weight: 600;
   transition: color 0.3s;
 }
 
 .hp-trust__bottom a:hover {
-  color: #5a4a9d;
+  color: var(--primary-dark);
   text-decoration: underline;
 }
 
