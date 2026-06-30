@@ -139,6 +139,15 @@
 }
 .btn-signout:hover { background: var(--bg-hover); }
 
+[data-theme="dark"] .btn-signout {
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #ff8a8a;
+}
+
+[data-theme="dark"] .btn-signout:hover {
+  background: rgba(239, 68, 68, 0.08);
+}
+
 /* ─── Topbar ─── */
 .topbar-premium {
   height: 70px;
