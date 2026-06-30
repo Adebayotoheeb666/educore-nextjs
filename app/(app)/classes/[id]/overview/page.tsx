@@ -213,8 +213,9 @@ export default function ClassOverviewPage() {
           justify-content: space-between;
           align-items: center;
           padding: 20px;
-          background: #f9f9f9;
+          background: var(--bg-card);
           border-radius: 6px;
+          border: 1px solid var(--border-color);
         }
         .teacher-info h3 {
           margin: 0;
@@ -264,15 +265,15 @@ export default function ClassOverviewPage() {
           padding: 16px;
           text-align: center;
           background: var(--bg-card);
-          border: 2px solid #667eea;
+          border: 2px solid var(--primary);
           border-radius: 6px;
-          color: #667eea;
+          color: var(--primary);
           text-decoration: none;
           font-weight: 600;
           transition: all 0.2s;
         }
         .quick-link-btn:hover {
-          background: #667eea;
+          background: var(--primary);
           color: white;
         }
         .subject-grid {
@@ -282,15 +283,15 @@ export default function ClassOverviewPage() {
           padding: 16px 0;
         }
         .subject-card {
-          border: 1px solid #e0e0e0;
+          border: 1px solid var(--border-color);
           border-radius: 8px;
           padding: 16px;
-          background: #fafafa;
+          background: var(--bg-card);
           transition: all 0.2s;
         }
         .subject-card:hover {
-          border-color: #667eea;
-          box-shadow: 0 2px 8px rgba(102, 126, 234, 0.1);
+          border-color: var(--primary);
+          box-shadow: 0 2px 8px rgba(145, 131, 255, 0.1);
         }
         .subject-header {
           display: flex;
@@ -304,7 +305,7 @@ export default function ClassOverviewPage() {
           font-size: 16px;
         }
         .subject-link {
-          color: #667eea;
+          color: var(--primary);
           text-decoration: none;
         }
         .subject-link:hover {
@@ -319,17 +320,17 @@ export default function ClassOverviewPage() {
           white-space: nowrap;
         }
         .badge-required {
-          background: #d4edda;
-          color: #155724;
+          background: var(--badge-green-bg);
+          color: var(--badge-green-text);
         }
         .badge-elective {
-          background: #cfe2ff;
-          color: #084298;
+          background: var(--badge-blue-bg);
+          color: var(--badge-blue-text);
         }
         .subject-code {
           margin: 8px 0;
           font-size: 12px;
-          color: #666;
+          color: var(--text-muted);
         }
         .teachers-section {
           margin: 12px 0;
@@ -338,7 +339,7 @@ export default function ClassOverviewPage() {
           margin: 0;
           font-size: 12px;
           font-weight: 600;
-          color: #666;
+          color: var(--text-muted);
         }
         .teacher-names {
           margin-top: 4px;
@@ -352,7 +353,7 @@ export default function ClassOverviewPage() {
         .manage-link {
           display: inline-block;
           margin-top: 12px;
-          color: #667eea;
+          color: var(--primary);
           text-decoration: none;
           font-size: 13px;
           font-weight: 600;
@@ -365,7 +366,7 @@ export default function ClassOverviewPage() {
           text-align: center;
         }
         .link {
-          color: #667eea;
+          color: var(--primary);
           text-decoration: none;
         }
         .link:hover {

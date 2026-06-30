@@ -672,12 +672,12 @@ export default function ClassCurriculumPage() {
           margin: 0 0 0.5rem 0;
           font-size: 2rem;
           font-weight: 800;
-          color: #0f172a;
+          color: var(--text-main);
         }
 
         .page-header-text p {
           margin: 0;
-          color: #64748b;
+          color: var(--text-muted);
           font-size: 1.1rem;
         }
 
@@ -724,21 +724,23 @@ export default function ClassCurriculumPage() {
           font-weight: 700;
           margin-bottom: 0.5rem;
           font-size: 1rem;
-          color: #0f172a;
+          color: var(--text-main);
         }
 
         .session-input {
           width: 100%;
           padding: 0.75rem 1rem;
-          border: 1px solid #e2e8f0;
+          border: 1px solid var(--border-color);
           border-radius: 8px;
           font-size: 1rem;
           outline: none;
           transition: all 0.2s;
+          background: var(--input-bg);
+          color: var(--text-main);
         }
 
         .session-input:focus {
-          border-color: #6a5acd;
+          border-color: var(--input-border-focus);
           box-shadow: 0 0 0 3px rgba(106, 90, 205, 0.1);
         }
 
@@ -795,8 +797,8 @@ export default function ClassCurriculumPage() {
         .spinner {
           width: 40px;
           height: 40px;
-          border: 4px solid #e2e8f0;
-          border-top-color: #667eea;
+          border: 4px solid var(--border-color);
+          border-top-color: var(--primary);
           border-radius: 50%;
           animation: spin 1s linear infinite;
           margin: 0 auto 1rem;
@@ -809,9 +811,9 @@ export default function ClassCurriculumPage() {
         .empty-state {
           text-align: center;
           padding: 4rem 2rem;
-          background: #f8fafc;
+          background: var(--bg-hover);
           border-radius: 16px;
-          border: 2px dashed #e2e8f0;
+          border: 2px dashed var(--border-color);
         }
 
         .empty-icon {
@@ -821,13 +823,13 @@ export default function ClassCurriculumPage() {
 
         .empty-state h2 {
           margin: 0 0 0.5rem 0;
-          color: #0f172a;
+          color: var(--text-main);
           font-size: 1.8rem;
         }
 
         .empty-state p {
           margin: 0 0 1.5rem 0;
-          color: #64748b;
+          color: var(--text-muted);
         }
 
         .btn-lg {
@@ -836,8 +838,8 @@ export default function ClassCurriculumPage() {
         }
 
         .add-subject-card {
-          background: white;
-          border: 1px solid #e2e8f0;
+          background: var(--bg-card);
+          border: 1px solid var(--border-color);
           border-radius: 12px;
           overflow: hidden;
         }
@@ -847,25 +849,25 @@ export default function ClassCurriculumPage() {
           justify-content: space-between;
           align-items: center;
           padding: 1.5rem;
-          border-bottom: 1px solid #e2e8f0;
-          background: #f8fafc;
+          border-bottom: 1px solid var(--border-color);
+          background: var(--bg-hover);
         }
 
         .add-subject-header h3 {
           margin: 0;
           font-size: 1.3rem;
-          color: #0f172a;
+          color: var(--text-main);
         }
 
         .add-subject-form {
           padding: 1.5rem;
-          background: white;
+          background: var(--bg-card);
         }
 
         .form-empty {
           text-align: center;
           padding: 2rem;
-          color: #64748b;
+          color: var(--text-muted);
         }
 
         .form-group {
@@ -876,7 +878,7 @@ export default function ClassCurriculumPage() {
 
         .form-group label {
           font-weight: 700;
-          color: #0f172a;
+          color: var(--text-main);
         }
 
         .select-wrapper {
@@ -888,16 +890,17 @@ export default function ClassCurriculumPage() {
         .form-select {
           flex: 1;
           padding: 0.75rem 1rem;
-          border: 1px solid #e2e8f0;
+          border: 1px solid var(--border-color);
           border-radius: 8px;
           font-size: 1rem;
-          background: white;
+          background: var(--select-bg);
+          color: var(--text-main);
           cursor: pointer;
           outline: none;
         }
 
         .form-select:focus {
-          border-color: #6a5acd;
+          border-color: var(--input-border-focus);
           box-shadow: 0 0 0 3px rgba(106, 90, 205, 0.1);
         }
 
@@ -912,24 +915,24 @@ export default function ClassCurriculumPage() {
         }
 
         .subject-card {
-          background: white;
-          border: 1px solid #e2e8f0;
+          background: var(--bg-card);
+          border: 1px solid var(--border-color);
           border-radius: 12px;
           overflow: hidden;
           transition: all 0.3s ease;
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+          box-shadow: var(--shadow-card);
         }
 
         .subject-card:hover {
-          border-color: #6a5acd;
-          box-shadow: 0 8px 16px rgba(106, 90, 205, 0.1);
+          border-color: var(--primary);
+          box-shadow: var(--shadow-card-hover);
           transform: translateY(-2px);
         }
 
         .card-header {
           padding: 1rem 1.5rem;
-          background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-          border-bottom: 1px solid #e2e8f0;
+          background: var(--bg-hover);
+          border-bottom: 1px solid var(--border-color);
           display: flex;
           justify-content: space-between;
           align-items: center;
@@ -973,7 +976,7 @@ export default function ClassCurriculumPage() {
           margin: 0 0 0.5rem 0;
           font-size: 1.3rem;
           font-weight: 700;
-          color: #0f172a;
+          color: var(--text-main);
         }
 
         .subject-title a {
@@ -989,11 +992,11 @@ export default function ClassCurriculumPage() {
 
         .subject-code {
           display: inline-block;
-          background: #f1f5f9;
+          background: var(--bg-hover);
           padding: 0.2rem 0.6rem;
           border-radius: 4px;
           font-size: 0.85rem;
-          color: #64748b;
+          color: var(--text-muted);
           font-family: monospace;
           margin-bottom: 1rem;
         }
@@ -1013,19 +1016,19 @@ export default function ClassCurriculumPage() {
 
         .detail-label {
           font-weight: 600;
-          color: #64748b;
+          color: var(--text-muted);
           min-width: 80px;
         }
 
         .detail-value {
-          color: #0f172a;
+          color: var(--text-main);
           flex: 1;
         }
 
         .teacher-count {
           display: block;
           font-size: 0.85rem;
-          color: #64748b;
+          color: var(--text-muted);
         }
 
         .no-value {
@@ -1037,8 +1040,8 @@ export default function ClassCurriculumPage() {
           display: flex;
           gap: 0.5rem;
           padding: 1rem 1.5rem;
-          border-top: 1px solid #e2e8f0;
-          background: #f8fafc;
+          border-top: 1px solid var(--border-color);
+          background: var(--bg-hover);
           flex-wrap: wrap;
         }
 
@@ -1046,12 +1049,13 @@ export default function ClassCurriculumPage() {
           flex: 1;
           min-width: 80px;
           padding: 0.6rem 0.8rem;
-          border: 1px solid #e2e8f0;
+          border: 1px solid var(--border-color);
           border-radius: 8px;
           font-size: 0.9rem;
           font-weight: 600;
           cursor: pointer;
-          background: white;
+          background: var(--bg-card);
+          color: var(--text-main);
           transition: all 0.2s;
           white-space: nowrap;
         }
@@ -1098,9 +1102,9 @@ export default function ClassCurriculumPage() {
         }
 
         .card-expansion {
-          border-top: 1px solid #e2e8f0;
+          border-top: 1px solid var(--border-color);
           padding: 1.5rem;
-          background: #f8fafc;
+          background: var(--bg-hover);
         }
 
         .expansion-header {
@@ -1110,7 +1114,7 @@ export default function ClassCurriculumPage() {
         .expansion-header h5 {
           margin: 0;
           font-size: 1rem;
-          color: #0f172a;
+          color: var(--text-main);
           font-weight: 700;
         }
 
@@ -1118,7 +1122,7 @@ export default function ClassCurriculumPage() {
         .expansion-empty {
           text-align: center;
           padding: 2rem;
-          color: #64748b;
+          color: var(--text-muted);
         }
 
         .students-list {
@@ -1132,15 +1136,15 @@ export default function ClassCurriculumPage() {
           justify-content: space-between;
           align-items: center;
           padding: 0.75rem;
-          background: white;
-          border: 1px solid #e2e8f0;
+          background: var(--bg-card);
+          border: 1px solid var(--border-color);
           border-radius: 8px;
           transition: all 0.2s;
         }
 
         .student-row:hover {
-          border-color: #d1d5db;
-          background: #f9fafb;
+          border-color: var(--primary);
+          background: var(--bg-hover);
         }
 
         .student-info {
@@ -1149,7 +1153,7 @@ export default function ClassCurriculumPage() {
 
         .student-name {
           font-weight: 600;
-          color: #0f172a;
+          color: var(--text-main);
           margin-bottom: 0.2rem;
         }
 
@@ -1157,7 +1161,7 @@ export default function ClassCurriculumPage() {
           display: flex;
           gap: 0.75rem;
           font-size: 0.85rem;
-          color: #64748b;
+          color: var(--text-muted);
         }
 
         .status-badge {
@@ -1201,28 +1205,28 @@ export default function ClassCurriculumPage() {
         }
 
         .modal-dialog {
-          background: white;
+          background: var(--bg-card);
           border-radius: 16px;
           max-width: 600px;
           width: 100%;
           max-height: 90vh;
           overflow: auto;
-          box-shadow: 0 20px 25px rgba(0, 0, 0, 0.15);
+          box-shadow: var(--shadow-modal);
         }
 
         .modal-header {
           padding: 1.5rem;
-          border-bottom: 1px solid #e2e8f0;
+          border-bottom: 1px solid var(--border-color);
           display: flex;
           justify-content: space-between;
           align-items: center;
-          background: #f8fafc;
+          background: var(--bg-hover);
         }
 
         .modal-header h3 {
           margin: 0;
           font-size: 1.3rem;
-          color: #0f172a;
+          color: var(--text-main);
         }
 
         .modal-close {
@@ -1230,7 +1234,7 @@ export default function ClassCurriculumPage() {
           border: none;
           cursor: pointer;
           font-size: 1.5rem;
-          color: #64748b;
+          color: var(--text-muted);
           width: 40px;
           height: 40px;
           display: flex;
@@ -1241,8 +1245,8 @@ export default function ClassCurriculumPage() {
         }
 
         .modal-close:hover {
-          background: #e2e8f0;
-          color: #0f172a;
+          background: var(--border-color);
+          color: var(--text-main);
         }
 
         .modal-body {
@@ -1252,7 +1256,7 @@ export default function ClassCurriculumPage() {
         .select-all-box {
           margin-bottom: 1rem;
           padding-bottom: 1rem;
-          border-bottom: 1px solid #e2e8f0;
+          border-bottom: 1px solid var(--border-color);
         }
 
         .select-all-box label {
@@ -1261,7 +1265,7 @@ export default function ClassCurriculumPage() {
           gap: 0.75rem;
           cursor: pointer;
           font-weight: 600;
-          color: #0f172a;
+          color: var(--text-main);
         }
 
         .select-all-box input {
@@ -1287,7 +1291,7 @@ export default function ClassCurriculumPage() {
         }
 
         .checkbox-item:hover {
-          background: #f8fafc;
+          background: var(--bg-hover);
         }
 
         .checkbox-item input {
@@ -1304,19 +1308,19 @@ export default function ClassCurriculumPage() {
 
         .checkbox-label div:first-child {
           font-weight: 600;
-          color: #0f172a;
+          color: var(--text-main);
         }
 
         .checkbox-meta {
           font-size: 0.85rem;
-          color: #64748b;
+          color: var(--text-muted);
           margin-top: 0.2rem;
         }
 
         .modal-footer {
           padding: 1.5rem;
-          border-top: 1px solid #e2e8f0;
-          background: #f8fafc;
+          border-top: 1px solid var(--border-color);
+          background: var(--bg-hover);
           display: flex;
           gap: 1rem;
           justify-content: flex-end;
