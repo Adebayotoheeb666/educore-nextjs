@@ -59,7 +59,7 @@ export default function OurTeamPage() {
   }, []);
 
   return (
-    <div style={{ fontFamily: "Manrope, sans-serif", background: "#fff" }}>
+    <div className="our-team-wrapper">
       {/* ── NAVBAR ── */}
       <nav className={`web-navbar ${isScrolled ? "scrolled" : ""}`}>
         <div className="web-container web-navbar__inner">
@@ -88,59 +88,26 @@ export default function OurTeamPage() {
       </nav>
 
       {/* Hero */}
-      <header style={{ background: "#2d2460", padding: "10rem 0 5rem", color: "#fff" }}>
-        <div className="hp-container" style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", animation: "slideDown 0.8s ease-out" }}>
-          <span style={{ 
-            display: "inline-block",
-            background: "rgba(255,255,255,0.15)", 
-            color: "#fff", 
-            padding: "0.6rem 1.6rem",
-            borderRadius: "50px",
-            fontSize: "1.2rem",
-            fontWeight: 600,
-            letterSpacing: "0.05em",
-            marginBottom: "2rem",
-            animation: "slideRight 0.6s ease-out 0.2s both"
-          }}>MEET THE TEAM</span>
-          <h1 style={{ fontSize: "3.5rem", fontWeight: 800, marginBottom: "1.5rem", lineHeight: 1.3, animation: "slideRight 0.6s ease-out 0.3s both" }}>
-            The People Behind EduCore AI
-          </h1>
-          <p style={{ fontSize: "1.5rem", color: "rgba(255,255,255,0.7)", maxWidth: "650px", lineHeight: 1.6, animation: "slideRight 0.6s ease-out 0.4s both" }}>
-            A passionate team of educators, engineers, and innovators dedicated to transforming Nigerian education.
-          </p>
+      <header className="team-hero">
+        <div className="hp-container team-hero__content">
+          <span className="team-hero__badge">MEET THE TEAM</span>
+          <h1 className="team-hero__title">The People Behind EduCore AI</h1>
+          <p className="team-hero__subtitle">A passionate team of educators, engineers, and innovators dedicated to transforming Nigerian education.</p>
         </div>
       </header>
 
       {/* Team Grid */}
-      <section style={{ padding: "6rem 0", background: "#f9fafb" }}>
+      <section className="team-grid-section">
         <div className="hp-container">
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "2.5rem" }} className="responsive-team-grid">
+          <div className="team-grid responsive-team-grid">
             {teamMembers.map((member, index) => (
-              <div key={index} style={{ 
-                background: "#fff", 
-                borderRadius: "16px", 
-                padding: "2.5rem", 
-                textAlign: "center",
-                boxShadow: "0 4px 20px rgba(0,0,0,0.06)",
-                transition: "transform 0.3s ease, box-shadow 0.3s ease"
-              }}>
-                <div style={{ 
-                  width: "120px", 
-                  height: "120px", 
-                  borderRadius: "50%", 
-                  background: "linear-gradient(135deg, #6A5ACD 0%, #2d2460 100%)", 
-                  margin: "0 auto 1.5rem",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: "3rem",
-                  color: "#fff"
-                }}>
+              <div key={index} className="team-member-card">
+                <div className="team-member-avatar">
                   {member.name.split(' ').map(n => n[0]).join('')}
                 </div>
-                <h3 style={{ fontSize: "1.6rem", fontWeight: 700, color: "#1f2937", marginBottom: "0.5rem" }}>{member.name}</h3>
-                <p style={{ fontSize: "1.2rem", color: "#6A5ACD", fontWeight: 600, marginBottom: "1rem" }}>{member.role}</p>
-                <p style={{ fontSize: "1.25rem", color: "#6b7280", lineHeight: 1.6 }}>{member.bio}</p>
+                <h3 className="team-member-name">{member.name}</h3>
+                <p className="team-member-role">{member.role}</p>
+                <p className="team-member-bio">{member.bio}</p>
               </div>
             ))}
           </div>
@@ -148,24 +115,11 @@ export default function OurTeamPage() {
       </section>
 
       {/* Join Us CTA */}
-      <section style={{ padding: "5rem 0", background: "#fff" }}>
-        <div className="hp-container" style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center" }}>
-          <h2 style={{ fontSize: "2.5rem", fontWeight: 800, marginBottom: "1rem", color: "#1f2937" }}>Want to Join Our Team?</h2>
-          <p style={{ fontSize: "1.4rem", color: "#6b7280", marginBottom: "2rem", maxWidth: "500px" }}>
-            We are always looking for talented individuals passionate about education and technology.
-          </p>
-          <Link href="/careers" style={{
-            display: "inline-block",
-            padding: "1rem 2.5rem",
-            fontSize: "1.3rem",
-            fontWeight: 600,
-            borderRadius: "8px",
-            background: "#2d2460",
-            color: "#fff",
-            textDecoration: "none"
-          }}>
-            View Open Positions
-          </Link>
+      <section className="team-cta-section">
+        <div className="hp-container team-cta-content">
+          <h2 className="team-cta-title">Want to Join Our Team?</h2>
+          <p className="team-cta-text">We are always looking for talented individuals passionate about education and technology.</p>
+          <Link href="/careers" className="team-cta-btn">View Open Positions</Link>
         </div>
       </section>
 

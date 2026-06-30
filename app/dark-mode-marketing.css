@@ -396,6 +396,26 @@ a.btn-qa-secondary:hover {
   color: var(--link-color);
 }
 
+/* ─── Social Proof / Trusted By Section ─── */
+[data-theme="dark"] .hp-social-proof {
+  background: var(--bg-main);
+  border-bottom-color: var(--border-color);
+}
+
+[data-theme="dark"] .hp-social-proof__text {
+  color: var(--text-main);
+}
+
+[data-theme="dark"] .hp-school-logo {
+  background: var(--bg-card);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .hp-school-logo:hover {
+  border-color: var(--primary);
+  box-shadow: 0 4px 12px rgba(145, 131, 255, 0.2);
+}
+
 /* ─── Case Studies Section ─── */
 [data-theme="dark"] .hp-case-studies {
   background: var(--bg-main);
@@ -529,4 +549,42 @@ a.btn-qa-secondary:hover {
 
 [data-theme="dark"] .hp-objection-card p {
   color: var(--text-muted);
+}
+
+/* ─── Global dark mode text fixes for public pages ─── */
+[data-theme="dark"] p,
+[data-theme="dark"] span,
+[data-theme="dark"] li,
+[data-theme="dark"] label {
+  color: var(--text-main);
+}
+
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4,
+[data-theme="dark"] h5,
+[data-theme="dark"] h6 {
+  color: var(--text-main);
+}
+
+/* Muted text elements */
+[data-theme="dark"] p[style*="#6b7280"],
+[data-theme="dark"] p[style*="#94a3b8"],
+[data-theme="dark"] p[style*="#64748b"],
+[data-theme="dark"] span[style*="#6b7280"],
+[data-theme="dark"] span[style*="#94a3b8"] {
+  color: var(--text-muted) !important;
+}
+
+/* ─── Card sections background fixes ─── */
+[data-theme="dark"] section[style*="background: #f9fafb"],
+[data-theme="dark"] section[style*='background: "#f9fafb"'] {
+  background: var(--bg-main) !important;
+}
+
+[data-theme="dark"] div[style*="background: #fff"],
+[data-theme="dark"] div[style*='background: "white"'] {
+  background: var(--bg-card) !important;
+  border-color: var(--border-color) !important;
 }
