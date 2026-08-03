@@ -1,7 +1,7 @@
 // Edge-compatible proxy for Next.js 16+ with Cloudflare
 import { NextRequest, NextResponse } from "next/server";
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
 	try {
 		const { pathname } = request.nextUrl;
 		if (pathname === "/undefined") {
