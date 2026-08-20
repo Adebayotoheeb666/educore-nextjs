@@ -1092,18 +1092,19 @@ export default function ClassCurriculumPage() {
         }
 
         .action-btn {
-          flex: 1;
-          min-width: 80px;
-          padding: 0.6rem 0.8rem;
+          flex: 1 1 auto;
+          min-width: 76px;
+          padding: 0.6rem 0.5rem;
           border: 1px solid var(--border-color);
           border-radius: 8px;
           font-size: 0.9rem;
           font-weight: 600;
+          line-height: 1.25;
           cursor: pointer;
           background: var(--bg-card);
           color: var(--text-main);
           transition: all 0.2s;
-          white-space: nowrap;
+          overflow-wrap: anywhere;
         }
 
         .teachers-btn {
