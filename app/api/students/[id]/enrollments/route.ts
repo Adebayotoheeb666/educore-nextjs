@@ -79,8 +79,8 @@ export const POST = withAuth(
             const subjectId = (subject as any).subject_id;
             const subjectEnrollmentId = generateId();
             await execute(
-              `INSERT INTO student_subjects (id, student_id, subject_id, class_id, academic_session, term, status, enrolled_date, created_at, updated_at)
-               VALUES (?, ?, ?, ?, ?, ?, 'active', datetime('now'), datetime('now'), datetime('now'))`,
+              `INSERT INTO student_subjects (id, student_id, subject_id, class_id, academic_session, term, status, source, enrolled_date, created_at, updated_at)
+               VALUES (?, ?, ?, ?, ?, ?, 'active', 'auto', datetime('now'), datetime('now'), datetime('now'))`,
               [subjectEnrollmentId, studentId, subjectId, classId, academicSession, term || null]
             );
           } catch (err) {

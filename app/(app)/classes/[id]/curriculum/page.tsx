@@ -52,6 +52,7 @@ export default function ClassCurriculumPage() {
   const [session, setSession] = useState("");
   const [selectedSubjectId, setSelectedSubjectId] = useState("");
   const [showAddSubject, setShowAddSubject] = useState(false);
+  const [newSubjectCompulsory, setNewSubjectCompulsory] = useState(false);
   const [expandedSubject, setExpandedSubject] = useState<string | null>(null);
   const [studentsInSubject, setStudentsInSubject] = useState<Record<string, StudentInSubject[]>>({});
   const [loadingStudents, setLoadingStudents] = useState<Record<string, boolean>>({});
@@ -135,7 +136,7 @@ export default function ClassCurriculumPage() {
     try {
       const payload: any = {
         subjectId: selectedSubjectId,
-        isCompulsory: false,
+        isCompulsory: newSubjectCompulsory,
         sequence: (subjects.length || 0) + 1,
       };
 
@@ -155,6 +156,7 @@ export default function ClassCurriculumPage() {
       }
       setSelectedSubjectId("");
       setShowAddSubject(false);
+      setNewSubjectCompulsory(false);
       setError(null);
       fetchCurriculumData();
     } catch (err) {
@@ -222,6 +224,33 @@ export default function ClassCurriculumPage() {
       );
 
       if (!res.ok) throw new Error("Failed to remove student");
+      await fetchStudentsInSubject(subjectId);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "An error occurred");
+    }
+  };
+
+  const handleToggleCompulsory = async (subjectId: string, currentValue: number) => {
+    try {
+      const sessionParam = session ? `?session=${session}` : "";
+      const res = await authenticatedFetch(
+        `/api/classes/${classId}/subjects/${subjectId}${sessionParam}`,
+        {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            isCompulsory: !currentValue,
+            academicSession: session || undefined,
+          }),
+        }
+      );
+
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData?.message || "Failed to update subject type");
+      }
+      setError(null);
+      await fetchCurriculumData();
       await fetchStudentsInSubject(subjectId);
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
@@ -418,6 +447,16 @@ export default function ClassCurriculumPage() {
                           ))}
                         </select>
                       </div>
+                      <div className="compulsory-row">
+                        <label className="compulsory-check">
+                          <input
+                            type="checkbox"
+                            checked={newSubjectCompulsory}
+                            onChange={(e) => setNewSubjectCompulsory(e.target.checked)}
+                          />
+                          <span>Compulsory — auto-assign to all students in this class</span>
+                        </label>
+                      </div>
                       <button
                         className="btn-primary btn-submit"
                         onClick={handleAddSubject}
@@ -501,6 +540,13 @@ export default function ClassCurriculumPage() {
                         ➕ Assign
                       </button>
                     )}
+                    <button
+                      className={`action-btn ${subject.is_compulsory ? 'elective-btn' : 'required-btn'}`}
+                      onClick={() => handleToggleCompulsory(subject.subject_id, subject.is_compulsory)}
+                      title={subject.is_compulsory ? "Make this an optional subject" : "Make this subject compulsory for all students"}
+                    >
+                      {subject.is_compulsory ? '◯ Make Elective' : '✓ Make Required'}
+                    </button>
                     <button
                       className="action-btn remove-btn"
                       onClick={() => handleRemoveSubject(subject.subject_id)}
@@ -1089,6 +1135,46 @@ export default function ClassCurriculumPage() {
         .assign-btn:hover {
           background: #f0fdf4;
           border-color: #86efac;
+        }
+
+        .required-btn {
+          border-color: #bfdbfe;
+          color: #1d4ed8;
+        }
+
+        .required-btn:hover {
+          background: #eff6ff;
+          border-color: #93c5fd;
+        }
+
+        .elective-btn {
+          border-color: #fde68a;
+          color: #b45309;
+        }
+
+        .elective-btn:hover {
+          background: #fffbeb;
+          border-color: #fcd34d;
+        }
+
+        .compulsory-row {
+          padding: 0.5rem 0;
+        }
+
+        .compulsory-check {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          cursor: pointer;
+          font-weight: 600;
+          color: var(--text-main);
+        }
+
+        .compulsory-check input {
+          width: 18px;
+          height: 18px;
+          cursor: pointer;
+          flex-shrink: 0;
         }
 
         .remove-btn {

@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { queryOne, execute } from "@/lib/db/turso";
+import { queryOne, query, execute } from "@/lib/db/turso";
 import { withAuth, type AuthContext } from "@/lib/middleware/auth";
 import { notFound, ok, serverError } from "@/lib/utils/response";
+import { syncSubjectEnrollment } from "@/lib/services/subjectEnrollmentSync";
 
 export const GET = withAuth(async (_req: NextRequest, { school }: AuthContext, params): Promise<NextResponse> => {
   try {
@@ -43,6 +44,30 @@ export const PATCH = withAuth(async (req: NextRequest, { school }: AuthContext, 
        isCompulsory !== undefined ? (isCompulsory ? 1 : 0) : null,
        description || null, id]
     );
+
+    // Propagate a compulsory/optional change to every class using this subject,
+    // keeping class_subjects and student_subjects in sync.
+    if (isCompulsory !== undefined) {
+      const affectedClasses = await query<{ class_id: string }>(
+        "SELECT DISTINCT class_id FROM class_subjects WHERE subject_id = ?",
+        [id]
+      );
+
+      for (const row of affectedClasses || []) {
+        const classDoc = await queryOne<{ academic_session: string | null }>(
+          "SELECT academic_session FROM classes WHERE id = ? AND school_id = ?",
+          [row.class_id, school.id]
+        );
+        const session = classDoc?.academic_session || school.academic_session || new Date().getFullYear().toString();
+
+        await execute(
+          "UPDATE class_subjects SET is_compulsory = ?, updated_at = datetime('now') WHERE subject_id = ? AND class_id = ?",
+          [isCompulsory ? 1 : 0, id, row.class_id]
+        );
+
+        await syncSubjectEnrollment(row.class_id, id, session, isCompulsory);
+      }
+    }
 
     const updated = await queryOne("SELECT * FROM subjects WHERE id = ?", [id]);
     return ok(updated);

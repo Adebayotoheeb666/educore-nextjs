@@ -142,8 +142,8 @@ export const PATCH = withAuth(
             const subjectEnrollmentId = generateId();
             try {
               await execute(
-                `INSERT INTO student_subjects (id, student_id, subject_id, class_id, academic_session, status, enrolled_date, created_at, updated_at)
-                 VALUES (?, ?, ?, ?, ?, 'active', datetime('now'), datetime('now'), datetime('now'))`,
+                `INSERT INTO student_subjects (id, student_id, subject_id, class_id, academic_session, status, source, enrolled_date, created_at, updated_at)
+                 VALUES (?, ?, ?, ?, ?, 'active', 'auto', datetime('now'), datetime('now'), datetime('now'))`,
                 [subjectEnrollmentId, id, subjectId, classId, session]
               );
             } catch (err) {

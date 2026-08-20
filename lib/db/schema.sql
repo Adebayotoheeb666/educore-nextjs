@@ -285,6 +285,7 @@ CREATE TABLE IF NOT EXISTS student_subjects (
   term TEXT,
   enrolled_date TEXT NOT NULL DEFAULT (datetime('now')),
   status TEXT NOT NULL DEFAULT 'active' CHECK(status IN ('active', 'dropped', 'transferred')),
+  source TEXT NOT NULL DEFAULT 'manual' CHECK(source IN ('auto', 'manual')),
   created_at TEXT NOT NULL DEFAULT (datetime('now')),
   updated_at TEXT NOT NULL DEFAULT (datetime('now')),
   UNIQUE(student_id, subject_id, class_id, academic_session)

@@ -30,27 +30,21 @@ export const GET = withAuth(async (_req: NextRequest, { school }: AuthContext, p
 
     const session = classDoc?.academic_session || school.academic_session || new Date().getFullYear().toString();
 
-    // Get subjects from class curriculum and explicit student enrollments.
-    // This ensures students see subjects assigned to their class even if student_subjects has not been created yet.
+    // Get the subjects explicitly assigned to this student for the class/session.
+    // Compulsory subjects are auto-assigned at enrollment time; optional subjects
+    // are only present when the student was specifically assigned to them.
     const subjects = await query(
       `SELECT DISTINCT s.id, s.name, s.code, cs.is_compulsory,
               t.id as teacher_id, t.name as teacher_name, t.email as teacher_email
-       FROM (
-         SELECT ss.subject_id, ss.class_id, ss.academic_session
-         FROM student_subjects ss
-         WHERE ss.student_id = ? AND ss.class_id = ? AND ss.status = 'active' AND (ss.academic_session = ? OR ss.academic_session IS NULL)
-         UNION
-         SELECT cs.subject_id, cs.class_id, cs.academic_session
-         FROM class_subjects cs
-         WHERE cs.class_id = ? AND (cs.academic_session = ? OR cs.academic_session IS NULL)
-       ) AS enrolled
-       JOIN subjects s ON enrolled.subject_id = s.id
-       LEFT JOIN class_subjects cs ON cs.subject_id = s.id AND cs.class_id = enrolled.class_id AND cs.academic_session = enrolled.academic_session
-       LEFT JOIN subject_teachers st ON st.subject_id = s.id AND (st.class_id = enrolled.class_id OR st.class_id IS NULL) AND (st.academic_session = enrolled.academic_session OR st.academic_session IS NULL)
+       FROM student_subjects ss
+       JOIN subjects s ON ss.subject_id = s.id
+       LEFT JOIN class_subjects cs ON cs.subject_id = s.id AND cs.class_id = ss.class_id AND cs.academic_session = ss.academic_session
+       LEFT JOIN subject_teachers st ON st.subject_id = s.id AND (st.class_id = ss.class_id OR st.class_id IS NULL) AND (st.academic_session = ss.academic_session OR st.academic_session IS NULL)
        LEFT JOIN users t ON st.teacher_id = t.id
-       WHERE s.school_id = ?
+       WHERE ss.student_id = ? AND ss.class_id = ? AND ss.status = 'active' AND ss.academic_session = ?
+         AND s.school_id = ?
        ORDER BY s.name`,
-      [studentId, classId, session, classId, session, school.id]
+      [studentId, classId, session, school.id]
     );
 
     return ok(subjects);

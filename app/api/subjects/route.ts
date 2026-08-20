@@ -3,6 +3,7 @@ import { query, execute, queryOne } from "@/lib/db/turso";
 import { withAuth, type AuthContext } from "@/lib/middleware/auth";
 import { badRequest, created, ok, serverError } from "@/lib/utils/response";
 import { generateId } from "@/lib/utils/id";
+import { syncSubjectEnrollment } from "@/lib/services/subjectEnrollmentSync";
 
 export const dynamic = "force-dynamic";
 
@@ -70,11 +71,17 @@ export const POST = withAuth(async (req: NextRequest, { school }: AuthContext): 
     if (classId) {
       const session = classSession as string;
       const classSubjectId = generateId();
+      const compulsory = isCompulsory !== false ? 1 : 0;
       await execute(
         `INSERT INTO class_subjects (id, class_id, subject_id, is_compulsory, academic_session, added_date, created_at, updated_at)
          VALUES (?, ?, ?, ?, ?, datetime('now'), datetime('now'), datetime('now'))`,
-        [classSubjectId, classId, id, isCompulsory !== false ? 1 : 0, session]
+        [classSubjectId, classId, id, compulsory, session]
       );
+
+      // Auto-assign a newly created compulsory subject to all active students in the class
+      if (compulsory === 1) {
+        await syncSubjectEnrollment(classId, id, session, true);
+      }
     }
 
     return created({ id, name, code: code || null });
