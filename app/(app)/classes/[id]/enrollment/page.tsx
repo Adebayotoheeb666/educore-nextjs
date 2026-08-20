@@ -12,6 +12,13 @@ interface Student {
   email: string;
 }
 
+interface ClassOption {
+  id: string;
+  name: string;
+  level?: string;
+  section?: string;
+}
+
 interface EnrollmentStats {
   total?: number;
   total_enrolled?: number;
@@ -39,9 +46,13 @@ export default function ClassEnrollmentPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectAll, setSelectAll] = useState(false);
   const [isEnrolling, setIsEnrolling] = useState(false);
+  const [classes, setClasses] = useState<ClassOption[]>([]);
+  const [processingId, setProcessingId] = useState<string | null>(null);
+  const [promoteTarget, setPromoteTarget] = useState<Record<string, string>>({});
 
   useEffect(() => {
     fetchSchoolSession();
+    fetchClasses();
   }, []);
 
   useEffect(() => {
@@ -58,6 +69,18 @@ export default function ClassEnrollmentPage() {
         setSessionOptions([academicSession]);
         setSession(academicSession);
       }
+    } catch {
+      // ignore
+    }
+  };
+
+  const fetchClasses = async () => {
+    try {
+      const res = await authenticatedFetch("/api/classes");
+      if (!res.ok) return;
+      const data = await res.json();
+      const list = Array.isArray(data) ? data : (data.data || []);
+      setClasses(list);
     } catch {
       // ignore
     }
@@ -154,6 +177,70 @@ export default function ClassEnrollmentPage() {
       setIsEnrolling(false);
     }
   };
+
+  const handlePromote = async (studentId: string, toClassId: string) => {
+    if (!toClassId) return;
+    setProcessingId(studentId);
+    try {
+      const res = await authenticatedFetch("/api/students/promote", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          fromClassId: classId,
+          toClassId,
+          studentIds: [studentId],
+          academicSession: session,
+        }),
+      });
+
+      if (!res.ok) throw new Error("Failed to promote student");
+      const result = await res.json();
+      const data = result.data ?? result;
+
+      setError(null);
+      alert(data.message || "Student promoted successfully");
+      setPromoteTarget((prev) => ({ ...prev, [studentId]: "" }));
+      fetchEnrollmentData();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "An error occurred");
+    } finally {
+      setProcessingId(null);
+    }
+  };
+
+  const handleGraduate = async (studentId: string) => {
+    if (!window.confirm("Mark this student as graduated? This will remove them from active enrollment.")) return;
+    setProcessingId(studentId);
+    try {
+      const res = await authenticatedFetch("/api/students/graduate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          classId,
+          studentIds: [studentId],
+          academicSession: session,
+        }),
+      });
+
+      if (!res.ok) throw new Error("Failed to mark student as graduated");
+      const result = await res.json();
+      const data = result.data ?? result;
+
+      setError(null);
+      alert(data.message || "Student marked as graduated");
+      fetchEnrollmentData();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "An error occurred");
+    } finally {
+      setProcessingId(null);
+    }
+  };
+
+  const promoteTargets = useMemo(() => {
+    return classes
+      .filter((c) => c.id !== classId)
+      .sort((a, b) => (a.level || "").localeCompare(b.level || "") || a.name.localeCompare(b.name));
+  }, [classes, classId]);
 
   const toggleStudentSelection = (studentId: string) => {
     setSelectedStudents((prev) =>
@@ -286,6 +373,7 @@ export default function ClassEnrollmentPage() {
                       <th>Name</th>
                       <th>Admission No.</th>
                       <th>Email</th>
+                      <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -294,6 +382,36 @@ export default function ClassEnrollmentPage() {
                         <td style={{ fontWeight: 700, color: "#0f172a" }}>{student.name}</td>
                         <td><span className="mono">{student.admission_no}</span></td>
                         <td>{student.email}</td>
+                        <td>
+                          <div style={{ display: "flex", gap: "0.8rem", alignItems: "center", flexWrap: "wrap" }}>
+                            <select
+                              value={promoteTarget[student.id] || ""}
+                              disabled={processingId === student.id || promoteTargets.length === 0}
+                              onChange={(e) => {
+                                const toClassId = e.target.value;
+                                setPromoteTarget((prev) => ({ ...prev, [student.id]: toClassId }));
+                                handlePromote(student.id, toClassId);
+                              }}
+                              className="enrollment-action-select"
+                              title={promoteTargets.length === 0 ? "No other classes available" : "Promote to next class"}
+                            >
+                              <option value="">Promote to…</option>
+                              {promoteTargets.map((c) => (
+                                <option key={c.id} value={c.id}>
+                                  {c.name}{c.level ? ` (${c.level})` : ""}
+                                </option>
+                              ))}
+                            </select>
+                            <button
+                              className="enrollment-action-btn enrollment-action-graduate"
+                              onClick={() => handleGraduate(student.id)}
+                              disabled={processingId === student.id}
+                              style={{ opacity: processingId === student.id ? 0.6 : 1, cursor: processingId === student.id ? "not-allowed" : "pointer" }}
+                            >
+                              {processingId === student.id ? "Processing…" : "Graduate"}
+                            </button>
+                          </div>
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -481,6 +599,47 @@ export default function ClassEnrollmentPage() {
           border-color: #6A5ACD;
           background: var(--bg-card);
           box-shadow: 0 0 0 3px rgba(106, 90, 205, 0.1);
+        }
+
+        .enrollment-action-select {
+          padding: 0.7rem 1rem;
+          border: 1px solid #e2e8f0;
+          border-radius: 8px;
+          font-size: 1.2rem;
+          background: var(--bg-card);
+          color: var(--text-main);
+          outline: none;
+          cursor: pointer;
+          transition: all 0.15s;
+        }
+
+        .enrollment-action-select:focus {
+          border-color: #6A5ACD;
+          box-shadow: 0 0 0 3px rgba(106, 90, 205, 0.1);
+        }
+
+        .enrollment-action-select:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+
+        .enrollment-action-btn {
+          padding: 0.7rem 1.4rem;
+          border-radius: 8px;
+          font-size: 1.2rem;
+          font-weight: 600;
+          border: none;
+          transition: all 0.15s;
+        }
+
+        .enrollment-action-graduate {
+          background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+          color: white;
+          box-shadow: 0 4px 12px rgba(139, 92, 246, 0.2);
+        }
+
+        .enrollment-action-graduate:hover:not(:disabled) {
+          filter: brightness(1.08);
         }
 
         .bulk-enrollment-form {
