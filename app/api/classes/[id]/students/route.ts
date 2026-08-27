@@ -20,7 +20,7 @@ export const GET = withAuth(async (req: NextRequest, { school }: AuthContext, pa
               sc.status, sc.enrolled_date, sc.academic_session
        FROM users u
        INNER JOIN students_classes sc ON sc.student_id = u.id
-       WHERE sc.class_id = ? AND u.school_id = ? AND u.role = 'student' AND sc.academic_session = ?
+       WHERE sc.class_id = ? AND u.school_id = ? AND u.role = 'student' AND sc.academic_session = ? AND sc.status = 'active'
        ORDER BY u.name`,
       [classId, school.id, session]
     );

@@ -688,6 +688,8 @@ CREATE INDEX IF NOT EXISTS idx_subjects_class_id ON subjects(class_id);
 CREATE INDEX IF NOT EXISTS idx_students_classes_student_id ON students_classes(student_id);
 CREATE INDEX IF NOT EXISTS idx_students_classes_class_id ON students_classes(class_id);
 CREATE INDEX IF NOT EXISTS idx_students_classes_session ON students_classes(academic_session);
+-- Enforce single active enrollment per student per academic session (prevents multi-class enrollment)
+CREATE UNIQUE INDEX IF NOT EXISTS idx_students_classes_one_active_per_session ON students_classes(student_id, academic_session) WHERE status = 'active';
 CREATE INDEX IF NOT EXISTS idx_class_subjects_class_id ON class_subjects(class_id);
 CREATE INDEX IF NOT EXISTS idx_class_subjects_subject_id ON class_subjects(subject_id);
 CREATE INDEX IF NOT EXISTS idx_student_subjects_student_id ON student_subjects(student_id);

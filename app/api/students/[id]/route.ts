@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { query, queryOne, execute } from "@/lib/db/turso";
 import { withAuth, type AuthContext } from "@/lib/middleware/auth";
-import { notFound, ok, serverError } from "@/lib/utils/response";
+import { badRequest, notFound, ok, serverError } from "@/lib/utils/response";
 import { generateId } from "@/lib/utils/id";
 
 type Params = { params: { id: string } };
@@ -92,6 +92,19 @@ export const PATCH = withAuth(
       if (classId !== undefined && classId !== ex.class_id) {
         const session = school.academic_session || new Date().getFullYear().toString();
 
+        // Enforce single active per session: if moving to new class, ensure no other active enrollment exists besides the old one
+        if (classId) {
+          const conflictingActive = await queryOne(
+            "SELECT class_id FROM students_classes WHERE student_id = ? AND academic_session = ? AND status = 'active' AND class_id != ? AND class_id != ?",
+            [id, session, ex.class_id || "__none__", classId]
+          );
+          if (conflictingActive) {
+            return badRequest(
+              `Student is already actively enrolled in another class for ${session}. Unenroll first before changing class.`
+            );
+          }
+        }
+
         if (ex.class_id) {
           // Mark old enrollment in the current academic session as transferred
           await execute(
@@ -180,6 +193,10 @@ export const PATCH = withAuth(
       );
       return ok(updated);
     } catch (err) {
+      const msg = (err as Error).message || "";
+      if (msg.toLowerCase().includes("unique") || msg.toLowerCase().includes("constraint")) {
+        return badRequest("Student is already actively enrolled in another class for this session. Unenroll first.");
+      }
       return serverError(err);
     }
   },

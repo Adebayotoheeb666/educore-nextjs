@@ -158,14 +158,19 @@ export default function ClassEnrollmentPage() {
         }),
       });
 
-      if (!res.ok) throw new Error("Failed to enroll students");
       const result = await res.json();
+      if (!res.ok) {
+        const msg = result.message || `Failed to enroll students (${res.status})`;
+        throw new Error(msg);
+      }
       const data = result.data ?? result;
 
       setError(null);
-      alert(
-        `✓ Enrolled: ${data.enrolled?.length ?? 0}, Duplicates: ${data.duplicates?.length ?? 0}, Failed: ${data.failed?.length ?? 0}`
-      );
+      let msg = `✓ Enrolled: ${data.enrolled?.length ?? 0}, Duplicates: ${data.duplicates?.length ?? 0}, Failed: ${data.failed?.length ?? 0}`;
+      if (data.blocked?.length) {
+        msg += `\nBlocked (already in another class): ${data.blocked.map((b: any) => b.studentId).join(", ")}`;
+      }
+      alert(msg);
 
       setSelectedStudents([]);
       setSelectAll(false);
@@ -175,6 +180,38 @@ export default function ClassEnrollmentPage() {
       setError(err instanceof Error ? err.message : "An error occurred");
     } finally {
       setIsEnrolling(false);
+    }
+  };
+
+  const handleUnenroll = async (studentId: string) => {
+    if (!window.confirm("Unenroll this student from the class? They will need to be re-enrolled to rejoin.")) return;
+    setProcessingId(studentId);
+    try {
+      const res = await authenticatedFetch(`/api/classes/${classId}/enroll-students`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          studentIds: [studentId],
+          academicSession: session,
+        }),
+      });
+      const result = await res.json();
+      if (!res.ok) {
+        const msg = result.message || `Failed to unenroll (${res.status})`;
+        throw new Error(msg);
+      }
+      const data = result.data ?? result;
+      if (data.notEnrolled?.length) {
+        setError("Student is not actively enrolled in this class");
+      } else {
+        setError(null);
+        alert(data.message || "Student unenrolled successfully");
+      }
+      fetchEnrollmentData();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "An error occurred");
+    } finally {
+      setProcessingId(null);
     }
   };
 
@@ -339,6 +376,10 @@ export default function ClassEnrollmentPage() {
             <div className="enrollment-stat-number">{stats.graduated ?? 0}</div>
             <div className="enrollment-stat-label">Graduated</div>
           </div>
+          <div className="enrollment-stat-card" style={{ background: "linear-gradient(135deg, #ef4444 0%, #dc2626 100%)", boxShadow: "0 4px 12px rgba(239,68,68,0.15)" }}>
+            <div className="enrollment-stat-number">{stats.withdrawn ?? 0}</div>
+            <div className="enrollment-stat-label">Withdrawn</div>
+          </div>
         </div>
       )}
 
@@ -409,6 +450,14 @@ export default function ClassEnrollmentPage() {
                               style={{ opacity: processingId === student.id ? 0.6 : 1, cursor: processingId === student.id ? "not-allowed" : "pointer" }}
                             >
                               {processingId === student.id ? "Processing…" : "Graduate"}
+                            </button>
+                            <button
+                              className="enrollment-action-btn enrollment-action-unenroll"
+                              onClick={() => handleUnenroll(student.id)}
+                              disabled={processingId === student.id}
+                              style={{ opacity: processingId === student.id ? 0.6 : 1, cursor: processingId === student.id ? "not-allowed" : "pointer" }}
+                            >
+                              {processingId === student.id ? "Processing…" : "Unenroll"}
                             </button>
                           </div>
                         </td>
@@ -640,6 +689,18 @@ export default function ClassEnrollmentPage() {
 
         .enrollment-action-graduate:hover:not(:disabled) {
           filter: brightness(1.08);
+        }
+
+        .enrollment-action-unenroll {
+          background: #fff;
+          color: #dc2626;
+          border: 1px solid #fecaca;
+          box-shadow: 0 1px 4px rgba(220, 38, 38, 0.08);
+        }
+
+        .enrollment-action-unenroll:hover:not(:disabled) {
+          background: #fef2f2;
+          border-color: #fca5a5;
         }
 
         .bulk-enrollment-form {
